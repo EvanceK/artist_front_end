@@ -1,0 +1,27 @@
+.card {
+  background-color: $light;
+  box-shadow: 0.2rem 0.3rem 0.5rem rgba($dark, 0.5);
+  .photoFrame {
+    overflow: hidden;
+    // border: 1px solid red;
+    margin: 0.5rem;
+    .card-img-top {
+      &:hover {
+        scale: 1.2;
+      }
+    }
+  }
+  .card-body {
+    background-color: $info;
+
+    .card-title {
+      color: red;
+    }
+
+    .card-text {
+    }
+  }
+  &:hover {
+    box-shadow: 0.5rem 0.5rem 1.5rem rgba($dark, 0.5);
+  }
+}

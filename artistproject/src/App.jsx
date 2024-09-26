@@ -6,7 +6,6 @@ import NavBar from "./components/NavBar";
 import MyCard from "./components/MyCard";
 import projectLogo from "./assets/LOGO11.png";
 function App() {
-  // const projectLogo = "../assets/LOGO11.png";
   return (
     <>
       <NavBar></NavBar>
@@ -19,6 +18,7 @@ function App() {
         </a>
       </div>
       <h1>Artis Project</h1>
+
       <MyCard photo={projectLogo} altText="photo alt text" />
     </>
   );

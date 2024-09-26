@@ -2,9 +2,16 @@
 @import "../../node_modules/bootstrap/scss/functions";
 @import "./variables";
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
+@import "./components/card.scss";
 
-.card {
-  width: 18rem;
+* {
+  transition: 0.5s ease;
+}
+
+.btn {
+  &:hover {
+    box-shadow: 5px 5px 10px 0.05px $dark;
+  }
 }
 
 .projectLogo {

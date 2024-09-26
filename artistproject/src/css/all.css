@@ -11845,7 +11845,32 @@ textarea.form-control-lg {
   }
 }
 .card {
-  width: 18rem;
+  background-color: #f8f9fa;
+  box-shadow: 0.2rem 0.3rem 0.5rem rgba(33, 37, 41, 0.5);
+}
+.card .photoFrame {
+  overflow: hidden;
+  margin: 0.5rem;
+}
+.card .photoFrame .card-img-top:hover {
+  scale: 1.2;
+}
+.card .card-body {
+  background-color: #0dcaf0;
+}
+.card .card-body .card-title {
+  color: red;
+}
+.card:hover {
+  box-shadow: 0.5rem 0.5rem 1.5rem rgba(33, 37, 41, 0.5);
+}
+
+* {
+  transition: 0.5s ease;
+}
+
+.btn:hover {
+  box-shadow: 5px 5px 10px 0.05px #212529;
 }
 
 .projectLogo {
