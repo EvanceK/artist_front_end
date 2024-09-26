@@ -5,7 +5,8 @@ export default function MyCard({ photo, altText }) {
         <img src={photo} className="card-img-top" alt={altText} />
       </div>
       <div className="card-body">
-        <h5 className="card-title">Title</h5>
+        <h5 className="card-title">最偉大的作品</h5>
+        <span className="see-more">vv 了解更多 vv</span>
         <p className="card-text">
           作家：橘🍊 <br />
           作品年份： 2024
