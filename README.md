@@ -6,6 +6,14 @@
 <a href="https://github.com/EvanceK"><img src="https://img.shields.io/badge/Evance.K-red"/></a>
 <a href="https://github.com/Chenchen-GitHub-812"><img src="https://img.shields.io/badge/YangYang890120%20-blue"/></a>
 <h2>Languages</h2>
-<a href=""><img src="https://img.shields.io/badge/javascript-ver. ES6-blue?logo=javascript"/></a>
-<h2>Tools</h2>
+<a href=""><img src="https://img.shields.io/badge/javascript- ES6-blue?logo=javascript"/></a>
+<a href=""><img src="https://img.shields.io/badge/html5-white?logo=html5"/></a>
+<a href=""><img src="https://img.shields.io/badge/CSS3-yellow?logo=css3"/></a>
+<a href="https://www.python.org/"><img src="https://img.shields.io/badge/python-purple?logo=python"/></a>
+
+<h2>IDE, Frameworks</h2>
+<a href="https://legacy.reactjs.org/"><img src="https://img.shields.io/badge/react- 18.3.1-blue?logo=react"/></a>
+<a href="https://vitejs.dev/"><img src="https://img.shields.io/badge/react- v5.47-blue?logo=vite"/></a>
+<a href="https://nodejs.org/zh-tw"><img src="https://img.shields.io/badge/Node.js- v20.17.0-blue?logo=nodedotjs"/></a>
+
 
