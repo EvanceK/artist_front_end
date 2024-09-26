@@ -1,6 +1,7 @@
 .card {
   background-color: $light;
   box-shadow: 0.2rem 0.3rem 0.5rem rgba($dark, 0.5);
+  overflow: hidden;
   .photoFrame {
     overflow: hidden;
     // border: 1px solid red;
@@ -12,32 +13,24 @@
     }
   }
   .card-body {
+    position: absolute;
+    width: 90%;
+    left: 5%;
+
     background-color: $info;
     border-radius: 0.5em;
+    transform: translatey(170%);
     .card-title {
       color: red;
-    }
-    .see-more {
-      color: rgba($dark, 0.3);
-    }
-    .card-text {
-      display: none;
-      transition: display 1s eass;
-    }
-    .btn {
-      display: none;
     }
   }
   &:hover {
     box-shadow: 0.5rem 0.5rem 1.5rem rgba($dark, 0.5);
-    .see-more {
-      display: none;
-    }
-    .card-text {
-      display: block;
-    }
-    .btn {
-      display: block;
+    .card-body {
+      &:hover {
+        transform: translatey(85%);
+        background-color: rgba($info, 0.5);
+      }
     }
   }
 }
