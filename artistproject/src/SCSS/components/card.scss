@@ -2,6 +2,7 @@
   background-color: $light;
   box-shadow: 0.2rem 0.3rem 0.5rem rgba($dark, 0.5);
   overflow: hidden;
+  margin: 10px;
   .photoFrame {
     overflow: hidden;
     // border: 1px solid red;
@@ -19,7 +20,7 @@
 
     background-color: $info;
     border-radius: 0.5em;
-    transform: translatey(170%);
+    transform: translatey(100%);
     .card-title {
       color: red;
     }
@@ -27,8 +28,10 @@
   &:hover {
     box-shadow: 0.5rem 0.5rem 1.5rem rgba($dark, 0.5);
     .card-body {
+      transform: translatey(90%);
+
       &:hover {
-        transform: translatey(85%);
+        transform: translatey(5%);
         background-color: rgba($info, 0.5);
       }
     }

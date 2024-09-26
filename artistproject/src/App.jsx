@@ -18,8 +18,10 @@ function App() {
         </a>
       </div>
       <h1>Artis Project</h1>
-
-      <MyCard photo={projectLogo} altText="photo alt text" />
+      <div className="container d-inline-flex p-2 flex-wrap">
+        <MyCard photo={projectLogo} altText="photo alt text" />
+        <MyCard photo={projectLogo} altText="photo alt text" />
+      </div>
     </>
   );
 }

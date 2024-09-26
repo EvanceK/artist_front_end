@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 export default function MyCard({ photo, altText }) {
   return (
-    <div className="card" style={{ width: "28rem" }}>
+    <div className="card" style={{ width: "18rem" }}>
       <div className="photoFrame">
         <img src={photo} className="card-img-top" alt={altText} />
       </div>
