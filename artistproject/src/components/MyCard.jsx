@@ -1,7 +1,7 @@
-export default function MyCard() {
+export default function MyCard({ photo, altText }) {
   return (
     <div className="card">
-      <img src="..." className="card-img-top" alt="..." />
+      <img src={photo} className="card-img-top" alt={altText} />
       <div className="card-body">
         <h5 className="card-title"></h5>
         <p className="card-text">
