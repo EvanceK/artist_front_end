@@ -24,6 +24,9 @@
     .card-title {
       color: red;
     }
+    .card-text {
+      font-weight: 500;
+    }
   }
   &:hover {
     box-shadow: 0.5rem 0.5rem 1.5rem rgba($dark, 0.5);
@@ -32,7 +35,7 @@
 
       &:hover {
         transform: translatey(5%);
-        background-color: rgba($info, 0.5);
+        background-color: rgba($info, 0.8);
       }
     }
   }
