@@ -1,7 +1,10 @@
+import projectLogo from "../assets/LOGO11.png";
+
 export default function NavBar() {
   return (
     <nav className="navbar navbar-expand-lg bg-light">
       <div className="container-fluid">
+        <img className="projectLogo" src={projectLogo} alt="Logo"></img>
         <a className="navbar-brand" href="#">
           Artist Project Logo
         </a>

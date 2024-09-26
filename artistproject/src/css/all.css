@@ -11847,3 +11847,8 @@ textarea.form-control-lg {
 .card {
   width: 18rem;
 }
+
+.projectLogo {
+  width: 5rem;
+  filter: blur(20);
+}

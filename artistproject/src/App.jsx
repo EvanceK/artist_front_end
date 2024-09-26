@@ -6,8 +6,6 @@ import NavBar from "./components/NavBar";
 import MyCard from "./components/MyCard";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
       <NavBar></NavBar>
@@ -21,14 +19,6 @@ function App() {
       </div>
       <h1>Artis Project</h1>
       <MyCard />
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
     </>
   );
 }

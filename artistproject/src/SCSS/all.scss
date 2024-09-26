@@ -1,5 +1,13 @@
+// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
+@import "../../node_modules/bootstrap/scss/functions";
+@import "./variables";
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
 
 .card {
   width: 18rem;
+}
+
+.projectLogo {
+  width: 5rem;
+  filter: blur(20);
 }
