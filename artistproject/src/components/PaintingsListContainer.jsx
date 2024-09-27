@@ -8,13 +8,14 @@ export default function PaintingsListContainer() {
   const api = "http://localhost:8080/artistproject//PTController/findall";
   const [data, setData] = useState([]);
   const [requestPageNumber, setRequestPageNumber] = useState();
-  const [currentPage, setCurrentPage] = useState("1");
+  const [artisList, setArtisList] = useState([]);
+
   //撈取資料庫
   const getdata = async () => {
     try {
       const result = await axios.get(`${api}?page=${requestPageNumber}`);
       setData(result.data);
-      console.log(result);
+      // console.log(result.data);
     } catch (error) {
       console.log(error);
     }
@@ -22,18 +23,43 @@ export default function PaintingsListContainer() {
 
   useEffect(() => {
     getdata();
-  }, [currentPage]);
+  }, []);
 
   useEffect(() => {
-    setCurrentPage(requestPageNumber);
-  }, [requestPageNumber]);
+    const plaintingTypeName = data
+      .filter(
+        (item, index, self) =>
+          index === self.findIndex((t) => t.artisId === item.artisId)
+      )
+      .map((t) => t.artisId);
+    console.log(plaintingTypeName);
+    setArtisList(plaintingTypeName);
+  }, [data]);
 
   return (
     <>
       <div className="container ">
-        {data.map((d, i) => {
-          return <MyCard key={i} Paintings={d} />;
-          // return <MyCard key={i} photo={d.smallUrl} altText={d.paintingName} />;
+        {artisList.map((d, i) => {
+          return (
+            <>
+              <div className="divByArtis ">
+                <p className="h2">{d}</p>
+                <div className="list">
+                  {
+                    data
+                      .filter((item) => item.artisId === d)
+                      .map((d, i) => {
+                        return <MyCard key={i} Paintings={d} />;
+                      })
+                    // data.map((d, i) => {
+                    //   return <MyCard key={i} Paintings={d} />;
+                    //   // return <MyCard key={i} photo={d.smallUrl} altText={d.paintingName} />;
+                    // })
+                  }
+                </div>
+              </div>
+            </>
+          );
         })}
       </div>
     </>

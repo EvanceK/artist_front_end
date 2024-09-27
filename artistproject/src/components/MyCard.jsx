@@ -2,15 +2,7 @@ import PropTypes from "prop-types";
 
 export default function MyCard({ Paintings }) {
   return (
-    <div className="card d-inline-block" id={Paintings.paintingId}>
-      <div className="photoFrame">
-        <img
-          src={Paintings.smallUrl}
-          className="card-img-top"
-          alt={Paintings.paintingName}
-        />
-      </div>
-      <p className="alt">{Paintings.paintingId}</p>
+    <div className="cards " id={Paintings.paintingId}>
       <div className="card-body">
         <h5 className="card-title">{Paintings.paintingName}</h5>
 
@@ -37,6 +29,14 @@ export default function MyCard({ Paintings }) {
           搶購
         </a>
       </div>
+      <div className="photoFrame">
+        <img
+          src={Paintings.smallUrl}
+          className="card-img-top"
+          alt={Paintings.paintingName}
+        />
+      </div>
+      <p className="alt">{Paintings.paintingId}</p>
     </div>
   );
 }
