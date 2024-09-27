@@ -1,19 +1,37 @@
 import PropTypes from "prop-types";
 
-export default function MyCard({ photo, altText }) {
+export default function MyCard({ Paintings }) {
   return (
-    <div className="card" style={{ width: "18rem" }}>
+    <div className="card d-inline-block" id={Paintings.paintingId}>
       <div className="photoFrame">
-        <img src={photo} className="card-img-top" alt={altText} />
+        <img
+          src={Paintings.smallUrl}
+          className="card-img-top"
+          alt={Paintings.paintingName}
+        />
       </div>
+      <p className="alt">{Paintings.paintingId}</p>
       <div className="card-body">
-        <h5 className="card-title">{altText}</h5>
+        <h5 className="card-title">{Paintings.paintingName}</h5>
 
         <p className="card-text">
-          作家：橘🍊 <br />
-          作品年份： 2024
-          <br /> 風格： 科技復古
-          <br /> 售價： 1000000$
+          <span>作家：{Paintings.artisId}</span>
+          <br />
+          <span>年分：{Paintings.date}</span>
+          <br />
+          <span>原作尺寸：{Paintings.dimensions}</span>
+          <br />
+          <span>畫風：{Paintings.genre}</span>
+          {/* <br />
+          <span>media：{Paintings.media}</span>
+          <br />
+          <span>period：{Paintings.period}</span>
+          <br />
+          <span>price：{Paintings.price}</span>
+          <br />
+          <span>style：{Paintings.style}</span>
+          <br />
+          <span>uploadDate：{Paintings.uploadDate}</span> */}
         </p>
         <a href="#" className="btn btn-primary">
           搶購
@@ -24,6 +42,23 @@ export default function MyCard({ photo, altText }) {
 }
 
 MyCard.propTypes = {
-  photo: PropTypes.string.isRequired,
-  altText: PropTypes.string.isRequired,
+  Paintings: PropTypes.arrayOf(
+    PropTypes.shape({
+      photo: PropTypes.string.isRequired,
+      artisId: PropTypes.string.isRequired,
+      date: PropTypes.string.isRequired,
+      delicated: PropTypes.string.isRequired,
+      dimensions: PropTypes.string.isRequired,
+      genre: PropTypes.string.isRequired,
+      largUrl: PropTypes.string.isRequired,
+      media: PropTypes.string.isRequired,
+      paintingId: PropTypes.string.isRequired,
+      paintingName: PropTypes.string.isRequired,
+      period: PropTypes.string.isRequired,
+      price: PropTypes.string.isRequired,
+      smallUrl: PropTypes.string.isRequired,
+      style: PropTypes.string.isRequired,
+      uploadDate: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };

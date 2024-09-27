@@ -1,4 +1,8 @@
 .navbar {
+  // position: fixed;
+  // width: 100%;
+  z-index: 9;
+  margin-top: 0;
   .nav-item {
     .nav-link.active {
       color: $primary;

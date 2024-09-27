@@ -1,13 +1,20 @@
 // 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
 @import "../../node_modules/bootstrap/scss/functions";
 @import "./variables";
+@import "./variables-dark";
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
+
 @import "./components/card.scss";
 @import "./components/navBar.scss";
+
 * {
   transition: 0.5s ease;
 }
 
+#root {
+  overflow: hidden;
+  padding-top: 0;
+}
 .btn {
   &:hover {
     box-shadow: 5px 5px 10px 0.05px $dark;

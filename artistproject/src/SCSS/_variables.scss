@@ -1398,7 +1398,7 @@ $placeholder-opacity-min: 0.2 !default;
 // scss-docs-start card-variables
 $card-spacer-y: $spacer !default;
 $card-spacer-x: $spacer !default;
-$card-title-spacer-y: $spacer * 0.5 !default;
+$card-title-spacer-y: $spacer * 0.15 !default;
 $card-title-color: null !default;
 $card-subtitle-color: null !default;
 $card-border-width: var(--#{$prefix}border-width) !default;
