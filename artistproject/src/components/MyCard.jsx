@@ -7,7 +7,7 @@ export default function MyCard({ photo, altText }) {
         <img src={photo} className="card-img-top" alt={altText} />
       </div>
       <div className="card-body">
-        <h5 className="card-title">最偉大的作品</h5>
+        <h5 className="card-title">{altText}</h5>
 
         <p className="card-text">
           作家：橘🍊 <br />

@@ -11847,6 +11847,8 @@ textarea.form-control-lg {
 .card {
   background-color: #f8f9fa;
   box-shadow: 0.2rem 0.3rem 0.5rem rgba(33, 37, 41, 0.5);
+  overflow: hidden;
+  margin: 10px;
 }
 .card .photoFrame {
   overflow: hidden;
@@ -11856,38 +11858,32 @@ textarea.form-control-lg {
   scale: 1.2;
 }
 .card .card-body {
+  position: absolute;
+  width: 90%;
+  left: 5%;
   background-color: #0dcaf0;
   border-radius: 0.5em;
+  transform: translatey(100%);
 }
 .card .card-body .card-title {
   color: red;
 }
-.card .card-body .see-more {
-  transform: scaleY(100%);
-  color: rgba(33, 37, 41, 0.3);
-}
 .card .card-body .card-text {
-  align-items: start;
-  transform: scaleY(0);
-  display: none;
-}
-.card .card-body .btn {
-  transform: scaleY(0);
-  display: none;
+  font-weight: 500;
 }
 .card:hover {
   box-shadow: 0.5rem 0.5rem 1.5rem rgba(33, 37, 41, 0.5);
 }
-.card:hover .see-more {
-  transform: scaleY(0);
+.card:hover .card-body {
+  transform: translatey(90%);
 }
-.card:hover .card-text {
-  display: block;
-  transform: scaleY(1);
+.card:hover .card-body:hover {
+  transform: translatey(5%);
+  background-color: rgba(13, 202, 240, 0.8);
 }
-.card:hover .btn {
-  display: block;
-  transform: scaleY(1);
+
+.navbar .nav-item .nav-link.active {
+  color: #0d6efd;
 }
 
 * {

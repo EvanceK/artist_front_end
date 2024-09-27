@@ -3,8 +3,8 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import NavBar from "./components/NavBar";
-import MyCard from "./components/MyCard";
-import projectLogo from "./assets/LOGO11.png";
+
+import PaintingsListContainer from "./components/PaintingsListContainer";
 function App() {
   return (
     <>
@@ -18,12 +18,7 @@ function App() {
         </a>
       </div>
       <h1>Artis Project</h1>
-      <div className="container d-inline-flex p-2 flex-wrap">
-        <MyCard photo={projectLogo} altText="photo alt text" />
-        <MyCard photo={projectLogo} altText="photo alt text" />
-        <MyCard photo={projectLogo} altText="photo alt text" />
-        <MyCard photo={projectLogo} altText="photo alt text" />
-      </div>
+      <PaintingsListContainer></PaintingsListContainer>
     </>
   );
 }

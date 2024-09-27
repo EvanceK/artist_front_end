@@ -1,6 +1,18 @@
+import { useEffect } from "react";
 import projectLogo from "../assets/LOGO11.png";
+import $ from "jquery";
 
 export default function NavBar() {
+  useEffect(() => {
+    $(".nav-link").on("click", function () {
+      $(".nav-link").removeClass("active"); // Remove "active" class from all
+      $(this).addClass("active"); // Add "active" class to the clicked element
+    });
+    // Cleanup event listener
+    return () => {
+      $(".nav-link").off("click");
+    };
+  }, []);
   return (
     <nav className="navbar navbar-expand-lg bg-light">
       <div className="container-fluid">
@@ -28,7 +40,17 @@ export default function NavBar() {
             </li>
             <li className="nav-item">
               <a className="nav-link" href="#">
-                Link
+                Link1
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">
+                Link2
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">
+                Link3
               </a>
             </li>
             <li className="nav-item dropdown">
