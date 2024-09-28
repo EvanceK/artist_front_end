@@ -4,7 +4,7 @@
 @import "./variables-dark";
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
 
-// @import "./components/card.scss";
+@import "./components/card.scss";
 @import "./components/navBar.scss";
 
 * {
@@ -34,65 +34,5 @@
     display: flex;
     overflow: scroll;
     position: relative;
-  }
-}
-.cards {
-  position: relative;
-  width: fit-content;
-  height: fit-content;
-  // height: 300px;
-  margin: 1rem;
-
-  .photoFrame {
-    overflow: hidden;
-    width: 20rem;
-    // border: 1px solid red;
-    // margin: auto 0.5rem;
-
-    .card-img-top {
-      &:hover {
-        scale: 1.2;
-      }
-    }
-  }
-  .alt {
-    margin: 0;
-    padding-top: 0.5rem;
-  }
-  .card-body {
-    padding: 1rem;
-    position: absolute;
-    left: 15%;
-    bottom: 2rem;
-    width: 15rem;
-    z-index: 1;
-    background-color: rgba($info, 0.5);
-    border-radius: 0.5em;
-    opacity: 0;
-    .card-title {
-      color: red;
-      font-size: 0.8rem;
-    }
-    .card-text {
-      font-weight: 500;
-      span {
-        font-size: 0.8rem;
-      }
-      * {
-        margin: 0;
-        padding: 0;
-      }
-    }
-  }
-  &:hover {
-    box-shadow: 0.5rem 0.5rem 1.5rem rgba($dark, 0.5);
-    .card-body {
-      opacity: 1;
-
-      &:hover {
-        transform: translatex(0);
-        background-color: rgba($info, 0.8);
-      }
-    }
   }
 }

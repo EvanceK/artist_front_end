@@ -36,7 +36,9 @@ export default function MyCard({ Paintings }) {
           alt={Paintings.paintingName}
         />
       </div>
-      <p className="alt">{Paintings.paintingId}</p>
+      <p className="alt">
+        {Paintings.paintingId}: {Paintings.paintingName}
+      </p>
     </div>
   );
 }
