@@ -7,7 +7,7 @@ export default function MyCard({ Paintings }) {
         <h5 className="card-title">{Paintings.paintingName}</h5>
 
         <p className="card-text">
-          <span>作家：{Paintings.artisId}</span>
+          <span>作家：{Paintings.artisName}</span>
           <br />
           <span>年分：{Paintings.date}</span>
           <br />
@@ -48,6 +48,7 @@ MyCard.propTypes = {
     PropTypes.shape({
       photo: PropTypes.string.isRequired,
       artisId: PropTypes.string.isRequired,
+      artisName: PropTypes.string.isRequired,
       date: PropTypes.string.isRequired,
       delicated: PropTypes.string.isRequired,
       dimensions: PropTypes.string.isRequired,

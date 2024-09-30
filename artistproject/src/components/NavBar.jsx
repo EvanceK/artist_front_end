@@ -15,7 +15,7 @@ export default function NavBar() {
   }, []);
   return (
     <nav className="navbar navbar-expand-lg bg-light">
-      <div className="container-fluid">
+      <div className="container">
         <img className="projectLogo" src={projectLogo} alt="Logo"></img>
         <a className="navbar-brand" href="#">
           Artist Project Logo
@@ -35,22 +35,7 @@ export default function NavBar() {
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <a className="nav-link active" aria-current="page" href="#">
-                Home
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Link1
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Link2
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Link3
+                首頁
               </a>
             </li>
             <li className="nav-item dropdown">
@@ -61,7 +46,7 @@ export default function NavBar() {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Dropdown
+                作家
               </a>
               <ul className="dropdown-menu">
                 <li>
@@ -85,6 +70,17 @@ export default function NavBar() {
               </ul>
             </li>
             <li className="nav-item">
+              <a className="nav-link" href="#">
+                團隊
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">
+                登入
+              </a>
+            </li>
+
+            <li className="nav-item">
               <a className="nav-link disabled">Disabled</a>
             </li>
           </ul>
@@ -96,8 +92,10 @@ export default function NavBar() {
               aria-label="Search"
             />
             <button className="btn btn-outline-success" type="submit">
-              Search
+              <i className="bi bi-search"></i>
             </button>
+
+            <div className=""></div>
           </form>
         </div>
       </div>

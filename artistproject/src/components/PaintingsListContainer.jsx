@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 export default function PaintingsListContainer() {
   // const api = "http://localhost:8080/mvweb0923/forReactServlet";
-  const api = "http://localhost:8080/artistproject//PTController/findall";
+  const api = "http://localhost:8080/artistproject/PTController/findall";
   const [data, setData] = useState([]);
   const [requestPageNumber, setRequestPageNumber] = useState();
   const [artisList, setArtisList] = useState([]);
@@ -15,7 +15,7 @@ export default function PaintingsListContainer() {
     try {
       const result = await axios.get(`${api}?page=${requestPageNumber}`);
       setData(result.data);
-      // console.log(result.data);
+      console.log(result.data);
     } catch (error) {
       console.log(error);
     }
@@ -29,9 +29,9 @@ export default function PaintingsListContainer() {
     const plaintingTypeName = data
       .filter(
         (item, index, self) =>
-          index === self.findIndex((t) => t.artisId === item.artisId)
+          index === self.findIndex((t) => t.artisName === item.artisName)
       )
-      .map((t) => t.artisId);
+      .map((t) => t.artisName);
     console.log(plaintingTypeName);
     setArtisList(plaintingTypeName);
   }, [data]);
@@ -43,11 +43,11 @@ export default function PaintingsListContainer() {
           return (
             <>
               <div className="divByArtis ">
-                <p className="h2">{d}</p>
+                <p className="h2">Artis： {d}</p>
                 <div className="list">
                   {
                     data
-                      .filter((item) => item.artisId === d)
+                      .filter((item) => item.artisName === d)
                       .map((d, i) => {
                         return <MyCard key={i} Paintings={d} />;
                       })
@@ -58,6 +58,7 @@ export default function PaintingsListContainer() {
                   }
                 </div>
               </div>
+              <hr></hr>
             </>
           );
         })}
