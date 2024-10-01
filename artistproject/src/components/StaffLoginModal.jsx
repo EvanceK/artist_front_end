@@ -1,3 +1,4 @@
+import projectLogo from "../assets/LOGO.png";
 export default function StaffLoginModal() {
   return (
     <div
@@ -20,7 +21,7 @@ export default function StaffLoginModal() {
             ></button>
           </div>
 
-          <div className="h2 my-3 ">Artis LOGO</div>
+          <img className="projectLogo" src={projectLogo} alt="Logo"></img>
           <form action="">
             <div className="input">
               <h2 className="d-flex m-5">Staff Log In</h2>
