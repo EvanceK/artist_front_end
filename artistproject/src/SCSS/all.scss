@@ -10,8 +10,13 @@
 @import "./components/card.scss";
 @import "./components/navBar.scss";
 @import "./components/carousel.scss";
+
+@import url("https://fonts.googleapis.com/css2?family=Signika:wght@300..700&display=swap");
+
 * {
   transition: 0.5s ease;
+  font-family: "Signika", "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+    sans-serif;
 }
 
 #root {

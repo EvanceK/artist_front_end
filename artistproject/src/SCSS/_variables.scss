@@ -36,6 +36,8 @@ $grays: (
 // fusv-enable
 
 // scss-docs-start color-variables
+$artisBlue: #0a2540 !default;
+$artisGold: #f8db8a !default;
 $blue: #0d6efd !default;
 $indigo: #6610f2 !default;
 $purple: #6f42c1 !default;
@@ -298,7 +300,7 @@ $cyans: (
 // fusv-enable
 
 // scss-docs-start theme-color-variables
-$primary: $blue !default;
+$primary: $artisBlue !default;
 $secondary: $gray-600 !default;
 $success: $green !default;
 $info: $cyan !default;
