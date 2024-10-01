@@ -94,7 +94,14 @@ export default function NavBar() {
             <button className="btn btn-outline-success" type="submit">
               <span className="material-symbols-outlined">search</span>
             </button>
-
+            <button
+              type="button"
+              className="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop"
+            >
+              Log_In
+            </button>
             <div className=""></div>
           </form>
         </div>
