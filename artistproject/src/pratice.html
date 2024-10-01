@@ -30,6 +30,11 @@
       .labelgroup{
         display: flex;
         flex-direction: column;
+        justify-content:left;
+      }
+      .inputgroup{
+        display: flex;
+        flex-direction: column;
       }
     </style>
 </head>
@@ -131,8 +136,14 @@
       <form action="">
       <div class="logingroup">
         <h2>Staff Log In</h2>
-        <label for="labelgroup">Username</label>
-        <label for="labelgroup">Password</label>
+        <div class="labelgroup">
+        <label for="username">Username</label>
+        <label for="password">Password</label>
+        </div>
+        <div class="inputgroup">
+          <input class="input" type="text"name="username" placeholder="Username"/>
+          <input class="input" type="text"name="password" placeholder="Password"/>
+        </div>
       </div>
       </form>
       <div class="login-btn"></div>
