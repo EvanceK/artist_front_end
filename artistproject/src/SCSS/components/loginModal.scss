@@ -1,10 +1,4 @@
-.modal {
-  vertical-align: middle;
-}
 .login {
-  // border: 1px solid black;
-  // width: 450px;
-
   display: flex;
   flex-direction: column;
 }
@@ -22,22 +16,22 @@
 }
 .input {
   margin: 0 30px;
-}
-.inputcontainer {
-  display: flex;
+  .inputcontainer {
+    display: flex;
 
-  width: 400px;
-  justify-content: space-between;
+    width: 400px;
+    justify-content: space-between;
+  }
 }
 .labelgroup {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-}
-.labelgroup label {
-  height: 36px;
-  display: flex;
-  align-items: center;
+  label {
+    height: 36px;
+    display: flex;
+    align-items: center;
+  }
 }
 .inputgroup {
   display: flex;
@@ -53,13 +47,4 @@
   margin: 80px auto;
   display: flex;
   justify-content: space-between;
-}
-.btn {
-  cursor: pointer;
-  padding: 10px 20px;
-  border: 1px solid#0A2540;
-}
-.btn-primary {
-  background-color: #0a2540;
-  color: #f8db8a;
 }
