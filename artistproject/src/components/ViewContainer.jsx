@@ -6,10 +6,11 @@ import Pagination from "./Pagination";
 
 export default function ViewContainer() {
   // const api = "http://localhost:8080/mvweb0923/forReactServlet";
-  const api = "http://localhost:8080/artistproject/PTController/findByPage";
+  const api = "http://localhost:8080/PTController/findByPage";
   const [data, setData] = useState([]);
   const [requestPageNumber, setRequestPageNumber] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(20);
+  const [totalPage, setTotalPage] = useState();
   const [pages, setPages] = useState();
   // const [artisList, setArtisList] = useState([]);
 
@@ -19,7 +20,8 @@ export default function ViewContainer() {
       const result = await axios.get(
         `${api}?currentPage=${requestPageNumber}&pageSize=${pageSize}`
       );
-      setData(result.data);
+      setData(result.data.paintingsList);
+      setTotalPage(result.data.totalPage);
       console.log(result.data);
     } catch (error) {
       console.log(error);
@@ -42,14 +44,14 @@ export default function ViewContainer() {
 
   return (
     <>
-      <div className="container ">
+      <div className="container d-flex flex-wrap ">
         {data.map((d, i) => {
           return <MyCard key={i} Paintings={d} />;
           // return <MyCard key={i} photo={d.smallUrl} altText={d.paintingName} />;
         })}
         <hr></hr>
       </div>
-      <Pagination></Pagination>
+      <Pagination totalPage={totalPage}></Pagination>
     </>
   );
 }

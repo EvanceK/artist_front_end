@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 export default function PaintingsListContainer() {
   // const api = "http://localhost:8080/mvweb0923/forReactServlet";
-  const api = "http://localhost:8080/artistproject/PTController/findall";
+  const api = "http://localhost:8080/PTController/findall";
   const [data, setData] = useState([]);
   const [requestPageNumber, setRequestPageNumber] = useState();
   const [artisList, setArtisList] = useState([]);

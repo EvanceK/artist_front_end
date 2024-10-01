@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 export default function MyCard({ Paintings }) {
   return (
-    <div className="cards " id={Paintings.paintingId}>
+    <div className="cards align-items-center" id={Paintings.paintingId}>
       <div className="card-body">
         <h5 className="card-title">{Paintings.paintingName}</h5>
 
@@ -36,7 +36,7 @@ export default function MyCard({ Paintings }) {
           alt={Paintings.paintingName}
         />
       </div>
-      <p className="alt">
+      <p className="alt d-flex text-break">
         {Paintings.paintingId}: {Paintings.paintingName}
       </p>
     </div>
