@@ -6,11 +6,35 @@
     <title>Document</title>
     <link rel="stylesheet" href="./Css/all.css">
     <style>
-
+      .dropmenu{
+        width: 100%;
+        height: 350px;
+      }
+      ul{
+        list-style: none;
+        color:black;
+      }
+      li{
+        color: black;
+      }
+      .staff-login{
+        width: 450px;
+        border-color: black;
+        
+      }
+      .logo{
+        width: 100%;
+        height: 100px;
+        background-color: red;
+      }
+      .labelgroup{
+        display: flex;
+        flex-direction: column;
+      }
     </style>
 </head>
 <body>
-    <div class="container .text-start">
+    <div class="dropmenu">
         <div class="row">
           <div class="col">
             <ul className="dropdown-menu">
@@ -101,6 +125,17 @@
             </ul>
           </div>
         </div>
+    </div>
+    <div class="staff-login">
+      <div class="logo"></div>
+      <form action="">
+      <div class="logingroup">
+        <h2>Staff Log In</h2>
+        <label for="labelgroup">Username</label>
+        <label for="labelgroup">Password</label>
       </div>
+      </form>
+      <div class="login-btn"></div>
+    </div>
 </body>
 </html>

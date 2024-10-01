@@ -50,60 +50,6 @@ export default function NavBar() {
               >
                 作家
               </a>
-              <div class="container text-center">
-              <div class="row">
-                <div class="col">
-                <ul className="dropdown-menu">
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Action
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Another action
-                  </a>
-                </li>
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Something else here
-                  </a>
-                </li>
-              </ul>
-                </div>
-                <div class="col">
-                <ul className="dropdown-menu col-md-4">
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Action
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Another action
-                  </a>
-                </li>
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Something else here
-                  </a>
-                </li>
-              </ul>
-                </div>
-                <div class="col">
-                  3 of 3
-                </div>
-                <div class="col">
-                  4 of 4
-                </div>
-              </div>
-            </div>
               <ul className="dropdown-menu col-md-4">
                 <li>
                   <a className="dropdown-item" href="#">
