@@ -107,7 +107,7 @@ export default function NavBar() {
               type="button"
               className="btn btn-primary"
               data-bs-toggle="modal"
-              data-bs-target="#"
+              data-bs-target="#StaffLoginModal"
             >
               SIGN UP
             </button>
