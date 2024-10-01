@@ -9,21 +9,21 @@
     <style>
       .login {
         border: 1px solid black;
-
         width: 450px;
-        height: 500px;
         display: flex;
         flex-direction: column;
       }
       .logo {
-        background-color: red;
         width: 100%;
-        height: 50px;
-
-        text-align: center;
+        margin: 25px auto;
+        height: 55px;
+        font-weight: 800;
+        font-size: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
       .input {
-        /* background-color: blue; */
         margin: 0 20px;
       }
       .inputcontainer {
@@ -35,6 +35,12 @@
       .labelgroup {
         display: flex;
         flex-direction: column;
+        justify-content: space-around;
+      }
+      .labelgroup label {
+        height: 36px;
+        display: flex;
+        align-items: center;
       }
       .inputgroup {
         display: flex;
@@ -42,11 +48,23 @@
         margin: 0 10px;
         width: 100%;
       }
+      .txtbox {
+        height: 36px;
+      }
       .btngroup {
-        width: 200px;
+        width: 300px;
         margin: 80px auto;
         display: flex;
         justify-content: space-between;
+      }
+      .btn {
+        cursor: pointer;
+        padding: 10px 20px;
+        border: 1px solid blue;
+      }
+      .btn-primary {
+        background-color: blue;
+        color: yellow;
       }
     </style>
     <div class="login">
@@ -78,8 +96,8 @@
           </div>
         </div>
         <div class="btngroup">
-          <button>LOG IN</button>
-          <button>SIGN UP</button>
+          <div class="btn btn-secondary">LOG IN</div>
+          <div class="btn btn-primary">SIGN UP</div>
         </div>
       </form>
     </div>
