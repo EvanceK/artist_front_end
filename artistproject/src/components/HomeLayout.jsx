@@ -1,6 +1,7 @@
 import reactLogo from "../assets/react.svg";
 import PaintingsListContainer from "./PaintingsListContainer";
 import Carousel from "./Carousel";
+import ViewContainer from "./ViewContainer";
 
 export default function HomeLayout() {
   return (
@@ -12,7 +13,10 @@ export default function HomeLayout() {
       </div> */}
       <Carousel></Carousel>
       <h1>Artis Project</h1>
-      <PaintingsListContainer></PaintingsListContainer>
+      <ViewContainer></ViewContainer>
+      <hr></hr>
+      <hr></hr>
+      {/* <PaintingsListContainer></PaintingsListContainer> */}
     </div>
   );
 }

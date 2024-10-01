@@ -92,7 +92,7 @@ export default function NavBar() {
               aria-label="Search"
             />
             <button className="btn btn-outline-success" type="submit">
-              <i className="bi bi-search"></i>
+              <span className="material-symbols-outlined">search</span>
             </button>
 
             <div className=""></div>
