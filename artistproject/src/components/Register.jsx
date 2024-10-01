@@ -1,7 +1,7 @@
 import projectLogo from "../assets/LOGO.png";
-export default function Register(){
-    return(
-      <div
+export default function Register() {
+  return (
+    <div
       className="modal fade"
       id="registerModel"
       data-bs-backdrop="static"
@@ -22,12 +22,21 @@ export default function Register(){
           </div>
 
           <div className="h2 my-3 "></div>
-          <img className="projectLogo" src={projectLogo} alt="Logo"></img>
+          <div className="logo d-flex justify-content-center">
+            <img
+              className="projectLogo  w-50 h-100"
+              src={projectLogo}
+              alt="Logo"
+            ></img>
+          </div>
           <form action="">
             <div className="input">
               <div className="d-block mt-5 m-2">
                 <div className="row m-2 d-flex justify-content-center">
-                  <label className="col-3 d-flex justify-content-start" htmlFor="name">
+                  <label
+                    className="col-3 d-flex justify-content-start"
+                    htmlFor="name"
+                  >
                     Name :
                   </label>
                   <input
@@ -39,7 +48,10 @@ export default function Register(){
                   />
                 </div>
                 <div className="row m-2 d-flex justify-content-center">
-                  <label className="col-3 d-flex justify-content-start" htmlFor="nickname">
+                  <label
+                    className="col-3 d-flex justify-content-start"
+                    htmlFor="nickname"
+                  >
                     NickName :
                   </label>
                   <input
@@ -50,10 +62,13 @@ export default function Register(){
                     placeholder="NickName"
                   />
                 </div>
-                
+
                 <div className="row m-2 d-flex justify-content-center">
-                  <label className="col-3 d-flex justify-content-start" htmlFor="Email">
-                  Email :
+                  <label
+                    className="col-3 d-flex justify-content-start"
+                    htmlFor="Email"
+                  >
+                    Email :
                   </label>
                   <input
                     id="Email"
@@ -64,8 +79,11 @@ export default function Register(){
                   />
                 </div>
                 <div className="row m-2 d-flex justify-content-center">
-                  <label className="col-3 d-flex justify-content-start" htmlFor="Password">
-                  Password :
+                  <label
+                    className="col-3 d-flex justify-content-start"
+                    htmlFor="Password"
+                  >
+                    Password :
                   </label>
                   <input
                     id="Password"
@@ -76,8 +94,11 @@ export default function Register(){
                   />
                 </div>
                 <div className="row m-2 d-flex justify-content-center">
-                  <label className="col-3 d-flex justify-content-start" htmlFor="Phone">
-                  Phone :
+                  <label
+                    className="col-3 d-flex justify-content-start"
+                    htmlFor="Phone"
+                  >
+                    Phone :
                   </label>
                   {/* <span class="col-1 px-0" >:</span> */}
                   <input
@@ -89,8 +110,11 @@ export default function Register(){
                   />
                 </div>
                 <div className="row m-2 d-flex justify-content-center">
-                  <label className="col-3 d-flex justify-content-start" htmlFor="Address">
-                  Address :
+                  <label
+                    className="col-3 d-flex justify-content-start"
+                    htmlFor="Address"
+                  >
+                    Address :
                   </label>
                   <textarea
                     id="Address"
@@ -101,7 +125,6 @@ export default function Register(){
                     row="3"
                   />
                 </div>
-               
               </div>
             </div>
 
@@ -114,5 +137,5 @@ export default function Register(){
         </div>
       </div>
     </div>
-    )
+  );
 }

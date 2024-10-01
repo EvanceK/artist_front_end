@@ -60,7 +60,13 @@ export default function LoginModal() {
             </form>
           </div> */}
           <div className="login row">
-          <img className="projectLogo" src={projectLogo} alt="Logo"></img>
+            <div className="logo">
+              <img
+                className="projectLogo w-50"
+                src={projectLogo}
+                alt="Logo"
+              ></img>
+            </div>
             <form>
               <div className="input m-x-3">
                 <h2 className="d-flex m-5 ">Sign Up or Log In</h2>

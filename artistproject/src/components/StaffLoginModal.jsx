@@ -20,8 +20,13 @@ export default function StaffLoginModal() {
               aria-label="Close"
             ></button>
           </div>
-
-          <img className="projectLogo" src={projectLogo} alt="Logo"></img>
+          <div className="logo">
+            <img
+              className="projectLogo w-50"
+              src={projectLogo}
+              alt="Logo"
+            ></img>
+          </div>
           <form action="">
             <div className="input">
               <h2 className="d-flex m-5">Staff Log In</h2>
