@@ -19,7 +19,9 @@
       }
       .staff-login{
         width: 450px;
-        border-color: black;
+        border: 1px solid black;
+        display: flex;
+        flex-direction: column;
         
       }
       .logo{
@@ -27,10 +29,14 @@
         height: 100px;
         background-color: red;
       }
+      .inputcontainer{
+        display: flex;
+
+      }
       .labelgroup{
         display: flex;
         flex-direction: column;
-        justify-content:left;
+        justify-content:space-around;
       }
       .inputgroup{
         display: flex;
@@ -134,15 +140,16 @@
     <div class="staff-login">
       <div class="logo"></div>
       <form action="">
-      <div class="logingroup">
-        <h2>Staff Log In</h2>
-        <div class="labelgroup">
-        <label for="username">Username</label>
-        <label for="password">Password</label>
+      <div class="inputcontainer"></div>
+        <div class="logingroup">
+          <h2>Staff Log In</h2>
+          <div class="labelgroup">
+            <label for="username">Username</label>
+            <label for="password">Password</label>
         </div>
         <div class="inputgroup">
-          <input class="input" type="text"name="username" placeholder="Username"/>
-          <input class="input" type="text"name="password" placeholder="Password"/>
+          <input class="inputtxt" type="text"name="username" placeholder="Username"/>
+          <input class="inputtxt" type="text"name="password" placeholder="Password"/>
         </div>
       </div>
       </form>
