@@ -39,6 +39,7 @@
     }
     .card-text {
       font-weight: 500;
+
       span {
         font-size: 0.8rem;
       }
@@ -57,5 +58,9 @@
         background-color: rgba($info, 0.8);
       }
     }
+  }
+  .card-text:last-child {
+    max-width: 15rem;
+    text-wrap: wrap;
   }
 }
