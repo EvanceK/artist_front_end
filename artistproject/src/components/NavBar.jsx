@@ -16,7 +16,9 @@ export default function NavBar() {
   return (
     <nav className="navbar navbar-expand-lg bg-light">
       <div className="container">
-        <img className="projectLogo" src={projectLogo} alt="Logo"></img>
+        <a href="/">
+          <img className="projectLogo" src={projectLogo} alt="Logo"></img>
+        </a>
         {/* <a className="navbar-brand" href="#">
           Artist Project Logo
         </a> */}
