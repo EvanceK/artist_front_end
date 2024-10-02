@@ -85,14 +85,15 @@ button:focus-visible {
   transform-style: preserve-3d;
   transform: perspective(1000px);
   animation: autoRun 50s linear infinite;
-  z-index: 2;
 }
 @keyframes autoRun {
   from {
-    transform: perspective(1000px) rotateX(-36deg) rotateY(0deg);
+    transform: perspective(1000px) rotateX(-20deg) rotateY(0deg);
+    z-index: 0;
   }
   to {
-    transform: perspective(1000px) rotateX(-16deg) rotateY(360deg);
+    transform: perspective(1000px) rotateX(-20deg) rotateY(360deg);
+    z-index: 2;
   }
 }
 
