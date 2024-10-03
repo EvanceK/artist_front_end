@@ -7,7 +7,9 @@ import StaffLoginModal from "./components/StaffLoginModal";
 import Register from "./components/Register";
 import HomeLayout from "./components/HomeLayout";
 import { UserContext } from "./components/UserContext";
-import SignupSuccess from "./components/SignupSuccess"
+import SignupSuccess from "./components/SignupSuccess";
+import Deposit from "./components/Deposit";
+import DeleteWarning from "./components/DeleteWarning";
 import $ from "jquery";
 
 function App() {
@@ -22,6 +24,8 @@ function App() {
         <Register></Register>
         <HomeLayout></HomeLayout>
         <SignupSuccess></SignupSuccess>
+        <Deposit></Deposit>
+        <DeleteWarning></DeleteWarning>
       </UserContext.Provider>
     </>
   );
