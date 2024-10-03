@@ -16,7 +16,6 @@ body::before {
   height: 90%;
   transform: translateX(-50%);
   content: "";
-  /* background-image: url(././assets/home/bg.png); */
   background-image: repeating-linear-gradient(
       to right,
       transparent 0 100px,
@@ -86,43 +85,6 @@ body::before {
   height: 100%;
   object-fit: cover;
 }
-/* .banner .content {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(1400px, 100vw);
-  height: max-content;
-  padding-bottom: 100px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  z-index: 1;
-}
-.banner .content h1 {
-  font-family: "ICA Rubrik";
-  font-size: 16em;
-  line-height: 1em;
-  color: #25283b;
-  position: relative;
-}
-.banner .content h1::after {
-  position: absolute;
-  inset: 0 0 0 0;
-  content: attr(data-content);
-  z-index: 2;
-  -webkit-text-stroke: 2px #d2d2d2;
-  color: transparent;
-}
-.banner .content .author {
-  font-family: Poppins;
-  text-align: right;
-  max-width: 200px;
-}
-.banner .content h2 {
-  font-size: 3em;
-} */
 .model {
   /* background-image: url(././assets/LOGO11.png); */
   width: 600px;
