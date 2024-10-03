@@ -51,7 +51,11 @@ export default function ViewContainer() {
         })}
         <hr></hr>
       </div>
-      <Pagination totalPage={totalPage}></Pagination>
+      <Pagination
+        totalPage={totalPage}
+        currentPage={requestPageNumber}
+        setRequestPageNumber={setRequestPageNumber}
+      ></Pagination>
     </>
   );
 }

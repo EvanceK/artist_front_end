@@ -1,4 +1,8 @@
-export default function Pagination({ totalPage }) {
+export default function Pagination({
+  totalPage,
+  requestPageNumber,
+  setRequestPageNumber,
+}) {
   return (
     <nav aria-label="Page navigation example">
       <ul className="pagination">
