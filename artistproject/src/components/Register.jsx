@@ -129,7 +129,9 @@ export default function Register() {
             </div>
 
             <div className="row d-flex justify-content-center m-5">
-              <div className="btn col-3 btn-primary" data-bs-dismiss="modal">
+              <div className="btn col-3 btn-primary" 
+                   data-bs-toggle="modal"
+                   data-bs-target="#SignupSuccess">
                 SIGN UP
               </div>
             </div>
