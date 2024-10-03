@@ -1,18 +1,53 @@
-import { useEffect } from "react";
+import { useEffect, useState, useContext } from "react";
 import projectLogo from "../assets/LOGO.png";
 import $ from "jquery";
+import { UserContext } from "./UserContext";
 
 export default function NavBar() {
+  const [search, setSearch] = useState();
+  const { userName } = useContext(UserContext);
+  const [accountfeild, setAccountfeild] = useState();
   useEffect(() => {
     $(".nav-link").on("click", function () {
       $(".nav-link").removeClass("active"); // Remove "active" class from all
       $(this).addClass("active"); // Add "active" class to the clicked element
+    });
+    $("#search").on("keyup", (e) => {
+      setSearch(e.target.value);
+      console.log(e.target.value);
     });
     // Cleanup event listener
     return () => {
       $(".nav-link").off("click");
     };
   }, []);
+
+  useEffect(() => {
+    if (userName == null) {
+      setAccountfeild(
+        <>
+          <button
+            type="button"
+            className="btn "
+            data-bs-toggle="modal"
+            data-bs-target="#LoginModal"
+          >
+            Log_In
+          </button>
+          <button
+            type="button"
+            className="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#registerModel"
+          >
+            SIGN UP
+          </button>
+        </>
+      );
+    } else {
+      setAccountfeild(userName);
+    }
+  }, [userName]);
   return (
     <nav className="navbar navbar-expand-lg bg-light">
       <div className="container">
@@ -25,7 +60,8 @@ export default function NavBar() {
         <form className="d-flex position-relative" role="search">
           <input
             className="form-control ms-2"
-            type="search"
+            id="search"
+            // type="search"
             placeholder="Search"
             aria-label="Search"
           />
@@ -131,22 +167,7 @@ export default function NavBar() {
               />
             </svg>
 
-            <button
-              type="button"
-              className="btn "
-              data-bs-toggle="modal"
-              data-bs-target="#LoginModal"
-            >
-              Log_In
-            </button>
-            <button
-              type="button"
-              className="btn btn-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#registerModel"
-            >
-              SIGN UP
-            </button>
+            {accountfeild}
           </div>
         </div>
       </div>

@@ -128,6 +128,16 @@ body::before {
   animation: autoRun 50s linear infinite;
   z-index: 0;
 }
+.banner .slider .item {
+  position: absolute;
+  inset: 0 0 0 0;
+  transform: rotateY(
+      calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)
+    )
+    translateZ(550px);
+
+  animation: changeZIndex 50s linear infinite;
+}
 @keyframes autoRun {
   from {
     transform: perspective(1500px) rotateX(-16deg) rotateY(0deg);
@@ -136,14 +146,35 @@ body::before {
     transform: perspective(1500px) rotateX(-16deg) rotateY(360deg);
   }
 }
+@keyframes autoRunBack {
+  from {
+    transform: rotateY(360deg);
+  }
+  to {
+    transform: rotateY(0deg);
+  }
+}
+@keyframes changeZIndex {
+  0%,
+  100% {
+    z-index: calc(var(--z-front)); /* Front (0 deg or 360 deg) */
+  }
+  25% {
+    z-index: calc(var(--z-middle)); /* Side (90 deg) */
+  }
+  50% {
+    z-index: calc(var(--z-back)); /* Back (180 deg) */
+  }
+  75% {
+    z-index: calc(var(--z-middle)); /* Side (270 deg) */
+  }
+}
 
-.banner .slider .item {
-  position: absolute;
-  inset: 0 0 0 0;
-  transform: rotateY(
-      calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)
-    )
-    translateZ(550px);
+/* Variables to define z-index behavior */
+:root {
+  --z-front: 2;
+  --z-middle: 1;
+  --z-back: 0;
 }
 .banner .slider .item img {
   width: 100%;
@@ -188,16 +219,24 @@ body::before {
   font-size: 3em;
 } */
 .model {
-  background-image: url(././assets/LOGO11.png);
-  width: 100vw;
-  height: 22vh;
-  top: 22vh;
+  /* background-image: url(././assets/LOGO11.png); */
+  width: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: fit-content;
   position: absolute;
-  left: 0;
+  width: 600px;
+  top: -20vh;
+  left: calc(50% - 300px);
   background-size: auto 130%;
   background-repeat: no-repeat;
   background-position: top center;
-  z-index: 2;
+  z-index: 1;
+  animation: autoRunBack 50s linear infinite;
+}
+.model img {
+  width: inherit;
 }
 
 .btngroup {
@@ -241,8 +280,9 @@ body::before {
     padding: 0 30px;
   }
   .model {
-    height: 19vh;
-    top: 18vh;
+    width: 400px;
+    top: -15vh;
+    left: calc(50% - 200px);
   }
 }
 @media screen and (max-width: 767px) {
@@ -261,7 +301,8 @@ body::before {
     font-size: 5em;
   }
   .model {
-    height: 15vh;
-    top: 20vh;
+    width: 300px;
+    top: -15vh;
+    left: calc(50% - 150px);
   }
 }

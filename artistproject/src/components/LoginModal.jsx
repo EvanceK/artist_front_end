@@ -1,5 +1,14 @@
+import { useContext, useEffect } from "react";
 import projectLogo from "../assets/LOGO.png";
+import { UserContext } from "./UserContext";
+import $ from "jquery";
 export default function LoginModal() {
+  const { userName, setUserName } = useContext(UserContext);
+  useEffect(() => {
+    $("#login").on("click", () => {
+      setUserName($("#email").val());
+    });
+  }, []);
   return (
     <div
       className="modal fade"
@@ -98,7 +107,11 @@ export default function LoginModal() {
                 </div>
               </div>
               <div className="row my-5 mx-auto justify-content-center">
-                <div className="btn col-3 mx-2" data-bs-dismiss="modal">
+                <div
+                  className="btn col-3 mx-2"
+                  id="login"
+                  data-bs-dismiss="modal"
+                >
                   LOG IN
                 </div>
                 <div className="btn btn-primary col-3 mx-2">SIGN UP</div>
