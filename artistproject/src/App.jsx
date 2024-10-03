@@ -7,6 +7,7 @@ import StaffLoginModal from "./components/StaffLoginModal";
 import Register from "./components/Register";
 import HomeLayout from "./components/HomeLayout";
 import { UserContext } from "./components/UserContext";
+import SignupSuccess from "./components/SignupSuccess"
 import $ from "jquery";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <StaffLoginModal></StaffLoginModal>
         <Register></Register>
         <HomeLayout></HomeLayout>
+        <SignupSuccess></SignupSuccess>
       </UserContext.Provider>
     </>
   );
