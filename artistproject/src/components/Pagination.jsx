@@ -1,31 +1,71 @@
+import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
+
 export default function Pagination({
   totalPage,
   requestPageNumber,
-  setRequestPageNumber,
+  onPageChange,
 }) {
+  const [pages, setPages] = useState([]);
+
+  const handlePageChange = (newPage) => {
+    if (newPage > 0 && newPage <= totalPage) {
+      onPageChange(newPage);
+    }
+  };
+
+  useEffect(() => {
+    const getPageNumbers = () => {
+      const pages = [];
+      if (requestPageNumber > 1) {
+        pages.push(requestPageNumber - 1);
+      }
+      pages.push(requestPageNumber);
+      if (requestPageNumber < totalPage) {
+        pages.push(requestPageNumber + 1);
+        pages.push(requestPageNumber + 2);
+      }
+      return pages;
+    };
+    setPages(getPageNumbers());
+  }, [requestPageNumber, totalPage]); // Add dependencies
+
   return (
     <nav aria-label="Page navigation example">
       <ul className="pagination">
-        <li className="page-item">
-          <a className="page-link" href="#" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
+        <li
+          className="page-link"
+          onClick={() => handlePageChange(requestPageNumber - 1)}
+          disabled={requestPageNumber === 1}
+        >
+          <span aria-hidden="true">&laquo;</span>
         </li>
-        {[...Array(totalPage)].map((_, i) => {
-          return (
-            <li key={i} className="page-item">
-              <a className="page-link" href="#">
-                {i + 1}
-              </a>
-            </li>
-          );
-        })}
-        <li className="page-item">
-          <a className="page-link" href="#" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
+        {pages.map((page) => (
+          <li
+            key={page}
+            onClick={() => handlePageChange(page)}
+            className={`page-item ${
+              page === requestPageNumber ? "active" : ""
+            }`}
+          >
+            <span className="page-link">{page}</span>
+          </li>
+        ))}
+        <li
+          className="page-link"
+          onClick={() => handlePageChange(requestPageNumber + 1)}
+          disabled={requestPageNumber === totalPage}
+        >
+          <span aria-hidden="true">&raquo;</span>
         </li>
       </ul>
     </nav>
   );
 }
+
+// Define Prop Types for Validation
+Pagination.propTypes = {
+  totalPage: PropTypes.number.isRequired,
+  requestPageNumber: PropTypes.number.isRequired,
+  onPageChange: PropTypes.func.isRequired,
+};
