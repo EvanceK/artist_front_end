@@ -8,6 +8,14 @@
 body {
   background-image: radial-gradient(circle, #0e1a27 1%, #0a2540 80%);
 }
+.bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0.6;
+}
 body::before {
   position: absolute;
   width: min(1400px, 90vw);
