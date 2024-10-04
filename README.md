@@ -15,5 +15,7 @@
 <a href="https://legacy.reactjs.org/"><img src="https://img.shields.io/badge/react- 18.3.1-blue?logo=react"/></a>
 <a href="https://vitejs.dev/"><img src="https://img.shields.io/badge/react- v5.47-blue?logo=vite"/></a>
 <a href="https://nodejs.org/zh-tw"><img src="https://img.shields.io/badge/Node.js- v20.17.0-blue?logo=nodedotjs"/></a>
-
+<a href="https://nodejs.org/zh-tw"><img src="https://img.shields.io/badge/Node.js- v20.17.0-blue?logo=nodedotjs"/></a>
+<a href="https://nodejs.org/zh-tw"><img src="https://img.shields.io/badge/bootstrap- v5.3.3-fuchsia?logo=bootstrap"/></a>
+<a href="https://www.figma.com"><img src="https://img.shields.io/badge/figma- v2024-red?logo=figma"/></a>
 

@@ -22,6 +22,8 @@ export default function App() {
         <Register></Register>
         <HomeLayout></HomeLayout>
         <SignupSuccess></SignupSuccess>
+        <Deposit></Deposit>
+        <DeleteWarning></DeleteWarning>
       </UserContext.Provider>
     </>
   );
