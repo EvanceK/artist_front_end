@@ -8,6 +8,8 @@ import Register from "./components/Register";
 import HomeLayout from "./components/HomeLayout";
 import { UserContext } from "./components/UserContext";
 import SignupSuccess from "./components/SignupSuccess";
+import Deposit from "./components/Deposit";
+import DeleteWarning from "./components/Deletewarning";
 import $ from "jquery";
 
 export default function App() {
