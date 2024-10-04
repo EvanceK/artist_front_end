@@ -9,10 +9,10 @@ import HomeLayout from "./components/HomeLayout";
 import { UserContext } from "./components/UserContext";
 import SignupSuccess from "./components/SignupSuccess";
 import Deposit from "./components/Deposit";
-import DeleteWarning from "./components/DeleteWarning";
+import DeleteWarning from "./components/Deletewarning";
 import $ from "jquery";
 
-function App() {
+export default function App() {
   const [userName, setUserName] = useState();
 
   return (
@@ -30,5 +30,3 @@ function App() {
     </>
   );
 }
-
-export default App;

@@ -1,61 +1,65 @@
 import axios from "axios";
 import MyCard from "./MyCard";
-import projectLogo from "../assets/LOGO11.png"; // will replace by ajax data
 import { useEffect, useState } from "react";
 import Pagination from "./Pagination";
 
 export default function ViewContainer() {
-  // const api = "http://localhost:8080/mvweb0923/forReactServlet";
-  const api = "http://localhost:8080/PTController/findByPage";
+  const path = import.meta.env.VITE_DATA_HOST_API;
+  const api = path + "/PTController/findByPage";
   const [data, setData] = useState([]);
   const [requestPageNumber, setRequestPageNumber] = useState(1);
-  const [pageSize, setPageSize] = useState(20);
-  const [totalPage, setTotalPage] = useState();
-  const [pages, setPages] = useState();
-  // const [artisList, setArtisList] = useState([]);
+  const [pageSize, setPageSize] = useState(10);
+  const [totalPage, setTotalPage] = useState(1);
+  const [loading, setLoading] = useState(false);
 
-  //撈取資料庫
+  // Fetch data
   const getdata = async () => {
+    setLoading(true);
     try {
       const result = await axios.get(
         `${api}?currentPage=${requestPageNumber}&pageSize=${pageSize}`
       );
       setData(result.data.paintingsList);
-      setTotalPage(result.data.totalPage);
-      console.log(result.data);
+      setTotalPage(result.data.totalPage || 1);
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
     getdata();
-  }, []);
+  }, [requestPageNumber]); // Fetch data when page changes
 
-  useEffect(() => {
-    const plaintingTypeName = data
-      .filter(
-        (item, index, self) =>
-          index === self.findIndex((t) => t.artisName === item.artisName)
-      )
-      .map((t) => t.artisName);
-    console.log(plaintingTypeName);
-  }, [data]);
+  // useEffect(() => {
+  //   const plaintingTypeName = data
+  //     .filter(
+  //       (item, index, self) =>
+  //         index === self.findIndex((t) => t.artisName === item.artisName)
+  //     )
+  //     .map((t) => t.artisName);
+  //   console.log(plaintingTypeName);
+  // }, [data]);
 
   return (
     <>
-      <div className="container d-flex flex-wrap ">
-        {data.map((d, i) => {
-          return <MyCard key={i} Paintings={d} />;
-          // return <MyCard key={i} photo={d.smallUrl} altText={d.paintingName} />;
-        })}
+      <div className="container d-flex flex-wrap">
+        {loading ? (
+          <div className="spinner-border text-info" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        ) : (
+          data.map((d, i) => {
+            return <MyCard key={i} Paintings={d} />;
+          })
+        )}
         <hr></hr>
       </div>
       <Pagination
         totalPage={totalPage}
-        currentPage={requestPageNumber}
-        setRequestPageNumber={setRequestPageNumber}
-      ></Pagination>
+        requestPageNumber={requestPageNumber}
+        onPageChange={setRequestPageNumber}
+      />
     </>
   );
 }

@@ -57,6 +57,7 @@ body::before {
     )
     translateZ(550px);
 }
+
 @keyframes autoRun {
   from {
     transform: perspective(1500px) rotateX(-16deg) rotateY(0deg);
@@ -117,6 +118,25 @@ body::before {
   border-top: 2px solid #f8db8a;
   border-bottom: 2px solid #f8db8a;
   background-color: #0c2f52;
+}
+.content > * {
+  color: #fff;
+  opacity: 0.8;
+  position: absolute;
+  top: 1vh;
+  left: 10vw;
+}
+.content h2 {
+  font-size: 100px;
+  position: absolute;
+  top: 12vh;
+  /* left: 10vw; */
+}
+.content h3 {
+  font-size: 20px;
+  position: absolute;
+  top: 10vh;
+  /* left: 10vw; */
 }
 @media screen and (max-width: 1023px) {
   .banner .slider {
