@@ -1,32 +1,20 @@
 import { useState, createContext, useContext, useEffect } from "react";
-
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import NavBar from "./components/NavBar";
-import LoginModal from "./components/LoginModal";
-import StaffLoginModal from "./components/StaffLoginModal";
-import Register from "./components/Register";
-import HomeLayout from "./components/HomeLayout";
-import { UserContext } from "./components/UserContext";
-import SignupSuccess from "./components/SignupSuccess";
-import Deposit from "./components/Deposit";
-import DeleteWarning from "./components/Deletewarning";
+import ViewContainer from "./components/ViewContainer";
 import $ from "jquery";
+import MainPage from "./pages/MainPage";
+import Welcome from "./pages/Welcome";
 
 export default function App() {
-  const [userName, setUserName] = useState();
-
   return (
     <>
-      <UserContext.Provider value={{ userName, setUserName }}>
-        <NavBar></NavBar>
-        <LoginModal></LoginModal>
-        <StaffLoginModal></StaffLoginModal>
-        <Register></Register>
-        <HomeLayout></HomeLayout>
-        <SignupSuccess></SignupSuccess>
-        <Deposit></Deposit>
-        <DeleteWarning></DeleteWarning>
-      </UserContext.Provider>
+      <Routes>
+        <Route path="/" element={<Welcome />}></Route>
+        <Route path="/home" element={<MainPage />}>
+          <Route index element={<ViewContainer />}></Route>
+        </Route>
+      </Routes>
     </>
   );
 }

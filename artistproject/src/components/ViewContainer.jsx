@@ -21,6 +21,7 @@ export default function ViewContainer() {
       );
       setData(result.data.paintingsList);
       setTotalPage(result.data.totalPage || 1);
+      console.log(result);
     } catch (error) {
       console.log(error);
     }
@@ -43,23 +44,30 @@ export default function ViewContainer() {
 
   return (
     <>
-      <div className="container d-flex flex-wrap">
-        {loading ? (
-          <div className="spinner-border text-info" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
-        ) : (
-          data.map((d, i) => {
-            return <MyCard key={i} Paintings={d} />;
-          })
-        )}
-        <hr></hr>
+      <div className="container">
+        <Pagination
+          totalPage={totalPage}
+          requestPageNumber={requestPageNumber}
+          onPageChange={setRequestPageNumber}
+        />
+        <div className="container d-flex flex-wrap">
+          {loading ? (
+            <div className="spinner-border text-info" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          ) : (
+            data.map((d, i) => {
+              return <MyCard key={i} Paintings={d} />;
+            })
+          )}
+          <hr></hr>
+        </div>
+        <Pagination
+          totalPage={totalPage}
+          requestPageNumber={requestPageNumber}
+          onPageChange={setRequestPageNumber}
+        />
       </div>
-      <Pagination
-        totalPage={totalPage}
-        requestPageNumber={requestPageNumber}
-        onPageChange={setRequestPageNumber}
-      />
     </>
   );
 }

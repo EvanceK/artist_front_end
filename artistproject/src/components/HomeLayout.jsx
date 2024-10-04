@@ -2,13 +2,14 @@ import reactLogo from "../assets/react.svg";
 import PaintingsListContainer from "./PaintingsListContainer";
 import Carousel from "./Carousel";
 import ViewContainer from "./ViewContainer";
+import { Outlet } from "react-router-dom";
 
 export default function HomeLayout() {
   return (
     <div className="homelayout">
       <Carousel></Carousel>
-      <h1>Artis Project</h1>
-      <ViewContainer></ViewContainer>
+      <br></br>
+      <Outlet />
       <hr></hr>
       <hr></hr>
       {/* <PaintingsListContainer></PaintingsListContainer> */}

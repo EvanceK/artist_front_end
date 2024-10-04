@@ -23,7 +23,8 @@ export default function Pagination({
       pages.push(requestPageNumber);
       if (requestPageNumber < totalPage) {
         pages.push(requestPageNumber + 1);
-        pages.push(requestPageNumber + 2);
+        if (requestPageNumber + 2 <= totalPage)
+          pages.push(requestPageNumber + 2);
       }
       return pages;
     };
