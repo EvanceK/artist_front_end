@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import Pagination from "./Pagination";
 
 export default function ViewContainer() {
-  const api = "http://localhost:8080/PTController/findByPage";
+  const path = import.meta.env.VITE_DATA_HOST_API;
+  const api = path + "/PTController/findByPage";
   const [data, setData] = useState([]);
   const [requestPageNumber, setRequestPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -44,7 +45,7 @@ export default function ViewContainer() {
     <>
       <div className="container d-flex flex-wrap">
         {loading ? (
-          <div className="spinner-border" role="status">
+          <div className="spinner-border text-info" role="status">
             <span className="visually-hidden">Loading...</span>
           </div>
         ) : (
