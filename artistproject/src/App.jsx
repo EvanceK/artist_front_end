@@ -1,10 +1,9 @@
-import { useState, createContext, useContext, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import ViewContainer from "./components/ViewContainer";
-import $ from "jquery";
 import MainPage from "./pages/MainPage";
 import Welcome from "./pages/Welcome";
+import $ from "jquery";
 
 export default function App() {
   return (

@@ -1,5 +1,36 @@
+import axios from "axios";
+import { useContext, useEffect, useState } from "react";
 import projectLogo from "../assets/LOGO.png";
 export default function Register() {
+  const path = import.meta.env.VITE_DATA_HOST_API;
+  const api = path + "/customers/register";
+  const [data, setData] = useState({
+    name: "",
+    nickName: "",
+    phone: "",
+    email: "",
+    address: "",
+    account: "",
+    password: "",
+  });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    setData({ ...data, [name]: value });
+    console.log(data);
+  };
+  const submit = async (e) => {
+    try {
+      const result = await axios.post(api, data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div
       className="modal fade"
@@ -22,9 +53,9 @@ export default function Register() {
           </div>
 
           <div className="h2 my-3 "></div>
-          <div className="logo d-flex justify-content-center">
+          <div className="py-5 d-flex justify-content-center">
             <img
-              className="projectLogo  w-50 h-100"
+              className="projectLogo  w-50 h-50"
               src={projectLogo}
               alt="Logo"
             ></img>
@@ -45,6 +76,7 @@ export default function Register() {
                     name="name"
                     type="text"
                     placeholder="Name"
+                    onChange={handleChange}
                   />
                 </div>
                 <div className="row m-2 d-flex justify-content-center">
@@ -57,9 +89,10 @@ export default function Register() {
                   <input
                     id="nickname"
                     className="txtbox col-7"
-                    name="NickName"
+                    name="nickName"
                     type="text"
                     placeholder="NickName"
+                    onChange={handleChange}
                   />
                 </div>
 
@@ -73,9 +106,10 @@ export default function Register() {
                   <input
                     id="Email"
                     className="txtbox col-7"
-                    name="Email"
+                    name="email"
                     type="text"
                     placeholder="Email"
+                    onChange={handleChange}
                   />
                 </div>
                 <div className="row m-2 d-flex justify-content-center">
@@ -88,9 +122,10 @@ export default function Register() {
                   <input
                     id="Password"
                     className="txtbox col-7"
-                    name="Password"
+                    name="password"
                     type="text"
                     placeholder="Password"
+                    onChange={handleChange}
                   />
                 </div>
                 <div className="row m-2 d-flex justify-content-center">
@@ -104,9 +139,10 @@ export default function Register() {
                   <input
                     id="Phone"
                     className="txtbox col-7"
-                    name="Phone"
+                    name="phone"
                     type="text"
                     placeholder="Phone"
+                    onChange={handleChange}
                   />
                 </div>
                 <div className="row m-2 d-flex justify-content-center">
@@ -119,19 +155,23 @@ export default function Register() {
                   <textarea
                     id="Address"
                     className="txtbox col-7 overflow-scroll"
-                    name="Address"
+                    name="address"
                     type="text"
                     placeholder="Address"
                     row="3"
+                    onChange={handleChange}
                   />
                 </div>
               </div>
             </div>
 
             <div className="row d-flex justify-content-center m-5">
-              <div className="btn col-3 btn-primary" 
-                   data-bs-toggle="modal"
-                   data-bs-target="#SignupSuccess">
+              <div
+                className="btn col-3 btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#SignupSuccess"
+                onClick={submit}
+              >
                 SIGN UP
               </div>
             </div>

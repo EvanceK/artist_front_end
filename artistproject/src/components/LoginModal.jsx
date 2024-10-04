@@ -1,14 +1,56 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import projectLogo from "../assets/LOGO.png";
+import axios from "axios";
 import { UserContext } from "./UserContext";
+
 import $ from "jquery";
 export default function LoginModal() {
+  const path = import.meta.env.VITE_DATA_HOST_API;
+  const api = path + "/customers/login";
   const { userName, setUserName } = useContext(UserContext);
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
+  const [token, setToken] = useState();
+  // email: tester@email.com. pass: 123
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    setData({ ...data, [name]: value });
+    console.log(data);
+  };
+  const submit = async () => {
+    try {
+      const result = await axios.post(api, data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(result.data);
+      setToken(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
+    localStorage.setItem("token", token);
+    localStorage.setItem("role", "customer");
     $("#login").on("click", () => {
       setUserName($("#email").val());
     });
-  }, []);
+  }, [token]);
+
+  // $.ajax({
+  //   url: api,
+  //   type: "POST",
+  //   dataType: "json",
+  //   contentType: "application/json",
+  //   data: JSON.stringify(data),
+  //   success: result,
+  // });
+  // };
+
   return (
     <div
       className="modal fade"
@@ -32,46 +74,10 @@ export default function LoginModal() {
               aria-label="Close"
             ></button>
           </div>
-          {/* <div className="login row">
-            <div className="h2 ">Artis LOGO</div>
-            <form>
-              <div className="input">
-                <h2>Sign Up or Log In</h2>
-                <div className="inputcontainer">
-                  <div className="labelgroup">
-                    <label for="email">Email:</label>
-                    <label for="password">Password:</label>
-                  </div>
-                  <div className="inputgroup">
-                    <input
-                      id="email"
-                      className="txtbox"
-                      name="email"
-                      type="text"
-                      placeholder="email"
-                    />
-                    <input
-                      id="password"
-                      className="txtbox"
-                      name="password"
-                      type="text"
-                      placeholder="password"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="btngroup">
-                <div className="btn" data-bs-dismiss="modal">
-                  LOG IN
-                </div>
-                <div className="btn btn-primary">SIGN UP</div>
-              </div>
-            </form>
-          </div> */}
           <div className="login row">
-            <div className="logo">
+            <div className="d-flex justify-content-center py-5">
               <img
-                className="projectLogo w-50"
+                className="projectLogo w-50 h-50"
                 src={projectLogo}
                 alt="Logo"
               ></img>
@@ -90,6 +96,7 @@ export default function LoginModal() {
                       name="email"
                       type="text"
                       placeholder="email"
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="row m-2">
@@ -102,6 +109,7 @@ export default function LoginModal() {
                       name="password"
                       type="text"
                       placeholder="password"
+                      onChange={handleChange}
                     />
                   </div>
                 </div>
@@ -111,10 +119,17 @@ export default function LoginModal() {
                   className="btn col-3 mx-2"
                   id="login"
                   data-bs-dismiss="modal"
+                  onClick={submit}
                 >
                   LOG IN
                 </div>
-                <div className="btn btn-primary col-3 mx-2">SIGN UP</div>
+                <div
+                  className="btn btn-primary col-3 mx-2"
+                  data-bs-toggle="modal"
+                  data-bs-target="#registerModel"
+                >
+                  SIGN UP
+                </div>
               </div>
             </form>
           </div>

@@ -6,8 +6,9 @@ import { Link } from "react-router-dom";
 
 export default function NavBar() {
   const [search, setSearch] = useState();
-  const { userName } = useContext(UserContext);
+  const { userName, setUserName } = useContext(UserContext);
   const [accountfeild, setAccountfeild] = useState();
+
   useEffect(() => {
     $(".nav-link").on("click", function () {
       $(".nav-link").removeClass("active"); // Remove "active" class from all
@@ -46,9 +47,24 @@ export default function NavBar() {
         </>
       );
     } else {
-      setAccountfeild(userName);
+      setAccountfeild(
+        <>
+          <button type="button" className="btn ">
+            {userName}
+          </button>
+
+          <button type="button" className="btn " onClick={logout}>
+            Log_Out
+          </button>
+        </>
+      );
     }
   }, [userName]);
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    setUserName(null);
+  };
   return (
     <nav className="navbar navbar-expand-lg bg-light">
       <div className="container">
