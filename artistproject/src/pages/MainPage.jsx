@@ -10,6 +10,7 @@ import SignupSuccess from "../components/SignupSuccess";
 import Deposit from "../components/Deposit";
 import DeleteWarning from "../components/Deletewarning";
 import ViewContainer from "../components/ViewContainer";
+import Footer from "../components/Footer";
 import $ from "jquery";
 export default function MainPage() {
   const [userName, setUserName] = useState();
@@ -22,13 +23,15 @@ export default function MainPage() {
             <Route index element={<ViewContainer />}></Route>
           </Route>
         </Routes>
+        {/* modal for navbar vv */}
         <LoginModal></LoginModal>
         <StaffLoginModal></StaffLoginModal>
         <Register></Register>
-
-        <SignupSuccess></SignupSuccess>
-        <Deposit></Deposit>
-        <DeleteWarning></DeleteWarning>
+        <SignupSuccess />
+        {/* modal for navbar ^^ */}
+        <Deposit />
+        <DeleteWarning />
+        <Footer />
       </UserContext.Provider>
     </>
   );
