@@ -17,9 +17,9 @@ export default function LoginModal() {
   // email: tester@email.com. pass: 123
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
+    // console.log(name, value);
     setData({ ...data, [name]: value });
-    console.log(data);
+    // console.log(data);
   };
   const submit = async () => {
     try {
@@ -28,7 +28,7 @@ export default function LoginModal() {
           "Content-Type": "application/json",
         },
       });
-      console.log(result.data);
+      // console.log(result.data);
       localStorage.setItem("token", result.data);
       localStorage.setItem("nickName", "customer");
       setUserName("customer");
@@ -37,6 +37,7 @@ export default function LoginModal() {
       setIsLogin(true);
     } catch (error) {
       console.log(error);
+      alert("登入失敗，帳號或密碼不正確！");
       setIsLogin(false);
     }
   };

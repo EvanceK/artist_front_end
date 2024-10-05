@@ -1,13 +1,17 @@
 .cards {
   position: relative;
+  // min-width: 18rem;
   width: fit-content;
   height: fit-content;
   // height: 300px;
   margin: 1rem;
 
+  padding: 10px;
+
   .photoFrame {
     overflow: hidden;
     width: fit-content;
+    position: relative;
     // border: 1px solid red;
     // margin: auto 0.5rem;
 
@@ -18,44 +22,50 @@
         scale: 1.2;
       }
     }
+    .card-body {
+      padding: 1rem;
+      position: absolute;
+      border-radius: 0;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      z-index: 1;
+      background-color: rgba(#fff, 0.5);
+      transform: translateY(100%);
+      // opacity: 0;
+      .card-title {
+        color: red;
+        font-size: 0.8rem;
+      }
+      .card-text {
+        font-weight: 500;
+
+        span {
+          font-size: 0.8rem;
+        }
+        * {
+          margin: 0;
+          padding: 0;
+        }
+      }
+      .cardBtn > * {
+        font-size: 11px;
+        padding: 0.5rem;
+      }
+    }
   }
   .alt {
     margin: 0;
     padding-top: 0.5rem;
   }
-  .card-body {
-    padding: 1rem;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 15rem;
-    z-index: 1;
-    background-color: rgba($info, 0.5);
-    border-radius: 0.5em;
-    opacity: 0;
-    .card-title {
-      color: red;
-      font-size: 0.8rem;
-    }
-    .card-text {
-      font-weight: 500;
 
-      span {
-        font-size: 0.8rem;
-      }
-      * {
-        margin: 0;
-        padding: 0;
-      }
-    }
-  }
   &:hover {
     box-shadow: 0.5rem 0.5rem 1.5rem rgba($dark, 0.5);
     .card-body {
-      opacity: 1;
-
+      // opacity: 1;
+      transform: translateY(0%);
       &:hover {
-        background-color: rgba($info, 0.8);
+        background-color: rgba(#fff, 1);
       }
     }
   }

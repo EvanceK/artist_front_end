@@ -10,6 +10,7 @@ import SignupSuccess from "../components/SignupSuccess";
 import Deposit from "../components/Deposit";
 import DeleteWarning from "../components/Deletewarning";
 import ViewContainer from "../components/ViewContainer";
+// import PaintingsListContainer from "../components/PaintingsListContainer";
 import Footer from "../components/Footer";
 import $ from "jquery";
 export default function MainPage() {
@@ -23,7 +24,8 @@ export default function MainPage() {
         <NavBar></NavBar>
         <Routes>
           <Route path="/" element={<HomeLayout />}>
-            <Route index element={<ViewContainer />}></Route>
+            <Route index element={<ViewContainer />} />
+            {/* <Route path="/byArtist" element={<PaintingsListContainer />} /> */}
           </Route>
         </Routes>
         {/* modal for navbar vv */}

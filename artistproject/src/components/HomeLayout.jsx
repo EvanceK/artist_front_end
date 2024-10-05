@@ -10,9 +10,6 @@ export default function HomeLayout() {
       <Carousel></Carousel>
       <br></br>
       <Outlet />
-      <hr></hr>
-      <hr></hr>
-      {/* <PaintingsListContainer></PaintingsListContainer> */}
     </div>
   );
 }

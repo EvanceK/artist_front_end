@@ -25,7 +25,7 @@ export default function NavBar() {
     if (storedToken) {
       setToken(storedToken);
     }
-    console.log(token);
+    // console.log(token);
     return () => {
       $(".nav-link").off("click");
     };
