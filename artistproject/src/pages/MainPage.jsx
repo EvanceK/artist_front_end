@@ -14,9 +14,12 @@ import Footer from "../components/Footer";
 import $ from "jquery";
 export default function MainPage() {
   const [userName, setUserName] = useState();
+  const [isLogin, setIsLogin] = useState(false);
   return (
     <>
-      <UserContext.Provider value={{ userName, setUserName }}>
+      <UserContext.Provider
+        value={{ userName, setUserName, isLogin, setIsLogin }}
+      >
         <NavBar></NavBar>
         <Routes>
           <Route path="/" element={<HomeLayout />}>

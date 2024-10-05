@@ -6,8 +6,10 @@ import { Link } from "react-router-dom";
 
 export default function NavBar() {
   const [search, setSearch] = useState();
-  const { userName, setUserName } = useContext(UserContext);
+  const { userName, setUserName, isLogin, setIsLogin } =
+    useContext(UserContext);
   const [accountfeild, setAccountfeild] = useState();
+  const [token, setToken] = useState(null);
 
   useEffect(() => {
     $(".nav-link").on("click", function () {
@@ -19,13 +21,18 @@ export default function NavBar() {
       console.log(e.target.value);
     });
     // Cleanup event listener
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      setToken(storedToken);
+    }
+    console.log(token);
     return () => {
       $(".nav-link").off("click");
     };
   }, []);
 
   useEffect(() => {
-    if (userName == null) {
+    if (localStorage.getItem("token") == null) {
       setAccountfeild(
         <>
           <button
@@ -50,7 +57,7 @@ export default function NavBar() {
       setAccountfeild(
         <>
           <button type="button" className="btn ">
-            {userName}
+            Hi! {localStorage.getItem("nickName")}
           </button>
 
           <button type="button" className="btn " onClick={logout}>
@@ -59,10 +66,11 @@ export default function NavBar() {
         </>
       );
     }
-  }, [userName]);
+  }, [isLogin, setIsLogin]);
   const logout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("role");
+    localStorage.removeItem("nickName");
+    setIsLogin(false);
     setUserName(null);
   };
   return (

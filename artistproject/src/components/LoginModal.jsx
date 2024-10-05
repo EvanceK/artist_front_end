@@ -7,12 +7,13 @@ import $ from "jquery";
 export default function LoginModal() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const api = path + "/customers/login";
-  const { userName, setUserName } = useContext(UserContext);
+  const { userName, setUserName, isLogin, setIsLogin } =
+    useContext(UserContext);
   const [data, setData] = useState({
     email: "",
     password: "",
   });
-  const [token, setToken] = useState();
+  const [token, setToken] = useState(null);
   // email: tester@email.com. pass: 123
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,18 +29,22 @@ export default function LoginModal() {
         },
       });
       console.log(result.data);
+      localStorage.setItem("token", result.data);
+      localStorage.setItem("nickName", "customer");
+      setUserName("customer");
       setToken(result.data);
+
+      setIsLogin(true);
     } catch (error) {
       console.log(error);
+      setIsLogin(false);
     }
   };
-  useEffect(() => {
-    localStorage.setItem("token", token);
-    localStorage.setItem("role", "customer");
-    $("#login").on("click", () => {
-      setUserName($("#email").val());
-    });
-  }, [token]);
+
+  // const storeStoke = () => {
+  // localStorage.setItem("token", token);
+  // localStorage.setItem("role", "customer");
+  // };
 
   // $.ajax({
   //   url: api,
