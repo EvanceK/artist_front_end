@@ -12,7 +12,11 @@ export default function WinningRecords(){
                         Select All
                     </label>
                 </div>
-
+                <div>
+                    <div className="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="select"/>
+                    </div>
+                </div>
                 </div>
             </div>
         </div>
