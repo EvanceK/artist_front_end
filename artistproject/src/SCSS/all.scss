@@ -52,7 +52,10 @@
     color: inherit;
   }
 }
-
+.foot{
+  background-color: $primary;
+  color: $artisGold;
+}
 .projectLogo {
   height: 3rem;
   filter: blur(20);

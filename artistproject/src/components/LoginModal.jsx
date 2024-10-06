@@ -81,15 +81,15 @@ export default function LoginModal() {
             ></button>
           </div>
           <div className="login row">
-            <div className="d-flex justify-content-center py-5">
+            <div className="d-flex justify-content-center pt-5">
               <img
-                className="projectLogo w-50 h-50"
+                className="projectLogo w-50 h-100"
                 src={projectLogo}
                 alt="Logo"
               ></img>
             </div>
             <form>
-              <div className="input m-x-3">
+              <div className="input mx-3">
                 <h2 className="d-flex m-5 ">Sign Up or Log In</h2>
                 <div className="d-block">
                   <div className="row mt-5 m-2">
