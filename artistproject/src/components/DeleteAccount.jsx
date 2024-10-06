@@ -1,8 +1,8 @@
-export default function  DeleteWarning(){
+export default function  DeleteAccount(){
     return(
         <div
         className="modal modal-lg fade"
-        id="DeleteWarning"
+        id="DeleteAccount"
         data-bs-backdrop="static"
         data-bs-keyboard="false"
         tabIndex="-1"
@@ -21,7 +21,9 @@ export default function  DeleteWarning(){
             </div>
             <div className="DeleteWarning">
                 <div className=" my-3"> 
-                    <h2>Do you want to remove the winning item?</h2>
+                    <h2>Are you sure you want to <br/>
+                        delete your account?</h2>
+                        
                 </div>
                 <div className="icon">
                     <i className="bi bi-exclamation-triangle-fill"></i>
@@ -36,8 +38,9 @@ export default function  DeleteWarning(){
                 </svg>
                 </div>
                 <div className="">
-                    <h5>Doing so may result in additional fees 
-                    and restiriction of future participation</h5>
+                    <h5>This will permanently remove your bidding history, auction wins,
+                            and any associated payment or order data.
+                            This action cannot be undone.</h5>
                 </div>
                 <div className="row  d-flex justify-content-center m-5">
                     <div className="border border-dark col-2 py-2 ">DELETE</div>
