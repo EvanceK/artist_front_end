@@ -1,7 +1,4 @@
-import reactLogo from "../assets/react.svg";
-import PaintingsListContainer from "./PaintingsListContainer";
 import Carousel from "./Carousel";
-import ViewContainer from "./ViewContainer";
 import { Outlet } from "react-router-dom";
 
 export default function HomeLayout() {

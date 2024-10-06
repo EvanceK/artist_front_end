@@ -2,9 +2,10 @@ import { useEffect, useState, useContext } from "react";
 import projectLogo from "../assets/LOGO.png";
 import $ from "jquery";
 import { UserContext } from "./UserContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function NavBar() {
+  const navigate = useNavigate();
   const [search, setSearch] = useState();
   const { userName, setUserName, isLogin, setIsLogin } =
     useContext(UserContext);
@@ -36,6 +37,7 @@ export default function NavBar() {
     setIsLogin(false);
     setToken(null);
     setUserName(null);
+    navigate("/home");
   };
   useEffect(() => {
     if (localStorage.getItem("token") == null) {
@@ -62,13 +64,46 @@ export default function NavBar() {
     } else {
       setAccountfeild(
         <>
-          <button type="button" className="btn ">
-            Hi! {localStorage.getItem("nickName")}
-          </button>
-
-          <button type="button" className="btn " onClick={logout}>
-            Log_Out
-          </button>
+          <div className="nav-item dropdown">
+            <span
+              className="nav-link dropdown-toggle"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Hi! {localStorage.getItem("nickName")}
+            </span>
+            <ul className="dropdown-menu">
+              <li>
+                <Link className="dropdown-item" to="cusdash">
+                  My Account
+                </Link>
+              </li>
+              <li>
+                <a className="dropdown-item" href="#">
+                  My Order
+                </a>
+              </li>
+              <li>
+                <a className="dropdown-item" href="#">
+                  My Wallet
+                </a>
+              </li>
+              <li>
+                <a className="dropdown-item" href="#">
+                  My Wishlist
+                </a>
+              </li>
+              <li>
+                <hr className="dropdown-divider" />
+              </li>
+              <li>
+                <span className="dropdown-item" onClick={logout}>
+                  Log out
+                </span>
+              </li>
+            </ul>
+          </div>
         </>
       );
     }

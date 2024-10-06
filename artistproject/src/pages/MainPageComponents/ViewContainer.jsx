@@ -1,7 +1,7 @@
 import axios from "axios";
-import MyCard from "./MyCard";
+import MyCard from "../../components/MyCard";
 import { useEffect, useState } from "react";
-import Pagination from "./Pagination";
+import Pagination from "../../components/Pagination";
 
 export default function ViewContainer() {
   const path = import.meta.env.VITE_DATA_HOST_API;

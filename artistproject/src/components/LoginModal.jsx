@@ -28,9 +28,9 @@ export default function LoginModal() {
           "Content-Type": "application/json",
         },
       });
-      // console.log(result.data);
-      localStorage.setItem("token", result.data);
-      localStorage.setItem("nickName", "customer");
+      console.log(result);
+      localStorage.setItem("token", result.data.token);
+      localStorage.setItem("nickName", result.data.nickName);
       setUserName("customer");
       setToken(result.data);
 
