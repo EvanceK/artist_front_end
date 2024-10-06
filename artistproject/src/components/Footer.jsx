@@ -13,21 +13,21 @@ export default function Footer() {
               alt="Logo" />
         </div>
         <div className="aboutus w-20">
-          <p className="d-flex flex-column justify-content-center align-items-center">
+          <div className="d-flex flex-column justify-content-center align-items-center">
           <h1>About Us</h1>
-          Chen Chen<br/>
-          Daniel<br/>
-          Evance<br/>
-          Wenyang
-          </p>
+          <span>Chen Chen</span>
+          <span>Daniel</span>
+          <span>Evance</span>
+          <span>Wenyang</span>
+          </div>
         </div>
         <div className="Buy-group  w-25">
-          <p className="d-flex flex-column justify-content-center align-items-center">
+          <div className="d-flex flex-column justify-content-center align-items-center">
           <h1>Buy</h1>
-          How to buy<br/>
-          Buyer terms<br/>
-          Payment options
-          </p>
+          <span>How to buy</span>
+          <span>Buyer terms</span> 
+          <span>Payment options</span> 
+          </div>
         </div>
         </div>
       </div>
