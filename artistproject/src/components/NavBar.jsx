@@ -1,8 +1,9 @@
 import { useEffect, useState, useContext } from "react";
 import projectLogo from "../assets/LOGO.png";
 import $ from "jquery";
-import { UserContext } from "./UserContext";
+import { UserContext } from "./ContextProvider/UserContext";
 import { Link, useNavigate } from "react-router-dom";
+import { MainPageContext } from "./ContextProvider/MainPageContext";
 
 export default function NavBar() {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ export default function NavBar() {
     useContext(UserContext);
   const [accountfeild, setAccountfeild] = useState();
   const [token, setToken] = useState(null);
+  const { artistList } = useContext(MainPageContext);
 
   useEffect(() => {
     $(".nav-link").on("click", function () {

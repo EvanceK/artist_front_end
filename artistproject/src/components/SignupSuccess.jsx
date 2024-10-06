@@ -21,7 +21,7 @@ export default function SignupSuccess() {
             ></button>
           </div>
           <div className="Signupsuccess">
-            <div className="logo my-3">
+            <div className="py-5 d-flex justify-content-center">
               <img
                 className="projectLogo  w-50 h-100 "
                 src={projectLogo}

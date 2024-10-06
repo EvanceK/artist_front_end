@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import projectLogo from "../assets/LOGO.png";
 import axios from "axios";
-import { UserContext } from "./UserContext";
+import { UserContext } from "./ContextProvider/UserContext";
 
 import $ from "jquery";
 export default function LoginModal() {
@@ -28,7 +28,7 @@ export default function LoginModal() {
           "Content-Type": "application/json",
         },
       });
-      console.log(result);
+      // console.log(result);
       localStorage.setItem("token", result.data.token);
       localStorage.setItem("nickName", result.data.nickName);
       setUserName("customer");

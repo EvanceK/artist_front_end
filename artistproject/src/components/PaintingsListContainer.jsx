@@ -4,8 +4,9 @@ import projectLogo from "../assets/LOGO11.png"; // will replace by ajax data
 import { useEffect, useState } from "react";
 
 export default function PaintingsListContainer() {
-  // const api = "http://localhost:8080/mvweb0923/forReactServlet";
-  const api = "http://localhost:8080/PTController/findall";
+  // const api = "http://localhost:8080/PTController/findall";
+  const path = import.meta.env.VITE_DATA_HOST_API;
+  const api = path + "/PTController/findallavailable";
   const [data, setData] = useState([]);
   const [requestPageNumber, setRequestPageNumber] = useState();
   const [artisList, setArtisList] = useState([]);
