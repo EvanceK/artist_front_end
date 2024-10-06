@@ -30,7 +30,13 @@ export default function NavBar() {
       $(".nav-link").off("click");
     };
   }, []);
-
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("nickName");
+    setIsLogin(false);
+    setToken(null);
+    setUserName(null);
+  };
   useEffect(() => {
     if (localStorage.getItem("token") == null) {
       setAccountfeild(
@@ -66,13 +72,7 @@ export default function NavBar() {
         </>
       );
     }
-  }, [isLogin, setIsLogin]);
-  const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("nickName");
-    setIsLogin(false);
-    setUserName(null);
-  };
+  }, [isLogin, userName, token]);
   return (
     <nav className="navbar navbar-expand-lg bg-light">
       <div className="container">
