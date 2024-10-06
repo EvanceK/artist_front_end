@@ -11,7 +11,7 @@ export default function MyCard({ Paintings }) {
           {/* <h5 className="card-title">{Paintings.paintingName}</h5> */}
 
           <p className="card-text">
-            <span>ARTIST: {Paintings.artist.artistName}</span>
+            <span>ARTIST: {Paintings.artistName}</span>
             <br />
             <span>YEAR：{Paintings.date}</span>
             <br />
@@ -74,15 +74,34 @@ export default function MyCard({ Paintings }) {
 //     })
 //   ).isRequired,
 // };
+// MyCard.propTypes = {
+//   Paintings: PropTypes.shape({
+//     artisId: PropTypes.string.isRequired,
+//     artist: PropTypes.shape({
+//       artistId: PropTypes.string.isRequired,
+//       artistName: PropTypes.string.isRequired,
+//       desciption: PropTypes.string.isRequired,
+//       url: PropTypes.string.isRequired,
+//     }).isRequired,
+//     date: PropTypes.string.isRequired,
+//     delicated: PropTypes.number.isRequired,
+//     // dimensions: PropTypes.string.isRequired,
+//     genre: PropTypes.string.isRequired,
+//     largUrl: PropTypes.string.isRequired,
+//     media: PropTypes.any.isRequired,
+//     paintingId: PropTypes.string.isRequired,
+//     paintingName: PropTypes.string.isRequired,
+//     period: PropTypes.string.isRequired,
+//     price: PropTypes.number.isRequired,
+//     smallUrl: PropTypes.string.isRequired,
+//     style: PropTypes.string.isRequired,
+//     uploadDate: PropTypes.array.isRequired,
+//   }).isRequired,
+// };
 MyCard.propTypes = {
   Paintings: PropTypes.shape({
     artisId: PropTypes.string.isRequired,
-    artist: PropTypes.shape({
-      artistId: PropTypes.string.isRequired,
-      artistName: PropTypes.string.isRequired,
-      desciption: PropTypes.string.isRequired,
-      url: PropTypes.string.isRequired,
-    }).isRequired,
+    artistName: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
     delicated: PropTypes.number.isRequired,
     // dimensions: PropTypes.string.isRequired,

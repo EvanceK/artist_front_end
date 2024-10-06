@@ -1,14 +1,13 @@
-import { useContext, useEffect, useState } from "react";
-import projectLogo from "../assets/LOGO.png";
+import { useContext, useState } from "react";
+import projectLogo from "../../assets/LOGO.png";
 import axios from "axios";
-import { UserContext } from "./ContextProvider/UserContext";
+import { UserContext } from "../ContextProvider/UserContext";
 
 import $ from "jquery";
 export default function LoginModal() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const api = path + "/customers/login";
-  const { userName, setUserName, isLogin, setIsLogin } =
-    useContext(UserContext);
+  const { setUserName, setIsLogin } = useContext(UserContext);
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -33,7 +32,6 @@ export default function LoginModal() {
       localStorage.setItem("nickName", result.data.nickName);
       setUserName("customer");
       setToken(result.data);
-
       setIsLogin(true);
     } catch (error) {
       console.log(error);
@@ -41,21 +39,6 @@ export default function LoginModal() {
       setIsLogin(false);
     }
   };
-
-  // const storeStoke = () => {
-  // localStorage.setItem("token", token);
-  // localStorage.setItem("role", "customer");
-  // };
-
-  // $.ajax({
-  //   url: api,
-  //   type: "POST",
-  //   dataType: "json",
-  //   contentType: "application/json",
-  //   data: JSON.stringify(data),
-  //   success: result,
-  // });
-  // };
 
   return (
     <div

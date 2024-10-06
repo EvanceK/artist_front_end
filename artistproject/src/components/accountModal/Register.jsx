@@ -1,6 +1,6 @@
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
-import projectLogo from "../assets/LOGO.png";
+import { useState } from "react";
+import projectLogo from "../../assets/LOGO.png";
 export default function Register() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const api = path + "/customers/register";
@@ -19,7 +19,7 @@ export default function Register() {
     setData({ ...data, [name]: value });
     console.log(data);
   };
-  const submit = async (e) => {
+  const submit = async () => {
     try {
       const result = await axios.post(api, data, {
         headers: {
@@ -158,7 +158,7 @@ export default function Register() {
                     name="address"
                     type="text"
                     placeholder="Address"
-                    row="3"
+                    rows="3"
                     onChange={handleChange}
                   />
                 </div>
