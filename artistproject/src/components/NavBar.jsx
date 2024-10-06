@@ -11,6 +11,8 @@ export default function NavBar() {
   const { userName, setUserName, isLogin, setIsLogin } =
     useContext(UserContext);
   const [accountfeild, setAccountfeild] = useState();
+  const [artistMenu, setArtistMenu] = useState();
+  const [loadMenu, setLoadMenu] = useState(false);
   const [token, setToken] = useState(null);
   const { artistList } = useContext(MainPageContext);
 
@@ -28,6 +30,7 @@ export default function NavBar() {
     if (storedToken) {
       setToken(storedToken);
     }
+
     // console.log(token);
     return () => {
       $(".nav-link").off("click");
@@ -110,6 +113,7 @@ export default function NavBar() {
       );
     }
   }, [isLogin, userName, token]);
+
   return (
     <nav className="navbar navbar-expand-lg bg-light">
       <div className="container">
@@ -165,6 +169,7 @@ export default function NavBar() {
                 Home
               </Link>
             </li>
+            {/* xxxxxx */}
             <li className="nav-item dropdown">
               <a
                 className="nav-link dropdown-toggle"
@@ -176,26 +181,18 @@ export default function NavBar() {
                 Artists
               </a>
               <ul className="dropdown-menu">
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Action
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Another action
-                  </a>
-                </li>
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Something else here
-                  </a>
-                </li>
+                {artistList.map((a, i) => {
+                  return (
+                    <li key={i}>
+                      <a className="dropdown-item" href={a.url} target="_blank">
+                        {a.artistName}
+                      </a>
+                    </li>
+                  );
+                })}
               </ul>
             </li>
+            {/* xxxxx x */}
             <li className="nav-item">
               <a className="nav-link" href="#">
                 ArtWorks
