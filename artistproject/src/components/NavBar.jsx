@@ -12,7 +12,7 @@ export default function NavBar() {
     useContext(UserContext);
   const [accountfeild, setAccountfeild] = useState();
   const [token, setToken] = useState(null);
-  const { artistList } = useContext(MainPageContext);
+  const { artistList, getArtistList } = useContext(MainPageContext);
 
   useEffect(() => {
     $(".nav-link").on("click", function () {
@@ -28,7 +28,7 @@ export default function NavBar() {
     if (storedToken) {
       setToken(storedToken);
     }
-
+    getArtistList();
     // console.log(token);
     return () => {
       $(".nav-link").off("click");
@@ -183,7 +183,7 @@ export default function NavBar() {
                   return (
                     <li key={i}>
                       <div className="dropdown-item d-flex justify-content-between">
-                        <Link className="text-decoration-none" to="#">
+                        <Link className="text-decoration-none" to={a.artistId}>
                           {a.artistName}
                         </Link>
                         <a className="ms-3" href={a.url} target="_blank">

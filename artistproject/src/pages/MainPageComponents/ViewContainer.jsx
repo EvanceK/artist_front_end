@@ -2,7 +2,7 @@ import axios from "axios";
 import MyCard from "../../components/MyCard";
 import { useEffect, useState } from "react";
 import Pagination from "../../components/Pagination";
-
+import Carousel from "../../components/Carousel";
 export default function ViewContainer() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const api = path + "/PTController/findByPage";
@@ -44,6 +44,8 @@ export default function ViewContainer() {
 
   return (
     <>
+      <Carousel></Carousel>
+      <br></br>
       <div className="container">
         <Pagination
           totalPage={totalPage}

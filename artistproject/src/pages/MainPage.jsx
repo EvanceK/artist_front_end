@@ -13,6 +13,7 @@ import ViewContainer from "./MainPageComponents/ViewContainer";
 import MyAccount from "./MainPageComponents/MyAccount";
 import PaintingsListContainer from "./MainPageComponents/ArtistViewContainer";
 import { MainPageContext } from "../components/ContextProvider/MainPageContext";
+import ViewByArtistContainer from "./MainPageComponents/ViewByArtistContainer";
 import Footer from "../components/Footer";
 import $ from "jquery";
 export default function MainPage() {
@@ -29,9 +30,9 @@ export default function MainPage() {
       console.log(error);
     }
   };
-  useEffect(() => {
-    getArtistList();
-  }, []);
+  // useEffect(() => {
+  //   getArtistList();
+  // }, []);
 
   return (
     <>
@@ -43,6 +44,7 @@ export default function MainPage() {
           <Route path="/" element={<HomeLayout />}>
             <Route index element={<ViewContainer />} />
             <Route path="/byArtist" element={<PaintingsListContainer />} />
+            <Route path=":id" element={<ViewByArtistContainer />} />
           </Route>
           <Route>
             <Route path="/cusdash" element={<MyAccount />} />
@@ -53,10 +55,10 @@ export default function MainPage() {
         <StaffLoginModal></StaffLoginModal>
         <Register></Register>
         <SignupSuccess />
+        <DeleteWarning />
+        <Deposit />
 
         {/* modal for navbar ^^ */}
-        <Deposit />
-        <DeleteWarning />
         <Footer />
       </MainPageContext.Provider>
     </>
