@@ -15,7 +15,7 @@
 // @import "./components/staffloginModal.scss";
 
 @import url("https://fonts.googleapis.com/css2?family=Signika:wght@300..700&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200");
 * {
   transition: 0.5s ease;
   font-family: "Signika", "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
@@ -92,4 +92,8 @@ body {
 
 .page-link {
   cursor: pointer;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
 }
