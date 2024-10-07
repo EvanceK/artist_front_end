@@ -4,7 +4,7 @@ export default function Auction() {
   return (
     <>
       <Carousel></Carousel>
-      <div className="container mt-5">
+      <div className="container my-5">
         <div className="Breadcrumb">
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb">
@@ -29,34 +29,35 @@ export default function Auction() {
                 height: "250px",
                 backgroundColor: "blue",
               }}
+              className="m-4"
               src="..."
               alt="Painting IMG"
             />
             <div className="context">
               <div className="row">
-                <div className="col">ARTIST:</div>
+                <div className="col-4">ARTIST:</div>
                 <div className="col">Orange Chen</div>
               </div>
               <div className="row">
-                <div className="col">YEAR:</div>
+                <div className="col-4">YEAR:</div>
                 <div className="col">2023</div>
               </div>
               <div className="row">
-                <div className="col">STYLE:</div>
+                <div className="col-4">STYLE:</div>
                 <div className="col">Cute</div>
               </div>
               <div className="row">
-                <div className="col">PERIOD:</div>
+                <div className="col-4">PERIOD:</div>
                 <div className="col">2023-2024</div>
               </div>
             </div>
           </div>
           <div className="col d-flex flex-column">
-            <div className="countdown d-flex justify-content-center align-items-center">
+            <div className="countdown d-flex justify-content-center align-items-center m-3">
               <span>CLOSE IN </span>
               <strong className="h1 ms-4">10H 23m 41s</strong>
             </div>
-            <p className="price h4 text-center">$ 1,595</p>
+            <p className="price h4 text-center mb-5">$ 1,595</p>
             <select className="form-select" aria-label="Default select example">
               <option selected>$ 1,600</option>
               <option value="1">$1,605</option>
@@ -65,7 +66,7 @@ export default function Auction() {
             <span className="small text-danger">
               Once a bid is placed, it cannot be canceled. Please bid carefully.
             </span>
-            <div className="cardBtn d-flex justify-content-center ">
+            <div className="cardBtn d-flex justify-content-center m-5">
               <span className="btn btn mx-3">
                 FAV
                 <svg
