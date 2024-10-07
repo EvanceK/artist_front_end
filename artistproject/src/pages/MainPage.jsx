@@ -1,4 +1,4 @@
-import { useState, createContext, useContext, useEffect } from "react";
+import { useState, createContext, useContext, useEffect, useRef } from "react";
 import axios from "axios";
 import { Route, Routes } from "react-router-dom";
 import NavBar from "../components/NavBar";
@@ -15,17 +15,27 @@ import PaintingsListContainer from "./MainPageComponents/ArtistViewContainer";
 import { MainPageContext } from "../components/ContextProvider/MainPageContext";
 import ViewByArtistContainer from "./MainPageComponents/ViewByArtistContainer";
 import Footer from "../components/Footer";
+import * as bootstrap from "bootstrap"; // Import Bootstrap as a module
+
 import $ from "jquery";
 export default function MainPage() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const api = path + "/ArtController/findall";
   const [artistList, setArtisList] = useState([]);
   const [search, setSearch] = useState();
+  const loginModalRef = useRef(null);
+  const showLoginModal = () => {
+    console.log("show login modal");
+    const modalElement = loginModalRef.current;
+    console.log(modalElement);
+    const modal = new bootstrap.Modal(modalElement);
+    modal.show();
+  };
   const getArtistList = async () => {
     try {
       const result = await axios.get(`${api}`);
       setArtisList(result.data);
-      console.log(result.data);
+      console.log(result);
     } catch (error) {
       console.log(error);
     }
@@ -37,7 +47,15 @@ export default function MainPage() {
   return (
     <>
       <MainPageContext.Provider
-        value={{ artistList, setArtisList, getArtistList, search, setSearch }}
+        value={{
+          artistList,
+          setArtisList,
+          getArtistList,
+          search,
+          setSearch,
+          loginModalRef,
+          showLoginModal,
+        }}
       >
         <NavBar></NavBar>
         <Routes>
