@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import Pagination from "../../components/Pagination";
 import MyCard from "../../components/MyCard";
 import { MainPageContext } from "../../components/ContextProvider/MainPageContext";
-
+import * as bootstrap from "bootstrap"; // Import Bootstrap as a module
 export default function ViewByArtistContainer() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const api = path + "/ArtController/artists";
@@ -46,7 +46,7 @@ export default function ViewByArtistContainer() {
       );
       setData(result.data.paintingsList);
       setTotalPage(result.data.totalPage || 1);
-      console.log(result);
+      // console.log(result);
     } catch (error) {
       console.log(error);
     }
@@ -75,10 +75,11 @@ export default function ViewByArtistContainer() {
         />
         <div className="container d-flex flex-wrap">
           {loading ? (
-            <div className="spinner-border text-info" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
+            <p>Loading...</p>
           ) : (
+            // <div className="spinner-border text-info" role="status">
+            // <span className="visually-hidden">Loading...</span>
+            // </div>
             data.map((d, i) => {
               return <MyCard key={i} Paintings={d} />;
             })

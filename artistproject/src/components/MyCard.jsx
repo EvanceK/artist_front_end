@@ -138,7 +138,7 @@ export default function MyCard({ Paintings }) {
 // };
 MyCard.propTypes = {
   Paintings: PropTypes.shape({
-    artisId: PropTypes.string.isRequired,
+    artistId: PropTypes.string.isRequired,
     artisName: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired, //畫作倉作日期
     delicated: PropTypes.number.isRequired,
