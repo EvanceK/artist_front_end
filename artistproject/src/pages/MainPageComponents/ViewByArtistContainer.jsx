@@ -31,7 +31,7 @@ export default function ViewByArtistContainer() {
       setSelectedArtist(findArtist || null); // Handle case when artist is not found
     }
     getdata();
-  }, [id, selectedArtist, artistList, requestPageNumber]);
+  }, [id, selectedArtist, artistList, requestPageNumber, loading]);
 
   if (!selectedArtist) {
     return <p className="container mt-5 pt-5">plase select an artist...</p>; // Handle loading or no artist found
