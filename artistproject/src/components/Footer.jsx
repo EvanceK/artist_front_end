@@ -2,7 +2,7 @@ import projectLogo from "../assets/LOGO.png";
 
 export default function Footer() {
   return (
-    <footer className="footer bg-light position-absolute bottom-0 w-100">
+    <footer className="footer bg-light">
       <div className="container d-flex">
         <div className="foot w-100 d-flex ">
           <div className=" w-25 d-flex justify-content-center align-items-center">

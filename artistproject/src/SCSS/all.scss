@@ -21,10 +21,15 @@
   font-family: "Signika", "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
     sans-serif;
 }
+html,
 body {
-  height: 100vh;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
-
+.homelayout {
+  min-height: 80vh;
+}
 #root {
   overflow: hidden;
   padding-top: 0;
