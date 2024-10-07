@@ -14,6 +14,7 @@ import MyAccount from "./MainPageComponents/MyAccount";
 import PaintingsListContainer from "./MainPageComponents/ArtistViewContainer";
 import { MainPageContext } from "../components/ContextProvider/MainPageContext";
 import ViewByArtistContainer from "./MainPageComponents/ViewByArtistContainer";
+import Auction from "../components/Auction";
 import Footer from "../components/Footer";
 import * as bootstrap from "bootstrap"; // Import Bootstrap as a module
 
@@ -84,6 +85,7 @@ export default function MainPage() {
             <Route index element={<ViewContainer />} />
             <Route path="/byArtist" element={<PaintingsListContainer />} />
             <Route path=":id" element={<ViewByArtistContainer />} />
+            <Route path="/auction" element={<Auction></Auction>} />
           </Route>
           <Route>
             <Route path="/cusdash" element={<MyAccount />} />
