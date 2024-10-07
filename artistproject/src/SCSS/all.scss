@@ -21,6 +21,9 @@
   font-family: "Signika", "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
     sans-serif;
 }
+body {
+  height: 100vh;
+}
 
 #root {
   overflow: hidden;
@@ -52,7 +55,7 @@
     color: inherit;
   }
 }
-.foot{
+.foot {
   background-color: $primary;
   color: $artisGold;
 }

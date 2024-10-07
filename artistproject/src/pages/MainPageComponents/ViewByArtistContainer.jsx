@@ -10,15 +10,15 @@ export default function ViewByArtistContainer() {
   useEffect(() => {
     // Fetch artist list when the component mounts
     getArtistList();
-  }, [getArtistList]);
+  }, []);
   useEffect(() => {
-    const findArtist = artistList.find((ar) => ar.artistId == id);
-    setSelectedArtist(findArtist);
+    // const findArtist = artistList.find((ar) => ar.artistId == id);
+    // setSelectedArtist(findArtist);
     // Check if artistList has data before searching for the artist
-    // if (artistList.length > 0) {
-    //   const findArtist = artistList.find((ar) => ar.artistId == id);
-    //   setSelectedArtist(findArtist || null); // Handle case when artist is not found
-    // }
+    if (artistList.length > 0) {
+      const findArtist = artistList.find((ar) => ar.artistId == id);
+      setSelectedArtist(findArtist || null); // Handle case when artist is not found
+    }
   }, [id, selectedArtist, artistList]);
 
   if (!selectedArtist) {

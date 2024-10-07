@@ -28,7 +28,7 @@ export default function NavBar() {
     if (storedToken) {
       setToken(storedToken);
     }
-    getArtistList();
+    // getArtistList();
     // console.log(token);
     return () => {
       $(".nav-link").off("click");

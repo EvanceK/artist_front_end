@@ -22,7 +22,7 @@ export default function MainPage() {
   const path = import.meta.env.VITE_DATA_HOST_API;
 
   const [artistList, setArtisList] = useState([]);
-  const [wishListByCus, setWishListByCus] = useState([]);
+  const [wishListByCus, setWishListByCus] = useState();
   const [search, setSearch] = useState();
   const loginModalRef = useRef(null);
   const showLoginModal = () => {
@@ -53,16 +53,17 @@ export default function MainPage() {
           },
         });
         console.log("Wishlist: " + result);
-        // setWishListByCus(result.data);
+        setWishListByCus(result.data);
+        console.log("Wishlistdata: " + wishListByCus);
       } catch (error) {
         console.log(error);
       }
     }
   };
-  // getWishList();
-  // useEffect(() => {
-  //   getArtistList();
-  // }, []);
+
+  useEffect(() => {
+    getWishList();
+  }, []);
 
   return (
     <>
