@@ -8,10 +8,22 @@ export default function ViewByArtistContainer() {
   const { artistList, getArtistList } = useContext(MainPageContext);
   const [selectedArtist, setSelectedArtist] = useState({});
   useEffect(() => {
+    // Fetch artist list when the component mounts
     getArtistList();
+  }, [getArtistList]);
+  useEffect(() => {
     const findArtist = artistList.find((ar) => ar.artistId == id);
     setSelectedArtist(findArtist);
-  }, [id, selectedArtist]);
+    // Check if artistList has data before searching for the artist
+    // if (artistList.length > 0) {
+    //   const findArtist = artistList.find((ar) => ar.artistId == id);
+    //   setSelectedArtist(findArtist || null); // Handle case when artist is not found
+    // }
+  }, [id, selectedArtist, artistList]);
+
+  if (!selectedArtist) {
+    return <p className="container mt-5 pt-5">plase select an artist...</p>; // Handle loading or no artist found
+  }
   return (
     <>
       <div className="container mt-5 pt-5">

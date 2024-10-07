@@ -15,8 +15,10 @@ export default function MyCard({ Paintings }) {
     const elementId = event.target.id;
     console.log(event.target);
     console.log("Element ID:", elementId);
-    setAddPainting({ ...addPainting, paintingId: elementId });
-    addWishlist();
+    if (elementId != null) {
+      setAddPainting({ ...addPainting, paintingId: elementId });
+      addWishlist();
+    }
   };
   const addWishlist = () => {
     const authorization = localStorage.getItem("token");
