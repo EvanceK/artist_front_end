@@ -28,7 +28,6 @@ export default function MyCard({ Paintings }) {
         },
       });
     } else {
-      console.log("window.bootstrap:" + window.bootstrap);
       showLoginModal();
       console.log("please login");
     }

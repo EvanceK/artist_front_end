@@ -20,26 +20,44 @@ import * as bootstrap from "bootstrap"; // Import Bootstrap as a module
 import $ from "jquery";
 export default function MainPage() {
   const path = import.meta.env.VITE_DATA_HOST_API;
-  const api = path + "/ArtController/findall";
+
   const [artistList, setArtisList] = useState([]);
   const [search, setSearch] = useState();
   const loginModalRef = useRef(null);
   const showLoginModal = () => {
-    console.log("show login modal");
+    // console.log("show login modal");
     const modalElement = loginModalRef.current;
-    console.log(modalElement);
+    // console.log(modalElement);
     const modal = new bootstrap.Modal(modalElement);
     modal.show();
   };
   const getArtistList = async () => {
+    const api = path + "/ArtController/findall";
     try {
       const result = await axios.get(`${api}`);
       setArtisList(result.data);
-      console.log(result);
+      // console.log(result);
     } catch (error) {
       console.log(error);
     }
   };
+  const getWishList = async () => {
+    const authorization = localStorage.getItem("token");
+    const api = path + "/api/wishlist";
+    if (authorization) {
+      try {
+        const result = await axios.get(`${api}`, {
+          headers: {
+            Authorization: `Bearer ${authorization}`,
+          },
+        });
+        console.log("Wishlist: " + result);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+  getWishList();
   // useEffect(() => {
   //   getArtistList();
   // }, []);
