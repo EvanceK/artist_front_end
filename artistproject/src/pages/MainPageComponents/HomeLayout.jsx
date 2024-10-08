@@ -1,4 +1,3 @@
-// import Carousel from "../../components/Carousel";
 import { Outlet } from "react-router-dom";
 
 export default function HomeLayout() {

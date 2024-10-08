@@ -10,11 +10,12 @@ import DeleteWarning from "../components/Deletewarning";
 import ViewContainer from "./MainPageComponents/ViewContainer";
 import MyAccount from "./MainPageComponents/MyAccount";
 import PaintingsListContainer from "./MainPageComponents/ArtistViewContainer";
-// import { MainPageContext } from "../components/ContextProvider/MainPageContext";
 import { MainContextProvider } from "../components/ContextProvider/MainContext";
 import ViewByArtistContainer from "./MainPageComponents/ViewByArtistContainer";
 import Auction from "../components/Auction";
 import Footer from "../components/Footer";
+import CusDashboard from "./CusDashboard";
+import ComingSoon from "./Comingsoon";
 export default function MainPage() {
   return (
     <>
@@ -27,8 +28,9 @@ export default function MainPage() {
             <Route path=":id" element={<ViewByArtistContainer />} />
             <Route path="/auction" element={<Auction></Auction>} />
           </Route>
-          <Route>
-            <Route path="/cusdash" element={<MyAccount />} />
+          <Route path="/cusdashboard" element={<CusDashboard />}>
+            <Route path="myaccount" element={<MyAccount />} />
+            <Route path="comingsoon" element={<ComingSoon />}></Route>
           </Route>
         </Routes>
         {/* modal for navbar vv */}

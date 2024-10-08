@@ -79,24 +79,24 @@ export default function NavBar() {
             </span>
             <ul className="dropdown-menu">
               <li>
-                <Link className="dropdown-item" to="cusdash">
+                <Link className="dropdown-item" to="cusdashboard/myaccount">
                   My Account
                 </Link>
               </li>
               <li>
-                <a className="dropdown-item" href="#">
+                <Link className="dropdown-item" to="cusdashboard/comingsoon">
                   My Order
-                </a>
+                </Link>
               </li>
               <li>
-                <a className="dropdown-item" href="#">
+                <Link className="dropdown-item" to="cusdashboard/comingsoon">
                   My Wallet
-                </a>
+                </Link>
               </li>
               <li>
-                <a className="dropdown-item" href="#">
+                <Link className="dropdown-item" to="cusdashboard/comingsoon">
                   My Wishlist
-                </a>
+                </Link>
               </li>
               <li>
                 <hr className="dropdown-divider" />

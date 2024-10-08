@@ -27,7 +27,8 @@ body {
   display: flex;
   flex-direction: column;
 }
-.homelayout {
+.homelayout,
+.cusdash {
   min-height: 80vh;
 }
 #root {
