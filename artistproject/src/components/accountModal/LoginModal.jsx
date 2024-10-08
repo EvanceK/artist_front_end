@@ -2,14 +2,15 @@ import { useContext, useState } from "react";
 import projectLogo from "../../assets/LOGO.png";
 import axios from "axios";
 import { UserContext } from "../ContextProvider/UserContext";
-import { MainPageContext } from "../ContextProvider/MainPageContext";
-
+// import { MainPageContext } from "../ContextProvider/MainPageContext";
+import { MainContext } from "../ContextProvider/MainContext";
 import $ from "jquery";
 export default function LoginModal() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const api = path + "/customers/login";
   const { setUserName, setIsLogin } = useContext(UserContext);
-  const { loginModalRef } = useContext(MainPageContext);
+  // const { loginModalRef } = useContext(MainPageContext);
+  const { loginModalRef } = useContext(MainContext);
   const [data, setData] = useState({
     email: "",
     password: "",

@@ -4,13 +4,15 @@ import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import Pagination from "../../components/Pagination";
 import MyCard from "../../components/MyCard";
-import { MainPageContext } from "../../components/ContextProvider/MainPageContext";
+// import { MainPageContext } from "../../components/ContextProvider/MainPageContext";
+import { MainContext } from "../../components/ContextProvider/MainContext";
 import * as bootstrap from "bootstrap"; // Import Bootstrap as a module
 export default function ViewByArtistContainer() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const api = path + "/ArtController/artists";
   const { id } = useParams();
-  const { artistList, getArtistList } = useContext(MainPageContext);
+  // const { artistList, getArtistList } = useContext(MainPageContext);
+  const { artistList, getArtistList } = useContext(MainContext);
   const [selectedArtist, setSelectedArtist] = useState({});
   const [data, setData] = useState([]);
   const [requestPageNumber, setRequestPageNumber] = useState(1);

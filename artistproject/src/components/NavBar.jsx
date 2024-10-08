@@ -3,16 +3,16 @@ import projectLogo from "../assets/LOGO.png";
 import $ from "jquery";
 import { UserContext } from "./ContextProvider/UserContext";
 import { Link, useNavigate } from "react-router-dom";
-import { MainPageContext } from "./ContextProvider/MainPageContext";
-
+// import { MainPageContext } from "./ContextProvider/MainPageContext";
+import { MainContext } from "./ContextProvider/MainContext";
 export default function NavBar() {
   const navigate = useNavigate();
-  const [search, setSearch] = useState();
   const { userName, setUserName, isLogin, setIsLogin } =
     useContext(UserContext);
+  const { artistList, getArtistList, setSearch } = useContext(MainContext);
+  // const { artistList, getArtistList } = useContext(MainPageContext);
   const [accountfeild, setAccountfeild] = useState();
   const [token, setToken] = useState(null);
-  const { artistList, getArtistList } = useContext(MainPageContext);
 
   useEffect(() => {
     $(".nav-link").on("click", function () {
@@ -23,13 +23,14 @@ export default function NavBar() {
       setSearch(e.target.value);
       console.log(e.target.value);
     });
-    // Cleanup event listener
+
     const storedToken = localStorage.getItem("token");
     if (storedToken) {
       setToken(storedToken);
     }
     getArtistList();
     // console.log(token);
+    // Cleanup event listener
     return () => {
       $(".nav-link").off("click");
     };

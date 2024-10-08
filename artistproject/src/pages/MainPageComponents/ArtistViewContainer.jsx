@@ -8,7 +8,7 @@ export default function PaintingsListContainer() {
   const api = path + "/PTController/findallavailable";
   const [data, setData] = useState([]);
   const [requestPageNumber, setRequestPageNumber] = useState();
-  const [artisList, setArtisList] = useState([]);
+  // const [artisList, setArtisList] = useState([]);
 
   // //撈取資料庫
   // const getdata = async () => {

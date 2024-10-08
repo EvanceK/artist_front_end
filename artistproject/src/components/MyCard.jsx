@@ -2,13 +2,14 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import { useContext, useState } from "react";
 import $ from "jquery";
-import { MainPageContext } from "./ContextProvider/MainPageContext";
-
+// import { MainPageContext } from "./ContextProvider/MainPageContext";
+import { MainContext } from "./ContextProvider/MainContext";
 export default function MyCard({ Paintings }) {
   const [addPainting, setAddPainting] = useState({
     paintingId: "",
   });
-  const { showLoginModal } = useContext(MainPageContext);
+  // const { showLoginModal } = useContext(MainPageContext);
+  const { showLoginModal } = useContext(MainContext);
   const path = import.meta.env.VITE_DATA_HOST_API;
   const api = path + "/api/wishlist";
   const handleClick = (event) => {
