@@ -5,6 +5,7 @@ import React, {
   useRef,
   useEffect,
 } from "react";
+import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 import PropTypes from "prop-types";
 import * as bootstrap from "bootstrap"; // Import Bootstrap as a module
@@ -13,19 +14,24 @@ import * as bootstrap from "bootstrap"; // Import Bootstrap as a module
 export const MainContext = createContext();
 
 export function MainContextProvider({ children }) {
-  //API path
+  //API path 存放在環境變數 .evn 設定為 http://localhost:8080
   const path = import.meta.env.VITE_DATA_HOST_API;
-  //state for data
-  const [artistList, setArtisList] = useState([]);
-  const [wishListByCus, setWishListByCus] = useState();
+  //state for data 共用變數
+  const [artistList, setArtisList] = useState([]); //所有作家名單 目前for navBar 選單用
+  const [wishListByCus, setWishListByCus] = useState([]); //目前customer的wishlist產品
+  const [wishlistPaintingIdList, setWishlistPaintingIdList] = useState([]);
+  //vv for searching 功能用的變數：
   const [search, setSearch] = useState();
+  const [searchParams, setSearchParams] = useSearchParams();
+
   // methods for loading data
   const getArtistList = async () => {
     const api = path + "/ArtController/findall";
+    // 等同 $.ajax(" get blablablba ")
     try {
       const result = await axios.get(`${api}`);
-      setArtisList(result.data);
       // console.log(result);
+      setArtisList(result.data);
     } catch (error) {
       console.log(error);
     }
@@ -33,6 +39,7 @@ export function MainContextProvider({ children }) {
   const getWishList = async () => {
     const authorization = localStorage.getItem("token");
     const api = path + "/api/wishlist";
+
     if (authorization) {
       try {
         const result = await axios.get(`${api}`, {
@@ -40,9 +47,8 @@ export function MainContextProvider({ children }) {
             Authorization: `Bearer ${authorization}`,
           },
         });
-        console.log("Wishlist: ", result);
+        console.log("Wishlist: ", result.data);
         setWishListByCus(result.data);
-        console.log("Wishlistdata: ", wishListByCus);
       } catch (error) {
         console.log(error);
       }
@@ -51,7 +57,12 @@ export function MainContextProvider({ children }) {
   // useEffect for preload data
 
   useEffect(() => {
-    // getWishList();
+    const paintingIdArray = ["PT0001", "PT0002", "PT0005"];
+    getWishList();
+    // wishListByCus.map((w) => {
+    //   paintingIdArray.push(w.paintingId);
+    // });
+    setWishlistPaintingIdList(paintingIdArray);
   }, []);
 
   // Create a Provider component
@@ -71,6 +82,8 @@ export function MainContextProvider({ children }) {
         artistList,
         setArtisList,
         getArtistList,
+        wishListByCus,
+        wishlistPaintingIdList,
         search,
         setSearch,
         loginModalRef,

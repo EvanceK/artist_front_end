@@ -21,7 +21,7 @@ export default function ViewContainer() {
       );
       setData(result.data.paintingsList);
       setTotalPage(result.data.totalPage || 1);
-      console.log(result);
+      // console.log("viewcontainer: ",result);
     } catch (error) {
       console.log(error);
     }
