@@ -18,6 +18,9 @@ import CusDashboard from "./CusDashboard";
 import ComingSoon from "./Comingsoon";
 import EditAccount from "../components/EditAccount";
 import DeleteAccount from "../components/DeleteAccount";
+import OrderPage from "./OrderPage";
+import OrderHistory from "./OrderRecord";
+import OrderRecord from "./OrderRecord";
 export default function MainPage() {
   return (
     <>
@@ -44,6 +47,7 @@ export default function MainPage() {
         <SignupSuccess />
         <DeleteWarning />
         <Deposit />
+        <OrderRecord />
 
         {/* modal for navbar ^^ */}
         <Footer />
