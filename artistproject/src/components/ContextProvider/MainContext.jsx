@@ -69,8 +69,9 @@ export function MainContextProvider({ children }) {
   };
   // useEffect for preload data
   useEffect(() => {
-    loadWishlist ? getWishList() : "";
-  }, [loadWishlist]);
+    // loadWishlist ? getWishList() : "";
+    getWishList();
+  }, [loadWishlist, setLoadWishlist]);
 
   // Create a Provider component
   const loginModalRef = useRef(null); // useRef for loginModal
@@ -89,12 +90,12 @@ export function MainContextProvider({ children }) {
         artistList,
         setArtisList,
         getArtistList,
-        // wishListByCus,
         getWishList,
         search,
         setSearch,
         loginModalRef,
         showLoginModal,
+        loadWishlist,
         setLoadWishlist,
       }}
     >

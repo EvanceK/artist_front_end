@@ -12,7 +12,6 @@ export default function MyCard({ Paintings }) {
   // const { showLoginModal } = useContext(MainPageContext);
   const { showLoginModal } = useContext(MainContext);
   const path = import.meta.env.VITE_DATA_HOST_API;
-  const api = path + "/api/wishlist";
 
   const handleClick = (event) => {
     setLike(!like);
@@ -22,11 +21,27 @@ export default function MyCard({ Paintings }) {
     console.log("Element ID:", elementId);
     if (elementId != null) {
       setAddPainting({ ...addPainting, paintingId: elementId });
-      addWishlist();
+      like ? addWishlist() : removeWishlist();
     }
   };
   const addWishlist = () => {
     const authorization = localStorage.getItem("token");
+    const api = path + "/api/wishlist";
+    if (authorization) {
+      axios.post(api, addPainting, {
+        headers: {
+          Authorization: `Bearer ${authorization}`,
+          "Content-Type": "application/json",
+        },
+      });
+    } else {
+      showLoginModal();
+      console.log("please login");
+    }
+  };
+  const removeWishlist = () => {
+    const authorization = localStorage.getItem("token");
+    const api = path + "/api/wishlist";
     if (authorization) {
       axios.post(api, addPainting, {
         headers: {
@@ -47,7 +62,7 @@ export default function MyCard({ Paintings }) {
           liked = true;
         }
       });
-    if (liked) {
+    if (like) {
       return (
         <>
           <svg

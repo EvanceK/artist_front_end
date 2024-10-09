@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "artistproject": "file:",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
