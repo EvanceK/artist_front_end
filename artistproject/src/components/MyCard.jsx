@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import $ from "jquery";
 // import { MainPageContext } from "./ContextProvider/MainPageContext";
 import { MainContext } from "./ContextProvider/MainContext";
@@ -9,9 +9,10 @@ export default function MyCard({ Paintings }) {
     paintingId: "",
   });
   // const { showLoginModal } = useContext(MainPageContext);
-  const { showLoginModal } = useContext(MainContext);
+  const { showLoginModal, wishlistPaintingIdList } = useContext(MainContext);
   const path = import.meta.env.VITE_DATA_HOST_API;
   const api = path + "/api/wishlist";
+  const [favorBtn, setFavorBtn] = useState();
   const handleClick = (event) => {
     const elementId = event.target.id;
     console.log(event.target);
@@ -35,6 +36,56 @@ export default function MyCard({ Paintings }) {
       console.log("please login");
     }
   };
+  useEffect(() => {
+    let liked = false;
+    // console.log(wishlistPaintingIdList);
+    // console.log("pid:", Paintings.paintingId);
+    wishlistPaintingIdList.map((i) => {
+      console.log("i:", i);
+      if (i == Paintings.paintingId) {
+        console.log(true);
+        liked = true;
+        return;
+      }
+    });
+    liked
+      ? setFavorBtn(
+          <>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              // fill="currentColor"
+              fill="red"
+              className="bi bi-heart-fill"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fillRule="evenodd"
+                d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"
+              />
+            </svg>
+          </>
+        )
+      : setFavorBtn(
+          <>
+            <svg
+              id={Paintings.paintingId}
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              className="bi bi-heart"
+              viewBox="0 0 16 16"
+            >
+              <path
+                id={Paintings.paintingId}
+                d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"
+              />
+            </svg>
+          </>
+        );
+  }, []);
   return (
     <div className="cards d-flex flex-column align-items-center">
       <div className="photoFrame d-flex flex-column ">
@@ -55,23 +106,8 @@ export default function MyCard({ Paintings }) {
             id={Paintings.paintingId}
             onClick={handleClick}
           >
-            <span id={Paintings.paintingId} className="btn btn mx-3">
-              FAV
-              <svg
-                id={Paintings.paintingId}
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                className="bi bi-heart"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  id={Paintings.paintingId}
-                  d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"
-                />
-              </svg>
-              RITE
+            <span id={Paintings.paintingId} className="btn mx-3">
+              FAV {favorBtn} RITE
             </span>
             <span id={Paintings.paintingId} className="btn btn-primary mx-3">
               PLACE BID
@@ -153,6 +189,6 @@ MyCard.propTypes = {
     price: PropTypes.number.isRequired,
     smallUrl: PropTypes.string.isRequired,
     style: PropTypes.string.isRequired,
-    uploadDate: PropTypes.array.isRequired,
+    uploadDate: PropTypes.string.isRequired,
   }).isRequired,
 };
