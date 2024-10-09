@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
-import PropTypes from "prop-types";
+import PropTypes, { func } from "prop-types";
 import * as bootstrap from "bootstrap"; // Import Bootstrap as a module
 
 // Create the Context
@@ -17,9 +17,10 @@ export function MainContextProvider({ children }) {
   //API path 存放在環境變數 .evn 設定為 http://localhost:8080
   const path = import.meta.env.VITE_DATA_HOST_API;
   //state for data 共用變數
+  const [loadWishlist, setLoadWishlist] = useState(false);
   const [artistList, setArtisList] = useState([]); //所有作家名單 目前for navBar 選單用
   const [wishListByCus, setWishListByCus] = useState([]); //目前customer的wishlist產品
-  const [wishlistPaintingIdList, setWishlistPaintingIdList] = useState([]);
+  // const [wishlistPaintingIdList, setWishlistPaintingIdList] = useState([]);
   //vv for searching 功能用的變數：
   const [search, setSearch] = useState();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -39,7 +40,7 @@ export function MainContextProvider({ children }) {
   const getWishList = async () => {
     const authorization = localStorage.getItem("token");
     const api = path + "/api/wishlist";
-
+    const paintingIdArray = [];
     if (authorization) {
       try {
         const result = await axios.get(`${api}`, {
@@ -47,23 +48,29 @@ export function MainContextProvider({ children }) {
             Authorization: `Bearer ${authorization}`,
           },
         });
-        console.log("Wishlist: ", result.data);
+        // console.log("Wishlist: ", result.data);
         setWishListByCus(result.data);
+        localStorage.setItem("Wishlist", JSON.stringify(result.data));
+        JSON.parse(localStorage.getItem("Wishlist")).map((w) => {
+          paintingIdArray.push(w.paintingId);
+        });
+        if (paintingIdArray.length > 0) {
+          // console.log("setpaintingIdArray");
+          localStorage.setItem(
+            "paintingIdArray",
+            JSON.stringify(paintingIdArray)
+          );
+        }
       } catch (error) {
         console.log(error);
       }
+      // setWishlistPaintingIdList(paintingIdArray);
     }
   };
   // useEffect for preload data
-
   useEffect(() => {
-    const paintingIdArray = ["PT0001", "PT0002", "PT0005"];
-    getWishList();
-    // wishListByCus.map((w) => {
-    //   paintingIdArray.push(w.paintingId);
-    // });
-    setWishlistPaintingIdList(paintingIdArray);
-  }, []);
+    loadWishlist ? getWishList() : "";
+  }, [loadWishlist]);
 
   // Create a Provider component
   const loginModalRef = useRef(null); // useRef for loginModal
@@ -82,12 +89,13 @@ export function MainContextProvider({ children }) {
         artistList,
         setArtisList,
         getArtistList,
-        wishListByCus,
-        wishlistPaintingIdList,
+        // wishListByCus,
+        getWishList,
         search,
         setSearch,
         loginModalRef,
         showLoginModal,
+        setLoadWishlist,
       }}
     >
       {children}

@@ -9,13 +9,14 @@ export default function LoginModal() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const api = path + "/customers/login";
   const { setUserName, setIsLogin } = useContext(UserContext);
-  // const { loginModalRef } = useContext(MainPageContext);
-  const { loginModalRef } = useContext(MainContext);
+
+  const { loginModalRef, setLoadWishlist, loadWishlist } =
+    useContext(MainContext);
   const [data, setData] = useState({
     email: "",
     password: "",
   });
-  const [token, setToken] = useState(null);
+
   // email: tester@email.com. pass: 123
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,6 +25,7 @@ export default function LoginModal() {
     // console.log(data);
   };
   const submit = async () => {
+    setLoadWishlist(!loadWishlist);
     try {
       const result = await axios.post(api, data, {
         headers: {
@@ -33,8 +35,6 @@ export default function LoginModal() {
       // console.log(result);
       localStorage.setItem("token", result.data.token);
       localStorage.setItem("nickName", result.data.nickName);
-      setUserName("customer");
-      setToken(result.data);
       setIsLogin(true);
     } catch (error) {
       console.log(error);

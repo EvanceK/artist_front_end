@@ -3,15 +3,21 @@ import projectLogo from "../assets/LOGO.png";
 import $ from "jquery";
 import { UserContext } from "./ContextProvider/UserContext";
 import { Link, useNavigate } from "react-router-dom";
-// import { MainPageContext } from "./ContextProvider/MainPageContext";
+
 import { MainContext } from "./ContextProvider/MainContext";
 export default function NavBar() {
   const navigate = useNavigate();
   const { userName, setUserName, isLogin, setIsLogin } =
     useContext(UserContext);
-  const { artistList, getArtistList, setSearch, wishlistPaintingIdList } =
-    useContext(MainContext);
-  // const { artistList, getArtistList } = useContext(MainPageContext);
+  const {
+    artistList,
+    getArtistList,
+    getWishList,
+    setSearch,
+    loadWishlist,
+    setLoadWishlist,
+  } = useContext(MainContext);
+
   const [accountfeild, setAccountfeild] = useState();
   const [token, setToken] = useState(null);
 
@@ -30,6 +36,8 @@ export default function NavBar() {
       setToken(storedToken);
     }
     getArtistList();
+
+    setLoadWishlist(true);
     // console.log(token);
     // Cleanup event listener
     return () => {
@@ -39,10 +47,13 @@ export default function NavBar() {
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("nickName");
+    localStorage.removeItem("paintingIdArray");
+    localStorage.removeItem("Wishlist");
     setIsLogin(false);
     setToken(null);
     setUserName(null);
     navigate("/home");
+    setLoadWishlist(!loadWishlist);
   };
   useEffect(() => {
     if (localStorage.getItem("token") == null) {
@@ -112,6 +123,7 @@ export default function NavBar() {
         </>
       );
     }
+    getWishList();
   }, [isLogin, userName, token]);
 
   return (
@@ -120,10 +132,6 @@ export default function NavBar() {
         <Link to="/">
           <img className="projectLogo" src={projectLogo} alt="Logo"></img>
         </Link>
-
-        {/* <a className="navbar-brand" href="#">
-          Artist Project Logo
-        </a> */}
         <form className="d-flex position-relative" role="search">
           <input
             className="form-control ms-2"
@@ -164,14 +172,11 @@ export default function NavBar() {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              {/* <a className="nav-link active" aria-current="page" href="#">
-                Home
-              </a> */}
               <Link className="nav-link" to="/home" aria-current="page">
                 Home
               </Link>
             </li>
-            {/* xxxxxx */}
+
             <li className="nav-item dropdown">
               <a
                 className="nav-link dropdown-toggle"
@@ -208,7 +213,7 @@ export default function NavBar() {
                 })}
               </ul>
             </li>
-            {/* xxxxx x */}
+
             <li className="nav-item">
               <a className="nav-link" href="#">
                 ArtWorks
@@ -232,7 +237,9 @@ export default function NavBar() {
               <path d="m8 6.236-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.6 7.6 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z" />
             </svg>
             <span className="wishlistNumber">
-              {wishlistPaintingIdList.length}
+              {localStorage.getItem("paintingIdArray") != null
+                ? JSON.parse(localStorage.getItem("paintingIdArray")).length
+                : ""}
             </span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
