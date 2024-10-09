@@ -32,7 +32,7 @@ export default function EditAccount() {
   return (
     <div
       className="modal fade"
-      id="registerModel"
+      id="editAccount"
       data-bs-backdrop="static"
       data-bs-keyboard="false"
       tabIndex="-1"
