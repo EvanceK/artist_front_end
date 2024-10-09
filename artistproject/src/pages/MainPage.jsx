@@ -16,6 +16,8 @@ import Auction from "../components/Auction";
 import Footer from "../components/Footer";
 import CusDashboard from "./CusDashboard";
 import ComingSoon from "./Comingsoon";
+import EditAccount from "../components/EditAccount";
+import DeleteAccount from "../components/DeleteAccount";
 export default function MainPage() {
   return (
     <>
@@ -35,6 +37,8 @@ export default function MainPage() {
         </Routes>
         {/* modal for navbar vv */}
         <LoginModal></LoginModal>
+        <EditAccount/>
+        <DeleteAccount/>
         <StaffLoginModal></StaffLoginModal>
         <Register></Register>
         <SignupSuccess />
