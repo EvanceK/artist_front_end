@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import MemberNav from "../../components/MemberNav";
 
 export default function MyAccount() {
   //1.先回傳customerID
@@ -31,8 +31,9 @@ export default function MyAccount() {
 
   return (
       <div className="container">
-        <h2 className="my-5 py-5 border-bottom">My Account</h2>
-        <div className="row">
+        <MemberNav/>
+        <h2 className="mb-5 py-5 border-bottom">My Account</h2>
+        <div className="row mb-5">
           <div className="d-flex flex-column justify-content-center">
             <div className="row d-flex justify-content-center">
               <div className="col-2"><h4>Name:</h4></div>
@@ -58,7 +59,7 @@ export default function MyAccount() {
               <div className="col-2"><h4>Password:</h4></div>
               <div className="col-4"><h4>{customer.password}</h4></div>
             </div>
-            <div className="row d-flex justify-content-center ">
+            <div className="row d-flex justify-content-center">
               <div className="btn m-4 col-1 " 
                    id="edit"
                    data-bs-toggle="modal"
