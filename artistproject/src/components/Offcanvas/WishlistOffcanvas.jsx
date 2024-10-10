@@ -1,5 +1,39 @@
+import { useEffect, useState, useContext } from "react";
 import WishlistOffCanCard from "./WishlistOffCanCard";
+import { UserContext } from "../ContextProvider/UserContext";
+import { MainContext } from "../ContextProvider/MainContext";
+
 export default function WishlistOffcanvas() {
+  const { isLogin, setIsLogin } = useContext(UserContext);
+  const { loadWishlist } = useContext(MainContext);
+  const [wishlist, setWishlist] = useState([]);
+  // useEffect(() => {
+  //   console.log("islogin", isLogin);
+  //   if (isLogin) {
+  //     const storedWishlist = localStorage.getItem("Wishlist");
+  //     if (storedWishlist) {
+  //       setWishlist(JSON.parse(storedWishlist));
+  //     }
+  //     console.log(storedWishlist);
+  //   } else {
+  //     setWishlist([]);
+  //   }
+  // }, [isLogin, setIsLogin]);
+  useEffect(() => {
+    console.log("isLogin state:", isLogin);
+    if (isLogin) {
+      const storedWishlist = localStorage.getItem("Wishlist");
+      if (storedWishlist) {
+        setWishlist(JSON.parse(storedWishlist));
+        console.log("Wishlist found:", JSON.parse(storedWishlist));
+      } else {
+        console.log("No Wishlist found in localStorage");
+      }
+    } else {
+      console.log("User is not logged in, clearing wishlist");
+      setWishlist([]);
+    }
+  }, [isLogin, loadWishlist]);
   return (
     <>
       <div
@@ -20,11 +54,16 @@ export default function WishlistOffcanvas() {
           ></button>
         </div>
         <div className="offcanvas-body d-flex  flex-column">
-          {localStorage.getItem("Wishlist")
+          {wishlist.length > 0
+            ? wishlist.map((wp, i) => {
+                return <WishlistOffCanCard key={i} wishlisProps={wp} />;
+              })
+            : "please feel free to add plainting to Favorites List"}
+          {/* {localStorage.getItem("Wishlist")
             ? JSON.parse(localStorage.getItem("Wishlist")).map((wp, i) => {
                 return <WishlistOffCanCard key={i} wishlisProps={wp} />;
               })
-            : ""}
+            : ""} */}
         </div>
       </div>
     </>

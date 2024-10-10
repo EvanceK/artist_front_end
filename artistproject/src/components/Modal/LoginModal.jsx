@@ -25,7 +25,6 @@ export default function LoginModal() {
     // console.log(data);
   };
   const submit = async () => {
-    setLoadWishlist(!loadWishlist);
     try {
       const result = await axios.post(api, data, {
         headers: {
@@ -35,6 +34,7 @@ export default function LoginModal() {
       // console.log(result);
       localStorage.setItem("token", result.data.token);
       localStorage.setItem("nickName", result.data.nickName);
+      setLoadWishlist(!loadWishlist);
       setIsLogin(true);
     } catch (error) {
       console.log(error);

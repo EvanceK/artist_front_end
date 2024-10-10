@@ -10,7 +10,7 @@ import $ from "jquery";
 
 export default function App() {
   const [userName, setUserName] = useState();
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(!!localStorage.getItem("token"));
 
   return (
     <>
