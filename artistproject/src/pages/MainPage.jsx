@@ -21,9 +21,8 @@ import OrderPage from "./MainPageComponents/OrderPage";
 import OrderHistory from "./MainPageComponents/OrderRecord";
 import OrderRecord from "./MainPageComponents/OrderRecord";
 import WinningRecords from "./MainPageComponents/WinningRecords";
-import BiddingHistory from "../components/Offcanvas/BiddingHistoryOffcanvas";
+// import BiddingHistory from "../components/Modal/BiddingHistoryModal";
 import WishlistOffcanvas from "../components/Offcanvas/WishlistOffcanvas";
-import BiddingHistoryOffcanvas from "../components/Offcanvas/BiddingHistoryOffcanvas";
 
 export default function MainPage() {
   return (
@@ -41,7 +40,7 @@ export default function MainPage() {
             <Route path="myaccount" element={<MyAccount />} />
             <Route path="comingsoon" element={<ComingSoon />}></Route>
             <Route path="winningRecords" element={<WinningRecords />}>
-              <Route path="biddingHistory" element={<BiddingHistory />}></Route>{" "}
+              {/* <Route path="biddingHistory" element={<BiddingHistory />}></Route>{" "} */}
             </Route>
           </Route>
         </Routes>
@@ -55,7 +54,6 @@ export default function MainPage() {
         <Deposit />
         {/* modal for navbar ^^ */}
         {/* Offcanvas vv*/}
-        <BiddingHistoryOffcanvas/>
         <WishlistOffcanvas />
         {/* Offcanvas ^^*/}
         <Footer />

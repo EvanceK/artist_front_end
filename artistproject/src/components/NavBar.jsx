@@ -15,6 +15,8 @@ export default function NavBar() {
     getWishList,
     setSearch,
     search,
+    searchParams,
+    setSearchParams,
     loadWishlist,
     setLoadWishlist,
   } = useContext(MainContext);
@@ -151,9 +153,10 @@ export default function NavBar() {
             defaultValue={search}
             aria-label="Search"
             onKeyUp={(e) => {
-              if (e.Code === "Enter") {
-                console.log("as");
+              if (e.code === "Enter") {
+                // console.log("as");
                 setSearch(e.target.value);
+                //search?keyword=xxxxx
               }
             }}
           />

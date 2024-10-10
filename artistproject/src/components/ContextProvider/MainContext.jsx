@@ -57,13 +57,13 @@ export function MainContextProvider({ children }) {
         JSON.parse(localStorage.getItem("Wishlist")).map((w) => {
           paintingIdArray.push(w.paintingId);
         });
-        if (paintingIdArray.length > 0) {
-          // console.log("setpaintingIdArray");
-          localStorage.setItem(
-            "paintingIdArray",
-            JSON.stringify(paintingIdArray)
-          );
-        }
+        // if (paintingIdArray.length > 0) {
+        // console.log("setpaintingIdArray");
+        localStorage.setItem(
+          "paintingIdArray",
+          JSON.stringify(paintingIdArray)
+        );
+        // }
         setLoadWishlist(!loadWishlist);
       } catch (error) {
         console.log(error);
@@ -76,7 +76,7 @@ export function MainContextProvider({ children }) {
     // loadWishlist ? getWishList() : "";
     getWishList();
     // }, [setLoadWishlist, loadWishlist]);
-  }, [isLogin]);
+  }, [isLogin, loadWishlist, getWishList]);
 
   // Create a Provider component
   const loginModalRef = useRef(null); // useRef for loginModal
@@ -89,6 +89,16 @@ export function MainContextProvider({ children }) {
     }
   };
 
+  const getSearch = async (keyword) => {
+    const api = path + `/PTController/search?keyword=${keyword}`;
+    const result = await axiosConfig.get(api);
+    console.log(result);
+  };
+
+  //for test method
+  useEffect(() => {
+    // getSearch("");
+  }, []);
   return (
     <MainContext.Provider
       value={{
