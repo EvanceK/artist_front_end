@@ -22,6 +22,8 @@ import OrderHistory from "./MainPageComponents/OrderRecord";
 import OrderRecord from "./MainPageComponents/OrderRecord";
 import WinningRecords from "./MainPageComponents/WinningRecords";
 import BiddingHistory from "../components/Modal/BiddingHistoryModal";
+import WishlistOffcanvas from "../components/Offcanvas/WishlistOffcanvas";
+
 export default function MainPage() {
   return (
     <>
@@ -37,20 +39,23 @@ export default function MainPage() {
           <Route path="/cusdashboard" element={<CusDashboard />}>
             <Route path="myaccount" element={<MyAccount />} />
             <Route path="comingsoon" element={<ComingSoon />}></Route>
-            <Route path="winningRecords" element={<WinningRecords/>}>
-              <Route path="biddingHistory" element={<BiddingHistory/>}></Route> </Route>
+            <Route path="winningRecords" element={<WinningRecords />}>
+              <Route path="biddingHistory" element={<BiddingHistory />}></Route>{" "}
+            </Route>
           </Route>
         </Routes>
         {/* modal for navbar vv */}
         <LoginModal></LoginModal>
-        <EditAccount/>
-        <DeleteAccount/>
+        <EditAccount />
+        <DeleteAccount />
         <StaffLoginModal></StaffLoginModal>
         <Register></Register>
         <SignupSuccess />
         <Deposit />
         {/* modal for navbar ^^ */}
-        
+        {/* Offcanvas vv*/}
+        <WishlistOffcanvas />
+        {/* Offcanvas ^^*/}
         <Footer />
       </MainContextProvider>
     </>
