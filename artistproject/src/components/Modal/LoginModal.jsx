@@ -35,6 +35,8 @@ export default function LoginModal() {
       // console.log(result);
       localStorage.setItem("token", result.data.token);
       localStorage.setItem("nickName", result.data.nickName);
+      localStorage.setItem("customerId", result.data.customerId);
+      //console.log("customerId:    "+ localStorage.getItem("customerId"));
       setIsLogin(true);
     } catch (error) {
       console.log(error);

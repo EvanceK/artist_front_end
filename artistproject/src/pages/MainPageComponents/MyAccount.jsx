@@ -3,10 +3,15 @@ import MemberNav from "../../components/MemberNav";
 
 export default function MyAccount() {
   //1.先回傳customerID
+  let customerId = localStorage.getItem("customerId");
   //2.接收customer資料
-  //3.要帶入costomer的資料
-  //const path=import.meta.env.VITE_DATA_HOST_API;
-  //const api= path + "/costomer/";
+  // const path=import.meta.env.VITE_DATA_HOST_API;
+  // const ininDatAapi= path + "/costomer/initEditData";
+  //3.要帶入costomer的資料  
+  
+
+  // const EditAccountApi= path + "/costomer/EditAccount";
+
   
   const [customer,setCustomer]=useState({
     name:"aaa",
