@@ -10,7 +10,7 @@ import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 import PropTypes, { func } from "prop-types";
 import * as bootstrap from "bootstrap"; // Import Bootstrap as a module
-
+import axiosConfig from "../../axiosConfig";
 // Create the Context
 export const MainContext = createContext();
 
