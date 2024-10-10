@@ -7,21 +7,21 @@ export default function WinningRecords(){
             </div>
             <div className="cart mb-5">
                 <div className="">
-                    <div class="form-check ">
-                    <input class="form-check-input " type="checkbox" value="" id="selectAll"/>
-                    <label class="form-check-label" htmlFor="selectAll">
+                    <div className="form-check ">
+                    <input className="form-check-input " type="checkbox" value="" id="selectAll"/>
+                    <label className="form-check-label" htmlFor="selectAll">
                         Select All
                     </label>
                     </div>
                 <div className="pb-5 border-bottom">
                     <div className="d-flex justify-content-between row">
                         <div className="">
-                            <input class="form-check-input" type="checkbox" value="" id="select"/>
+                            <input className="form-check-input" type="checkbox" value="" id="select"/>
                         </div>    
                         <div className="d-flex justify-content-center col-6">
                             <img className="w-25" src="..\..\src\assets\home\orange.jpg" alt="product1" />
                         </div>    
-                            <label class="form-check-label col-4" htmlFor="select">
+                            <label className="form-check-label col-4" htmlFor="select">
                                 <h3>Wheat Field with Cypresses</h3>
                                 <p>Vincent van Gogh</p>
                                 <br/>
