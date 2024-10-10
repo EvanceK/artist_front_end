@@ -20,6 +20,7 @@ export function MainContextProvider({ children }) {
   const path = import.meta.env.VITE_DATA_HOST_API;
   //state for data 共用變數
   const [loadWishlist, setLoadWishlist] = useState(false);
+  const [getWishlistData, setGetWishListData] = useState(false);
   const [artistList, setArtisList] = useState([]); //所有作家名單 目前for navBar 選單用
   const [wishListByCus, setWishListByCus] = useState([]); //目前customer的wishlist產品
   // const [wishlistPaintingIdList, setWishlistPaintingIdList] = useState([]);
@@ -76,7 +77,7 @@ export function MainContextProvider({ children }) {
     // loadWishlist ? getWishList() : "";
     getWishList();
     // }, [setLoadWishlist, loadWishlist]);
-  }, [isLogin, loadWishlist, getWishList]);
+  }, [isLogin, getWishlistData]);
 
   // Create a Provider component
   const loginModalRef = useRef(null); // useRef for loginModal
@@ -114,6 +115,8 @@ export function MainContextProvider({ children }) {
         showLoginModal,
         loadWishlist,
         setLoadWishlist,
+        getWishlistData,
+        setGetWishListData,
       }}
     >
       {children}

@@ -4,13 +4,16 @@ import axiosInstance from "../../axiosConfig";
 import { MainContext } from "../ContextProvider/MainContext";
 const path = import.meta.env.VITE_DATA_HOST_API;
 export default function WishlistOffCanCard({ wishlisProps }) {
-  const { loadWishlist, setLoadWishlist } = useContext(MainContext);
+  const { loadWishlist, setLoadWishlist, getWishlistData, setGetWishListData } =
+    useContext(MainContext);
   const removeWishlist = async (event) => {
     const api = path + `/api/wishlist/${event.target.id}`;
     console.log(event.target.id);
     const result = await axiosInstance.delete(api);
     // console.log(result);
     setLoadWishlist(!loadWishlist);
+
+    setGetWishListData(!getWishlistData);
   };
   return (
     <>
