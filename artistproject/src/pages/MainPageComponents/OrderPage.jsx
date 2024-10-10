@@ -1,6 +1,6 @@
-import CustomerInfo from "../components/CustomerInfo";
-import PaymentMethod from "../components/PaymentMethod";
-import Order from "../components/Order";
+import CustomerInfo from "../../components/CustomerInfo";
+import PaymentMethod from "../../components/PaymentMethod";
+import Order from "../../components/Order";
 
 function OrderPage() {
   return (

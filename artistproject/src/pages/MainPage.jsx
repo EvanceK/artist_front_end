@@ -18,10 +18,11 @@ import CusDashboard from "./CusDashboard";
 import ComingSoon from "./Comingsoon";
 import EditAccount from "../components/EditAccount";
 import DeleteAccount from "../components/DeleteAccount";
-import OrderPage from "./OrderPage";
-import OrderHistory from "./OrderRecord";
-import OrderRecord from "./OrderRecord";
+import OrderPage from "./MainPageComponents/OrderPage";
+import OrderHistory from "./MainPageComponents/OrderRecord";
+import OrderRecord from "./MainPageComponents/OrderRecord";
 import WinningRecords from "../components/WinningRecords";
+import BiddingHistory from "../components/BiddingHistory";
 export default function MainPage() {
   return (
     <>
@@ -37,6 +38,8 @@ export default function MainPage() {
           <Route path="/cusdashboard" element={<CusDashboard />}>
             <Route path="myaccount" element={<MyAccount />} />
             <Route path="comingsoon" element={<ComingSoon />}></Route>
+            <Route path="winningRecords" element={<WinningRecords/>}>
+              <Route path="biddingHistory" element={<BiddingHistory/>}></Route> </Route>
           </Route>
         </Routes>
         {/* modal for navbar vv */}
@@ -48,8 +51,8 @@ export default function MainPage() {
         <SignupSuccess />
         <DeleteWarning />
         <Deposit />
-        <WinningRecords/>
         {/* modal for navbar ^^ */}
+        
         <Footer />
       </MainContextProvider>
     </>

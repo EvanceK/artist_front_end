@@ -1,3 +1,4 @@
+
 export default function WinningRecords(){
     return(
         <div className="container my-5 h-auto">
@@ -18,7 +19,7 @@ export default function WinningRecords(){
                             <input class="form-check-input" type="checkbox" value="" id="select"/>
                         </div>    
                         <div className="d-flex justify-content-center col-6">
-                            <img className="w-25" src="src\assets\home\orange.jpg" alt="product1" />
+                            <img className="w-25" src="..\..\src\assets\home\orange.jpg" alt="product1" />
                         </div>    
                             <label class="form-check-label col-4" for="select">
                                 <h3>Wheat Field with Cypresses</h3>
