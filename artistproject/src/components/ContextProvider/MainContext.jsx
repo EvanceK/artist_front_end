@@ -4,6 +4,7 @@ import React, {
   useContext,
   useRef,
   useEffect,
+  useCallback,
 } from "react";
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
@@ -37,7 +38,7 @@ export function MainContextProvider({ children }) {
       console.log(error);
     }
   };
-  const getWishList = async () => {
+  const getWishList = useCallback(async () => {
     const authorization = localStorage.getItem("token");
     const api = path + "/api/wishlist";
     const paintingIdArray = [];
@@ -66,12 +67,12 @@ export function MainContextProvider({ children }) {
       }
       // setWishlistPaintingIdList(paintingIdArray);
     }
-  };
+  });
   // useEffect for preload data
   useEffect(() => {
     // loadWishlist ? getWishList() : "";
     getWishList();
-  }, [loadWishlist, setLoadWishlist]);
+  }, [setLoadWishlist, loadWishlist]);
 
   // Create a Provider component
   const loginModalRef = useRef(null); // useRef for loginModal

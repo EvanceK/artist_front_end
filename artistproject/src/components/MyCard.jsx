@@ -10,7 +10,8 @@ export default function MyCard({ Paintings }) {
     paintingId: "",
   });
   // const { showLoginModal } = useContext(MainPageContext);
-  const { showLoginModal } = useContext(MainContext);
+  const { showLoginModal, loadWishlist, setLoadWishlist } =
+    useContext(MainContext);
   const path = import.meta.env.VITE_DATA_HOST_API;
 
   const handleClick = (event) => {
@@ -21,10 +22,14 @@ export default function MyCard({ Paintings }) {
     console.log("Element ID:", elementId);
     if (elementId != null) {
       setAddPainting({ ...addPainting, paintingId: elementId });
-      like ? addWishlist() : removeWishlist();
+      // like ? addWishlist() : removeWishlist(event);
+      addWishlist();
+      // removeWishlist(event);
     }
+    setLoadWishlist(!loadWishlist);
   };
   const addWishlist = () => {
+    console.log("addWL");
     const authorization = localStorage.getItem("token");
     const api = path + "/api/wishlist";
     if (authorization) {
@@ -39,11 +44,12 @@ export default function MyCard({ Paintings }) {
       console.log("please login");
     }
   };
-  const removeWishlist = () => {
+  const removeWishlist = (event) => {
+    console.log("removeWL");
     const authorization = localStorage.getItem("token");
-    const api = path + "/api/wishlist";
+    const api = path + `/api/wishlist/${event.target.id}`;
     if (authorization) {
-      axios.post(api, addPainting, {
+      axios.delete(api, addPainting, {
         headers: {
           Authorization: `Bearer ${authorization}`,
           "Content-Type": "application/json",
@@ -62,7 +68,9 @@ export default function MyCard({ Paintings }) {
           liked = true;
         }
       });
-    if (like) {
+
+    // setLike(liked);
+    if (liked) {
       return (
         <>
           <svg
@@ -75,6 +83,7 @@ export default function MyCard({ Paintings }) {
             viewBox="0 0 16 16"
           >
             <path
+              id={Paintings.paintingId}
               fillRule="evenodd"
               d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"
             />
