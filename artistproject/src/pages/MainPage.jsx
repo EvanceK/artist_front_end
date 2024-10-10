@@ -1,11 +1,11 @@
 import { Route, Routes } from "react-router-dom";
 import NavBar from "../components/NavBar";
-import LoginModal from "../components/accountModal/LoginModal";
-import StaffLoginModal from "../components/StaffLoginModal";
-import Register from "../components/accountModal/Register";
+import LoginModal from "../components/Modal/LoginModal";
+import StaffLoginModal from "../components/Modal/StaffLoginModal";
+import Register from "../components/Modal/RegisterModal";
 import HomeLayout from "./MainPageComponents/HomeLayout";
-import SignupSuccess from "../components/accountModal/SignupSuccess";
-import Deposit from "../components/Deposit";
+import SignupSuccess from "../components/Modal/SignupSuccess";
+import Deposit from "../components/Modal/DepositModal";
 import DeleteAccount from "./MainPageComponents/MyAccountComponents/DeleteAccount";
 import ViewContainer from "./MainPageComponents/ViewContainer";
 import MyAccount from "./MainPageComponents/MyAccount";
@@ -20,8 +20,8 @@ import EditAccount from "./MainPageComponents/MyAccountComponents/EditAccount";
 import OrderPage from "./MainPageComponents/OrderPage";
 import OrderHistory from "./MainPageComponents/OrderRecord";
 import OrderRecord from "./MainPageComponents/OrderRecord";
-import WinningRecords from "../components/WinningRecords";
-import BiddingHistory from "../components/BiddingHistory";
+import WinningRecords from "./MainPageComponents/WinningRecords";
+import BiddingHistory from "../components/Modal/BiddingHistoryModal";
 export default function MainPage() {
   return (
     <>

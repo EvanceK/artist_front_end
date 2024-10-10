@@ -1,4 +1,4 @@
-export default function DeleteWarning() {
+export default function DeleteWarningModal() {
   return (
     <div
       className="modal modal-lg fade"

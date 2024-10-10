@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import projectLogo from "../../assets/LOGO.png";
-export default function Register() {
+export default function RegisterModal() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const api = path + "/customers/register";
   const [data, setData] = useState({

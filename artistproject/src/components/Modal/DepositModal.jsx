@@ -1,4 +1,4 @@
-export default function Deposit(){
+export default function DepositModal(){
     return(
         <div
         className="modal modal-lg fade"
