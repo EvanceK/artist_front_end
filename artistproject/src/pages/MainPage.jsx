@@ -21,8 +21,9 @@ import OrderPage from "./MainPageComponents/OrderPage";
 import OrderHistory from "./MainPageComponents/OrderRecord";
 import OrderRecord from "./MainPageComponents/OrderRecord";
 import WinningRecords from "./MainPageComponents/WinningRecords";
-import BiddingHistory from "../components/Modal/BiddingHistoryModal";
+import BiddingHistory from "../components/Offcanvas/BiddingHistoryOffcanvas";
 import WishlistOffcanvas from "../components/Offcanvas/WishlistOffcanvas";
+import BiddingHistoryOffcanvas from "../components/Offcanvas/BiddingHistoryOffcanvas";
 
 export default function MainPage() {
   return (
@@ -54,6 +55,7 @@ export default function MainPage() {
         <Deposit />
         {/* modal for navbar ^^ */}
         {/* Offcanvas vv*/}
+        <BiddingHistoryOffcanvas/>
         <WishlistOffcanvas />
         {/* Offcanvas ^^*/}
         <Footer />

@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer className="footer bg-light">
       <div className="container d-flex">
-        <div className="foot w-100 d-flex row p-4">
+        <div className="w-100 d-flex row p-4 bg-primary-text-gold">
           <div className=" w-25 d-flex justify-content-center align-items-center col-3">
             <img
               className="projectLogo w-75 h-50 "
