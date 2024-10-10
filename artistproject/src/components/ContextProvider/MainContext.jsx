@@ -11,6 +11,7 @@ import axios from "axios";
 import PropTypes, { func } from "prop-types";
 import * as bootstrap from "bootstrap"; // Import Bootstrap as a module
 import axiosConfig from "../../axiosConfig";
+import { UserContext } from "./UserContext";
 // Create the Context
 export const MainContext = createContext();
 
@@ -25,7 +26,8 @@ export function MainContextProvider({ children }) {
   //vv for searching 功能用的變數：
   const [search, setSearch] = useState();
   const [searchParams, setSearchParams] = useSearchParams();
-
+  const { userName, setUserName, isLogin, setIsLogin } =
+    useContext(UserContext);
   // methods for loading data
   const getArtistList = async () => {
     const api = path + "/ArtController/findall";
@@ -62,6 +64,7 @@ export function MainContextProvider({ children }) {
             JSON.stringify(paintingIdArray)
           );
         }
+        setLoadWishlist(!loadWishlist);
       } catch (error) {
         console.log(error);
       }
@@ -72,7 +75,8 @@ export function MainContextProvider({ children }) {
   useEffect(() => {
     // loadWishlist ? getWishList() : "";
     getWishList();
-  }, [setLoadWishlist, loadWishlist]);
+    // }, [setLoadWishlist, loadWishlist]);
+  }, [isLogin]);
 
   // Create a Provider component
   const loginModalRef = useRef(null); // useRef for loginModal
