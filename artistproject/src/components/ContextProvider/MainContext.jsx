@@ -94,6 +94,8 @@ export function MainContextProvider({ children }) {
         getWishList,
         search,
         setSearch,
+        searchParams,
+        setSearchParams,
         loginModalRef,
         showLoginModal,
         loadWishlist,

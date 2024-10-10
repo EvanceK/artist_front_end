@@ -14,6 +14,7 @@ export default function NavBar() {
     getArtistList,
     getWishList,
     setSearch,
+    search,
     loadWishlist,
     setLoadWishlist,
   } = useContext(MainContext);
@@ -141,14 +142,21 @@ export default function NavBar() {
           <img className="projectLogo" src={projectLogo} alt="Logo"></img>
         </Link>
         <form className="d-flex position-relative" role="search">
+          p {search}
           <input
             className="form-control ms-2"
             id="search"
-            // type="search"
+            type="text"
             placeholder="Search"
+            defaultValue={search}
             aria-label="Search"
+            onKeyUp={(e) => {
+              if (e.Code === "Enter") {
+                console.log("as");
+                setSearch(e.target.value);
+              }
+            }}
           />
-
           <div className="d-flex align-items-center justify-content-end">
             {/* <span className="material-symbols-outlined position-absolute end-0 px-2">
               search
@@ -264,19 +272,19 @@ export default function NavBar() {
               data-bs-toggle="offcanvas"
               aria-controls="BiddingHistoryModal"
             >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="25"
-              height="25"
-              fill="currentColor"
-              className="bi bi-bag-check-fill m-4"
-              viewBox="0 0 16 16"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0m-.646 5.354a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z"
-              />
-            </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="25"
+                height="25"
+                fill="currentColor"
+                className="bi bi-bag-check-fill m-4"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0m-.646 5.354a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z"
+                />
+              </svg>
             </a>
             {accountfeild}
           </div>
