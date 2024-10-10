@@ -9,7 +9,7 @@ export default function WinningRecords(){
                 <div className="">
                     <div class="form-check ">
                     <input class="form-check-input " type="checkbox" value="" id="selectAll"/>
-                    <label class="form-check-label" for="selectAll">
+                    <label class="form-check-label" htmlFor="selectAll">
                         Select All
                     </label>
                     </div>
@@ -21,7 +21,7 @@ export default function WinningRecords(){
                         <div className="d-flex justify-content-center col-6">
                             <img className="w-25" src="..\..\src\assets\home\orange.jpg" alt="product1" />
                         </div>    
-                            <label class="form-check-label col-4" for="select">
+                            <label class="form-check-label col-4" htmlFor="select">
                                 <h3>Wheat Field with Cypresses</h3>
                                 <p>Vincent van Gogh</p>
                                 <br/>

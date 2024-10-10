@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import projectLogo from "../assets/LOGO.png";
 export default function EditAccount() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const api = path + "/customers/EditAccount";

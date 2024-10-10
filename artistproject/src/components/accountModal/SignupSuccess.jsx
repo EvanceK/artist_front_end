@@ -1,4 +1,4 @@
-import projectLogo from "../assets/LOGO.png";
+import projectLogo from "../../assets/LOGO.png";
 export default function SignupSuccess() {
   return (
     <div

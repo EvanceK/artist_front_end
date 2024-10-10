@@ -4,9 +4,9 @@ import LoginModal from "../components/accountModal/LoginModal";
 import StaffLoginModal from "../components/StaffLoginModal";
 import Register from "../components/accountModal/Register";
 import HomeLayout from "./MainPageComponents/HomeLayout";
-import SignupSuccess from "../components/SignupSuccess";
+import SignupSuccess from "../components/accountModal/SignupSuccess";
 import Deposit from "../components/Deposit";
-import DeleteWarning from "../components/Deletewarning";
+import DeleteAccount from "./MainPageComponents/MyAccountComponents/DeleteAccount";
 import ViewContainer from "./MainPageComponents/ViewContainer";
 import MyAccount from "./MainPageComponents/MyAccount";
 import PaintingsListContainer from "./MainPageComponents/ArtistViewContainer";
@@ -16,8 +16,7 @@ import Auction from "../components/Auction";
 import Footer from "../components/Footer";
 import CusDashboard from "./CusDashboard";
 import ComingSoon from "./Comingsoon";
-import EditAccount from "../components/EditAccount";
-import DeleteAccount from "../components/DeleteAccount";
+import EditAccount from "./MainPageComponents/MyAccountComponents/EditAccount";
 import OrderPage from "./MainPageComponents/OrderPage";
 import OrderHistory from "./MainPageComponents/OrderRecord";
 import OrderRecord from "./MainPageComponents/OrderRecord";
@@ -49,7 +48,6 @@ export default function MainPage() {
         <StaffLoginModal></StaffLoginModal>
         <Register></Register>
         <SignupSuccess />
-        <DeleteWarning />
         <Deposit />
         {/* modal for navbar ^^ */}
         
