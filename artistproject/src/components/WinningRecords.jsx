@@ -4,7 +4,7 @@ export default function WinningRecords(){
             <div className="title border-bottom my-5 py-4">
                 <h2>Winning Records</h2>
             </div>
-            <div className="cart ">
+            <div className="cart mb-5">
                 <div className="">
                     <div class="form-check ">
                     <input class="form-check-input " type="checkbox" value="" id="selectAll"/>
@@ -12,22 +12,22 @@ export default function WinningRecords(){
                         Select All
                     </label>
                     </div>
-                <div className="d-flex ">
-                    <div className="d-flex justify-content-between ">
+                <div className="pb-5 border-bottom">
+                    <div className="d-flex justify-content-between row">
                         <div className="">
                             <input class="form-check-input" type="checkbox" value="" id="select"/>
                         </div>    
-                        <div className="d-flex justify-content-center">
+                        <div className="d-flex justify-content-center col-6">
                             <img className="w-25" src="src\assets\home\orange.jpg" alt="product1" />
                         </div>    
-                            <label class="form-check-label" for="select">
+                            <label class="form-check-label col-4" for="select">
                                 <h3>Wheat Field with Cypresses</h3>
                                 <p>Vincent van Gogh</p>
                                 <br/>
                                 <br/>
                                 <p>$  125,0000</p>
                             </label>
-                        <div className="d-flex align-items-center">
+                        <div className="d-flex justify-content-center align-items-center col-1">
                         <svg xmlns="http://www.w3.org/2000/svg" 
                         width="16" 
                         height="16" 
@@ -39,10 +39,39 @@ export default function WinningRecords(){
                         </div>
                     </div>
                 </div>
-                
                 </div>
             </div>
-            
+            <div className="row d-flex justify-content-end">
+                <div className="col-4">
+                    <div className="d-flex justify-content-between row">
+                        <div className="col-4"><h4>Subtotal</h4></div>
+                        <div className="col-1"><h4>NT$</h4></div>
+                        <div className="col-4"><h4>125,000</h4></div>
+                    </div>
+                <div>
+                    <div className="d-flex justify-content-between row">
+                        <div className="col-4"><h4>Delivery fee</h4></div>
+                        <div className="col-1"><h4>NT$</h4></div>
+                        <div className="col-4"><h4>120</h4></div>
+                    </div>
+                </div>
+                <div className=" border-bottom">
+                    <div className="d-flex justify-content-between row">
+                        <div className="col-4"><h4>Service fee</h4></div>
+                        <div className="col-1"><h4>NT$</h4></div>
+                        <div className="col-4"><h4>12,500</h4></div>
+                    </div>
+                </div>
+                <div className="d-flex justify-content-between row">
+                        <div className="col-4"><h3>Total</h3></div>
+                        <div className="col-1"><h3>NT$</h3></div>
+                        <div className="col-4"><h3>137,620</h3></div>
+                    </div>
+                </div>
+            </div>
+            <div className="row d-flex justify-content-center m-5 ">
+                <div className="col-3 btn btn-primary py-3"><h5>Enter payment imformation</h5></div>
+            </div>
         </div>
     )
 }

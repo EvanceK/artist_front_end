@@ -21,6 +21,7 @@ import DeleteAccount from "../components/DeleteAccount";
 import OrderPage from "./OrderPage";
 import OrderHistory from "./OrderRecord";
 import OrderRecord from "./OrderRecord";
+import WinningRecords from "../components/WinningRecords";
 export default function MainPage() {
   return (
     <>
@@ -47,8 +48,7 @@ export default function MainPage() {
         <SignupSuccess />
         <DeleteWarning />
         <Deposit />
-        <OrderRecord />
-
+        <WinningRecords/>
         {/* modal for navbar ^^ */}
         <Footer />
       </MainContextProvider>
