@@ -6,6 +6,7 @@ import Register from "../components/Modal/RegisterModal";
 import HomeLayout from "./MainPageComponents/HomeLayout";
 import SignupSuccess from "../components/Modal/SignupSuccess";
 import Deposit from "../components/Modal/DepositModal";
+import PasswordResetEmailModel from "../components/Modal/PasswordResetEmailModal";
 import DeleteAccount from "./MainPageComponents/MyAccountComponents/DeleteAccount";
 import ViewContainer from "./MainPageComponents/ViewContainer";
 import MyAccount from "./MainPageComponents/MyAccount";
@@ -24,6 +25,7 @@ import WinningRecords from "./MainPageComponents/WinningRecords";
 import WishlistOffcanvas from "../components/Offcanvas/WishlistOffcanvas";
 import ConfirmOrder from "./MainPageComponents/ConfirmOrder";
 import MyWallet from "./MainPageComponents/MyWallet";
+import BiddingHistoryOffcanvas from "../components/Offcanvas/BiddingHistoryOffcanvas";
 
 export default function MainPage() {
   return (
@@ -60,13 +62,13 @@ export default function MainPage() {
         <Register></Register>
         <SignupSuccess />
         <Deposit />
-        <OrderPage/>
-       
-      
-        
+        <OrderPage />
+        <PasswordResetEmailModel />
+
         {/* modal for navbar ^^ */}
         {/* Offcanvas vv*/}
         <WishlistOffcanvas />
+        <BiddingHistoryOffcanvas />
         {/* Offcanvas ^^*/}
         <Footer />
       </MainContextProvider>
