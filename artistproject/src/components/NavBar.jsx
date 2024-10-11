@@ -117,8 +117,13 @@ export default function NavBar() {
                 </Link>
               </li>
               <li>
-                <Link className="dropdown-item" to="cusdashboard/comingsoon">
-                  My Wishlist
+                <Link className="dropdown-item" to="cusdashboard/ConfirmOrder">
+                  Confirm Order
+                </Link>
+              </li>
+              <li>
+                <Link className="dropdown-item" to="cusdashboard/OrderPage">
+                  My OrderPage
                 </Link>
               </li>
               <li>

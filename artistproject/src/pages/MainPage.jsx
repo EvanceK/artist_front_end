@@ -48,10 +48,10 @@ export default function MainPage() {
             <Route path="winningRecords" element={<WinningRecords />}>
               {/* <Route path="biddingHistory" element={<BiddingHistory />}></Route>{" "} */}
             </Route>
-            <Route path="ConfirmOrder" element={<ConfirmOrder />} />
-            <Route path="OrderPage" element={<OrderPage />} />
             <Route path="OrderRecord" element={<OrderRecord />} />
             <Route path="MyWallet" element={<MyWallet />} />
+            <Route path="ConfirmOrder" element={<ConfirmOrder />} />
+            <Route path="OrderPage" element={<OrderPage />} />
           </Route>
         </Routes>
         {/* modal for navbar vv */}
@@ -62,7 +62,7 @@ export default function MainPage() {
         <Register></Register>
         <SignupSuccess />
         <Deposit />
-        <OrderPage />
+
         <PasswordResetEmailModel />
 
         {/* modal for navbar ^^ */}
