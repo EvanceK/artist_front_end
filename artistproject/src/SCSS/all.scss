@@ -30,6 +30,7 @@ body {
 .homelayout,
 .cusdash {
   min-height: 80vh;
+  margin-top: 170px;
 }
 #root {
   overflow: hidden;
@@ -109,15 +110,6 @@ body {
   padding: 0;
 }
 
-:root {
-  --black: #000;
-  --eggshell: #fffffc;
-  --grullo: #9C9A89;
-  --darkblue: #0A2540;
-  --golden: #f8db8a;
-  --green: #3E6E5A;
-  --red: #A8243B;
-}
 
 .underline{
   border-bottom: 2px solid $info;

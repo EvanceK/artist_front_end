@@ -6,7 +6,8 @@ import $ from "jquery";
 import { MainContext } from "./ContextProvider/MainContext";
 import { useFetcher } from "react-router-dom";
 export default function MyCard({ Paintings }) {
-  const [like, setLike] = useState(false);
+  const [likedCard, setLikedCard] = useState(false);
+  const [cardId, setCardId] = useState();
   const [addPainting, setAddPainting] = useState();
   // const { showLoginModal } = useContext(MainPageContext);
   const {
@@ -15,6 +16,8 @@ export default function MyCard({ Paintings }) {
     setLoadWishlist,
     setGetWishListData,
     getWishlistData,
+    like,
+    setLike,
   } = useContext(MainContext);
   const path = import.meta.env.VITE_DATA_HOST_API;
 
@@ -22,25 +25,20 @@ export default function MyCard({ Paintings }) {
     setLike(!like);
     console.log(like);
     setAddPainting({ paintingId: event.target.id });
-
+    setCardId(event.target.id);
+    let currentValue = event.target.getAttribute("data-value") === "true";
+    console.log(currentValue);
+    setLikedCard(!currentValue);
+    event.target.setAttribute("data-value", !currentValue);
+    console.log("f", event.target);
     // console.log(addPainting);
-    // if (event.target.id !== null) {
-    //   setAddPainting({ ...addPainting, paintingId: event.target.id });
-    //   // setAddPainting({ paintingId: event.target.id });
-    //   // like ? addWishlist() : removeWishlist(event);
-    //   addWishlist();
-    //   // removeWishlist(event);
-    // }
-    // setGetWishListData(!getWishlistData);
-    // setLoadWishlist(!loadWishlist);
   };
   useEffect(() => {
-    console.log("useEffect: ", addPainting);
+    // console.log("useEffect: ", addPainting);
+
     if (addPainting) {
-      // setAddPainting({ paintingId: event.target.id });
       // like ? addWishlist() : removeWishlist(event);
-      addWishlist();
-      // removeWishlist(event);
+      likedCard ? addWishlist() : removeWishlist(cardId);
     }
     setGetWishListData(!getWishlistData);
     setLoadWishlist(!loadWishlist);
@@ -50,8 +48,8 @@ export default function MyCard({ Paintings }) {
   const addWishlist = async () => {
     const authorization = localStorage.getItem("token");
     const api = path + "/api/wishlist";
-    console.log(authorization);
-    console.log(addPainting);
+    // console.log(authorization);
+    // console.log(addPainting);
     if (authorization) {
       const result = await axiosInstance.post(api, addPainting);
       console.log("addWishlist result:", result);
@@ -62,15 +60,15 @@ export default function MyCard({ Paintings }) {
     console.log("added");
   };
 
-  // const removeWishlist = async (event) => {
-  //   const api = path + `/api/wishlist/${event.target.id}`;
-  //   console.log(event.target.id);
-  //   const result = await axiosInstance.delete(api);
-  //   console.log(result);
-  //   setLoadWishlist(!loadWishlist);
+  const removeWishlist = async (cardId) => {
+    const api = path + `/api/wishlist/${cardId}`;
+    console.log(cardId);
+    const result = await axiosInstance.delete(api);
+    console.log(result);
+    setLoadWishlist(!loadWishlist);
 
-  //   setGetWishListData(!getWishlistData);
-  // };
+    setGetWishListData(!getWishlistData);
+  };
 
   function buildBtn() {
     let liked = false;
@@ -81,10 +79,24 @@ export default function MyCard({ Paintings }) {
         }
       });
 
-    // setLike(liked);
     if (liked) {
       return (
         <>
+          <span
+            onClick={handleClick}
+            data-value={liked}
+            id={Paintings.paintingId}
+            style={{
+              position: "absolute",
+              display: "flex",
+              height: "100%",
+              width: "100%",
+              // backgroundColor: "black",
+              opacity: "90%",
+              zIndex: "2",
+            }}
+          ></span>
+          FAV
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -99,11 +111,41 @@ export default function MyCard({ Paintings }) {
               d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"
             />
           </svg>
+          RITE
+          {/* <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            // fill="currentColor"
+            fill="red"
+            className="bi bi-heart-fill"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fillRule="evenodd"
+              d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"
+            />
+          </svg> */}
         </>
       );
     } else {
       return (
         <>
+          <span
+            onClick={handleClick}
+            data-value={liked}
+            id={Paintings.paintingId}
+            style={{
+              position: "absolute",
+              display: "flex",
+              height: "100%",
+              width: "100%",
+              // backgroundColor: "black",
+              opacity: "90%",
+              zIndex: "2",
+            }}
+          ></span>
+          FAV
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -114,6 +156,17 @@ export default function MyCard({ Paintings }) {
           >
             <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
           </svg>
+          RITE
+          {/* <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            className="bi bi-heart"
+            viewBox="0 0 16 16"
+          >
+            <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+          </svg> */}
         </>
       );
     }
@@ -136,8 +189,9 @@ export default function MyCard({ Paintings }) {
           </p>
           <div className="cardBtn d-flex justify-content-center ">
             <span style={{ position: "relative" }} className="btn mx-3">
-              <span
+              {/* <span
                 onClick={handleClick}
+                data-value={likedCard}
                 id={Paintings.paintingId}
                 style={{
                   position: "absolute",
@@ -151,7 +205,8 @@ export default function MyCard({ Paintings }) {
               ></span>
               FAV
               {buildBtn()}
-              RITE
+              RITE */}
+              {buildBtn()}
             </span>
             <span className="btn btn-primary mx-3">PLACE BID</span>
           </div>

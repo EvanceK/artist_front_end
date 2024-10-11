@@ -107,12 +107,12 @@ export default function NavBar() {
                 </Link>
               </li>
               <li>
-                <Link className="dropdown-item" to="cusdashboard/comingsoon">
+                <Link className="dropdown-item" to="cusdashboard/OrderRecord">
                   My Order
                 </Link>
               </li>
               <li>
-                <Link className="dropdown-item" to="cusdashboard/comingsoon">
+                <Link className="dropdown-item" to="cusdashboard/MyWallet">
                   My Wallet
                 </Link>
               </li>
