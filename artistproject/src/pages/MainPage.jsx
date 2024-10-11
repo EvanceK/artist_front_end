@@ -18,11 +18,12 @@ import CusDashboard from "./CusDashboard";
 import ComingSoon from "./Comingsoon";
 import EditAccount from "./MainPageComponents/MyAccountComponents/EditAccount";
 import OrderPage from "./MainPageComponents/OrderPage";
-import OrderHistory from "./MainPageComponents/OrderRecord";
 import OrderRecord from "./MainPageComponents/OrderRecord";
 import WinningRecords from "./MainPageComponents/WinningRecords";
 // import BiddingHistory from "../components/Modal/BiddingHistoryModal";
 import WishlistOffcanvas from "../components/Offcanvas/WishlistOffcanvas";
+import ConfirmOrder from "./MainPageComponents/ConfirmOrder";
+import MyWallet from "./MyWallet";
 
 export default function MainPage() {
   return (
@@ -30,18 +31,25 @@ export default function MainPage() {
       <MainContextProvider>
         <NavBar></NavBar>
         <Routes>
+          {/*不用登入就可以看到的 */}
           <Route path="/" element={<HomeLayout />}>
             <Route index element={<ViewContainer />} />
             <Route path="/byArtist" element={<PaintingsListContainer />} />
             <Route path=":id" element={<ViewByArtistContainer />} />
             <Route path="/auction" element={<Auction></Auction>} />
           </Route>
+
+          {/*要登入才可以看到的 */}
           <Route path="/cusdashboard" element={<CusDashboard />}>
             <Route path="myaccount" element={<MyAccount />} />
             <Route path="comingsoon" element={<ComingSoon />}></Route>
             <Route path="winningRecords" element={<WinningRecords />}>
               {/* <Route path="biddingHistory" element={<BiddingHistory />}></Route>{" "} */}
             </Route>
+            <Route path="ConfirmOrder" element={<ConfirmOrder />} />
+            <Route path="OrderPage" element={<OrderPage />} />
+            <Route path="OrderRecord" element={<OrderRecord />} />
+            <Route path="MyWallet" element={<MyWallet />} />
           </Route>
         </Routes>
         {/* modal for navbar vv */}
@@ -52,6 +60,9 @@ export default function MainPage() {
         <Register></Register>
         <SignupSuccess />
         <Deposit />
+       
+      
+        
         {/* modal for navbar ^^ */}
         {/* Offcanvas vv*/}
         <WishlistOffcanvas />
