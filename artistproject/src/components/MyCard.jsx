@@ -6,7 +6,7 @@ import $ from "jquery";
 import { MainContext } from "./ContextProvider/MainContext";
 import { useFetcher } from "react-router-dom";
 export default function MyCard({ Paintings }) {
-  const [like, setLike] = useState(false);
+  // const [like, setLike] = useState(false);
   const [addPainting, setAddPainting] = useState();
   // const { showLoginModal } = useContext(MainPageContext);
   const {
@@ -15,6 +15,8 @@ export default function MyCard({ Paintings }) {
     setLoadWishlist,
     setGetWishListData,
     getWishlistData,
+    like,
+    setLike,
   } = useContext(MainContext);
   const path = import.meta.env.VITE_DATA_HOST_API;
 
@@ -38,8 +40,8 @@ export default function MyCard({ Paintings }) {
     console.log("useEffect: ", addPainting);
     if (addPainting) {
       // setAddPainting({ paintingId: event.target.id });
-      // like ? addWishlist() : removeWishlist(event);
-      addWishlist();
+      like ? addWishlist() : removeWishlist(event);
+      // addWishlist();
       // removeWishlist(event);
     }
     setGetWishListData(!getWishlistData);
@@ -50,8 +52,8 @@ export default function MyCard({ Paintings }) {
   const addWishlist = async () => {
     const authorization = localStorage.getItem("token");
     const api = path + "/api/wishlist";
-    console.log(authorization);
-    console.log(addPainting);
+    // console.log(authorization);
+    // console.log(addPainting);
     if (authorization) {
       const result = await axiosInstance.post(api, addPainting);
       console.log("addWishlist result:", result);
@@ -62,15 +64,15 @@ export default function MyCard({ Paintings }) {
     console.log("added");
   };
 
-  // const removeWishlist = async (event) => {
-  //   const api = path + `/api/wishlist/${event.target.id}`;
-  //   console.log(event.target.id);
-  //   const result = await axiosInstance.delete(api);
-  //   console.log(result);
-  //   setLoadWishlist(!loadWishlist);
+  const removeWishlist = async (event) => {
+    const api = path + `/api/wishlist/${event.target.id}`;
+    console.log(event.target.id);
+    const result = await axiosInstance.delete(api);
+    console.log(result);
+    setLoadWishlist(!loadWishlist);
 
-  //   setGetWishListData(!getWishlistData);
-  // };
+    setGetWishListData(!getWishlistData);
+  };
 
   function buildBtn() {
     let liked = false;
