@@ -23,7 +23,7 @@ import WinningRecords from "./MainPageComponents/WinningRecords";
 // import BiddingHistory from "../components/Modal/BiddingHistoryModal";
 import WishlistOffcanvas from "../components/Offcanvas/WishlistOffcanvas";
 import ConfirmOrder from "./MainPageComponents/ConfirmOrder";
-import MyWallet from "./MyWallet";
+import MyWallet from "./MainPageComponents/MyWallet";
 
 export default function MainPage() {
   return (
@@ -60,6 +60,7 @@ export default function MainPage() {
         <Register></Register>
         <SignupSuccess />
         <Deposit />
+        <OrderPage/>
        
       
         
