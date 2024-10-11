@@ -1,6 +1,9 @@
+import MemberNav from "../../components/MemberNav";
+
 function MyWallet() {
   return (
     <div className="container mt-5 mb-5">
+      <MemberNav/>
       {/* My Wallet 標題區塊 */}
 
       <h1 className="mb-3">My Wallet</h1>
