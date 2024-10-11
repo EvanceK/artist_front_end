@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import OrangeImage from "../assets/home/orange.jpg";
+import { info } from "sass";
 
 function Order() {
   return (

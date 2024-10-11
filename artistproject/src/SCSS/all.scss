@@ -120,16 +120,14 @@ body {
 }
 
 .underline{
-  border-bottom: 2px solid var(--grullo);
+  border-bottom: 2px solid $info;
   padding-bottom: 10px;
 
 }
 
-.customerInfo-p{
-  text-align: center;
-}
 
 
 .grayfont{
-  color: var(--grullo) !important;
+  color: $info !important;
 }
+
