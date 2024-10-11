@@ -1,15 +1,14 @@
 import PropTypes from "prop-types";
 import axiosInstance from "../axiosConfig";
-import { useCallback, useContext, useEffect, useState } from "react";
-import $ from "jquery";
-// import { MainPageContext } from "./ContextProvider/MainPageContext";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { MainContext } from "./ContextProvider/MainContext";
-import { useFetcher } from "react-router-dom";
+import { compileString } from "sass";
 export default function MyCard({ Paintings }) {
   const [likedCard, setLikedCard] = useState(false);
   const [cardId, setCardId] = useState();
   const [addPainting, setAddPainting] = useState();
-  // const { showLoginModal } = useContext(MainPageContext);
+  const navigate = useNavigate();
   const {
     showLoginModal,
     loadWishlist,
@@ -23,15 +22,20 @@ export default function MyCard({ Paintings }) {
 
   const handleClick = (event) => {
     setLike(!like);
-    console.log(like);
+    // console.log(like);
     setAddPainting({ paintingId: event.target.id });
     setCardId(event.target.id);
     let currentValue = event.target.getAttribute("data-value") === "true";
-    console.log(currentValue);
+    // console.log(currentValue);
     setLikedCard(!currentValue);
     event.target.setAttribute("data-value", !currentValue);
-    console.log("f", event.target);
+    // console.log("f", event.target);
     // console.log(addPainting);
+  };
+  const placeBid = (e) => {
+    console.log("placeBid");
+    console.log(e.target.id);
+    navigate(`/home/auction/${e.target.id}`);
   };
   useEffect(() => {
     // console.log("useEffect: ", addPainting);
@@ -50,23 +54,23 @@ export default function MyCard({ Paintings }) {
     const api = path + "/api/wishlist";
     // console.log(authorization);
     // console.log(addPainting);
-    if (authorization) {
-      const result = await axiosInstance.post(api, addPainting);
-      console.log("addWishlist result:", result);
-    } else {
-      showLoginModal();
-      console.log("please login");
+    try {
+      if (authorization) {
+        await axiosInstance.post(api, addPainting);
+        // console.log("addWishlist result:", result);
+      } else {
+        showLoginModal();
+        console.log("please login");
+      }
+    } catch (e) {
+      console.log(e);
     }
-    console.log("added");
   };
 
   const removeWishlist = async (cardId) => {
     const api = path + `/api/wishlist/${cardId}`;
-    console.log(cardId);
-    const result = await axiosInstance.delete(api);
-    console.log(result);
+    await axiosInstance.delete(api);
     setLoadWishlist(!loadWishlist);
-
     setGetWishListData(!getWishlistData);
   };
 
@@ -208,7 +212,13 @@ export default function MyCard({ Paintings }) {
               RITE */}
               {buildBtn()}
             </span>
-            <span className="btn btn-primary mx-3">PLACE BID</span>
+            <span
+              className="btn btn-primary mx-3"
+              id={Paintings.paintingId}
+              onClick={placeBid}
+            >
+              PLACE BID
+            </span>
           </div>
         </div>
         <img
@@ -274,18 +284,18 @@ MyCard.propTypes = {
   Paintings: PropTypes.shape({
     artistId: PropTypes.string.isRequired,
     artisName: PropTypes.string.isRequired,
+    paintingId: PropTypes.string.isRequired,
+    paintingName: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
     date: PropTypes.string.isRequired, //畫作倉作日期
     delicated: PropTypes.number.isRequired,
     // dimensions: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired, //畫風
-    largUrl: PropTypes.string.isRequired,
+    genre: PropTypes.string, //畫風
     // media: PropTypes.any.isRequired,//
-    paintingId: PropTypes.string.isRequired,
-    paintingName: PropTypes.string.isRequired,
     // period: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    smallUrl: PropTypes.string.isRequired,
-    style: PropTypes.string.isRequired,
-    uploadDate: PropTypes.string.isRequired,
+    smallUrl: PropTypes.string,
+    largUrl: PropTypes.string,
+    style: PropTypes.string,
+    uploadDate: PropTypes.string,
   }).isRequired,
 };

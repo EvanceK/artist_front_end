@@ -231,16 +231,6 @@ export default function NavBar() {
               </ul>
             </li>
 
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                ArtWorks
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Auctions
-              </a>
-            </li>
             <li>
               <button
                 type="button"

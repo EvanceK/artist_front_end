@@ -38,7 +38,7 @@ export default function MainPage() {
             <Route index element={<ViewContainer />} />
             <Route path="/byArtist" element={<PaintingsListContainer />} />
             <Route path=":id" element={<ViewByArtistContainer />} />
-            <Route path="/auction" element={<Auction></Auction>} />
+            <Route path="/auction/:id" element={<Auction />} />
           </Route>
 
           {/*要登入才可以看到的 */}
