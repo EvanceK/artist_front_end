@@ -23,6 +23,7 @@ export function MainContextProvider({ children }) {
   const [getWishlistData, setGetWishListData] = useState(false);
   const [artistList, setArtisList] = useState([]); //所有作家名單 目前for navBar 選單用
   const [wishListByCus, setWishListByCus] = useState([]); //目前customer的wishlist產品
+  const [like, setLike] = useState(false);
   // const [wishlistPaintingIdList, setWishlistPaintingIdList] = useState([]);
   //vv for searching 功能用的變數：
   const [search, setSearch] = useState();
@@ -77,7 +78,7 @@ export function MainContextProvider({ children }) {
     // loadWishlist ? getWishList() : "";
     getWishList();
     // }, [setLoadWishlist, loadWishlist]);
-  }, [isLogin, getWishlistData, loadWishlist]);
+  }, [isLogin, getWishlistData, like, setLike]);
 
   // Create a Provider component
   const loginModalRef = useRef(null); // useRef for loginModal
@@ -121,6 +122,8 @@ export function MainContextProvider({ children }) {
         setLoadWishlist,
         getWishlistData,
         setGetWishListData,
+        like,
+        setLike,
       }}
     >
       {children}
