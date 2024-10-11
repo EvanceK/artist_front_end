@@ -25,6 +25,7 @@ import WinningRecords from "./MainPageComponents/WinningRecords";
 import WishlistOffcanvas from "../components/Offcanvas/WishlistOffcanvas";
 import ConfirmOrder from "./MainPageComponents/ConfirmOrder";
 import MyWallet from "./MainPageComponents/MyWallet";
+import BiddingHistoryOffcanvas from "../components/Offcanvas/BiddingHistoryOffcanvas";
 
 export default function MainPage() {
   return (
@@ -67,6 +68,7 @@ export default function MainPage() {
         {/* modal for navbar ^^ */}
         {/* Offcanvas vv*/}
         <WishlistOffcanvas />
+        <BiddingHistoryOffcanvas />
         {/* Offcanvas ^^*/}
         <Footer />
       </MainContextProvider>
