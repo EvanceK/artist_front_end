@@ -29,8 +29,8 @@ export default function NavBar() {
       $(".nav-link").removeClass("active"); // Remove "active" class from all
       $(this).addClass("active"); // Add "active" class to the clicked element
     });
-    $("#search").on("keyup", (e) => {
-      setSearch(e.target.value);
+    $("#searchtxt").on("keyup", (e) => {
+      if (e.code === "Enter") setSearchParams({ keyword: e.target.value });
       console.log(e.target.value);
     });
 
@@ -144,21 +144,14 @@ export default function NavBar() {
           <img className="projectLogo" src={projectLogo} alt="Logo"></img>
         </Link>
         <form className="d-flex position-relative" role="search">
-          p {search}
+          {search}
           <input
             className="form-control ms-2"
-            id="search"
+            id="searchtxt"
             type="text"
             placeholder="Search"
             defaultValue={search}
-            aria-label="Search"
-            onKeyUp={(e) => {
-              if (e.code === "Enter") {
-                // console.log("as");
-                setSearch(e.target.value);
-                //search?keyword=xxxxx
-              }
-            }}
+            // aria-label="Search"
           />
           <div className="d-flex align-items-center justify-content-end">
             {/* <span className="material-symbols-outlined position-absolute end-0 px-2">

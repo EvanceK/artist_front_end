@@ -77,7 +77,7 @@ export function MainContextProvider({ children }) {
     // loadWishlist ? getWishList() : "";
     getWishList();
     // }, [setLoadWishlist, loadWishlist]);
-  }, [isLogin, getWishlistData]);
+  }, [isLogin, getWishlistData, loadWishlist]);
 
   // Create a Provider component
   const loginModalRef = useRef(null); // useRef for loginModal
@@ -90,16 +90,20 @@ export function MainContextProvider({ children }) {
     }
   };
 
-  const getSearch = async (keyword) => {
-    const api = path + `/PTController/search?keyword=${keyword}`;
+  const getSearch = async () => {
+    const api = path + `/PTController/search?${search}`;
     const result = await axiosConfig.get(api);
     console.log(result);
   };
 
   //for test method
   useEffect(() => {
-    // getSearch("");
-  }, []);
+    // getSearch();
+  }, [search, searchParams]);
+  useEffect(() => {
+    setSearch(searchParams.get("keyword"));
+    // console.log("search", search);
+  }, [searchParams]);
   return (
     <MainContext.Provider
       value={{

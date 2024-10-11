@@ -1,14 +1,13 @@
 import PropTypes from "prop-types";
 import axiosInstance from "../axiosConfig";
-import { useContext, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import $ from "jquery";
 // import { MainPageContext } from "./ContextProvider/MainPageContext";
 import { MainContext } from "./ContextProvider/MainContext";
+import { useFetcher } from "react-router-dom";
 export default function MyCard({ Paintings }) {
   const [like, setLike] = useState(false);
-  const [addPainting, setAddPainting] = useState({
-    paintingId: "",
-  });
+  const [addPainting, setAddPainting] = useState();
   // const { showLoginModal } = useContext(MainPageContext);
   const {
     showLoginModal,
@@ -22,62 +21,57 @@ export default function MyCard({ Paintings }) {
   const handleClick = (event) => {
     setLike(!like);
     console.log(like);
-    // console.log(event.target);
-    console.log("Element ID:", event.target.id);
-    if (event.target.id != null) {
-      // setAddPainting({ ...addPainting, paintingId: elementId });
-      setAddPainting({ paintingId: event.target.id });
+    setAddPainting({ paintingId: event.target.id });
+
+    // console.log(addPainting);
+    // if (event.target.id !== null) {
+    //   setAddPainting({ ...addPainting, paintingId: event.target.id });
+    //   // setAddPainting({ paintingId: event.target.id });
+    //   // like ? addWishlist() : removeWishlist(event);
+    //   addWishlist();
+    //   // removeWishlist(event);
+    // }
+    // setGetWishListData(!getWishlistData);
+    // setLoadWishlist(!loadWishlist);
+  };
+  useEffect(() => {
+    console.log("useEffect: ", addPainting);
+    if (addPainting) {
+      // setAddPainting({ paintingId: event.target.id });
       // like ? addWishlist() : removeWishlist(event);
       addWishlist();
       // removeWishlist(event);
     }
     setGetWishListData(!getWishlistData);
     setLoadWishlist(!loadWishlist);
-  };
+    buildBtn();
+  }, [setLike, like]);
+
   const addWishlist = async () => {
-    console.log("addWL");
     const authorization = localStorage.getItem("token");
     const api = path + "/api/wishlist";
+    console.log(authorization);
+    console.log(addPainting);
     if (authorization) {
       const result = await axiosInstance.post(api, addPainting);
-      // axios.post(api, addPainting, {
-      //   headers: {
-      //     Authorization: `Bearer ${authorization}`,
-      //     "Content-Type": "application/json",
-      //   },
-      // });
-      console.log(result);
+      console.log("addWishlist result:", result);
     } else {
       showLoginModal();
       console.log("please login");
     }
+    console.log("added");
   };
-  // const removeWishlist = (event) => {
-  //   console.log("removeWL");
-  //   const authorization = localStorage.getItem("token");
+
+  // const removeWishlist = async (event) => {
   //   const api = path + `/api/wishlist/${event.target.id}`;
-  //   if (authorization) {
-  //     axios.delete(api, addPainting, {
-  //       headers: {
-  //         Authorization: `Bearer ${authorization}`,
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
-  //   } else {
-  //     showLoginModal();
-  //     console.log("please login");
-  //   }
+  //   console.log(event.target.id);
+  //   const result = await axiosInstance.delete(api);
+  //   console.log(result);
+  //   setLoadWishlist(!loadWishlist);
 
+  //   setGetWishListData(!getWishlistData);
   // };
-  const removeWishlist = async (event) => {
-    const api = path + `/api/wishlist/${event.target.id}`;
-    console.log(event.target.id);
-    const result = await axiosInstance.delete(api);
-    // console.log(result);
-    setLoadWishlist(!loadWishlist);
 
-    setGetWishListData(!getWishlistData);
-  };
   function buildBtn() {
     let liked = false;
     if (localStorage.getItem("paintingIdArray") != null)
