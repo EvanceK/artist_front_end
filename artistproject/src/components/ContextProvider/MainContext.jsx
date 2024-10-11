@@ -20,6 +20,7 @@ export function MainContextProvider({ children }) {
   const path = import.meta.env.VITE_DATA_HOST_API;
   //state for data 共用變數
   const [loadWishlist, setLoadWishlist] = useState(false);
+  const [getWishlistData, setGetWishListData] = useState(false);
   const [artistList, setArtisList] = useState([]); //所有作家名單 目前for navBar 選單用
   const [wishListByCus, setWishListByCus] = useState([]); //目前customer的wishlist產品
   // const [wishlistPaintingIdList, setWishlistPaintingIdList] = useState([]);
@@ -57,13 +58,13 @@ export function MainContextProvider({ children }) {
         JSON.parse(localStorage.getItem("Wishlist")).map((w) => {
           paintingIdArray.push(w.paintingId);
         });
-        if (paintingIdArray.length > 0) {
-          // console.log("setpaintingIdArray");
-          localStorage.setItem(
-            "paintingIdArray",
-            JSON.stringify(paintingIdArray)
-          );
-        }
+        // if (paintingIdArray.length > 0) {
+        // console.log("setpaintingIdArray");
+        localStorage.setItem(
+          "paintingIdArray",
+          JSON.stringify(paintingIdArray)
+        );
+        // }
         setLoadWishlist(!loadWishlist);
       } catch (error) {
         console.log(error);
@@ -76,7 +77,7 @@ export function MainContextProvider({ children }) {
     // loadWishlist ? getWishList() : "";
     getWishList();
     // }, [setLoadWishlist, loadWishlist]);
-  }, [isLogin]);
+  }, [isLogin, getWishlistData]);
 
   // Create a Provider component
   const loginModalRef = useRef(null); // useRef for loginModal
@@ -89,6 +90,16 @@ export function MainContextProvider({ children }) {
     }
   };
 
+  const getSearch = async (keyword) => {
+    const api = path + `/PTController/search?keyword=${keyword}`;
+    const result = await axiosConfig.get(api);
+    console.log(result);
+  };
+
+  //for test method
+  useEffect(() => {
+    // getSearch("");
+  }, []);
   return (
     <MainContext.Provider
       value={{
@@ -104,6 +115,8 @@ export function MainContextProvider({ children }) {
         showLoginModal,
         loadWishlist,
         setLoadWishlist,
+        getWishlistData,
+        setGetWishListData,
       }}
     >
       {children}

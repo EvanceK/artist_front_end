@@ -5,8 +5,9 @@ import { MainContext } from "../ContextProvider/MainContext";
 
 export default function WishlistOffcanvas() {
   const { isLogin, setIsLogin } = useContext(UserContext);
-  const { loadWishlist } = useContext(MainContext);
+  const { loadWishlist, setLoadWishlist } = useContext(MainContext);
   const [wishlist, setWishlist] = useState([]);
+  const [renderCart, setRenderCart] = useState();
   // useEffect(() => {
   //   console.log("islogin", isLogin);
   //   if (isLogin) {
@@ -20,20 +21,30 @@ export default function WishlistOffcanvas() {
   //   }
   // }, [isLogin, setIsLogin]);
   useEffect(() => {
-    console.log("isLogin state:", isLogin);
+    // console.log("isLogin state:", isLogin);
     if (isLogin) {
       const storedWishlist = localStorage.getItem("Wishlist");
       if (storedWishlist) {
         setWishlist(JSON.parse(storedWishlist));
-        console.log("Wishlist found:", JSON.parse(storedWishlist));
+        // console.log("Wishlist found:", JSON.parse(storedWishlist));
       } else {
-        console.log("No Wishlist found in localStorage");
+        // console.log("No Wishlist found in localStorage");
       }
     } else {
-      console.log("User is not logged in, clearing wishlist");
+      // console.log("User is not logged in, clearing wishlist");
       setWishlist([]);
     }
   }, [isLogin, loadWishlist]);
+
+  useEffect(() => {
+    setRenderCart(
+      wishlist.length > 0
+        ? wishlist.map((wp, i) => {
+            return <WishlistOffCanCard key={i} wishlisProps={wp} />;
+          })
+        : "please feel free to add plainting to Favorites List"
+    );
+  }, [setWishlist, wishlist]);
   return (
     <>
       <div
@@ -54,6 +65,7 @@ export default function WishlistOffcanvas() {
           ></button>
         </div>
         <div className="offcanvas-body d-flex  flex-column">
+          {/* {renderCart} */}
           {wishlist.length > 0
             ? wishlist.map((wp, i) => {
                 return <WishlistOffCanCard key={i} wishlisProps={wp} />;
