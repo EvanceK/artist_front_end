@@ -1,4 +1,4 @@
-
+import OrangeImage from "../../assets/home/orange.jpg";
 
 function ConfirmOrder() {
   return (
