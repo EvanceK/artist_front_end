@@ -1,9 +1,9 @@
 import projectLogo from "../../assets/LOGO.png";
-export default function PasswordResetEmailModel() {
+export default function PassChangedSuccessModal() {
   return (
     <div
       className="modal fade"
-      id="PasswordResetEmailModel"
+      id="PassChangedSuccessModal"
       data-bs-backdrop="static"
       data-bs-keyboard="false"
       tabIndex="-1"
@@ -20,7 +20,7 @@ export default function PasswordResetEmailModel() {
               aria-label="Close"
             ></button>
           </div>
-          <div className="PasswordResetEmailModel">
+          <div className="PassChangedSuccessModal">
             <div className="py-5 d-flex justify-content-center">
               <img
                 className="projectLogo  w-50 h-100 "
@@ -30,11 +30,9 @@ export default function PasswordResetEmailModel() {
             </div>
             <div className="px-4 text-center h5">
               <p>
-                We have sent a password reset link to your email, please check
-                and follow the instructions
+              Password has been changed, please log in.
               </p>
 
-              <p className="grayfont">E-mail : yoyoyo123@gmail.com</p>
             </div>
 
             <div className="row my-5 mx-auto justify-content-center">
