@@ -1,29 +1,9 @@
 import { useContext } from "react";
 import projectLogo from "../../assets/LOGO.png";
-import { MainContext } from "../ContextProvider/MainContext";
+import { MainContext } from "../../components/ContextProvider/MainContext";
 export default function PasswordChanged() {
-    const {PasswordChangedRef} = useContext(MainContext);
   return (
-    <div
-        ref={PasswordChangedRef}
-      className="modal fade"
-      id="PasswordChanged"
-      data-bs-backdrop="static"
-      data-bs-keyboard="false"
-      tabIndex="-1"
-      aria-labelledby="staticBackdropLabel"
-      aria-hidden="true"
-    >
-      <div className="modal-dialog modal-dialog-centered">
-        <div className="modal-content">
-          <div className="modal-header">
-            <button
-              type="button"
-              className="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
+   
           <div className="PasswordChanged">
             <div className="py-5 d-flex justify-content-center">
               <img
@@ -50,9 +30,7 @@ export default function PasswordChanged() {
                 </div>
                 </div>
             </div>
-          </div>
-        </div>
-      </div>
+
   
   );
 }
