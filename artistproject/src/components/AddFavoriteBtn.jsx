@@ -43,6 +43,7 @@ export default function AddFavoriteBtn({ paintingId }) {
         console.log("please login");
       }
       setLiked(true);
+      setLike(true);
     } catch (e) {
       console.log(e);
     }
@@ -53,6 +54,7 @@ export default function AddFavoriteBtn({ paintingId }) {
       const api = path + `/api/wishlist/${cardId}`;
       await axiosInstance.delete(api);
       setLiked(false);
+      setLike(false);
     } catch (e) {
       console.log(e);
     }
@@ -60,7 +62,7 @@ export default function AddFavoriteBtn({ paintingId }) {
   useEffect(() => {
     setGetWishListData(!getWishlistData);
     setLoadWishlist(!loadWishlist);
-  }, [like]);
+  }, [like, liked]);
 
   useEffect(() => {
     if (localStorage.getItem("paintingIdArray") != null)

@@ -69,6 +69,7 @@ export function MainContextProvider({ children }) {
         );
         // }
         // setLoadWishlist(!loadWishlist);
+        setLike(!like);
       } catch (error) {
         console.log(error);
       }
@@ -80,7 +81,7 @@ export function MainContextProvider({ children }) {
     // loadWishlist ? getWishList() : "";
     getWishList();
     // }, [setLoadWishlist, loadWishlist]);
-  }, [isLogin, getWishlistData, loadWishlist, like]);
+  }, [isLogin, getWishlistData, loadWishlist]);
 
   // Create a Provider component
   const loginModalRef = useRef(null); // useRef for loginModal
