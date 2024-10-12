@@ -28,8 +28,8 @@ export default function IncorrectAccountModal() {
                 alt="Logo"
               ></img>
             </div>
-            <div className="">
-              <h2 className="h3">Account does not exist, please check your input or register a new account.</h2>
+            <div className="px-4">
+              <h2 className="h3 text-center">Account does not exist, please check your input or register a new account.</h2>
             </div>
             <div className="login-btn d-flex justify-content-center m-5">
               <div

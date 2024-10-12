@@ -5,6 +5,9 @@ import StaffLoginModal from "../components/Modal/StaffLoginModal";
 import Register from "../components/Modal/RegisterModal";
 import HomeLayout from "./MainPageComponents/HomeLayout";
 import SignupSuccess from "../components/Modal/SignupSuccess";
+import PasswordResetEmailModal from "../components/Modal/PasswordResetEmailModal";
+import IncorrectPasswordModal from "../components/Modal/IncorrectPasswordModal";
+import IncorrectAccountModal from "../components/Modal/IncorrectAccountModal";
 import Deposit from "../components/Modal/DepositModal";
 import PasswordResetEmailModel from "../components/Modal/PasswordResetEmailModal";
 import DeleteAccount from "./MainPageComponents/MyAccountComponents/DeleteAccount";
@@ -27,6 +30,7 @@ import ConfirmOrder from "./MainPageComponents/ConfirmOrder";
 import MyWallet from "./MainPageComponents/MyWallet";
 import BiddingHistoryOffcanvas from "../components/Offcanvas/BiddingHistoryOffcanvas";
 
+
 export default function MainPage() {
   return (
     <>
@@ -39,6 +43,9 @@ export default function MainPage() {
             <Route path="/byArtist" element={<PaintingsListContainer />} />
             <Route path=":id" element={<ViewByArtistContainer />} />
             <Route path="/auction/:id" element={<Auction />} />
+            <Route path="IncorrectAccountModal" element={<IncorrectAccountModal/>} />
+            <Route path="IncorrectPasswordModal" element={<IncorrectPasswordModal/>} />
+            <Route path="PasswordResetEmailModal" element={<PasswordResetEmailModal/>} />
           </Route>
 
           {/*要登入才可以看到的 */}
@@ -64,6 +71,8 @@ export default function MainPage() {
         <Deposit />
 
         <PasswordResetEmailModel />
+        <IncorrectAccountModal/>
+        <IncorrectAccountModal />
 
         {/* modal for navbar ^^ */}
         {/* Offcanvas vv*/}

@@ -28,11 +28,13 @@ export default function PasswordResetEmailModel() {
                 alt="Logo"
               ></img>
             </div>
-            <div className="">
-              <h2 className="h3">We have sent a password reset link to your email, please check and follow the instructions</h2>
-            </div>
-            <div className="h3 mt-3 grayfont">
-                E-mail : yoyoyo123@gmail.com
+            <div className="px-4 text-center h5">
+              <p>
+                We have sent a password reset link to your email, please check
+                and follow the instructions
+              </p>
+
+              <p className="grayfont">E-mail : yoyoyo123@gmail.com</p>
             </div>
 
             <div className="login-btn d-flex justify-content-center m-5">
@@ -41,7 +43,7 @@ export default function PasswordResetEmailModel() {
                 data-bs-toggle="modal"
                 data-bs-target="#LoginModal"
               >
-               OK
+                OK
               </div>
             </div>
           </div>
