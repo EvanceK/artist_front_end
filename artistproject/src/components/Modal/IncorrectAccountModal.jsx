@@ -1,7 +1,12 @@
+import { useContext } from "react";
 import projectLogo from "../../assets/LOGO.png";
+import { MainContext } from "../ContextProvider/MainContext";
+
 export default function IncorrectAccountModal() {
+  const { incorrectAccountModalRef } = useContext(MainContext);
   return (
     <div
+      ref={incorrectAccountModalRef}
       className="modal fade"
       id="IncorrectAccountModal"
       data-bs-backdrop="static"
@@ -29,7 +34,10 @@ export default function IncorrectAccountModal() {
               ></img>
             </div>
             <div className="px-4">
-              <h2 className="h3 text-center">Account does not exist, please check your input or register a new account.</h2>
+              <h2 className="h3 text-center">
+                Account does not exist, please check your input or register a
+                new account.
+              </h2>
             </div>
             <div className="login-btn d-flex justify-content-center m-5">
               <div

@@ -19,6 +19,8 @@ export default function NavBar() {
     setSearchParams,
     loadWishlist,
     setLoadWishlist,
+    incorrectAccountModalRef,
+    showIncorrectAccountModal,
   } = useContext(MainContext);
 
   const [accountfeild, setAccountfeild] = useState();
@@ -87,8 +89,7 @@ export default function NavBar() {
             <span
               className="nav-link dropdown-toggle"
               role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
+              onClick={showIncorrectAccountModal}
             >
               Hi! {localStorage.getItem("nickName")}
             </span>

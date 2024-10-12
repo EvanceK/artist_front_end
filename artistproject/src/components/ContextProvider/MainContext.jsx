@@ -82,11 +82,19 @@ export function MainContextProvider({ children }) {
 
   // Create a Provider component
   const loginModalRef = useRef(null); // useRef for loginModal
+  const incorrectAccountModalRef = useRef(null); // useRef for loginModal
 
   // Function to trigger the modal
   const showLoginModal = () => {
     if (loginModalRef.current) {
       const modal = new bootstrap.Modal(loginModalRef.current); // Use bootstrap.Modal directly
+      modal.show();
+    }
+  };
+  // Function to trigger the modal
+  const showIncorrectAccountModal = () => {
+    if (incorrectAccountModalRef.current) {
+      const modal = new bootstrap.Modal(incorrectAccountModalRef.current); // Use bootstrap.Modal directly
       modal.show();
     }
   };
@@ -124,6 +132,8 @@ export function MainContextProvider({ children }) {
         setGetWishListData,
         like,
         setLike,
+        incorrectAccountModalRef,
+        showIncorrectAccountModal,
       }}
     >
       {children}
