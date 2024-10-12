@@ -83,6 +83,7 @@ export function MainContextProvider({ children }) {
   // Create a Provider component
   const loginModalRef = useRef(null); // useRef for loginModal
   const incorrectAccountModalRef = useRef(null); // useRef for loginModal
+  const PasswordChangedRef = useRef(null); // useRef for loginModal
 
   // Function to trigger the modal
   const showLoginModal = () => {
@@ -96,6 +97,14 @@ export function MainContextProvider({ children }) {
   const showIncorrectAccountModal = () => {
     if (incorrectAccountModalRef.current) {
       const modal = new bootstrap.Modal(incorrectAccountModalRef.current); // Use bootstrap.Modal directly
+      modal.show();
+    }
+  };
+
+  // Function to trigger the modal
+  const showPasswordChangedRef = () => {
+    if (PasswordChangedRef.current) {
+      const modal = new bootstrap.Modal(PasswordChangedRef.current); // Use bootstrap.Modal directly
       modal.show();
     }
   };
@@ -135,6 +144,9 @@ export function MainContextProvider({ children }) {
         setLike,
         incorrectAccountModalRef,
         showIncorrectAccountModal,
+        PasswordChangedRef,
+        showPasswordChangedRef
+
       }}
     >
       {children}

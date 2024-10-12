@@ -19,8 +19,8 @@ export default function NavBar() {
     setSearchParams,
     loadWishlist,
     setLoadWishlist,
-    incorrectAccountModalRef,
-    showIncorrectAccountModal,
+    PasswordChangedRef,
+    showPasswordChangedRef
   } = useContext(MainContext);
 
   const [accountfeild, setAccountfeild] = useState();
@@ -237,7 +237,7 @@ export default function NavBar() {
               <button
                 type="button"
                 className="btn "
-                onClick={showIncorrectAccountModal}
+                onClick={showPasswordChangedRef}
               >
                 PassReEmailModel
               </button>

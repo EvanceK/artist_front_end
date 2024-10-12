@@ -1,9 +1,13 @@
+import { useContext } from "react";
 import projectLogo from "../../assets/LOGO.png";
-export default function PasswordResetEmailModel() {
+import { MainContext } from "../ContextProvider/MainContext";
+export default function PasswordChanged() {
+    const {PasswordChangedRef} = useContext(MainContext);
   return (
     <div
+        ref={PasswordChangedRef}
       className="modal fade"
-      id="PasswordResetEmailModel"
+      id="PasswordChanged"
       data-bs-backdrop="static"
       data-bs-keyboard="false"
       tabIndex="-1"
@@ -20,7 +24,7 @@ export default function PasswordResetEmailModel() {
               aria-label="Close"
             ></button>
           </div>
-          <div className="PasswordResetEmailModel">
+          <div className="PasswordChanged">
             <div className="py-5 d-flex justify-content-center">
               <img
                 className="projectLogo  w-50 h-100 "
@@ -28,27 +32,27 @@ export default function PasswordResetEmailModel() {
                 alt="Logo"
               ></img>
             </div>
-            <div className="px-4 text-center h5">
-              <p>
-                We have sent a password reset link to your email, please check
-                and follow the instructions
-              </p>
+            <div className="px-4 h5 m-3">
+              <label className="mt-3">Please enter a new password:</label>
+              <input type="password " className="form-control mt-3" style={{backgroundColor: "light"}}></input>
+              <label className="mt-3">Please confirm your password:</label>
+              <input type="password " className="form-control mt-3" style={{backgroundColor: "light"}}></input>
+              </div>
 
-              <p className="grayfont">E-mail : yoyoyo123@gmail.com</p>
-            </div>
-
-            <div className="row my-5 mx-auto justify-content-center">
+              <div className="row my-5 mx-auto justify-content-center">
                 <div
                   className="btn col-3 mx-2"
                   id="OK"
-                  data-bs-dismiss="modal"
+                  data-bs-toggle="modal"
+                  data-bs-target="#PassChangedSuccessModal"
                 >
                   OK
                 </div>
                 </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+  
   );
 }
