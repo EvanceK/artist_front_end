@@ -21,7 +21,7 @@ export default function NavBar() {
     loadWishlist,
     setLoadWishlist,
     PasswordChangedRef,
-    showPasswordChangedRef
+    showPasswordChangedRef,
   } = useContext(MainContext);
 
   const [accountfeild, setAccountfeild] = useState();
@@ -29,7 +29,7 @@ export default function NavBar() {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    console.log("submit: ", searchParams);
+    // console.log("submit: ", searchParams);
 
     if (search === "") {
       console.log("empty search", search);
