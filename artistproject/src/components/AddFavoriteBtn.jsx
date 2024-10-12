@@ -11,6 +11,8 @@ export default function AddFavoriteBtn({ paintingId }) {
   const {
     showLoginModal,
     setLoadWishlist,
+    like,
+    setLike,
     getWishlistData,
     loadWishlist,
     setGetWishListData,
