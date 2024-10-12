@@ -8,12 +8,14 @@ import { MainContext } from "../../components/ContextProvider/MainContext";
 export default function ViewContainer() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const [data, setData] = useState([]);
-  const [requestPageNumber, setRequestPageNumber] = useState(1);
+  const [searchData, setSearchData] = useState([]);
+  // const [requestPageNumber, setRequestPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [totalPage, setTotalPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [cardsView, setCardsView] = useState();
-  const { search, searchParams } = useContext(MainContext);
+  const { search, searchParams, requestPageNumber, setRequestPageNumber } =
+    useContext(MainContext);
 
   // Fetch data
   const getdata = async () => {
@@ -35,15 +37,25 @@ export default function ViewContainer() {
   const getSearch = async () => {
     const api = path + `/PTController/search?${searchParams}`;
     const result = await axiosInstance.get(api);
-    // console.log(result);
+    setSearchData(result.data);
+
     setData(result.data);
-    setTotalPage(1);
+    // setTotalPage(1);
   };
+  useEffect(() => {
+    console.log(Math.ceil(searchData.length / 10));
+    setTotalPage(Math.ceil(searchData.length / 10));
+    const startIndex = (requestPageNumber - 1) * 10;
+    const endIndex = requestPageNumber * 10;
+    const dataArray = searchData.slice(startIndex, endIndex);
+    console.log("dataArray:", dataArray);
+
+    setData(searchData.slice(startIndex, endIndex));
+  }, [searchData]);
 
   useEffect(() => {
     if (search) {
       getSearch();
-      // console.log(totalPage);
     } else {
       getdata();
     }

@@ -13,6 +13,8 @@ export default function NavBar() {
     artistList,
     getArtistList,
     getWishList,
+    requestPageNumber,
+    setRequestPageNumber,
     getSearch,
     setSearch,
     search,
@@ -41,6 +43,7 @@ export default function NavBar() {
       setSearchParams({ keyword: search });
       console.log("searchParamsValue", searchParams.get("keyword"));
     }
+    setRequestPageNumber(1);
   };
 
   useEffect(() => {

@@ -28,6 +28,7 @@ export function MainContextProvider({ children }) {
   //vv for searching 功能用的變數：
   const [search, setSearch] = useState();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [requestPageNumber, setRequestPageNumber] = useState(1);
   const { userName, setUserName, isLogin, setIsLogin } =
     useContext(UserContext);
   // methods for loading data
@@ -128,6 +129,8 @@ export function MainContextProvider({ children }) {
         setArtisList,
         getArtistList,
         getWishList,
+        requestPageNumber,
+        setRequestPageNumber,
         search,
         setSearch,
         searchParams,
