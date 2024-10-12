@@ -10,7 +10,7 @@ import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 import PropTypes, { func } from "prop-types";
 import * as bootstrap from "bootstrap"; // Import Bootstrap as a module
-import axiosConfig from "../../axiosConfig";
+import axiosInstance from "../../axiosConfig";
 import { UserContext } from "./UserContext";
 // Create the Context
 export const MainContext = createContext();
@@ -84,7 +84,6 @@ export function MainContextProvider({ children }) {
   const loginModalRef = useRef(null); // useRef for loginModal
   const incorrectAccountModalRef = useRef(null); // useRef for loginModal
   const PasswordChangedRef = useRef(null); // useRef for loginModal
-
   // Function to trigger the modal
   const showLoginModal = () => {
     if (loginModalRef.current) {
@@ -108,12 +107,11 @@ export function MainContextProvider({ children }) {
       modal.show();
     }
   };
-
-  const getSearch = async () => {
-    const api = path + `/PTController/search?${searchParams}`;
-    const result = await axiosConfig.get(api);
-    console.log(result);
-  };
+  // const getSearch = async () => {
+  //   const api = path + `/PTController/search?${searchParams}`;
+  //   const result = await axiosConfig.get(api);
+  //   console.log(result);
+  // };
 
   //for test method
   // useEffect(() => {
@@ -134,7 +132,6 @@ export function MainContextProvider({ children }) {
         setSearch,
         searchParams,
         setSearchParams,
-        getSearch,
         loginModalRef,
         showLoginModal,
         loadWishlist,
@@ -146,8 +143,7 @@ export function MainContextProvider({ children }) {
         incorrectAccountModalRef,
         showIncorrectAccountModal,
         PasswordChangedRef,
-        showPasswordChangedRef
-
+        showPasswordChangedRef,
       }}
     >
       {children}
