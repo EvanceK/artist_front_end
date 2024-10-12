@@ -101,15 +101,15 @@ export function MainContextProvider({ children }) {
   };
 
   const getSearch = async () => {
-    const api = path + `/PTController/search?${search}`;
+    const api = path + `/PTController/search?${searchParams}`;
     const result = await axiosConfig.get(api);
     console.log(result);
   };
 
   //for test method
-  useEffect(() => {
-    // getSearch();
-  }, [search, searchParams]);
+  // useEffect(() => {
+  //   if (search) getSearch();
+  // }, [search]);
   useEffect(() => {
     setSearch(searchParams.get("keyword"));
     // console.log("search", search);
@@ -125,6 +125,7 @@ export function MainContextProvider({ children }) {
         setSearch,
         searchParams,
         setSearchParams,
+        getSearch,
         loginModalRef,
         showLoginModal,
         loadWishlist,

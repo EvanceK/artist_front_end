@@ -13,6 +13,7 @@ export default function NavBar() {
     artistList,
     getArtistList,
     getWishList,
+    getSearch,
     setSearch,
     search,
     searchParams,
@@ -26,14 +27,40 @@ export default function NavBar() {
   const [accountfeild, setAccountfeild] = useState();
   const [token, setToken] = useState(null);
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    console.log("submit: ", searchParams);
+
+    if (search === "") {
+      console.log("empty search", search);
+      // Clear all query params by setting searchParams to an empty object
+      setSearchParams({}); // This clears the query string entirely
+      navigate("/home", { replace: true }); // Navigate to the home page without query params
+    } else {
+      // Proceed with adding the keyword to the search params
+      setSearchParams({ keyword: search });
+      console.log("searchParamsValue", searchParams.get("keyword"));
+    }
+  };
+
   useEffect(() => {
     $(".nav-link").on("click", function () {
       $(".nav-link").removeClass("active"); // Remove "active" class from all
       $(this).addClass("active"); // Add "active" class to the clicked element
     });
+
+    // Handle keyup event for Enter key
     $("#searchtxt").on("keyup", (e) => {
-      if (e.code === "Enter") setSearchParams({ keyword: e.target.value });
-      console.log(e.target.value);
+      if (e.code === "Enter") {
+        const searchTerm = e.target.value;
+        if (searchTerm) {
+          setSearchParams({ keyword: searchTerm });
+        } else {
+          // Remove the keyword from the query params if the input is empty
+          setSearchParams({}); // Clears the URL query parameters
+          navigate("/home", { replace: true }); // Navigates to "/home" without any params
+        }
+      }
     });
 
     const storedToken = localStorage.getItem("token");
@@ -150,8 +177,11 @@ export default function NavBar() {
         <Link to="/">
           <img className="projectLogo" src={projectLogo} alt="Logo"></img>
         </Link>
-        <form className="d-flex position-relative" role="search">
-          {search}
+        <form
+          className="d-flex position-relative"
+          role="search"
+          onSubmit={handleSearch}
+        >
           <input
             className="form-control ms-2"
             id="searchtxt"
