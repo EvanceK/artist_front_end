@@ -91,6 +91,7 @@ export function MainContextProvider({ children }) {
       modal.show();
     }
   };
+
   // Function to trigger the modal
   const showIncorrectAccountModal = () => {
     if (incorrectAccountModalRef.current) {
