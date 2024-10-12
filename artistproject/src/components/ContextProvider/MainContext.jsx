@@ -1,4 +1,4 @@
-import React, {
+import {
   useState,
   createContext,
   useContext,
@@ -7,7 +7,6 @@ import React, {
   useCallback,
 } from "react";
 import { useSearchParams } from "react-router-dom";
-import axios from "axios";
 import PropTypes from "prop-types";
 import * as bootstrap from "bootstrap"; // Import Bootstrap as a module
 import axiosInstance from "../../axiosConfig";
@@ -22,22 +21,20 @@ export function MainContextProvider({ children }) {
   const [loadWishlist, setLoadWishlist] = useState(false);
   const [getWishlistData, setGetWishListData] = useState(false);
   const [artistList, setArtisList] = useState([]); //所有作家名單 目前for navBar 選單用
-  // const [wishListByCus, setWishListByCus] = useState([]); //目前customer的wishlist產品
   const [like, setLike] = useState(false);
   // const [wishlistPaintingIdList, setWishlistPaintingIdList] = useState([]);
   //vv for searching 功能用的變數：
   const [search, setSearch] = useState();
   const [searchParams, setSearchParams] = useSearchParams();
   const [requestPageNumber, setRequestPageNumber] = useState(1);
-  const { userName, setUserName, isLogin, setIsLogin } =
-    useContext(UserContext);
+  const { isLogin } = useContext(UserContext);
 
   // methods for loading data
   const getArtistList = async () => {
     const api = path + "/ArtController/findall";
     // 等同 $.ajax(" get blablablba ")
     try {
-      const result = await axios.get(`${api}`);
+      const result = await axiosInstance.get(`${api}`);
       // console.log(result);
       setArtisList(result.data);
     } catch (error) {
@@ -50,25 +47,22 @@ export function MainContextProvider({ children }) {
     const paintingIdArray = [];
     if (authorization) {
       try {
-        const result = await axios.get(`${api}`, {
+        const result = await axiosInstance.get(`${api}`, {
           headers: {
             Authorization: `Bearer ${authorization}`,
           },
         });
-        // console.log("Wishlist: ", result.data);
-        // setWishListByCus(result.data);
+
         localStorage.setItem("Wishlist", JSON.stringify(result.data));
         JSON.parse(localStorage.getItem("Wishlist")).map((w) => {
           paintingIdArray.push(w.paintingId);
         });
-        // if (paintingIdArray.length > 0) {
-        // console.log("setpaintingIdArray");
+
         localStorage.setItem(
           "paintingIdArray",
           JSON.stringify(paintingIdArray)
         );
-        // }
-        // setLoadWishlist(!loadWishlist);
+
         setLike(!like);
       } catch (error) {
         console.log(error);
@@ -78,9 +72,7 @@ export function MainContextProvider({ children }) {
   });
   // useEffect for preload data
   useEffect(() => {
-    // loadWishlist ? getWishList() : "";
     getWishList();
-    // }, [setLoadWishlist, loadWishlist]);
   }, [isLogin, getWishlistData, loadWishlist]);
 
   // Create a Provider component
@@ -116,14 +108,14 @@ export function MainContextProvider({ children }) {
   //   console.log(result);
   // };
 
-  //for test method
-  // useEffect(() => {
-  //   if (search) getSearch();
-  // }, [search]);
   useEffect(() => {
     setSearch(searchParams.get("keyword"));
     // console.log("search", search);
   }, [searchParams]);
+  //for test method
+  // useEffect(() => {
+  //   if (search) getSearch();
+  // }, [search]);
   return (
     <MainContext.Provider
       value={{

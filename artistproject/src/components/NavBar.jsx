@@ -201,7 +201,7 @@ export default function NavBar() {
             type="text"
             placeholder="Search"
             defaultValue={search}
-            // aria-label="Search"
+            aria-label="Search"
           />
           <div className="d-flex align-items-center justify-content-end">
             {/* <span className="material-symbols-outlined position-absolute end-0 px-2">
