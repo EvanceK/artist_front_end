@@ -10,18 +10,18 @@ export default function AddFavoriteBtn({ paintingId }) {
   const [addPainting, setAddPainting] = useState();
   const {
     showLoginModal,
-    setLoadWishlist,
     like,
     setLike,
     getWishlistData,
     loadWishlist,
+    setLoadWishlist,
     setGetWishListData,
   } = useContext(MainContext);
 
   const handleClick = () => {
     console.log("Favornewclicked: ", paintingId);
     setAddPainting({ paintingId: paintingId });
-    // setLiked(!liked);
+    setLike(!like);
   };
   useEffect(() => {
     if (addPainting) {
@@ -42,19 +42,25 @@ export default function AddFavoriteBtn({ paintingId }) {
         showLoginModal();
         console.log("please login");
       }
+      setLiked(true);
     } catch (e) {
       console.log(e);
     }
   };
 
   const removeWishlist = async (cardId) => {
-    const api = path + `/api/wishlist/${cardId}`;
-    await axiosInstance.delete(api);
+    try {
+      const api = path + `/api/wishlist/${cardId}`;
+      await axiosInstance.delete(api);
+      setLiked(false);
+    } catch (e) {
+      console.log(e);
+    }
   };
-  // useEffect(() => {
-  //   setGetWishListData(!getWishlistData);
-  //   setLoadWishlist(!loadWishlist);
-  // }, [addWishlist, removeWishlist]);
+  useEffect(() => {
+    setGetWishListData(!getWishlistData);
+    setLoadWishlist(!loadWishlist);
+  }, [like]);
 
   useEffect(() => {
     if (localStorage.getItem("paintingIdArray") != null)
@@ -92,7 +98,7 @@ export default function AddFavoriteBtn({ paintingId }) {
         <path fillRule="evenodd" d={d} />
       </svg>
     );
-  }, [liked, loadWishlist, getWishlistData]);
+  }, [liked, like]);
 
   return (
     <>
@@ -126,7 +132,7 @@ export default function AddFavoriteBtn({ paintingId }) {
             d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"
           />
         </svg> */}
-        RITE-new
+        RITE
       </span>
     </>
   );

@@ -22,7 +22,7 @@ export function MainContextProvider({ children }) {
   const [loadWishlist, setLoadWishlist] = useState(false);
   const [getWishlistData, setGetWishListData] = useState(false);
   const [artistList, setArtisList] = useState([]); //所有作家名單 目前for navBar 選單用
-  const [wishListByCus, setWishListByCus] = useState([]); //目前customer的wishlist產品
+  // const [wishListByCus, setWishListByCus] = useState([]); //目前customer的wishlist產品
   const [like, setLike] = useState(false);
   // const [wishlistPaintingIdList, setWishlistPaintingIdList] = useState([]);
   //vv for searching 功能用的變數：
@@ -56,7 +56,7 @@ export function MainContextProvider({ children }) {
           },
         });
         // console.log("Wishlist: ", result.data);
-        setWishListByCus(result.data);
+        // setWishListByCus(result.data);
         localStorage.setItem("Wishlist", JSON.stringify(result.data));
         JSON.parse(localStorage.getItem("Wishlist")).map((w) => {
           paintingIdArray.push(w.paintingId);
@@ -68,7 +68,7 @@ export function MainContextProvider({ children }) {
           JSON.stringify(paintingIdArray)
         );
         // }
-        setLoadWishlist(!loadWishlist);
+        // setLoadWishlist(!loadWishlist);
       } catch (error) {
         console.log(error);
       }
@@ -80,7 +80,7 @@ export function MainContextProvider({ children }) {
     // loadWishlist ? getWishList() : "";
     getWishList();
     // }, [setLoadWishlist, loadWishlist]);
-  }, [isLogin, getWishlistData, like, setLike]);
+  }, [isLogin, getWishlistData, loadWishlist, like]);
 
   // Create a Provider component
   const loginModalRef = useRef(null); // useRef for loginModal
