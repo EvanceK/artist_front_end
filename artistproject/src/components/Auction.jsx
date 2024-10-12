@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import Carousel from "./Carousel";
 import axiosInstance from "../axiosConfig";
 import CountDown from "./countDown";
+import AddFavoriteBtn from "./AddFavoriteBtn";
 
 export default function Auction() {
   const { id } = useParams();
@@ -22,7 +23,7 @@ export default function Auction() {
       const result = await axiosInstance.get(`${api}/${id}`);
       // setData(result.data.paintingsList);
 
-      console.log(result.data);
+      // console.log(result.data);
       setPainting(result.data.painting);
       setBiddingHistory(result.data.biddingHistory);
     } catch (error) {
@@ -47,11 +48,17 @@ export default function Auction() {
         )
       );
 
-      console.log("BreAmoutArray:", breAmoutArray);
-    } else {
-      console.log("No bidding history available");
+      // console.log("BreAmoutArray:", breAmoutArray);
     }
+    // else {
+    //   console.log("No bidding history available");
+    // }
   }, [biddingHistory]);
+
+  useEffect(() => {
+    if (painting) console.log("painting:", painting);
+    if (biddingHistory) console.log("biddingHistory:", biddingHistory);
+  }, [painting, biddingHistory]);
 
   const buildBreadCrumb = useCallback(() => {
     if (!painting) return; // Exit if painting is undefined
@@ -75,6 +82,7 @@ export default function Auction() {
       </div>
     );
   }, [painting]);
+
   if (painting)
     return (
       <>
@@ -171,6 +179,7 @@ export default function Auction() {
                 className="form-control"
                 placeholder="optional amount"
               ></input>
+              <AddFavoriteBtn paintingId={painting.paintingId} />
               <div className="cardBtn d-flex justify-content-center m-5">
                 <span className="btn btn mx-3">
                   FAV

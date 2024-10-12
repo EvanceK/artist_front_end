@@ -10,20 +10,20 @@ export default function BiddingHistoryOffcanvas() {
   const [biddingHistory, setBiddingHistory] = useState([]);
   // const [renderCart, setRenderCart] = useState();
 
-  const getBiddingHistory = async()=>{
-    const path=import.meta.env.VITE_DATA_HOST_API;
-    const api= path + "/api/bidding/history";
+  const getBiddingHistory = async () => {
+    const path = import.meta.env.VITE_DATA_HOST_API;
+    const api = path + "/api/bidding/history";
     const authorization = localStorage.getItem("token");
-    if(authorization){
+    if (authorization) {
       const result = await axiosInstance.get(api);
-      console.log(result.data);
-      setBiddingHistory(result.data)
+      // console.log(result.data);
+      setBiddingHistory(result.data);
       localStorage.setItem("biddingHistory", JSON.stringify(result.data));
-    }else{
+    } else {
       console.log("please login");
     }
-  }
- 
+  };
+
   useEffect(() => {
     if (isLogin) {
       //取得token

@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
-import PropTypes, { func } from "prop-types";
+import PropTypes from "prop-types";
 import * as bootstrap from "bootstrap"; // Import Bootstrap as a module
 import axiosInstance from "../../axiosConfig";
 import { UserContext } from "./UserContext";
@@ -31,6 +31,7 @@ export function MainContextProvider({ children }) {
   const [requestPageNumber, setRequestPageNumber] = useState(1);
   const { userName, setUserName, isLogin, setIsLogin } =
     useContext(UserContext);
+
   // methods for loading data
   const getArtistList = async () => {
     const api = path + "/ArtController/findall";
