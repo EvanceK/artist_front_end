@@ -19,7 +19,7 @@ export default function AddFavoriteBtn({ paintingId }) {
   } = useContext(MainContext);
 
   const handleClick = () => {
-    console.log("Favornewclicked: ", paintingId);
+    // console.log("Favornewclicked: ", paintingId);
     setAddPainting({ paintingId: paintingId });
     setLike(!like);
   };
