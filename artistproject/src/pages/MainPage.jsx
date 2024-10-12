@@ -7,8 +7,8 @@ import HomeLayout from "./MainPageComponents/HomeLayout";
 import SignupSuccess from "../components/Modal/SignupSuccess";
 import PasswordResetEmailModal from "../components/Modal/PasswordResetEmailModal";
 import IncorrectPasswordModal from "../components/Modal/IncorrectPasswordModal";
-// import IncorrectAccountModal from "../components/Modal/IncorrectAccountModal";
-import IncorrectAccountModal from "../components/Modal/IncorrectAccountMoal";
+import IncorrectAccountModal from "../components/Modal/IncorrectAccountModal";
+
 import Deposit from "../components/Modal/DepositModal";
 import PasswordResetEmailModel from "../components/Modal/PasswordResetEmailModal";
 import DeleteAccount from "./MainPageComponents/MyAccountComponents/DeleteAccount";
