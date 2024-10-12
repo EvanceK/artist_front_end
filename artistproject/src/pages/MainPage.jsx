@@ -8,7 +8,7 @@ import SignupSuccess from "../components/Modal/SignupSuccess";
 import PasswordResetEmailModal from "../components/Modal/PasswordResetEmailModal";
 import IncorrectPasswordModal from "../components/Modal/IncorrectPasswordModal";
 import IncorrectAccountModal from "../components/Modal/IncorrectAccountModal";
-import PasswordChanged from "../components/Modal/PasswordChanged";
+import PasswordChanged from "./MainPageComponents/PasswordChanged";
 
 import Deposit from "../components/Modal/DepositModal";
 import PasswordResetEmailModel from "../components/Modal/PasswordResetEmailModal";
@@ -57,7 +57,7 @@ export default function MainPage() {
               element={<PasswordResetEmailModal />}
             />
             <Route
-              path="PasswordChanged"
+              path="/reset-password/:token"
               element={<PasswordChanged />}
             />
 
@@ -84,9 +84,9 @@ export default function MainPage() {
         <Register></Register>
         <SignupSuccess />
         <Deposit />
-        <PasswordChanged />
         <PasswordResetEmailModel />
         <IncorrectAccountModal />
+        <IncorrectPasswordModal />
 
         {/* modal for navbar ^^ */}
         {/* Offcanvas vv*/}
