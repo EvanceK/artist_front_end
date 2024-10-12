@@ -2,33 +2,39 @@ import { useContext, useEffect, useState } from "react";
 import BiddingHistoryCard from "./BiddingHistoryCard";
 import { UserContext } from "../ContextProvider/UserContext";
 import { MainContext } from "../ContextProvider/MainContext";
+import axiosInstance from "../../axiosConfig";
 
 export default function BiddingHistoryOffcanvas() {
   const { isLogin, setLogin } = useContext(UserContext);
-  const { loadWishList, setLoadWishList } = useContext(MainContext);
-  const [wishlist, setWishlist] = useState([]);
-  const [renderCart, setRenderCart] = useState();
+  const { loadBiddingHistory, setloadBiddingHistory } = useContext(MainContext);
+  const [biddingHistory, setBiddingHistory] = useState([]);
+  // const [renderCart, setRenderCart] = useState();
 
+  const getBiddingHistory = async()=>{
+    const path=import.meta.env.VITE_DATA_HOST_API;
+    const api= path + "/api/bidding/history";
+    const authorization = localStorage.getItem("token");
+    if(authorization){
+      const result = await axiosInstance.get(api);
+      console.log(result.data);
+      setBiddingHistory(result.data)
+      localStorage.setItem("biddingHistory", JSON.stringify(result.data));
+    }else{
+      console.log("please login");
+    }
+  }
+ 
   useEffect(() => {
     if (isLogin) {
       //取得token
-      const storedWishlist = localStorage.getItem("wishlist");
-      if (storedWishlist) {
+      const storedBiddingHistory = localStorage.getItem("token");
+      if (storedBiddingHistory) {
         //將token轉為JSON存到setWishlist
-        setWishlist(JSON.parse(storedWishlist));
+        getBiddingHistory();
+        // setBiddingHistory(JSON.parse(storedBiddingHistory));
       }
     }
-  }, [isLogin, loadWishList]);
-  useEffect(() => {
-    setRenderCart(
-      //取得長度,再用三元運算將資料帶入 card
-      wishlist.length > 0
-        ? wishlist.map((wp, i) => {
-            return <BiddingHistoryCard key={i} WishlistProps={wp} />;
-          })
-        : ""
-    );
-  }, [setWishlist, wishlist]);
+  }, [isLogin, loadBiddingHistory]);
 
   return (
     <>
@@ -45,9 +51,9 @@ export default function BiddingHistoryOffcanvas() {
           {/* <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button> */}
         </div>
         <div className="offcanvas-body">
-          {wishlist.length > 0
-            ? wishlist.map((mp, i) => {
-                return <BiddingHistoryCard key={i} WishlistProps={wp} />;
+          {biddingHistory.length > 0
+            ? biddingHistory.map((bp, i) => {
+                return <BiddingHistoryCard key={i} biddingHistoryProps={bp} />;
               })
             : ""}
         </div>

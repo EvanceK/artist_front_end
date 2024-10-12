@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import Carousel from "./Carousel";
 import axiosInstance from "../axiosConfig";
-import { func } from "prop-types";
+import CountDown from "./countDown";
 
 export default function Auction() {
   const { id } = useParams();
@@ -10,6 +10,8 @@ export default function Auction() {
   const [biddingHistory, setBiddingHistory] = useState();
   const [painting, setPainting] = useState();
   const [breadcrumb, setBreadcrumb] = useState();
+  const [highestBre, setHighestBre] = useState();
+  const [breAmoutArray, setBreAmoutArray] = useState();
 
   // Fetch painting data
   const getdata = async () => {
@@ -34,6 +36,22 @@ export default function Auction() {
   useEffect(() => {
     buildBreadCrumb();
   }, [painting]);
+
+  useEffect(() => {
+    if (biddingHistory && biddingHistory.length > 0) {
+      setHighestBre(biddingHistory[0].bidAmount);
+      setBreAmoutArray(
+        Array.from(
+          { length: 3 },
+          (_, i) => biddingHistory[0].bidAmount + 50 * (i + 1)
+        )
+      );
+
+      console.log("BreAmoutArray:", breAmoutArray);
+    } else {
+      console.log("No bidding history available");
+    }
+  }, [biddingHistory]);
 
   const buildBreadCrumb = useCallback(() => {
     if (!painting) return; // Exit if painting is undefined
@@ -114,22 +132,45 @@ export default function Auction() {
             </div>
             <div className="col d-flex flex-column">
               <div className="countdown d-flex justify-content-center align-items-center m-3">
-                <span>CLOSE IN </span>
-                <strong className="h1 ms-4">10H 23m 41s</strong>
+                <CountDown datetime={painting.uploadDate} />
+
+                {/* <strong className="h1 ms-4">10H 23m 41s</strong> */}
               </div>
-              <p className="price h4 text-center mb-5">$ 1,595</p>
+              <p className="price h4 text-center mb-5">
+                ${" "}
+                {new Intl.NumberFormat("en-IN", {
+                  maximumSignificantDigits: 3,
+                }).format(painting.price)}{" "}
+              </p>
+
               <select
                 className="form-select"
                 aria-label="Default select example"
               >
-                <option defaultValue>$ 1,600</option>
+                {breAmoutArray
+                  ? breAmoutArray.map((b, i) => {
+                      return (
+                        <option key={i} defaultValue={b}>
+                          ${" "}
+                          {new Intl.NumberFormat("en-IN", {
+                            maximumSignificantDigits: 3,
+                          }).format(b)}
+                        </option>
+                      );
+                    })
+                  : ""}
+                {/* <option defaultValue>$ 1,600</option>
                 <option defaultValue="1">$1,605</option>
-                <option defaultValue="2">$ 1.610</option>
+                <option defaultValue="2">$ 1.610</option> */}
               </select>
               <span className="small text-danger">
                 Once a bid is placed, it cannot be canceled. Please bid
                 carefully.
               </span>
+              <input
+                className="form-control"
+                placeholder="optional amount"
+              ></input>
               <div className="cardBtn d-flex justify-content-center m-5">
                 <span className="btn btn mx-3">
                   FAV

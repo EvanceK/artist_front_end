@@ -14,7 +14,7 @@ export default function MyAccount() {
     const authorization = localStorage.getItem("token");
     //確認
     if(authorization){
-      //axiosInstance就有回傳token的功能
+    //axiosInstance就有回傳token的功能
       const result = await axiosInstance.get(api);
       console.log(result);
     }else{
@@ -22,6 +22,7 @@ export default function MyAccount() {
       console.log("please login")
     }
   }
+  //方法2
   const getCustomer2 = async()=>{
     const path=import.meta.env.VITE_DATA_HOST_API;
     const customerid="CU0004"
@@ -31,18 +32,19 @@ export default function MyAccount() {
     // const authorization = localStorage.getItem("token");
 
       //axiosInstance就有回傳token的功能
+        //2.接收customer資料
       const result = await axios.get(api);
       // JSON.parse(result.data)
       console.log(result.data);
-  }
-  //2.接收customer資料
+       //3.要帶入costomer的資料
+      setCustomer(result.data)
 
-  //3.要帶入costomer的資料
-  
+  };
   getCustomer2();
+  
   const [customer,setCustomer]=useState({
-    name:"aaa",
-    nickName:"aaa",
+    name:"",
+    nickName:"aaa", 
     email:"aaa",
     phone:"aaa",
     address:"aaa",

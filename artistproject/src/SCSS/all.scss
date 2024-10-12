@@ -109,7 +109,16 @@ body {
   border-radius: 50%;
   padding: 0;
 }
-
+.biddingNumber{
+  position: absolute;
+  margin: 24px 0 0px 40px;
+  background-color: $primary;
+  color: $artisGold;
+  width: 1.5rem;
+  text-align: center;
+  border-radius: 50%;
+  padding: 0;
+}
 
 .underline{
   border-bottom: 2px solid $info;
