@@ -13,15 +13,11 @@
   box-shadow: 0 0 80px rgba(255, 215, 0, 0.8); /* Add a glowing effect */
   transition: transform 0.2s ease-out;
   z-index: 99;
+  cursor: none;
 }
 
 body {
-  // cursor: none;
   margin: 0;
   height: 100vh;
   overflow: hidden;
-}
-
-*:hover {
-  cursor: none;
 }
