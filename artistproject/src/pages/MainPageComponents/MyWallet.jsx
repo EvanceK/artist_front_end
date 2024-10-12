@@ -12,7 +12,7 @@ function MyWallet() {
       {/* 信用卡資訊區塊 */}
       <div className="border p-4">
         <div className="h2 mb-5">Credit Card Information:</div>
-        <div class="d-flex justify-content-between gap-4 h4 mt-2">
+        <div className="d-flex justify-content-between gap-4 h4 mt-2">
           <div className="text-end w-50">
             <p>Bank :</p>
             <p>Credit Card Number :</p>
