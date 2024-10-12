@@ -89,7 +89,8 @@ export default function NavBar() {
             <span
               className="nav-link dropdown-toggle"
               role="button"
-              onClick={showIncorrectAccountModal}
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
             >
               Hi! {localStorage.getItem("nickName")}
             </span>
@@ -236,8 +237,7 @@ export default function NavBar() {
               <button
                 type="button"
                 className="btn "
-                data-bs-toggle="modal"
-                data-bs-target="#PasswordResetEmailModel"
+                onClick={showIncorrectAccountModal}
               >
                 PassReEmailModel
               </button>
