@@ -10,6 +10,7 @@ import IncorrectPasswordModal from "../components/Modal/IncorrectPasswordModal";
 import IncorrectAccountModal from "../components/Modal/IncorrectAccountModal";
 import PasswordChanged from "./MainPageComponents/PasswordChanged";
 import PassChangedSuccessModal from "../components/Modal/PassChangedSuccessModal";
+
 import Deposit from "../components/Modal/DepositModal";
 import PasswordResetEmailModel from "../components/Modal/PasswordResetEmailModal";
 import DeleteAccount from "./MainPageComponents/MyAccountComponents/DeleteAccount";
@@ -56,7 +57,11 @@ export default function MainPage() {
               path="PasswordResetEmailModal"
               element={<PasswordResetEmailModal />}
             />
-            <Route path="PasswordChanged" element={<PasswordChanged />} />
+
+            <Route
+              path="/reset-password/:token"
+              element={<PasswordChanged />}
+            />
           </Route>
 
           {/*要登入才可以看到的 */}
@@ -80,9 +85,10 @@ export default function MainPage() {
         <Register></Register>
         <SignupSuccess />
         <Deposit />
-        <PasswordChanged />
         <PasswordResetEmailModel />
         <IncorrectAccountModal />
+        <IncorrectPasswordModal />
+
         <PassChangedSuccessModal />
 
         {/* modal for navbar ^^ */}

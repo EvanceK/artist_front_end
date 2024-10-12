@@ -1,9 +1,22 @@
 import { useContext } from "react";
 import projectLogo from "../../assets/LOGO.png";
 import { MainContext } from "../ContextProvider/MainContext";
+import * as bootstrap from "bootstrap"; // Import Bootstrap as a module
 
 export default function IncorrectAccountModal() {
-  const { incorrectAccountModalRef } = useContext(MainContext);
+  const { incorrectAccountModalRef,showLoginModal } = useContext(MainContext);
+  const hideIncorrectAccountModal = () => {
+    if (incorrectAccountModalRef.current) {
+      const modal = new bootstrap.Modal(incorrectAccountModalRef.current); // Use bootstrap.Modal directly
+      modal.hide();
+    }
+  };
+
+  const closeaction =() =>{
+    hideIncorrectAccountModal();
+    showLoginModal();
+   
+  };
   return (
     <div
       ref={incorrectAccountModalRef}
@@ -21,7 +34,11 @@ export default function IncorrectAccountModal() {
             <button
               type="button"
               className="btn-close"
-              data-bs-dismiss="modal"
+              // data-bs-dismiss="IncorrectAccountModal"
+              // onClick={closeaction}
+               data-bs-toggle="modal"
+                data-bs-target="#LoginModal"
+        
               aria-label="Close"
             ></button>
           </div>

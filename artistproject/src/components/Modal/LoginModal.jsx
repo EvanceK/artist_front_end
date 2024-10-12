@@ -10,12 +10,14 @@ export default function LoginModal() {
   const api = path + "/customers/login";
   const { setUserName, setIsLogin } = useContext(UserContext);
 
-  const { loginModalRef, setLoadWishlist, loadWishlist } =
+  const { loginModalRef, setLoadWishlist, loadWishlist , showIncorrectAccountModal, showIncorrectPasswordModal} =
     useContext(MainContext);
   const [data, setData] = useState({
     email: "",
     password: "",
   });
+
+
 
   // email: tester@email.com. pass: 123
   const handleChange = (e) => {
@@ -31,6 +33,7 @@ export default function LoginModal() {
           "Content-Type": "application/json",
         },
       });
+      //處理成功登入結果
       // console.log(result);
       localStorage.setItem("token", result.data.token);
       localStorage.setItem("nickName", result.data.nickName);
@@ -38,7 +41,13 @@ export default function LoginModal() {
       setIsLogin(true);
     } catch (error) {
       console.log(error);
-      alert("登入失敗，帳號或密碼不正確！");
+      if (error.response.data === "Email doesn't exist"){
+        showIncorrectAccountModal();
+      }
+      else if (error.response.data==="Invalid password"){
+        showIncorrectPasswordModal();
+        }
+
       setIsLogin(false);
     }
   };
