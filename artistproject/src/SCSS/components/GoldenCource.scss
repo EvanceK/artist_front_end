@@ -21,14 +21,7 @@ body {
   height: 100vh;
   overflow: hidden;
 }
-@keyframes identifier {
-  from {
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); /* Add a glowing effect */
-  }
-  to {
-    box-shadow: 0 0 80px rgba(255, 215, 0, 0.8); /* Add a glowing effect */
-  }
-}
+
 *:hover {
   cursor: none;
 }

@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import GoldenCource from "../components/GoldenCource";
+import StarFollower from "../components/StarFollower";
 export default function Welcome() {
   return (
     <div className="welcome">
       <GoldenCource />
+      <StarFollower />
       <div className="bg">
         <img src="./src/assets/background1.webp" alt="background1" />
       </div>
