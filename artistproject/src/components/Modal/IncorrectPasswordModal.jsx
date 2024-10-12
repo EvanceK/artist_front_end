@@ -1,7 +1,13 @@
 import projectLogo from "../../assets/LOGO.png";
+import { useContext } from "react";
+import { MainContext } from "../ContextProvider/MainContext";
+
+
 export default function IncorrectPasswordModal() {
+  const { IncorrectPasswordModalRef } = useContext(MainContext);
   return (
     <div
+    ref={IncorrectPasswordModalRef}
       className="modal fade"
       id="IncorrectPasswordModal"
       data-bs-backdrop="static"
@@ -16,7 +22,8 @@ export default function IncorrectPasswordModal() {
             <button
               type="button"
               className="btn-close"
-              data-bs-dismiss="modal"
+             data-bs-toggle="modal"
+                data-bs-target="#LoginModal"
               aria-label="Close"
             ></button>
           </div>
