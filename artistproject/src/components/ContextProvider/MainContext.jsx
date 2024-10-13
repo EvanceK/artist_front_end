@@ -69,7 +69,7 @@ export function MainContextProvider({ children }) {
       }
       // setWishlistPaintingIdList(paintingIdArray);
     }
-  });
+  }, []);
   // useEffect for preload data
   useEffect(() => {
     getWishList();
