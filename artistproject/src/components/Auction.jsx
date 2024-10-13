@@ -1,9 +1,10 @@
 import { Link, useParams } from "react-router-dom";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import Carousel from "./Carousel";
 import axiosInstance from "../axiosConfig";
 import CountDown from "./countDown";
 import AddFavoriteBtn from "./AddFavoriteBtn";
+import { MainContext } from "./ContextProvider/MainContext";
 
 export default function Auction() {
   const { id } = useParams();
@@ -15,6 +16,8 @@ export default function Auction() {
   const [breAmoutArray, setBreAmoutArray] = useState();
   const [auctionList, setAuctionList] = useState();
   const [placeBid, setPlaceBid] = useState();
+  const { reLoadBiddingHistory, setReLoadBiddingHistory } =
+    useContext(MainContext);
   const path = import.meta.env.VITE_DATA_HOST_API;
 
   //Post placeBid
@@ -37,6 +40,7 @@ export default function Auction() {
   };
   useEffect(() => {
     if (placeBid) postPlaceBid();
+    setReLoadBiddingHistory(reLoadBiddingHistory);
   }, [placeBid]);
   // Fetch painting data
   const getdata = async () => {
