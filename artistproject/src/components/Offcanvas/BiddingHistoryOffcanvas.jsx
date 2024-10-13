@@ -6,14 +6,16 @@ import axiosInstance from "../../axiosConfig";
 
 export default function BiddingHistoryOffcanvas() {
   const { isLogin, setLogin } = useContext(UserContext);
-  const { loadBiddingHistory, setloadBiddingHistory } = useContext(MainContext);
+  const { reLoadBiddingHistory, setReLoadBiddingHistory } = useContext(MainContext);
   const [biddingHistory, setBiddingHistory] = useState([]);
+
   // const [renderCart, setRenderCart] = useState();
 
   const getBiddingHistory = async () => {
     const path = import.meta.env.VITE_DATA_HOST_API;
     const api = path + "/api/bidding/history";
     const authorization = localStorage.getItem("token");
+
     if (authorization) {
       const result = await axiosInstance.get(api);
       // console.log(result.data);
@@ -34,7 +36,7 @@ export default function BiddingHistoryOffcanvas() {
         // setBiddingHistory(JSON.parse(storedBiddingHistory));
       }
     }
-  }, [isLogin, loadBiddingHistory]);
+  }, [isLogin, reLoadBiddingHistory]);
 
   return (
     <>
