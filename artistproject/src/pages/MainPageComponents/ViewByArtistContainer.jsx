@@ -1,6 +1,6 @@
 // import ArtistViewContainer from "./ArtistViewContainer";
 import axios from "axios";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import Pagination from "../../components/Pagination";
 import MyCard from "../../components/MyCard";
@@ -33,15 +33,28 @@ export default function ViewByArtistContainer() {
       const findArtist = artistList.find((ar) => ar.artistId == id);
       setSelectedArtist(findArtist || null); // Handle case when artist is not found
     }
-    getdata();
+    if (!selectedArtist) {
+      return <p className="container mt-5 pt-5">plase select an artist...</p>; // Handle loading or no artist found
+    }
   }, [id, selectedArtist, artistList, requestPageNumber, loading]);
 
-  if (!selectedArtist) {
-    return <p className="container mt-5 pt-5">plase select an artist...</p>; // Handle loading or no artist found
-  }
-
-  // Fetch painting data
-  const getdata = async () => {
+  // // Fetch painting data
+  // const getdata = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const result = await axios.get(
+  //       `${api}?artistId=${selectedArtist.artistId}&currentPage=${requestPageNumber}&pageSize=${pageSize}`
+  //     );
+  //     setData(result.data.paintingsList);
+  //     setTotalPage(result.data.totalPage || 1);
+  //     // console.log(result);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  //   setLoading(false);
+  // };
+  const getdata = useCallback(async () => {
+    if (!selectedArtist || !selectedArtist.artistId) return; // Prevent call if artistId is not available
     setLoading(true);
     try {
       const result = await axios.get(
@@ -49,12 +62,17 @@ export default function ViewByArtistContainer() {
       );
       setData(result.data.paintingsList);
       setTotalPage(result.data.totalPage || 1);
-      // console.log(result);
     } catch (error) {
       console.log(error);
     }
     setLoading(false);
-  };
+  }, [selectedArtist, requestPageNumber, pageSize]);
+
+  useEffect(() => {
+    if (selectedArtist) {
+      getdata();
+    }
+  }, [selectedArtist, requestPageNumber, pageSize, getdata]);
 
   return (
     <>
