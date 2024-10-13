@@ -3,7 +3,6 @@ import MemberNav from "../../components/MemberNav";
 export default function WinningRecords(){
     return(
         <div className="container">
-            <MemberNav/>
             <div className="title mb-5 py-5 border-bottom">
                 <h2>Winning Records</h2>
             </div>
