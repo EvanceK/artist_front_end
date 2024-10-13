@@ -63,13 +63,14 @@ export default function AddFavoriteBtn({ paintingId }) {
   }, [like, liked]);
 
   useEffect(() => {
+    setLiked(false);
     if (localStorage.getItem("paintingIdArray") != null)
       JSON.parse(localStorage.getItem("paintingIdArray")).map((i) => {
         if (i == paintingId) {
           setLiked(true);
         }
       });
-  }, []);
+  }, [like, loadWishlist, paintingId]);
 
   useEffect(() => {
     let color = "";
@@ -98,7 +99,7 @@ export default function AddFavoriteBtn({ paintingId }) {
         <path fillRule="evenodd" d={d} />
       </svg>
     );
-  }, [liked, like]);
+  }, [liked]);
 
   return (
     <>
