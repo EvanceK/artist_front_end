@@ -13,10 +13,33 @@ export default function Auction() {
   const [breadcrumb, setBreadcrumb] = useState();
   const [highestBre, setHighestBre] = useState();
   const [breAmoutArray, setBreAmoutArray] = useState();
+  const [auctionList, setAuctionList] = useState();
+  const [placeBid, setPlaceBid] = useState();
+  const path = import.meta.env.VITE_DATA_HOST_API;
 
+  //Post placeBid
+  const handleClickPlaceBid = () => {
+    console.log("placeBid!");
+    console.log("ID:", painting.paintingId);
+    setPlaceBid({
+      paintingId: painting.paintingId,
+      bidAmount: "2000",
+    });
+  };
+  const postPlaceBid = async () => {
+    const api = path + "/api/bidding/bid";
+    try {
+      const result = await axiosInstance.post(`${api}`, placeBid);
+      console.log(result);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(() => {
+    if (placeBid) postPlaceBid();
+  }, [placeBid]);
   // Fetch painting data
   const getdata = async () => {
-    const path = import.meta.env.VITE_DATA_HOST_API;
     const api = path + "/api/bidding";
     setLoading(true);
     try {
@@ -31,6 +54,7 @@ export default function Auction() {
     }
     setLoading(false);
   };
+
   useEffect(() => {
     getdata();
   }, [id]);
@@ -41,18 +65,45 @@ export default function Auction() {
   useEffect(() => {
     if (biddingHistory && biddingHistory.length > 0) {
       setHighestBre(biddingHistory[0].bidAmount);
-      setBreAmoutArray(
-        Array.from(
-          { length: 3 },
-          (_, i) => biddingHistory[0].bidAmount + 50 * (i + 1)
-        )
-      );
-
-      // console.log("BreAmoutArray:", breAmoutArray);
+    } else {
+      setHighestBre(painting?.price);
     }
+    setBreAmoutArray(
+      Array.from({ length: 3 }, (_, i) => highestBre + 50 * (i + 1))
+    );
+
+    // console.log("BreAmoutArray:", breAmoutArray);
+
     // else {
     //   console.log("No bidding history available");
     // }
+  }, [biddingHistory]);
+
+  const buildAcutionList = () => {
+    if (!biddingHistory || biddingHistory.length === 0) {
+      return <p>No bidding history available.</p>;
+    }
+
+    return biddingHistory.map((b, i) => {
+      return (
+        <div key={i} className="auctionList">
+          <div className="row m-2">
+            <div className="col">{b.nickName}</div>
+            <div className="col">{b.bidTime}</div>
+            <div className="col">
+              ${" "}
+              {new Intl.NumberFormat("en-IN", {
+                maximumSignificantDigits: 3,
+              }).format(b.bidAmount)}
+            </div>
+          </div>
+        </div>
+      );
+    });
+  };
+
+  useEffect(() => {
+    setAuctionList(buildAcutionList());
   }, [biddingHistory]);
 
   useEffect(() => {
@@ -88,23 +139,6 @@ export default function Auction() {
       <>
         <Carousel></Carousel>
         <div className="container my-5">
-          {/* <div className="Breadcrumb">
-          <nav aria-label="breadcrumb">
-            <ol className="breadcrumb">
-              <li className="breadcrumb-item">
-                <Link to="/home">ARTIST</Link>
-              </li>
-              <li className="breadcrumb-item">
-                <Link to={`/home/${painting.artistId}`}>
-                  {painting.artisName}
-                </Link>
-              </li>
-              <li className="breadcrumb-item active" aria-current="page">
-                2023 - 2024
-              </li>
-            </ol>
-          </nav>
-        </div> */}
           {breadcrumb}
           <h2>{painting.paintingName}</h2>
           <div className="row">
@@ -121,19 +155,23 @@ export default function Auction() {
               />
               <div className="context h6">
                 <div className="row">
-                  <div className="col-4 text-end">ARTIST:</div>
+                  <div className="col-4 text-end">ARTIST</div>
+                  <div className="col-1 ">:</div>
                   <div className="col text-center">{painting.artisName}</div>
                 </div>
                 <div className="row">
-                  <div className="col-4  text-end">YEAR:</div>
+                  <div className="col-4  text-end">YEAR</div>
+                  <div className="col-1 ">:</div>
                   <div className="col text-center">{painting.date}</div>
                 </div>
                 <div className="row">
-                  <div className="col-4  text-end">STYLE:</div>
+                  <div className="col-4  text-end">STYLE</div>
+                  <div className="col-1 ">:</div>
                   <div className="col text-center">{painting.style}</div>
                 </div>
                 <div className="row">
-                  <div className="col-4  text-end">Genre:</div>
+                  <div className="col-4  text-end">Genre</div>
+                  <div className="col-1 ">:</div>
                   <div className="col text-center">{painting.genre}</div>
                 </div>
               </div>
@@ -182,7 +220,12 @@ export default function Auction() {
               <div className="cardBtn d-flex justify-content-center m-5">
                 <AddFavoriteBtn paintingId={painting.paintingId} />
 
-                <span className="btn btn-primary mx-3">PLACE BID</span>
+                <span
+                  className="btn btn-primary mx-3"
+                  onClick={handleClickPlaceBid}
+                >
+                  PLACE BID
+                </span>
               </div>
               <div className="row shipment">
                 <div className="row m-3">
@@ -224,7 +267,9 @@ export default function Auction() {
                   <div className="col">Closes: Tomorrow 00:30</div>
                 </div>
                 <hr />
-                <div className="auctionList">
+                {auctionList}
+
+                {/* <div className="auctionList">
                   <div className="row m-2">
                     <div className="col">Lisa</div>
                     <div className="col">3 h ago</div>
@@ -250,7 +295,7 @@ export default function Auction() {
                     <div className="col">20 h ago</div>
                     <div className="col">$ 500</div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
