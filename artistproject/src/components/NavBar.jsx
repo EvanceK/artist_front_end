@@ -63,6 +63,14 @@ export default function NavBar() {
     updateWishlistNumber(); // Immediately recheck wishlist number
   }, [like, loadWishlist]); // Depend on 'like' and 'loadWishlist'
 
+  useEffect(()=>{
+    setBiddingNum(
+      localStorage.getItem("biddingHistory") != null
+      ? JSON.parse(localStorage.getItem("biddingHistory")).length
+      : ""
+    );
+  },[reLoadBiddingNum])
+
   useEffect(() => {
     $(".nav-link").on("click", function () {
       $(".nav-link").removeClass("active"); // Remove "active" class from all
@@ -108,14 +116,7 @@ export default function NavBar() {
     navigate("/home");
     setLoadWishlist(!loadWishlist);
   };
-  useEffect(()=>{
-    console.log("帶入bidNum");
-    setBiddingNum(
-      localStorage.getItem("biddingHistory") != null
-      ? JSON.parse(localStorage.getItem("biddingHistory")).length
-      : ""
-    );
-  },[reLoadBiddingNum])
+
   useEffect(() => {
     if (localStorage.getItem("token") == null) {
       setAccountfeild(

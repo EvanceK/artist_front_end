@@ -39,13 +39,13 @@ export default function BiddingHistoryOffcanvas() {
         //將token轉為JSON存到setWishlist
         getBiddingHistory();
         setReLoadCard(!reLoadCard);
-        setReLoadBiddingNum(!reLoadBiddingNum);
         // setBiddingHistory(JSON.parse(storedBiddingHistory));
       }
     }
   }, [isLogin, reLoadBiddingHistory]);
 
   useEffect(()=>{
+    setReLoadBiddingNum(!reLoadBiddingNum);
     setRenderCart(
       biddingHistory.length > 0
             ? biddingHistory.map((bp, i) => {
