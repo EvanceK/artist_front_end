@@ -21,7 +21,6 @@ export default function AddFavoriteBtn({ paintingId }) {
   const handleClick = () => {
     // console.log("Favornewclicked: ", paintingId);
     setAddPainting({ paintingId: paintingId });
-    setLike(!like);
   };
   useEffect(() => {
     if (addPainting) {
@@ -32,18 +31,16 @@ export default function AddFavoriteBtn({ paintingId }) {
   const addWishlist = async () => {
     const authorization = localStorage.getItem("token");
     const api = path + "/api/wishlist";
-    // console.log(authorization);
-    // console.log(addPainting);
     try {
       if (authorization) {
         await axiosInstance.post(api, addPainting);
-        // console.log("addWishlist result:", result);
+        setLiked(true);
+        setLike(!like);
+        setLoadWishlist(true); // Trigger wishlist update
       } else {
         showLoginModal();
         console.log("please login");
       }
-      setLiked(true);
-      setLike(true);
     } catch (e) {
       console.log(e);
     }
@@ -54,7 +51,8 @@ export default function AddFavoriteBtn({ paintingId }) {
       const api = path + `/api/wishlist/${cardId}`;
       await axiosInstance.delete(api);
       setLiked(false);
-      setLike(false);
+      setLike(!like);
+      setLoadWishlist(true); // Trigger wishlist update
     } catch (e) {
       console.log(e);
     }

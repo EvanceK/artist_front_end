@@ -44,30 +44,21 @@ export function MainContextProvider({ children }) {
   const getWishList = useCallback(async () => {
     const authorization = localStorage.getItem("token");
     const api = path + "/api/wishlist";
-    const paintingIdArray = [];
+
     if (authorization) {
       try {
-        const result = await axiosInstance.get(`${api}`, {
-          headers: {
-            Authorization: `Bearer ${authorization}`,
-          },
-        });
+        const result = await axiosInstance.get(`${api}`);
 
+        const paintingIdArray = result.data.map((w) => w.paintingId);
         localStorage.setItem("Wishlist", JSON.stringify(result.data));
-        JSON.parse(localStorage.getItem("Wishlist")).map((w) => {
-          paintingIdArray.push(w.paintingId);
-        });
-
         localStorage.setItem(
           "paintingIdArray",
           JSON.stringify(paintingIdArray)
         );
-
         setLike(!like);
       } catch (error) {
         console.log(error);
       }
-      // setWishlistPaintingIdList(paintingIdArray);
     }
   }, []);
   // useEffect for preload data

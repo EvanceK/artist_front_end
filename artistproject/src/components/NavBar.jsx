@@ -33,28 +33,33 @@ export default function NavBar() {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    // console.log("submit: ", searchParams);
 
     if (search === "") {
       console.log("empty search", search);
-      // Clear all query params by setting searchParams to an empty object
-      setSearchParams({}); // This clears the query string entirely
-      navigate("/home", { replace: true }); // Navigate to the home page without query params
+      setSearchParams({}); // Clear the query string entirely
+      // Trigger a reload even if you're on "/home" by adding a dummy parameter
+      navigate("/home", { replace: true });
     } else {
-      // Proceed with adding the keyword to the search params
       setSearchParams({ keyword: search });
       console.log("searchParamsValue", searchParams.get("keyword"));
+
+      // To ensure the search works even on the "/home" path, use replace to update the URL
+      navigate("/home?keyword=" + search, { replace: true });
     }
     setRequestPageNumber(1);
   };
 
   useEffect(() => {
-    localStorage.getItem("paintingIdArray") != null
-      ? setWishlistNumber(
-          JSON.parse(localStorage.getItem("paintingIdArray")).length
-        )
-      : setWishlistNumber("");
-  }, [like]);
+    // Recheck localStorage whenever 'like' or 'loadWishlist' changes
+    const updateWishlistNumber = () => {
+      const paintingIdArray = JSON.parse(
+        localStorage.getItem("paintingIdArray")
+      );
+      setWishlistNumber(paintingIdArray ? paintingIdArray.length : "");
+    };
+
+    updateWishlistNumber(); // Immediately recheck wishlist number
+  }, [like, loadWishlist]); // Depend on 'like' and 'loadWishlist'
 
   useEffect(() => {
     $(".nav-link").on("click", function () {
