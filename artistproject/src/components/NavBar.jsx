@@ -99,6 +99,7 @@ export default function NavBar() {
     localStorage.removeItem("nickName");
     localStorage.removeItem("paintingIdArray");
     localStorage.removeItem("Wishlist");
+    localStorage.removeItem("biddingHistory");
     setIsLogin(false);
     setToken(null);
     setUserName(null);
