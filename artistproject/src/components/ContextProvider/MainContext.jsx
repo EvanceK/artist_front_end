@@ -23,6 +23,7 @@ export function MainContextProvider({ children }) {
   const [artistList, setArtisList] = useState([]); //所有作家名單 目前for navBar 選單用
   const [like, setLike] = useState(false);
   const [reLoadBiddingHistory,setReLoadBiddingHistory] = useState(false);
+  const [reLoadBiddingNum,setReLoadBiddingNum] =useState(false);
   // const [wishlistPaintingIdList, setWishlistPaintingIdList] = useState([]);
   //vv for searching 功能用的變數：
   const [search, setSearch] = useState();
@@ -136,6 +137,8 @@ export function MainContextProvider({ children }) {
         showPasswordChangedRef,
         reLoadBiddingHistory,
         setReLoadBiddingHistory,
+        reLoadBiddingNum,
+        setReLoadBiddingNum,
       }}
     >
       {children}

@@ -16,7 +16,8 @@ export default function Auction() {
   const [breAmoutArray, setBreAmoutArray] = useState();
   const [auctionList, setAuctionList] = useState();
   const [placeBid, setPlaceBid] = useState();
-  const { reLoadBiddingHistory, setReLoadBiddingHistory } =
+  
+  const { reLoadBiddingHistory, setReLoadBiddingHistory} =
     useContext(MainContext);
   const path = import.meta.env.VITE_DATA_HOST_API;
 
@@ -40,7 +41,7 @@ export default function Auction() {
   };
   useEffect(() => {
     if (placeBid) postPlaceBid();
-    setReLoadBiddingHistory(reLoadBiddingHistory);
+    setReLoadBiddingHistory(!reLoadBiddingHistory);
   }, [placeBid]);
   // Fetch painting data
   const getdata = async () => {
@@ -200,7 +201,9 @@ export default function Auction() {
                 {breAmoutArray
                   ? breAmoutArray.map((b, i) => {
                       return (
-                        <option key={i} defaultValue={b}>
+                        <option key={i} defaultValue={new Intl.NumberFormat("en-IN", {
+                          maximumSignificantDigits: 3,
+                        }).format(b)}>
                           ${" "}
                           {new Intl.NumberFormat("en-IN", {
                             maximumSignificantDigits: 3,

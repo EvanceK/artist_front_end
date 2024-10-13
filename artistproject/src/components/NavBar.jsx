@@ -25,12 +25,14 @@ export default function NavBar() {
     setLoadWishlist,
     PasswordChangedRef,
     showPasswordChangedRef,
+    reLoadBiddingNum,
+    setReLoadBiddingNum,
   } = useContext(MainContext);
 
   const [accountfeild, setAccountfeild] = useState();
   const [wishlistNumber, setWishlistNumber] = useState();
   const [token, setToken] = useState(null);
-
+  const [biddingNum,setBiddingNum]=useState();
   const handleSearch = (e) => {
     e.preventDefault();
 
@@ -106,6 +108,14 @@ export default function NavBar() {
     navigate("/home");
     setLoadWishlist(!loadWishlist);
   };
+  useEffect(()=>{
+    console.log("帶入bidNum");
+    setBiddingNum(
+      localStorage.getItem("biddingHistory") != null
+      ? JSON.parse(localStorage.getItem("biddingHistory")).length
+      : ""
+    );
+  },[reLoadBiddingNum])
   useEffect(() => {
     if (localStorage.getItem("token") == null) {
       setAccountfeild(
@@ -338,9 +348,10 @@ export default function NavBar() {
                 />
               </svg>
               <span className="biddingNumber">
-                {localStorage.getItem("biddingHistory") != null
+                {biddingNum}
+                {/* {localStorage.getItem("biddingHistory") != null
                   ? JSON.parse(localStorage.getItem("biddingHistory")).length
-                  : ""}
+                  : ""} */}
               </span>
             </a>
             {accountfeild}
