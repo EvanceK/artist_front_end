@@ -17,14 +17,27 @@ export default function MyCard({ Paintings }) {
         <div className="card-body">
           {/* <h5 className="card-title">{Paintings.paintingName}</h5> */}
 
-          <p className="card-text">
-            <span>ID: {Paintings.paintingId}</span>
-            <br />
-            <span>ARTIST: {Paintings.artisName}</span>
-            <br />
-            <span>YEAR：{Paintings.date}</span>
-            <br />
-            <span>STYLE：{Paintings.genre}</span>
+          <p className="card-text row d-flex flex-column ">
+            <div className="row justify-content-center">
+              <div className="col-2">ID </div>
+              <div className="col-1">: </div>
+              <div className="col-6">{Paintings.paintingId}</div>
+            </div>
+            <div className="row justify-content-center">
+              <div className="col-2">ARTIST </div>
+              <div className="col-1">: </div>
+              <div className="col-6">{Paintings.artisName}</div>
+            </div>
+            <div className="row justify-content-center">
+              <div className="col-2">YEAR</div>
+              <div className="col-1">: </div>
+              <div className="col-6">{Paintings.date}</div>
+            </div>
+            <div className="row justify-content-center">
+              <div className="col-2">STYLE</div>
+              <div className="col-1">: </div>
+              <div className="col-6">{Paintings.genre}</div>
+            </div>
           </p>
           <div className="cardBtn d-flex justify-content-center ">
             <AddFavoriteBtn paintingId={Paintings.paintingId} />
@@ -37,11 +50,13 @@ export default function MyCard({ Paintings }) {
             </span>
           </div>
         </div>
-        <img
-          src={Paintings.smallUrl}
-          className="card-img-top"
-          alt={Paintings.paintingName}
-        />
+        <div className="imgborder">
+          <img
+            src={Paintings.smallUrl}
+            className="card-img-top"
+            alt={Paintings.paintingName}
+          />
+        </div>
       </div>
       <p className="card-text ">
         {Paintings.paintingId}: {Paintings.paintingName}

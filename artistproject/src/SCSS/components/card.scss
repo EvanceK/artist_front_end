@@ -9,17 +9,21 @@
   padding: 10px;
 
   .photoFrame {
+    min-width: 22rem;
     overflow: hidden;
     width: fit-content;
     position: relative;
     // border: 1px solid red;
     // margin: auto 0.5rem;
-
-    .card-img-top {
-      height: 20rem;
-      width: auto;
-      &:hover {
-        scale: 1.2;
+    .imgborder {
+      display: flex;
+      justify-content: center;
+      .card-img-top {
+        height: 20rem;
+        width: auto;
+        &:hover {
+          scale: 1.2;
+        }
       }
     }
     .card-body {
