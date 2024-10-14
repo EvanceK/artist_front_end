@@ -22,8 +22,8 @@ export function MainContextProvider({ children }) {
   const [getWishlistData, setGetWishListData] = useState(false);
   const [artistList, setArtisList] = useState([]); //所有作家名單 目前for navBar 選單用
   const [like, setLike] = useState(false);
-  const [reLoadBiddingHistory, setReLoadBiddingHistory] = useState(false);
-  const [reLoadBiddingNum, setReLoadBiddingNum] = useState(false);
+  const [reLoadBiddingHistory,setReLoadBiddingHistory] = useState(false);
+  const [reLoadBiddingNum,setReLoadBiddingNum] =useState(false);
   // const [wishlistPaintingIdList, setWishlistPaintingIdList] = useState([]);
   //vv for searching 功能用的變數：
   const [search, setSearch] = useState();
@@ -40,17 +40,23 @@ export function MainContextProvider({ children }) {
   const cardNumber3Ref = useRef(null);
   const cardNumber4Ref = useRef(null);
 
+
+
+
   //當輸入滿4位數的時候，自動跳下一欄
-  const handleCardNumberChange = (e, setCardNumber, nextRef) => {
+  const handleCardNumberChange = (e, setCardNumber, nextRef) =>{
     const value = e.target.value;
     //只允許輸入數字，最大限度為4
-    if (/^\d{0,4}$/.test(value)) {
+    if(/^\d{0,4}$/.test(value)){
       setCardNumber(value);
-      if (value.length === 4 && nextRef) {
-        nextRef.current.focus(); //自動跳到下一個輸入框
+      if(value.length === 4 && nextRef){
+        nextRef.current.focus() //自動跳到下一個輸入框
       }
     }
   };
+
+
+  
 
   // methods for loading data
   const getArtistList = async () => {
@@ -89,6 +95,7 @@ export function MainContextProvider({ children }) {
     getWishList();
   }, [isLogin, getWishlistData, loadWishlist]);
 
+
   // Create a Provider component
   const loginModalRef = useRef(null); // useRef for loginModal
   const incorrectAccountModalRef = useRef(null); // useRef for loginModal
@@ -110,6 +117,7 @@ export function MainContextProvider({ children }) {
     }
   };
 
+  
   // Function to trigger the modal
   const showIncorrectPasswordModal = () => {
     if (IncorrectPasswordModalRef.current) {
@@ -160,31 +168,30 @@ export function MainContextProvider({ children }) {
         setGetWishListData,
         like,
         setLike,
-
         incorrectAccountModalRef,
         showIncorrectAccountModal,
         IncorrectPasswordModalRef,
         showIncorrectPasswordModal,
         PasswordChangedRef,
-        showPasswordChangedRef,
         
+        showPasswordChangedRef,
         reLoadBiddingHistory,
         setReLoadBiddingHistory,
         reLoadBiddingNum,
         setReLoadBiddingNum,
-
         cardNumber1,
-        setCardNumber1,
-        cardNumber2,
-        setCardNumber2,
-        cardNumber3,
-        setCardNumber3,
-        cardNumber4,
-        setCardNumber4,
-        cardNumber2Ref,
-        cardNumber3Ref,
-        cardNumber4Ref,
-        handleCardNumberChange,
+    setCardNumber1,
+    cardNumber2,
+    setCardNumber2,
+    cardNumber3,
+    setCardNumber3,
+    cardNumber4,
+    setCardNumber4,
+    cardNumber2Ref,
+    cardNumber3Ref,
+    cardNumber4Ref,
+    handleCardNumberChange
+       
       }}
     >
       {children}

@@ -1,10 +1,28 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
+import { MainContext } from "./ContextProvider/MainContext";
 
 
 function PaymentMethod() {
   const [paymentmethod, setPaymentMethod] = useState("CreditCard");
   const [paymentOption, setPaymentOption] = useState("one-time");
   const [installmentOption, setInstallmentOption] = useState("");
+
+  const {
+    cardNumber1,
+    cardNumber2,
+    cardNumber3,
+    cardNumber4,
+    setCardNumber1,
+    setCardNumber2,
+    setCardNumber3,
+    setCardNumber4,
+    cardNumber2Ref,
+    cardNumber3Ref,
+    cardNumber4Ref,
+    handleCardNumberChange,
+  } = useContext(MainContext);
+ 
+
 
   const handelPaymentMethodChange = (e) => {
     setPaymentMethod(e.target.value);
@@ -50,10 +68,44 @@ function PaymentMethod() {
           {/* Credit Card Information */}
          
               <div className="row d-flex justify-content-center m-4 gap-2">
-                <input type="text" className="txtbox col-2 text-center" /> —
-                <input type="text" className="txtbox col-2 text-center" /> —
-                <input type="text" className="txtbox col-2 text-center" /> —
-                <input type="text" className="txtbox col-2 text-center" />
+                <input type="text" 
+                className="txtbox col-2 text-center" 
+                value={cardNumber1}
+                onChange={(e) =>
+                  handleCardNumberChange(
+                    e,
+                    setCardNumber1,
+                    cardNumber2Ref
+                  )
+                }
+                maxLength="4"/> —
+                <input type="text" className="txtbox col-2 text-center" value={cardNumber2}
+                 ref={cardNumber2Ref}
+                onChange={(e) =>
+                  handleCardNumberChange(
+                    e,
+                    setCardNumber2,
+                    cardNumber3Ref
+                  )
+                }/> —
+                <input type="text" className="txtbox col-2 text-center" value={cardNumber3}
+                 ref={cardNumber3Ref}
+                onChange={(e) =>
+                  handleCardNumberChange(
+                    e,
+                    setCardNumber3,
+                    cardNumber4Ref
+                  )
+                }/> —
+                <input type="text" className="txtbox col-2 text-center" value={cardNumber4}
+                 ref={cardNumber4Ref}
+                onChange={(e) =>
+                  handleCardNumberChange(
+                    e,
+                    setCardNumber4,
+                    null
+                  )
+                }/>
                 <div className="row d-flex justify-content-center  m-3 ">
                   Expiration Date :
                   <input type="text" className="Date col-2 mx-3 text-center" />
