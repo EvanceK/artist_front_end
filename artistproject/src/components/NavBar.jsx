@@ -62,7 +62,7 @@ export default function NavBar() {
     };
 
     updateWishlistNumber(); // Immediately recheck wishlist number
-  }, [WToS]); // Depend on 'like' and 'loadWishlist'
+  }, [WToS, isLogin]); // Depend on 'like' and 'loadWishlist'
 
   useEffect(() => {
     setWishlistNumber(paintingIdArray ? paintingIdArray.length : "");
@@ -120,7 +120,7 @@ export default function NavBar() {
     setUserName(null);
     navigate("/home");
     // setLike(!like);
-    setLoadWishlist(!loadWishlist);
+    // setLoadWishlist(!loadWishlist);
   };
 
   useEffect(() => {
