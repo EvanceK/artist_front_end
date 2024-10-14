@@ -30,6 +30,7 @@ export function MainContextProvider({ children }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [requestPageNumber, setRequestPageNumber] = useState(1);
   const { isLogin } = useContext(UserContext);
+
   
 
   // methods for loading data
@@ -68,6 +69,11 @@ export function MainContextProvider({ children }) {
   useEffect(() => {
     getWishList();
   }, [isLogin, getWishlistData, loadWishlist]);
+
+  // 導行頁面
+ 
+
+  
 
   // Create a Provider component
   const loginModalRef = useRef(null); // useRef for loginModal
@@ -138,7 +144,9 @@ export function MainContextProvider({ children }) {
         reLoadBiddingHistory,
         setReLoadBiddingHistory,
         reLoadBiddingNum,
-        setReLoadBiddingNum,
+        setReLoadBiddingNum
+       
+       
       }}
     >
       {children}
