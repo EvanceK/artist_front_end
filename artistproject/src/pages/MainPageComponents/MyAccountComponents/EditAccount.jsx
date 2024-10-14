@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
+import axiosInstance from "../../../axiosConfig";
 export default function EditAccount() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const api = path + "/customers/EditAccount";
@@ -10,6 +11,25 @@ export default function EditAccount() {
     address: "",
     password: "",
   });
+  const getCustomer = async()=>{
+    const path=import.meta.env.VITE_DATA_HOST_API;
+    const Authorization = localStorage.getItem("token");
+    const api= path + "/customers/initEditData";
+    if(Authorization){
+    //axiosInstance就有回傳token的功能
+      const result = await axiosInstance.get(api);
+      // const result = await axios.get(api);
+      console.log(result.data);
+      setData(result.data)
+    }else{
+      showLogingModal();
+      console.log("please login")
+    }
+  };
+ 
+  useEffect(()=>{
+    getCustomer();
+  },[])
   const handleChange = (e) => {
     const { name, value } = e.target;
     console.log(name, value);
@@ -70,6 +90,7 @@ export default function EditAccount() {
                     type="text"
                     placeholder="Name"
                     onChange={handleChange}
+                    value={data.name}
                   />
                 </div>
                 <div className="row m-2 d-flex justify-content-center">
@@ -86,22 +107,7 @@ export default function EditAccount() {
                     type="text"
                     placeholder="NickName"
                     onChange={handleChange}
-                  />
-                </div>
-                <div className="row m-2 d-flex justify-content-center">
-                  <label
-                    className="col-3 d-flex justify-content-start"
-                    htmlFor="Password"
-                  >
-                    Password :
-                  </label>
-                  <input
-                    id="Password"
-                    className="txtbox col-7"
-                    name="password"
-                    type="text"
-                    placeholder="Password"
-                    onChange={handleChange}
+                    value={data.nickName}
                   />
                 </div>
                 <div className="row m-2 d-flex justify-content-center">
@@ -119,6 +125,7 @@ export default function EditAccount() {
                     type="text"
                     placeholder="Phone"
                     onChange={handleChange}
+                    value={data.phone}
                   />
                 </div>
                 <div className="row m-2 d-flex justify-content-center">
@@ -136,6 +143,7 @@ export default function EditAccount() {
                     placeholder="Address"
                     rows="3"
                     onChange={handleChange}
+                    value={data.address}
                   />
                 </div>
               </div>

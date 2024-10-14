@@ -1,55 +1,40 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import MemberNav from "../../components/MemberNav";
 import axiosInstance from "../../axiosConfig";
 import { MainContext } from "../../components/ContextProvider/MainContext";
 import axios from "axios";
+import { Link } from "react-router-dom";
 export default function MyAccount() {
+  const [customer,setCustomer]=useState({
+    name:"",
+    nickName:"", 
+    email:"",
+    phone:"",
+    address:"",
+  });
   //呼叫showLogingModal的方法
   const {showLogingModal} = useContext(MainContext);
   //1.先回傳token
   const getCustomer = async()=>{
     const path=import.meta.env.VITE_DATA_HOST_API;
+    const Authorization = localStorage.getItem("token");
     const api= path + "/customers/initEditData";
-    //檢查token
-    const authorization = localStorage.getItem("token");
-    //確認
-    if(authorization){
+    if(Authorization){
     //axiosInstance就有回傳token的功能
       const result = await axiosInstance.get(api);
-      console.log(result);
+      // const result = await axios.get(api);
+      console.log(result.data);
+      setCustomer(result.data)
     }else{
       showLogingModal();
       console.log("please login")
     }
-  }
-  //方法2
-  const getCustomer2 = async()=>{
-    const path=import.meta.env.VITE_DATA_HOST_API;
-    const customerid="CU0004"
-    //帶入 customerid 
-    const api= path + `/customers/initEditData/${customerid}`;
-    //檢查token
-    // const authorization = localStorage.getItem("token");
-
-      //axiosInstance就有回傳token的功能
-        //2.接收customer資料
-      const result = await axios.get(api);
-      // JSON.parse(result.data)
-      console.log(result.data);
-       //3.要帶入costomer的資料
-      setCustomer(result.data)
-
   };
-  getCustomer2();
+ 
+  useEffect(()=>{
+    getCustomer();
+  },[])
   
-  const [customer,setCustomer]=useState({
-    name:"",
-    nickName:"aaa", 
-    email:"aaa",
-    phone:"aaa",
-    address:"aaa",
-    password:"aaa"
-  });
   // const getdata = async ()=>{
   //   try{
   //     const result =await axios.get(
@@ -70,28 +55,24 @@ export default function MyAccount() {
           <div className="d-flex flex-column justify-content-center">
             <div className="row d-flex justify-content-center">
               <div className="col-2"><h4>Name:</h4></div>
-              <div className="col-4"><h4>{customer.name}</h4></div>
+              <div className="col-3"><h4>{customer.name}</h4></div>
             </div>
             <div className="row d-flex justify-content-center">
               <div className="col-2"><h4>Nikename:</h4></div>
-              <div className="col-4"><h4>{customer.nickName}</h4></div>
+              <div className="col-3"><h4>{customer.nickName}</h4></div>
             </div> 
             <div className="row d-flex justify-content-center">
               <div className="col-2"><h4>E-mail:</h4></div>
-              <div className="col-4"><h4>{customer.email}</h4></div>
+              <div className="col-3"><h4>{customer.email}</h4></div>
             </div> 
             <div className="row d-flex justify-content-center">
               <div className="col-2"><h4>Phone:</h4></div>
-              <div className="col-4"><h4>{customer.phone}</h4></div>
+              <div className="col-3"><h4>{customer.phone}</h4></div>
             </div> 
             <div className="row d-flex justify-content-center">
               <div className="col-2"><h4>Address:</h4></div>
-              <div className="col-4"><h4>{customer.address}</h4></div>
+              <div className="col-3"><h4>{customer.address}</h4></div>
             </div> 
-            <div className="row d-flex justify-content-center">
-              <div className="col-2"><h4>Password:</h4></div>
-              <div className="col-4"><h4>{customer.password}</h4></div>
-            </div>
             <div className="row d-flex justify-content-center">
               <div className="btn m-4 col-1 " 
                    id="edit"
@@ -99,7 +80,9 @@ export default function MyAccount() {
                    data-bs-target="#editAccount">
                     Edit
               </div>        
-              <div className="col-1"></div>
+              <Link className="btn btn-primary m-4 col-1"id="delete" to="PasswordChanged">
+                   Edit Password
+              </Link>      
               <div className="btn btn-danger m-4 col-1" 
                    id="delete"
                    data-bs-toggle="modal"
