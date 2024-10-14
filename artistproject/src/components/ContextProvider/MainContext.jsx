@@ -31,6 +31,31 @@ export function MainContextProvider({ children }) {
   const [requestPageNumber, setRequestPageNumber] = useState(1);
   const { isLogin } = useContext(UserContext);
 
+  //信用卡號輸入
+  const [cardNumber1, setCardNumber1] = useState("");
+  const [cardNumber2, setCardNumber2] = useState("");
+  const [cardNumber3, setCardNumber3] = useState("");
+  const [cardNumber4, setCardNumber4] = useState("");
+  const cardNumber2Ref = useRef(null);
+  const cardNumber3Ref = useRef(null);
+  const cardNumber4Ref = useRef(null);
+
+
+
+
+  //當輸入滿4位數的時候，自動跳下一欄
+  const handleCardNumberChange = (e, setCardNumber, nextRef) =>{
+    const value = e.target.value;
+    //只允許輸入數字，最大限度為4
+    if(/^\d{0,4}$/.test(value)){
+      setCardNumber(value);
+      if(value.length === 4 && nextRef){
+        nextRef.current.focus() //自動跳到下一個輸入框
+      }
+    }
+  };
+
+
   
 
   // methods for loading data
@@ -70,14 +95,11 @@ export function MainContextProvider({ children }) {
     getWishList();
   }, [isLogin, getWishlistData, loadWishlist]);
 
-  // 導行頁面
- 
-
-  
 
   // Create a Provider component
   const loginModalRef = useRef(null); // useRef for loginModal
   const incorrectAccountModalRef = useRef(null); // useRef for loginModal
+  const IncorrectPasswordModalRef = useRef(null); // useRef for loginModal
   const PasswordChangedRef = useRef(null); // useRef for loginModal
   // Function to trigger the modal
   const showLoginModal = () => {
@@ -91,6 +113,15 @@ export function MainContextProvider({ children }) {
   const showIncorrectAccountModal = () => {
     if (incorrectAccountModalRef.current) {
       const modal = new bootstrap.Modal(incorrectAccountModalRef.current); // Use bootstrap.Modal directly
+      modal.show();
+    }
+  };
+
+  
+  // Function to trigger the modal
+  const showIncorrectPasswordModal = () => {
+    if (IncorrectPasswordModalRef.current) {
+      const modal = new bootstrap.Modal(IncorrectPasswordModalRef.current); // Use bootstrap.Modal directly
       modal.show();
     }
   };
@@ -139,13 +170,27 @@ export function MainContextProvider({ children }) {
         setLike,
         incorrectAccountModalRef,
         showIncorrectAccountModal,
+        IncorrectPasswordModalRef,
+        showIncorrectPasswordModal,
         PasswordChangedRef,
+        
         showPasswordChangedRef,
         reLoadBiddingHistory,
         setReLoadBiddingHistory,
         reLoadBiddingNum,
-        setReLoadBiddingNum
-       
+        setReLoadBiddingNum,
+        cardNumber1,
+    setCardNumber1,
+    cardNumber2,
+    setCardNumber2,
+    cardNumber3,
+    setCardNumber3,
+    cardNumber4,
+    setCardNumber4,
+    cardNumber2Ref,
+    cardNumber3Ref,
+    cardNumber4Ref,
+    handleCardNumberChange
        
       }}
     >
