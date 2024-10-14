@@ -16,13 +16,16 @@ function MyWallet() {
             <p>Bank :</p>
             <p>Credit Card Number :</p>
           </div>
-          <div class="text-star w-50">
+          <div className="text-star w-50">
             <p>823 Nextbank</p>
             <p>4065-1352-****-7596</p>
           </div>
         </div>
-        <div className="btn m-4 ">Change credit card</div>
+        <div className="btn m-4 " 
+        data-bs-toggle="modal"
+                        data-bs-target="#ChangeCreditCardModal">Change credit card</div>
       </div>
+     
 
       {/* 錢包資訊區塊 */}
       <div className="border p-4 mt-5">
@@ -40,7 +43,7 @@ function MyWallet() {
         {/* 錢包資訊區塊 */}
         <div className="d-flex justify-content-between h2  px-5 mt-5">
           <div className="h3 text-star">Current Balance :</div>
-          <div ClassName="h3 text-end">$ 120,000</div>
+          <div className="h3 text-end">$ 120,000</div>
         </div>
         <div className="underline"></div>
         <div className="d-flex justify-content-between h5 mt-3 px-5">

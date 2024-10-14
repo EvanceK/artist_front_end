@@ -1,8 +1,16 @@
 import React, { useState } from "react";
 import OrangeImage from "../assets/home/orange.jpg";
 import { info } from "sass";
+import { useContext } from "react"; // 新增 useContext
+import { MainContext } from "./ContextProvider/MainContext"; 
+import { useNavigate } from "react-router-dom";
 
 function Order() {
+  const navigate = useNavigate();
+  const handleOrderConfirmClick = () => {
+    // 導航至 OrderPage 頁面
+    navigate("/home/cusdashboard/ConfirmOrder");
+  };
   return (
     <div className="orderInfo mt-5 row justify-content-center">
       <div className="h1 underline">Order</div>
@@ -94,7 +102,8 @@ function Order() {
 
                 {/* submit button*/}
                 <div className="place-Bid d-flex justify-content-center m-5 ">
-                      <div className="btn">Confirm</div>
+                      <div className="btn"
+                            onClick={handleOrderConfirmClick}>Confirm</div>
                   </div>
               </form>
             </div>

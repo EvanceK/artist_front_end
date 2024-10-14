@@ -12,7 +12,7 @@ import PasswordChanged from "./MainPageComponents/PasswordChanged";
 import PassChangedSuccessModal from "../components/Modal/PassChangedSuccessModal";
 
 import Deposit from "../components/Modal/DepositModal";
-import PasswordResetEmailModel from "../components/Modal/PasswordResetEmailModal";
+
 import DeleteAccount from "./MainPageComponents/MyAccountComponents/DeleteAccount";
 import ViewContainer from "./MainPageComponents/ViewContainer";
 import MyAccount from "./MainPageComponents/MyAccount";
@@ -32,6 +32,7 @@ import WishlistOffcanvas from "../components/Offcanvas/WishlistOffcanvas";
 import ConfirmOrder from "./MainPageComponents/ConfirmOrder";
 import MyWallet from "./MainPageComponents/MyWallet";
 import BiddingHistoryOffcanvas from "../components/Offcanvas/BiddingHistoryOffcanvas";
+import ChangeCreditCardModal from "../components/Modal/ChangeCreditCardModal";
 
 export default function MainPage() {
   return (
@@ -75,6 +76,10 @@ export default function MainPage() {
             <Route path="MyWallet" element={<MyWallet />} />
             <Route path="ConfirmOrder" element={<ConfirmOrder />} />
             <Route path="OrderPage" element={<OrderPage />} />
+            
+           
+            
+           
           </Route>
         </Routes>
         {/* modal for navbar vv */}
@@ -85,11 +90,11 @@ export default function MainPage() {
         <Register></Register>
         <SignupSuccess />
         <Deposit />
-        <PasswordResetEmailModel />
+        <PasswordResetEmailModal />
         <IncorrectAccountModal />
         <IncorrectPasswordModal />
-
         <PassChangedSuccessModal />
+        <ChangeCreditCardModal />
 
         {/* modal for navbar ^^ */}
         {/* Offcanvas vv*/}
