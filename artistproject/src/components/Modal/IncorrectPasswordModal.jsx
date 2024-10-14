@@ -41,7 +41,7 @@ export default function IncorrectPasswordModal() {
               <div
                 className="btn"
                 data-bs-toggle="modal"
-                data-bs-target="#PasswordResetEmailModal"
+                data-bs-target="#PasswordResetEmailModel"
               >
                 Reset password
               </div>
