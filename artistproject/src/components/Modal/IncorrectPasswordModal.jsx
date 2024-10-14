@@ -35,14 +35,13 @@ export default function IncorrectPasswordModal() {
                 alt="Logo"
               ></img>
             </div>
-            <div className="">
-              <h2 className="h3">Your password is incorrect, please try again or reset your password.</h2>
+            <div className="h3 text-center">Your password is incorrect, please try again or reset your password.
             </div>
             <div className="login-btn d-flex justify-content-center m-5">
               <div
                 className="btn"
                 data-bs-toggle="modal"
-                data-bs-target="#PasswordResetEmailModal"
+                data-bs-target="#PasswordResetEmailModel"
               >
                 Reset password
               </div>

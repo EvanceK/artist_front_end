@@ -29,8 +29,8 @@ export default function SignupSuccess() {
               ></img>
             </div>
             <div className="">
-              <h2 className="h2">Sign Up Successful.</h2>
-              <h2 className="h2">Click the Button to log in.</h2>
+              <div className="h2 text-center">Sign Up Successful.</div>
+              <div className="h2 text-center">Click the Button to log in.</div>
             </div>
             <div className="login-btn d-flex justify-content-center m-5">
               <div

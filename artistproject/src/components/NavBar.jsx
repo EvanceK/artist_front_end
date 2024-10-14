@@ -74,8 +74,7 @@ export default function NavBar() {
         ? JSON.parse(localStorage.getItem("biddingHistory")).length
         : ""
     );
-  }, [reLoadBiddingNum]);
-
+  }, [isLogin, reLoadBiddingNum]);
   useEffect(() => {
     $(".nav-link").on("click", function () {
       $(".nav-link").removeClass("active"); // Remove "active" class from all
@@ -115,6 +114,7 @@ export default function NavBar() {
     localStorage.removeItem("paintingIdArray");
     localStorage.removeItem("Wishlist");
     localStorage.removeItem("biddingHistory");
+    // setReLoadBiddingNum(!reLoadBiddingNum);
     setIsLogin(false);
     setToken(null);
     setUserName(null);

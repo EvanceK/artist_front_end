@@ -4,7 +4,7 @@ import { MainContext } from "../../components/ContextProvider/MainContext";
 export default function PasswordChanged() {
   return (
    
-          <div className="PasswordChanged">
+          <div className="PasswordChanged" id="PasswordChanged">
             <div className="py-5 d-flex justify-content-center">
               <img
                 className="projectLogo  w-50 h-100 "
