@@ -10,14 +10,19 @@ export default function LoginModal() {
   const api = path + "/customers/login";
   const { setUserName, setIsLogin } = useContext(UserContext);
 
-  const { loginModalRef, setLoadWishlist, loadWishlist , showIncorrectAccountModal, showIncorrectPasswordModal} =
-    useContext(MainContext);
+  const {
+    loginModalRef,
+    setLoadWishlist,
+    loadWishlist,
+    showIncorrectAccountModal,
+    showIncorrectPasswordModal,
+    like,
+    setLike,
+  } = useContext(MainContext);
   const [data, setData] = useState({
     email: "",
     password: "",
   });
-
-
 
   // email: tester@email.com. pass: 123
   const handleChange = (e) => {
@@ -41,12 +46,11 @@ export default function LoginModal() {
       setIsLogin(true);
     } catch (error) {
       console.log(error);
-      if (error.response.data === "Email doesn't exist"){
+      if (error.response.data === "Email doesn't exist") {
         showIncorrectAccountModal();
-      }
-      else if (error.response.data==="Invalid password"){
+      } else if (error.response.data === "Invalid password") {
         showIncorrectPasswordModal();
-        }
+      }
 
       setIsLogin(false);
     }

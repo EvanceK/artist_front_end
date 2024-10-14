@@ -1,30 +1,32 @@
 import PropTypes from "prop-types";
 import axiosInstance from "../axiosConfig";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import { MainContext } from "./ContextProvider/MainContext";
 const path = import.meta.env.VITE_DATA_HOST_API;
 
 export default function AddFavoriteBtn({ paintingId }) {
   const [liked, setLiked] = useState();
   const [hearProps, setHearProps] = useState();
-  const [addPainting, setAddPainting] = useState();
+  const [addPainting, setAddPainting] = useState(null);
+  const [resetColor, setResetColor] = useState(false);
+
   const {
     showLoginModal,
-    like,
-    setLike,
-    getWishlistData,
-    loadWishlist,
-    setLoadWishlist,
-    setGetWishListData,
+    addRemoveWishlistprocessed,
+    setaddRemoveWishlistprocessed,
+    WToS,
   } = useContext(MainContext);
 
-  const handleClick = () => {
+  function handleClick() {
     // console.log("Favornewclicked: ", paintingId);
     setAddPainting({ paintingId: paintingId });
-  };
+    console.log("step 1: clicked");
+  }
   useEffect(() => {
+    if (addPainting === null) return;
     if (addPainting) {
       !liked ? addWishlist() : removeWishlist(paintingId);
+      console.log("step2: execute add/ remove");
     }
   }, [addPainting]);
 
@@ -34,9 +36,11 @@ export default function AddFavoriteBtn({ paintingId }) {
     try {
       if (authorization) {
         await axiosInstance.post(api, addPainting);
+        // setLoadWishlist(true); // Trigger wishlist update
+        // setLike(!like);
+        setaddRemoveWishlistprocessed(!addRemoveWishlistprocessed);
         setLiked(true);
-        setLike(!like);
-        setLoadWishlist(true); // Trigger wishlist update
+        console.log("step 3: add!");
       } else {
         showLoginModal();
         console.log("please login");
@@ -50,17 +54,17 @@ export default function AddFavoriteBtn({ paintingId }) {
     try {
       const api = path + `/api/wishlist/${cardId}`;
       await axiosInstance.delete(api);
+      setaddRemoveWishlistprocessed(!addRemoveWishlistprocessed);
       setLiked(false);
-      setLike(!like);
-      setLoadWishlist(true); // Trigger wishlist update
+      console.log("step 3: removed!");
     } catch (e) {
       console.log(e);
     }
   };
-  useEffect(() => {
-    setGetWishListData(!getWishlistData);
-    setLoadWishlist(!loadWishlist);
-  }, [like, liked]);
+  // useEffect(() => {
+  //   setGetWishListData(!getWishlistData);
+  //   setLoadWishlist(!loadWishlist);
+  // }, [ liked]);
 
   useEffect(() => {
     setLiked(false);
@@ -70,7 +74,10 @@ export default function AddFavoriteBtn({ paintingId }) {
           setLiked(true);
         }
       });
-  }, [like, loadWishlist, paintingId]);
+    console.log("step 6: check localStorage to setLiked", liked);
+
+    setResetColor(!resetColor);
+  }, [WToS]);
 
   useEffect(() => {
     let color = "";
@@ -99,7 +106,7 @@ export default function AddFavoriteBtn({ paintingId }) {
         <path fillRule="evenodd" d={d} />
       </svg>
     );
-  }, [liked]);
+  }, [resetColor]);
 
   return (
     <>

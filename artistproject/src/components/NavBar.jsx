@@ -10,7 +10,10 @@ export default function NavBar() {
   const { userName, setUserName, isLogin, setIsLogin } =
     useContext(UserContext);
   const {
-    like,
+    // like,
+    // setLike,
+
+    WToS,
     artistList,
     getArtistList,
     getWishList,
@@ -32,7 +35,8 @@ export default function NavBar() {
   const [accountfeild, setAccountfeild] = useState();
   const [wishlistNumber, setWishlistNumber] = useState();
   const [token, setToken] = useState(null);
-  const [biddingNum,setBiddingNum]=useState();
+  const [biddingNum, setBiddingNum] = useState();
+  const [paintingIdArray, setPaintingIdArray] = useState();
   const handleSearch = (e) => {
     e.preventDefault();
 
@@ -54,22 +58,23 @@ export default function NavBar() {
   useEffect(() => {
     // Recheck localStorage whenever 'like' or 'loadWishlist' changes
     const updateWishlistNumber = () => {
-      const paintingIdArray = JSON.parse(
-        localStorage.getItem("paintingIdArray")
-      );
-      setWishlistNumber(paintingIdArray ? paintingIdArray.length : "");
+      setPaintingIdArray(JSON.parse(localStorage.getItem("paintingIdArray")));
     };
 
     updateWishlistNumber(); // Immediately recheck wishlist number
-  }, [like, loadWishlist]); // Depend on 'like' and 'loadWishlist'
+  }, [WToS]); // Depend on 'like' and 'loadWishlist'
 
-  useEffect(()=>{
+  useEffect(() => {
+    setWishlistNumber(paintingIdArray ? paintingIdArray.length : "");
+  }, [paintingIdArray]);
+
+  useEffect(() => {
     setBiddingNum(
       localStorage.getItem("biddingHistory") != null
-      ? JSON.parse(localStorage.getItem("biddingHistory")).length
-      : ""
+        ? JSON.parse(localStorage.getItem("biddingHistory")).length
+        : ""
     );
-  },[reLoadBiddingNum])
+  }, [reLoadBiddingNum]);
 
   useEffect(() => {
     $(".nav-link").on("click", function () {
@@ -97,7 +102,7 @@ export default function NavBar() {
     }
     getArtistList();
 
-    setLoadWishlist(true);
+    // setLoadWishlist(true);
     // console.log(token);
     // Cleanup event listener
     return () => {
@@ -114,6 +119,7 @@ export default function NavBar() {
     setToken(null);
     setUserName(null);
     navigate("/home");
+    // setLike(!like);
     setLoadWishlist(!loadWishlist);
   };
 
