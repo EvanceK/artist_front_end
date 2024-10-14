@@ -64,12 +64,14 @@ export default function NavBar() {
   }, [like, loadWishlist]); // Depend on 'like' and 'loadWishlist'
 
   useEffect(()=>{
+    console.log("重新讀取數字");
+    
     setBiddingNum(
       localStorage.getItem("biddingHistory") != null
       ? JSON.parse(localStorage.getItem("biddingHistory")).length
       : ""
     );
-  },[reLoadBiddingNum])
+  },[isLogin,reLoadBiddingNum])
 
   useEffect(() => {
     $(".nav-link").on("click", function () {
@@ -110,6 +112,7 @@ export default function NavBar() {
     localStorage.removeItem("paintingIdArray");
     localStorage.removeItem("Wishlist");
     localStorage.removeItem("biddingHistory");
+    // setReLoadBiddingNum(!reLoadBiddingNum);
     setIsLogin(false);
     setToken(null);
     setUserName(null);
