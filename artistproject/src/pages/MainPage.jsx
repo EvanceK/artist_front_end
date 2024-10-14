@@ -68,6 +68,10 @@ export default function MainPage() {
           {/*要登入才可以看到的 */}
           <Route path="/cusdashboard" element={<CusDashboard />}>
             <Route path="myaccount" element={<MyAccount />} />
+            <Route
+              path="myaccount/PasswordChanged"
+              element={<PasswordChanged />}
+            />
             <Route path="comingsoon" element={<ComingSoon />}></Route>
             <Route path="winningRecords" element={<WinningRecords />}>
               {/* <Route path="biddingHistory" element={<BiddingHistory />}></Route>{" "} */}
