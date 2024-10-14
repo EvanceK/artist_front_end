@@ -27,7 +27,6 @@ import EditAccount from "./MainPageComponents/MyAccountComponents/EditAccount";
 import OrderPage from "./MainPageComponents/OrderPage";
 import OrderRecord from "./MainPageComponents/OrderRecord";
 import WinningRecords from "./MainPageComponents/WinningRecords";
-// import BiddingHistory from "../components/Modal/BiddingHistoryModal";
 import WishlistOffcanvas from "../components/Offcanvas/WishlistOffcanvas";
 import ConfirmOrder from "./MainPageComponents/ConfirmOrder";
 import MyWallet from "./MainPageComponents/MyWallet";
@@ -73,17 +72,12 @@ export default function MainPage() {
               element={<PasswordChanged />}
             />
             <Route path="comingsoon" element={<ComingSoon />}></Route>
-            <Route path="winningRecords" element={<WinningRecords />}>
-              {/* <Route path="biddingHistory" element={<BiddingHistory />}></Route>{" "} */}
-            </Route>
+            <Route path="winningRecords" element={<WinningRecords />}/>
             <Route path="OrderRecord" element={<OrderRecord />} />
             <Route path="MyWallet" element={<MyWallet />} />
             <Route path="ConfirmOrder" element={<ConfirmOrder />} />
             <Route path="OrderPage" element={<OrderPage />} />
-            
-           
-            
-           
+
           </Route>
         </Routes>
         {/* modal for navbar vv */}
