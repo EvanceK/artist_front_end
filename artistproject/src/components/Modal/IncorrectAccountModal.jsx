@@ -4,19 +4,8 @@ import { MainContext } from "../ContextProvider/MainContext";
 import * as bootstrap from "bootstrap"; // Import Bootstrap as a module
 
 export default function IncorrectAccountModal() {
-  const { incorrectAccountModalRef,showLoginModal } = useContext(MainContext);
-  const hideIncorrectAccountModal = () => {
-    if (incorrectAccountModalRef.current) {
-      const modal = new bootstrap.Modal(incorrectAccountModalRef.current); // Use bootstrap.Modal directly
-      modal.hide();
-    }
-  };
-
-  const closeaction =() =>{
-    hideIncorrectAccountModal();
-    showLoginModal();
-   
-  };
+  const { incorrectAccountModalRef} = useContext(MainContext);
+  
   return (
     <div
       ref={incorrectAccountModalRef}
