@@ -20,6 +20,7 @@ function PaymentMethod() {
     cardNumber3Ref,
     cardNumber4Ref,
     handleCardNumberChange,
+    errors
   } = useContext(MainContext);
  
 
@@ -111,6 +112,18 @@ function PaymentMethod() {
                   <input type="text" className="Date col-2 mx-3 text-center" placeholder="MM/YY"/>
                   cvv: <input type="text" name="cvv" className="col-2 mx-3 text-center" />
                 </div>
+              </div>
+             <div>
+              {/* 顯示卡號的錯誤訊息 */}
+              {errors.cardNumber && (
+                <div className="text-danger">{errors.cardNumber}</div>
+              )}
+              {/* 顯示過期日期的錯誤訊息 */}
+              {errors.expirationDate && (
+                <div className="text-danger">{errors.expirationDate}</div>
+              )}
+              {/* 顯示 CVC 的錯誤訊息 */}
+              {errors.cvv && <div className="text-danger">{errors.cvv}</div>}
               </div>
 
               <div className="mb-3">
