@@ -65,7 +65,6 @@ export default function MyAccount() {
 
   return (
       <div className="container">
-        <MemberNav/>
         <h2 className="mb-5 py-5 border-bottom">My Account</h2>
         <div className="row mb-5">
           <div className="d-flex flex-column justify-content-center">

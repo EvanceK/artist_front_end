@@ -25,12 +25,14 @@ export default function NavBar() {
     setLoadWishlist,
     PasswordChangedRef,
     showPasswordChangedRef,
+    reLoadBiddingNum,
+    setReLoadBiddingNum,
   } = useContext(MainContext);
 
   const [accountfeild, setAccountfeild] = useState();
   const [wishlistNumber, setWishlistNumber] = useState();
   const [token, setToken] = useState(null);
-
+  const [biddingNum,setBiddingNum]=useState();
   const handleSearch = (e) => {
     e.preventDefault();
 
@@ -60,6 +62,14 @@ export default function NavBar() {
 
     updateWishlistNumber(); // Immediately recheck wishlist number
   }, [like, loadWishlist]); // Depend on 'like' and 'loadWishlist'
+
+  useEffect(()=>{
+    setBiddingNum(
+      localStorage.getItem("biddingHistory") != null
+      ? JSON.parse(localStorage.getItem("biddingHistory")).length
+      : ""
+    );
+  },[reLoadBiddingNum])
 
   useEffect(() => {
     $(".nav-link").on("click", function () {
@@ -99,12 +109,14 @@ export default function NavBar() {
     localStorage.removeItem("nickName");
     localStorage.removeItem("paintingIdArray");
     localStorage.removeItem("Wishlist");
+    localStorage.removeItem("biddingHistory");
     setIsLogin(false);
     setToken(null);
     setUserName(null);
     navigate("/home");
     setLoadWishlist(!loadWishlist);
   };
+
   useEffect(() => {
     if (localStorage.getItem("token") == null) {
       setAccountfeild(
@@ -337,9 +349,10 @@ export default function NavBar() {
                 />
               </svg>
               <span className="biddingNumber">
-                {localStorage.getItem("biddingHistory") != null
+                {biddingNum}
+                {/* {localStorage.getItem("biddingHistory") != null
                   ? JSON.parse(localStorage.getItem("biddingHistory")).length
-                  : ""}
+                  : ""} */}
               </span>
             </a>
             {accountfeild}

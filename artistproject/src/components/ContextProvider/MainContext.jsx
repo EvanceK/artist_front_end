@@ -22,12 +22,15 @@ export function MainContextProvider({ children }) {
   const [getWishlistData, setGetWishListData] = useState(false);
   const [artistList, setArtisList] = useState([]); //所有作家名單 目前for navBar 選單用
   const [like, setLike] = useState(false);
+  const [reLoadBiddingHistory,setReLoadBiddingHistory] = useState(false);
+  const [reLoadBiddingNum,setReLoadBiddingNum] =useState(false);
   // const [wishlistPaintingIdList, setWishlistPaintingIdList] = useState([]);
   //vv for searching 功能用的變數：
   const [search, setSearch] = useState();
   const [searchParams, setSearchParams] = useSearchParams();
   const [requestPageNumber, setRequestPageNumber] = useState(1);
   const { isLogin } = useContext(UserContext);
+  
 
   // methods for loading data
   const getArtistList = async () => {
@@ -132,6 +135,10 @@ export function MainContextProvider({ children }) {
         showIncorrectAccountModal,
         PasswordChangedRef,
         showPasswordChangedRef,
+        reLoadBiddingHistory,
+        setReLoadBiddingHistory,
+        reLoadBiddingNum,
+        setReLoadBiddingNum,
       }}
     >
       {children}

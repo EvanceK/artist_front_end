@@ -15,7 +15,13 @@ function MemberNav (){
             </li>
 
             <li className="nav-item">
-            <Link className="nav-link active " to="OrderRecord">
+            <Link className="nav-link active " to="/home/cusdashboard/winningRecords">
+            My WinningRecords
+            </Link>
+            </li>
+
+            <li className="nav-item">
+            <Link className="nav-link active " to="/home/cusdashboard/OrderPage">
             My Order
             </Link>
             </li>
@@ -27,8 +33,14 @@ function MemberNav (){
             </li>
 
             <li className="nav-item">
-            <Link className="nav-link active " to="#">
-            My WishList
+            <Link className="nav-link active " to="/home/cusdashboard/ConfirmOrder">
+            Confirm Order
+            </Link>
+            </li>
+
+            <li className="nav-item">
+            <Link className="nav-link active " to="/home/cusdashboard/OrderPage">
+            My OrderPage
             </Link>
             </li>
             </ul>

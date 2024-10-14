@@ -134,7 +134,7 @@ export default function EditAccount() {
                     name="address"
                     type="text"
                     placeholder="Address"
-                    row="3"
+                    rows="3"
                     onChange={handleChange}
                   />
                 </div>

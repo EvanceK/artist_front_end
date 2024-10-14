@@ -2,9 +2,8 @@ import MemberNav from "../../components/MemberNav";
 
 export default function WinningRecords(){
     return(
-        <div className="container my-5 h-auto">
-            <MemberNav/>
-            <div className="title border-bottom my-5 py-4">
+        <div className="container">
+            <div className="title mb-5 py-5 border-bottom">
                 <h2>Winning Records</h2>
             </div>
             <div className="cart mb-5">

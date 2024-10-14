@@ -17,7 +17,7 @@ export default function MyCard({ Paintings }) {
         <div className="card-body">
           {/* <h5 className="card-title">{Paintings.paintingName}</h5> */}
 
-          <p className="card-text row d-flex flex-column ">
+          <div className="card-text row d-flex flex-column ">
             <div className="row justify-content-center">
               <div className="col-2">ID </div>
               <div className="col-1">: </div>
@@ -38,7 +38,7 @@ export default function MyCard({ Paintings }) {
               <div className="col-1">: </div>
               <div className="col-6">{Paintings.genre}</div>
             </div>
-          </p>
+          </div>
           <div className="cardBtn d-flex justify-content-center ">
             <AddFavoriteBtn paintingId={Paintings.paintingId} />
             <span
