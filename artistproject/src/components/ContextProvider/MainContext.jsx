@@ -67,7 +67,7 @@ export function MainContextProvider({ children }) {
       console.log(error);
     }
   };
-  const getWishList = useCallback(async () => {
+  const getWishList = async () => {
     const authorization = localStorage.getItem("token");
     const api = path + "/api/wishlist";
 
@@ -81,17 +81,17 @@ export function MainContextProvider({ children }) {
         console.log(error);
       }
     }
-  }, []);
+  };
   useEffect(() => {
     if (wishlistResult) {
       const paintingIdArray = wishlistResult.map((w) => w.paintingId);
       localStorage.setItem("Wishlist", JSON.stringify(wishlistResult));
       localStorage.setItem("paintingIdArray", JSON.stringify(paintingIdArray));
-      setWToS(localStorage.getItem("paintingIdArray"));
       console.log("step 5: record to localStorage", WToS);
+      setWToS(localStorage.getItem("paintingIdArray"));
     }
     // setLike(!like);
-  }, [wishlistResult, getWishList]);
+  }, [wishlistResult]);
   // useEffect for preload data
   useEffect(() => {
     getWishList();
