@@ -11,7 +11,7 @@
 @import "./components/navBar.scss";
 @import "./components/carousel.scss";
 @import "./pages/welcome.scss";
-@import"./components/footer.scss";
+@import "./components/footer.scss";
 // @import "./components/staffloginModal.scss";
 
 @import url("https://fonts.googleapis.com/css2?family=Signika:wght@300..700&display=swap");
@@ -28,7 +28,8 @@ body {
   flex-direction: column;
 }
 .homelayout,
-.cusdash {
+.cusdash,
+.staffDashboard {
   min-height: 80vh;
   margin-top: 170px;
 }
@@ -109,7 +110,7 @@ body {
   border-radius: 50%;
   padding: 0;
 }
-.biddingNumber{
+.biddingNumber {
   position: absolute;
   margin: 24px 0 0px 40px;
   background-color: $primary;
@@ -120,15 +121,11 @@ body {
   padding: 0;
 }
 
-.underline{
+.underline {
   border-bottom: 2px solid $info;
   padding-bottom: 10px;
-
 }
 
-
-
-.grayfont{
+.grayfont {
   color: $info !important;
 }
-

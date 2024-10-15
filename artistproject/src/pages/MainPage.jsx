@@ -32,6 +32,8 @@ import ConfirmOrder from "./MainPageComponents/ConfirmOrder";
 import MyWallet from "./MainPageComponents/MyWallet";
 import BiddingHistoryOffcanvas from "../components/Offcanvas/BiddingHistoryOffcanvas";
 import ChangeCreditCardModal from "../components/Modal/ChangeCreditCardModal";
+import StaffDashboar from "./StaffDashboar";
+import PaintingMgn from "./MainPageComponents/StaffDashBoardpages/PaintingMgn";
 
 export default function MainPage() {
   return (
@@ -42,6 +44,7 @@ export default function MainPage() {
           {/*不用登入就可以看到的 */}
           <Route path="/" element={<HomeLayout />}>
             <Route index element={<ViewContainer />} />
+
             <Route path="/byArtist" element={<PaintingsListContainer />} />
             <Route path=":id" element={<ViewByArtistContainer />} />
             <Route path="/auction/:id" element={<Auction />} />
@@ -72,12 +75,11 @@ export default function MainPage() {
               element={<PasswordChanged />}
             />
             <Route path="comingsoon" element={<ComingSoon />}></Route>
-            <Route path="winningRecords" element={<WinningRecords />}/>
+            <Route path="winningRecords" element={<WinningRecords />} />
             <Route path="OrderRecord" element={<OrderRecord />} />
             <Route path="MyWallet" element={<MyWallet />} />
             <Route path="ConfirmOrder" element={<ConfirmOrder />} />
             <Route path="OrderPage" element={<OrderPage />} />
-
           </Route>
         </Routes>
         {/* modal for navbar vv */}

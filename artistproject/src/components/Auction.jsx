@@ -20,6 +20,7 @@ export default function Auction() {
   const [selectionValue, setSelectionValue] = useState();
   const [inputValue, setInputValue] = useState("");
   const [finalBidAmount, setFinalBidAmount] = useState();
+  const [selectinOptionList, setSelectinOptionList] = useState();
   const { reLoadBiddingHistory, setReLoadBiddingHistory, showLoginModal } =
     useContext(MainContext);
   const path = import.meta.env.VITE_DATA_HOST_API;
@@ -34,12 +35,15 @@ export default function Auction() {
     //   bidAmount: "2000",
     // });
     if (placeBid) postPlaceBid();
-    setReLoadBiddingHistory(!reLoadBiddingHistory);
+    console.log("step 1: click Bidbtn");
   };
 
   useEffect(() => {
-    if (selectionValue) setFinalBidAmount(selectionValue);
-    if (inputValue) setFinalBidAmount(inputValue);
+    if (inputValue && !selectionValue) {
+      setFinalBidAmount(inputValue);
+    } else if (selectionValue) {
+      setFinalBidAmount(selectionValue);
+    }
   }, [inputValue, selectionValue]);
   useEffect(() => {
     console.log(finalBidAmount);
@@ -96,9 +100,12 @@ export default function Auction() {
     try {
       const result = await axiosInstance.post(`${api}`, placeBid);
       console.log(result);
+      setReLoadBiddingHistory((prev) => !prev); // Only toggle once
+      console.log("step 2: post Bidbtn");
     } catch (e) {
       alert(e.response.data);
       console.log(e.response.data);
+      console.log("step 2: post Bidbtn error");
     }
   };
   // useEffect(() => {
@@ -107,6 +114,7 @@ export default function Auction() {
   // }, [placeBid]);
   // Fetch painting data
   const getdata = async () => {
+    setSelectedOption("");
     const api = path + "/api/bidding";
     setLoading(true);
     try {
@@ -116,15 +124,18 @@ export default function Auction() {
       // console.log(result.data);
       setPainting(result.data.painting);
       setBiddingHistory(result.data.biddingHistory);
+
+      console.log("step 3: get auction data");
     } catch (error) {
       console.log(error);
+      console.log("step 3: get auction data erro");
     }
     setLoading(false);
   };
 
   useEffect(() => {
     getdata();
-  }, [id]);
+  }, [id, reLoadBiddingHistory]);
   useEffect(() => {
     buildBreadCrumb();
   }, [painting]);
@@ -135,9 +146,6 @@ export default function Auction() {
     } else {
       setHighestBre(painting?.price);
     }
-    setBreAmoutArray(
-      Array.from({ length: 3 }, (_, i) => highestBre + 50 * (i + 1))
-    );
 
     // console.log("BreAmoutArray:", breAmoutArray);
 
@@ -146,11 +154,19 @@ export default function Auction() {
     // }
   }, [biddingHistory]);
 
+  useEffect(() => {
+    setBreAmoutArray(
+      Array.from({ length: 3 }, (_, i) => highestBre + 50 * (i + 1))
+    );
+    console.log("step 4: get highestBre and set setBreAmoutArray");
+  }, [highestBre]);
+
   const buildAcutionList = () => {
     if (!biddingHistory || biddingHistory.length === 0) {
       return <p>No bidding history available.</p>;
     }
 
+    console.log("step 4: buil AuctionList");
     return biddingHistory.map((b, i) => {
       return (
         <div key={i} className="auctionList">
@@ -160,7 +176,7 @@ export default function Auction() {
             <div className="col">
               ${" "}
               {new Intl.NumberFormat("en-IN", {
-                maximumSignificantDigits: 3,
+                // maximumSignificantDigits: 3,
               }).format(b.bidAmount)}
             </div>
           </div>
@@ -171,8 +187,25 @@ export default function Auction() {
 
   useEffect(() => {
     setAuctionList(buildAcutionList());
+    console.log("step 5: setAuctionList");
   }, [biddingHistory]);
-
+  //buil selection option
+  useEffect(() => {
+    if (breAmoutArray) console.log("step 5: setSelectinOptionList");
+    setSelectinOptionList(
+      breAmoutArray?.map((b, i) => {
+        console.log(b);
+        return (
+          <option key={i} defaultValue={b}>
+            ${" "}
+            {new Intl.NumberFormat("en-IN", {
+              // maximumSignificantDigits: 4,
+            }).format(b)}
+          </option>
+        );
+      })
+    );
+  }, [breAmoutArray]);
   // useEffect(() => {
   // if (painting) console.log("painting:", painting);
   // if (biddingHistory) console.log("biddingHistory:", biddingHistory);
@@ -263,7 +296,8 @@ export default function Auction() {
                 onChange={handleSelectChange}
               >
                 <option defaultValue={0}>Bidding amount ...</option>
-                {breAmoutArray
+                {selectinOptionList}
+                {/* {breAmoutArray
                   ? breAmoutArray.map((b, i) => {
                       return (
                         <option key={i} defaultValue={b}>
@@ -274,7 +308,7 @@ export default function Auction() {
                         </option>
                       );
                     })
-                  : ""}
+                  : ""} */}
                 {/* <option defaultValue>$ 1,600</option>
                 <option defaultValue="1">$1,605</option>
                 <option defaultValue="2">$ 1.610</option> */}
@@ -289,9 +323,15 @@ export default function Auction() {
                 value={inputValue}
                 onChange={handleInputChange}
               ></input>
+              <a
+              className="d-flex"
+              href="#biddingHistoryOffcanvas"
+              role="button"
+              data-bs-toggle="offcanvas"
+              aria-controls="BiddingHistoryModal"
+              >
               <div className="cardBtn d-flex justify-content-center m-5">
                 <AddFavoriteBtn paintingId={painting.paintingId} />
-
                 <span
                   className="btn btn-primary mx-3"
                   onClick={handleClickPlaceBid}
@@ -299,6 +339,7 @@ export default function Auction() {
                   PLACE BID
                 </span>
               </div>
+              </a>
               <div className="row shipment">
                 <div className="row m-3">
                   <div className="col-1">
@@ -340,34 +381,6 @@ export default function Auction() {
                 </div>
                 <hr />
                 {auctionList}
-
-                {/* <div className="auctionList">
-                  <div className="row m-2">
-                    <div className="col">Lisa</div>
-                    <div className="col">3 h ago</div>
-                    <div className="col">$ 1595</div>
-                  </div>
-                  <div className="row m-2">
-                    <div className="col">Mary</div>
-                    <div className="col">10 h ago</div>
-                    <div className="col">$ 1500</div>
-                  </div>
-                  <div className="row m-2">
-                    <div className="col">Mike</div>
-                    <div className="col">15 h age</div>
-                    <div className="col">$ 1200</div>
-                  </div>
-                  <div className="row m-2">
-                    <div className="col">Allen</div>
-                    <div className="col">20 h ago</div>
-                    <div className="col">$ 800</div>
-                  </div>
-                  <div className="row m-2">
-                    <div className="col">Lisa</div>
-                    <div className="col">20 h ago</div>
-                    <div className="col">$ 500</div>
-                  </div>
-                </div> */}
               </div>
             </div>
           </div>

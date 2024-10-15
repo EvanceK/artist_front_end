@@ -52,7 +52,11 @@ export default function Welcome() {
         <div className="btn btn-primary">
           <Link to="/home">EXPLORE</Link>
         </div>
-        <div className="btn btn-primary ">for STAFF</div>
+        <div className="btn btn-primary ">
+          <Link className="nav-link" to="staffdashboard" aria-current="page">
+            for STAFF
+          </Link>
+        </div>
       </div>
     </div>
   );

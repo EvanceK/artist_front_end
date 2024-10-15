@@ -1,13 +1,13 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import projectLogo from "../../assets/LOGO.png";
 import { MainContext } from "../../components/ContextProvider/MainContext";
+import axiosInstance from "../../axiosConfig";
 export default function PasswordChanged() {
   const path=import.meta.env.VITE_DATA_HOST_API;
   const Authorization = localStorage.getItem("token");
-  const api= path + "/customers/initEditData";
-
+  const api= path + "/customers/EditPassword";
   const[password,setPassword] = useState({
-    newPassword:"",
+    password:"",
     confirmPassword:""
   });
   const [data,setData]=useState();
@@ -26,36 +26,25 @@ export default function PasswordChanged() {
       console.log("please login")
     }
   };
+  useEffect(()=>{
+    getData();
+  },[])
 
- // 處理輸入變更並即時檢查密碼是否一致
- const handleChange = (e) => {
-  const { name, value } = e.target;
-  setPassword((prevState) => {
-    const updatedPassword = { ...prevState, [name]: value };
-
-    // 當兩個密碼都有值，且相同時才顯示"Passwords match!"
-    if (
-      updatedPassword.newPassword &&
-      updatedPassword.confirmPassword &&
-      updatedPassword.newPassword === updatedPassword.confirmPassword
-    ) {
-      setPasswordsMatch(true);
-      setError("");
-    } else if (updatedPassword.confirmPassword) {
-      setPasswordsMatch(false);
-      setError("Passwords do not match!");
-    } else {
-      setError(""); // 如果confirmPassword沒填，清空錯誤訊息
-      setPasswordsMatch(false); // 確保還沒輸入確認密碼時不顯示勾勾
-    }
-
-    return updatedPassword;
-  });
-
-     
+  const handleChange=(e) => {
+    const { name, value } = e.target;
+    setData({...data,[name]:value}) 
+    setPassword((prevState) => {
+      const updatedPassword = { ...prevState, [name]: value };
+      console.log(updatedPassword); // 這裡的 updatedPassword 是更新後的狀態
+      return updatedPassword;
+    });
+  };
   const submit= async ()=>{
     try {
-      console.log(password);
+      console.log(data);
+      // setData({...data,[password]:password}) 
+      // console.log(data);
+      
      if(Authorization){
         const result = await axiosInstance.put(api, data, {
        headers: {
@@ -68,19 +57,7 @@ export default function PasswordChanged() {
      console.log(error);
    }
   }
-  // 處理表單提交
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // 驗證密碼是否匹配
-    if (newPassword !== confirmPassword) {
-      setError("Passwords do not match!");
-    } else {
-      setError(""); // 清空錯誤訊息
-      // 如果匹配，執行其他邏輯（例如提交表單）
-      console.log("Password match. Submitting form...");
-      // 可以在這裡執行提交的 API 請求或其他邏輯
-    }
-  };
+  const isPasswordMatch = password.confirmPassword && password.password === password.confirmPassword;
   return (
           <div className="PasswordChanged" id="PasswordChanged">
             <div className="py-5 d-flex justify-content-center">
@@ -98,7 +75,7 @@ export default function PasswordChanged() {
                        className="form-control mt-3" 
                        style={{backgroundColor: "light"}} 
                        onChange={handleChange} 
-                       name="newPassword" 
+                       name="password" 
                        required>
                 </input>
                 {/* 只有在密碼匹配時顯示勾勾 */}
@@ -116,8 +93,8 @@ export default function PasswordChanged() {
                        name="confirmPassword" 
                        required>
                 </input>
-                {/* 顯示錯誤訊息 */}
-      {error && <div className="text-danger">{error}</div>}
+               
+                <div className="invalid-feedback">Passwords do not match.</div>
               </div>
             </div>
             <div className="row my-5 mx-auto justify-content-center">
