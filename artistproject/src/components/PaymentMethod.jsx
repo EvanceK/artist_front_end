@@ -63,6 +63,7 @@ function PaymentMethod() {
             <input
               type="text"
               className="txtbox col-2 text-center"
+              value={paymentInfo.cardNumber1}
               onChange={(e) =>
                 handleCardNumberChange(e, "cardNumber1", cardNumber2Ref)
               }
@@ -72,6 +73,7 @@ function PaymentMethod() {
             <input
               type="text"
               className="txtbox col-2 text-center"
+              value={paymentInfo.cardNumber2}
               ref={cardNumber2Ref}
               onChange={(e) =>
                 handleCardNumberChange(e, "cardNumber2", cardNumber3Ref)
@@ -81,6 +83,7 @@ function PaymentMethod() {
             <input
               type="text"
               className="txtbox col-2 text-center"
+              value={paymentInfo.cardNumber3}
               ref={cardNumber3Ref}
               onChange={(e) =>
                 handleCardNumberChange(e, "cardNumber3", cardNumber4Ref)
@@ -90,6 +93,7 @@ function PaymentMethod() {
             <input
               type="text"
               className="txtbox col-2 text-center"
+              value={paymentInfo.cardNumber4}
               ref={cardNumber4Ref}
               onChange={(e) => handleCardNumberChange(e, "cardNumber4", null)}
               maxLength="4"

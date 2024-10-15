@@ -68,6 +68,7 @@ export function MainContextProvider({ children }) {
         [field]: value,  // 更新對應的卡號欄位
       }));
       if (value.length === 4 && nextRef) {
+        console.log(nextRef);
         nextRef.current.focus(); //自動跳到下一個輸入框
       }
     }
@@ -91,12 +92,13 @@ export function MainContextProvider({ children }) {
 
   const validateForm = (recipientInfo, paymentInfo) => {
     const newErrors = {};
-
+    if(recipientInfo){
     //驗證收件人資訊
     if(!recipientInfo.name) newErrors.name = "Name is required";
     if(!recipientInfo.phone) newErrors.phone = "Phone is required";
     if(!recipientInfo.address) newErrors.address = "Address is required";
-
+  }
+    if(paymentInfo){
     //驗證付款
     if(!paymentInfo.cardNumber1 || !paymentInfo.cardNumber2 || !paymentInfo.cardNumber3 || !paymentInfo.cardNumber4)
       newErrors.cardNumber = "Complete card number is required";
@@ -112,7 +114,7 @@ export function MainContextProvider({ children }) {
     } else if (!/^\d{3}$/.test(paymentInfo.cvv)) {
       newErrors.cvv = "Expiration date must be a 3-digit number";
     }
-
+  }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0; //如果沒有錯誤則返回true
   }
