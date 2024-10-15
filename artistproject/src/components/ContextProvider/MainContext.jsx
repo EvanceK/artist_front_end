@@ -46,7 +46,7 @@ export function MainContextProvider({ children }) {
     cardNumber3: "",
     cardNumber4: "",
     expirationDate: "",
-    cvc: ""
+    cvv: ""
   });
 
   //信用卡號輸入

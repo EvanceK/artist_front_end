@@ -20,7 +20,8 @@ function PaymentMethod() {
     cardNumber3Ref,
     cardNumber4Ref,
     handleCardNumberChange,
-    errors
+    errors,
+    paymentInfo
   } = useContext(MainContext);
  
 
@@ -109,8 +110,8 @@ function PaymentMethod() {
                 }/>
                 <div className="row d-flex justify-content-center  m-3 ">
                   Expiration Date :
-                  <input type="text" className="Date col-2 mx-3 text-center" placeholder="MM/YY"/>
-                  cvv: <input type="text" name="cvv" className="col-2 mx-3 text-center" />
+                  <input type="text" className="Date col-2 mx-3 text-center" placeholder="MM/YY" value={paymentInfo.expirationDate} />
+                  cvv: <input type="text" name="cvv" className="col-2 mx-3 text-center" value={paymentInfo.cvv} />
                 </div>
               </div>
              <div>
