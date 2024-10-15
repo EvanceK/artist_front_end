@@ -33,8 +33,9 @@ body {
   margin-top: 170px;
 }
 .staffDashboard {
+  position: static;
   min-height: 80vh;
-  margin-top: 50px;
+  // margin-top: 50px;
 }
 #root {
   overflow: hidden;

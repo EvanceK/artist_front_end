@@ -61,8 +61,8 @@ export default function StaffNavBar() {
               </li>
             </ul>
           </div>
-        </div>
-      </nav>
+          </div>
+        </nav>
     </>
   );
 }
