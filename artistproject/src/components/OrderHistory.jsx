@@ -15,6 +15,11 @@ function OrderHistory() {
             <label>2024/10/02 00:30</label>
           </div>
           <div className="d-flex gap-3">
+            <label className="me-3">Order Stute:</label>
+            <label>Finished</label>
+          </div>
+
+          <div className="d-flex gap-3">
             <label className="me-3">Payment method:</label>
             <label>Credit Card One-time Payment</label>
           </div>
