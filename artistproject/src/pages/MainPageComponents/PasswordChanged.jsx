@@ -1,12 +1,13 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import projectLogo from "../../assets/LOGO.png";
 import { MainContext } from "../../components/ContextProvider/MainContext";
+import axiosInstance from "../../axiosConfig";
 export default function PasswordChanged() {
   const path=import.meta.env.VITE_DATA_HOST_API;
   const Authorization = localStorage.getItem("token");
-  const api= path + "/customers/initEditData";
+  const api= path + "/customers/EditPassword";
   const[password,setPassword] = useState({
-    newPassword:"",
+    password:"",
     confirmPassword:""
   });
   const [data,setData]=useState();
@@ -22,20 +23,25 @@ export default function PasswordChanged() {
       console.log("please login")
     }
   };
+  useEffect(()=>{
+    getData();
+  },[])
+
   const handleChange=(e) => {
     const { name, value } = e.target;
+    setData({...data,[name]:value}) 
     setPassword((prevState) => {
       const updatedPassword = { ...prevState, [name]: value };
-
       console.log(updatedPassword); // 這裡的 updatedPassword 是更新後的狀態
       return updatedPassword;
-      
-      
     });
   };
   const submit= async ()=>{
     try {
-      console.log(password);
+      console.log(data);
+      // setData({...data,[password]:password}) 
+      // console.log(data);
+      
      if(Authorization){
         const result = await axiosInstance.put(api, data, {
        headers: {
@@ -48,7 +54,7 @@ export default function PasswordChanged() {
      console.log(error);
    }
   }
-  const isPasswordMatch = password.confirmPassword && password.newPassword === password.confirmPassword;
+  const isPasswordMatch = password.confirmPassword && password.password === password.confirmPassword;
   return (
           <div className="PasswordChanged" id="PasswordChanged">
             <div className="py-5 d-flex justify-content-center">
@@ -66,7 +72,7 @@ export default function PasswordChanged() {
                        className="form-control mt-3" 
                        style={{backgroundColor: "light"}} 
                        onChange={handleChange} 
-                       name="newPassword" 
+                       name="password" 
                        required>
                 </input>
                 <div className="valid-feedback">Valid.</div>
@@ -81,7 +87,7 @@ export default function PasswordChanged() {
                        name="confirmPassword" 
                        required>
                 </input>
-                <div className="valid-feedback">Passwords match.</div>
+               
                 <div className="invalid-feedback">Passwords do not match.</div>
               </div>
             </div>

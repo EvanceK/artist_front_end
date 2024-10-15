@@ -30,7 +30,7 @@ export default function EditAccount() {
       setData(result.data)
       // handleChange();
     }else{
-      showLogingModal();
+      // showLogingModal();
       console.log("please login")
     }
   };

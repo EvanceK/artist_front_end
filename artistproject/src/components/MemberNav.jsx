@@ -1,45 +1,42 @@
 
 import { MainContext } from "./ContextProvider/MainContext";
-import { Link } from "react-router-dom"; // 從 react-router-dom 引入
+import { Link, useLocation } from "react-router-dom"; // 從 react-router-dom 引入
 
 
 function MemberNav (){
-    
+    const location = useLocation();
     return(
         <div className="container mt-5">
             <ul className="nav justify-content-center h4">
             <li className="nav-item">
-            <Link className="nav-link active " to="/home/cusdashboard/myaccount">
+            <Link className={`nav-link ${location.pathname === '/home/cusdashboard/myaccount' ? 'active border-bottom' : ''}`} to="/home/cusdashboard/myaccount">
             My Account
             </Link>
             </li>
 
             <li className="nav-item">
-            <Link className="nav-link active " to="/home/cusdashboard/winningRecords">
+            <Link className={`nav-link ${location.pathname === '/home/cusdashboard/winningRecords' ? 'active border-bottom' : ''}`} to="/home/cusdashboard/winningRecords">
             My WinningRecords
             </Link>
             </li>
 
             <li className="nav-item">
-            <Link className="nav-link active " to="/home/cusdashboard/OrderRecord">
+            <Link className={`nav-link ${location.pathname === '/home/cusdashboard/OrderRecord' ? 'active border-bottom' : ''}`} to="/home/cusdashboard/OrderRecord">
             My Order
             </Link>
             </li>
 
             <li className="nav-item">
-            <Link className="nav-link active " to="/home/cusdashboard/MyWallet">
+            <Link className={`nav-link ${location.pathname === '/home/cusdashboard/MyWallet' ? 'active border-bottom' : ''}`} to="/home/cusdashboard/MyWallet">
             My Wallet
             </Link>
             </li>
 
             <li className="nav-item">
-            <Link className="nav-link active " to="/home/cusdashboard/MyWishlist">
+            <Link className={`nav-link ${location.pathname === '/home/cusdashboard/MyWishlist' ? 'active border-bottom' : ''}`} to="/home/cusdashboard/MyWishlist">
             My Wishlist
             </Link>
             </li>
-
-
-        
             </ul>
         </div>
     )
