@@ -50,25 +50,41 @@ export function MainContextProvider({ children }) {
   });
 
   //信用卡號輸入
-  const [cardNumber1, setCardNumber1] = useState("");
-  const [cardNumber2, setCardNumber2] = useState("");
-  const [cardNumber3, setCardNumber3] = useState("");
-  const [cardNumber4, setCardNumber4] = useState("");
+  // const [cardNumber1, setCardNumber1] = useState("");
+  // const [cardNumber2, setCardNumber2] = useState("");
+  // const [cardNumber3, setCardNumber3] = useState("");
+  // const [cardNumber4, setCardNumber4] = useState("");
   const cardNumber2Ref = useRef(null);
   const cardNumber3Ref = useRef(null);
   const cardNumber4Ref = useRef(null);
 
-  //當輸入滿4位數的時候，自動跳下一欄
-  const handleCardNumberChange = (e, setCardNumber, nextRef) => {
+  //卡號當輸入滿4位數的時候，自動跳下一欄
+  const handleCardNumberChange = (e, field, nextRef) => {
     const value = e.target.value;
     //只允許輸入數字，最大限度為4
     if (/^\d{0,4}$/.test(value)) {
-      setCardNumber(value);
+      setPaymentInfo((prevPaymentInfo) => ({
+        ...prevPaymentInfo,
+        [field]: value,  // 更新對應的卡號欄位
+      }));
       if (value.length === 4 && nextRef) {
         nextRef.current.focus(); //自動跳到下一個輸入框
       }
     }
   };
+
+  //有效日期的onChange
+  const handleExpirationDateChange = (e) => {
+    const value = e.target.value;
+    setPaymentInfo({...paymentInfo, expirationDate:value });
+    };
+
+    //CVV的onChange
+    const handleCvvChange = (e) => {
+      const value = e.target.value;
+      setPaymentInfo({...paymentInfo, cvv:value });
+      };
+  
 
   //表單驗證狀態
   const [errors, setErrors] = useState({});
@@ -84,8 +100,18 @@ export function MainContextProvider({ children }) {
     //驗證付款
     if(!paymentInfo.cardNumber1 || !paymentInfo.cardNumber2 || !paymentInfo.cardNumber3 || !paymentInfo.cardNumber4)
       newErrors.cardNumber = "Complete card number is required";
-    if(!paymentInfo.expirationDate) newErrors.expirationDate = "ExpirationDate is required";
-    if(!paymentInfo.cvv) newErrors.cvv = "CVV is required";
+
+    if(!paymentInfo.expirationDate) {
+      newErrors.expirationDate = "ExpirationDate is required";
+    } else if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(paymentInfo.expirationDate)) {
+      newErrors.expirationDate = "Expiration date must be in MM/YY format";
+    }
+
+    if(!paymentInfo.cvv) {
+      newErrors.cvv = "CVV is required";
+    } else if (!/^\d{3}$/.test(paymentInfo.cvv)) {
+      newErrors.cvv = "Expiration date must be a 3-digit number";
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0; //如果沒有錯誤則返回true
@@ -219,18 +245,12 @@ export function MainContextProvider({ children }) {
         setReLoadBiddingHistory,
         reLoadBiddingNum,
         setReLoadBiddingNum,
-        cardNumber1,
-        setCardNumber1,
-        cardNumber2,
-        setCardNumber2,
-        cardNumber3,
-        setCardNumber3,
-        cardNumber4,
-        setCardNumber4,
         cardNumber2Ref,
         cardNumber3Ref,
         cardNumber4Ref,
         handleCardNumberChange,
+        handleExpirationDateChange,
+    handleCvvChange,
         validateForm,
         errors,
         recipientInfo,
