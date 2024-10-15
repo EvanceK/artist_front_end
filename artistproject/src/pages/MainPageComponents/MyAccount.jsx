@@ -89,7 +89,7 @@ export default function MyAccount() {
                    data-bs-target="#DeleteAccount">
                    Delete
               </div>      
-              <div className="col-2"></div>
+              <div className="col-1"></div>
             </div>
           </div>
         </div>

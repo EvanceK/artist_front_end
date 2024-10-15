@@ -1,12 +1,26 @@
 import PropTypes from "prop-types";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { UserContext } from "../ContextProvider/UserContext";
 import { MainContext } from "../ContextProvider/MainContext";
+import { useNavigate } from "react-router-dom";
 export default function BiddingHistoryCard({ biddingHistoryProps }) {
   const [statusfeild,setStatusfeild] = useState();
   const { isLogin, setLogin } = useContext(UserContext);
   const { loadBiddingHistory, setloadBiddingHistory } = useContext(MainContext);
-  
+  const navigate = useNavigate();
+  const divRef = useRef(null);
+
+  // const placeBid = (e) => {
+  //   console.log("placeBid");
+  //   console.log(e.target.id);
+  //   navigate(`/home/auction/${e.target.id}`);
+  // };
+  const placeBid = (e) => {
+    if(divRef.current){
+      console.log(divRef.current.id);
+      navigate(`/home/auction/${divRef.current.id}`);
+    }
+  };
   useEffect(()=>{
     console.log(biddingHistoryProps.status)
     //如果已結標就將圖像轉為已結標圖像
@@ -30,7 +44,7 @@ export default function BiddingHistoryCard({ biddingHistoryProps }) {
     }
   },[isLogin, loadBiddingHistory]);
     return(
-        <div className="row align-items-center my-3">
+      <div className="row align-items-center my-3" id={biddingHistoryProps.paintingId} onClick={placeBid} ref={divRef} >
         <div className="d-flex justify-content-center col-4">
           <img
             className="img-fluid"
@@ -54,7 +68,7 @@ export default function BiddingHistoryCard({ biddingHistoryProps }) {
 
 BiddingHistoryCard.propTypes = {
   biddingHistoryProps: PropTypes.shape({
-      //artistId: PropTypes.string.isRequired,
+      paintingId: PropTypes.string.isRequired,
       artisName: PropTypes.string.isRequired,
       paintingName: PropTypes.string.isRequired,
       bidAmount: PropTypes.number.isRequired,
