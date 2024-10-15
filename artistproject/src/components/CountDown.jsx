@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
 export default function CountDown({ datetime }) {
-  //given datetime from data
-  // const DateTime = "2024-10-10T10:53:22";
   const DateTime = datetime;
-  // Calculate target date (3 days after the given DateTime)
-  const targetDate = new Date(DateTime);
-  targetDate.setDate(targetDate.getDate() + 3);
+  // Calculate the "Coming Soon" date (3 days after the given DateTime)
+  const comingSoonDate = new Date(DateTime);
+  comingSoonDate.setDate(comingSoonDate.getDate() + 3);
+
+  // Calculate the "Close In" date (10 days after "Coming Soon" date)
+  const closeInDate = new Date(comingSoonDate);
+  closeInDate.setDate(closeInDate.getDate() + 10);
+
   const [isClosed, setIsClosed] = useState(false);
-  // State to store the remaining time
+  const [isOnGoing, setIsOnGoing] = useState(false);
   const [remainingTime, setRemainingTime] = useState({
     days: 0,
     hours: 0,
@@ -20,17 +24,39 @@ export default function CountDown({ datetime }) {
     // Function to calculate the remaining time
     const updateCountDown = () => {
       const now = new Date(); // Get the current date and time
-      const difference = targetDate - now; // Calculate the difference in milliseconds
+      const timeUntilComingSoon = comingSoonDate - now; // Time until "Coming Soon" period ends
+      const timeUntilCloseIn = closeInDate - now; // Time until "Close In" period ends
 
-      if (difference > 0) {
-        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor(
-          (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        );
-        const minutes = Math.floor(
-          (difference % (1000 * 60 * 60)) / (1000 * 60)
-        );
-        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+      let days;
+      let hours;
+      let minutes;
+      let seconds;
+
+      if (timeUntilCloseIn > 0) {
+        // "Close In" period
+        if (timeUntilComingSoon > 0) {
+          // "Coming Soon" period
+          setIsOnGoing(false);
+          days = Math.floor(timeUntilComingSoon / (1000 * 60 * 60 * 24));
+          hours = Math.floor(
+            (timeUntilComingSoon % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+          );
+          minutes = Math.floor(
+            (timeUntilComingSoon % (1000 * 60 * 60)) / (1000 * 60)
+          );
+          seconds = Math.floor((timeUntilComingSoon % (1000 * 60)) / 1000);
+        } else {
+          // "Close In" period has started
+          setIsOnGoing(true);
+          days = Math.floor(timeUntilCloseIn / (1000 * 60 * 60 * 24));
+          hours = Math.floor(
+            (timeUntilCloseIn % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+          );
+          minutes = Math.floor(
+            (timeUntilCloseIn % (1000 * 60 * 60)) / (1000 * 60)
+          );
+          seconds = Math.floor((timeUntilCloseIn % (1000 * 60)) / 1000);
+        }
 
         setRemainingTime({ days, hours, minutes, seconds });
       } else {
@@ -39,17 +65,23 @@ export default function CountDown({ datetime }) {
         setRemainingTime({ days: 0, hours: 0, minutes: 0, seconds: 0 });
       }
     };
+
     // Call the function every second to update the countdown
     const intervalId = setInterval(updateCountDown, 1000);
 
     // Clean up the interval when the component unmounts
     return () => clearInterval(intervalId);
-  }, [targetDate]);
+  }, [comingSoonDate, closeInDate]);
+
   return (
     <>
       {!isClosed ? (
         <>
-          <span className="me-3">CLOSE IN </span>
+          {!isOnGoing ? (
+            <span className="me-3">Coming Soon </span>
+          ) : (
+            <span className="me-3">CLOSE IN </span>
+          )}
           <div className="datetime h2">
             {remainingTime.days > 0 ? `${remainingTime.days} day` : ""}
             {remainingTime.hours > 0 ? ` ${remainingTime.hours} h ` : ""}
@@ -63,3 +95,7 @@ export default function CountDown({ datetime }) {
     </>
   );
 }
+
+CountDown.propTypes = {
+  datetime: PropTypes.instanceOf(Date).isRequired, // Use instanceOf for Date objects
+};
