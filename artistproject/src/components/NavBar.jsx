@@ -3,7 +3,7 @@ import projectLogo from "../assets/LOGO.png";
 import $ from "jquery";
 import { UserContext } from "./ContextProvider/UserContext";
 import { Link, useNavigate } from "react-router-dom";
-
+import SearchComponent from "./SearchComponent";
 import { MainContext } from "./ContextProvider/MainContext";
 export default function NavBar() {
   const navigate = useNavigate();
@@ -17,15 +17,11 @@ export default function NavBar() {
     artistList,
     getArtistList,
     getWishList,
-    requestPageNumber,
     setRequestPageNumber,
-    getSearch,
     setSearch,
     search,
     searchParams,
     setSearchParams,
-    loadWishlist,
-    setLoadWishlist,
     PasswordChangedRef,
     showPasswordChangedRef,
     reLoadBiddingNum,
@@ -37,23 +33,6 @@ export default function NavBar() {
   const [token, setToken] = useState(null);
   const [biddingNum, setBiddingNum] = useState();
   const [paintingIdArray, setPaintingIdArray] = useState();
-  const handleSearch = (e) => {
-    e.preventDefault();
-
-    if (search === "") {
-      console.log("empty search", search);
-      setSearchParams({}); // Clear the query string entirely
-      // Trigger a reload even if you're on "/home" by adding a dummy parameter
-      navigate("/home", { replace: true });
-    } else {
-      setSearchParams({ keyword: search });
-      console.log("searchParamsValue", searchParams.get("keyword"));
-
-      // To ensure the search works even on the "/home" path, use replace to update the URL
-      navigate("/home?keyword=" + search, { replace: true });
-    }
-    setRequestPageNumber(1);
-  };
 
   useEffect(() => {
     // Recheck localStorage whenever 'like' or 'loadWishlist' changes
@@ -66,7 +45,7 @@ export default function NavBar() {
 
   useEffect(() => {
     setWishlistNumber(paintingIdArray ? paintingIdArray.length : "");
-    console.log("step 6: change Navbar wishlist number");
+    // console.log("step 6: change Navbar wishlist number");
   }, [paintingIdArray]);
 
   useEffect(() => {
@@ -76,35 +55,13 @@ export default function NavBar() {
         : ""
     );
   }, [isLogin, reLoadBiddingNum]);
+
   useEffect(() => {
     $(".nav-link").on("click", function () {
       $(".nav-link").removeClass("active"); // Remove "active" class from all
       $(this).addClass("active"); // Add "active" class to the clicked element
     });
 
-    // Handle keyup event for Enter key
-    $("#searchtxt").on("keyup", (e) => {
-      if (e.code === "Enter") {
-        const searchTerm = e.target.value;
-        if (searchTerm) {
-          setSearchParams({ keyword: searchTerm });
-        } else {
-          // Remove the keyword from the query params if the input is empty
-          setSearchParams({}); // Clears the URL query parameters
-          navigate("/home", { replace: true }); // Navigates to "/home" without any params
-        }
-      }
-    });
-
-    const storedToken = localStorage.getItem("token");
-    if (storedToken) {
-      setToken(storedToken);
-    }
-    getArtistList();
-
-    // setLoadWishlist(true);
-    // console.log(token);
-    // Cleanup event listener
     return () => {
       $(".nav-link").off("click");
     };
@@ -123,6 +80,13 @@ export default function NavBar() {
     // setLike(!like);
     // setLoadWishlist(!loadWishlist);
   };
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      setToken(storedToken);
+    }
+    getArtistList();
+  }, []);
 
   useEffect(() => {
     if (localStorage.getItem("token") == null) {
@@ -214,36 +178,8 @@ export default function NavBar() {
         <Link to="/">
           <img className="projectLogo" src={projectLogo} alt="Logo"></img>
         </Link>
-        <form
-          className="d-flex position-relative"
-          role="search"
-          onSubmit={handleSearch}
-        >
-          <input
-            className="form-control ms-2"
-            id="searchtxt"
-            type="text"
-            placeholder="Search"
-            defaultValue={search}
-            aria-label="Search"
-          />
-          <div className="d-flex align-items-center justify-content-end">
-            {/* <span className="material-symbols-outlined position-absolute end-0 px-2">
-              search
-            </span> */}
+        <SearchComponent />
 
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              className="bi bi-search position-absolute me-2 "
-              viewBox="0 0 16 16"
-            >
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-            </svg>
-          </div>
-        </form>
         <button
           className="navbar-toggler"
           type="button"

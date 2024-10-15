@@ -46,7 +46,7 @@ export function MainContextProvider({ children }) {
     cardNumber3: "",
     cardNumber4: "",
     expirationDate: "",
-    cvc: ""
+    cvc: "",
   });
 
   //信用卡號輸入
@@ -77,19 +77,25 @@ export function MainContextProvider({ children }) {
     const newErrors = {};
 
     //驗證收件人資訊
-    if(!recipientInfo.name) newErrors.name = "Name is required";
-    if(!recipientInfo.phone) newErrors.phone = "Phone is required";
-    if(!recipientInfo.address) newErrors.address = "Address is required";
+    if (!recipientInfo.name) newErrors.name = "Name is required";
+    if (!recipientInfo.phone) newErrors.phone = "Phone is required";
+    if (!recipientInfo.address) newErrors.address = "Address is required";
 
     //驗證付款
-    if(!paymentInfo.cardNumber1 || !paymentInfo.cardNumber2 || !paymentInfo.cardNumber3 || !paymentInfo.cardNumber4)
+    if (
+      !paymentInfo.cardNumber1 ||
+      !paymentInfo.cardNumber2 ||
+      !paymentInfo.cardNumber3 ||
+      !paymentInfo.cardNumber4
+    )
       newErrors.cardNumber = "Complete card number is required";
-    if(!paymentInfo.expirationDate) newErrors.expirationDate = "ExpirationDate is required";
-    if(!paymentInfo.cvv) newErrors.cvv = "CVV is required";
+    if (!paymentInfo.expirationDate)
+      newErrors.expirationDate = "ExpirationDate is required";
+    if (!paymentInfo.cvv) newErrors.cvv = "CVV is required";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0; //如果沒有錯誤則返回true
-  }
+  };
 
   // methods for loading data
   const getArtistList = async () => {
@@ -111,7 +117,7 @@ export function MainContextProvider({ children }) {
       try {
         const result = await axiosInstance.get(`${api}`);
         setWishlistResult(result.data);
-        console.log("step 4: got wishlsht from data");
+        // console.log("step 4: got wishlsht from data");
       } catch (error) {
         showLoginModal();
         console.log(error);
@@ -123,7 +129,7 @@ export function MainContextProvider({ children }) {
       const paintingIdArray = wishlistResult.map((w) => w.paintingId);
       localStorage.setItem("Wishlist", JSON.stringify(wishlistResult));
       localStorage.setItem("paintingIdArray", JSON.stringify(paintingIdArray));
-      console.log("step 5: record to localStorage", WToS);
+      // console.log("step 5: record to localStorage", WToS);
       setWToS(!WToS);
     }
     // setLike(!like);
@@ -169,11 +175,6 @@ export function MainContextProvider({ children }) {
       modal.show();
     }
   };
-  // const getSearch = async () => {
-  //   const api = path + `/PTController/search?${searchParams}`;
-  //   const result = await axiosConfig.get(api);
-  //   console.log(result);
-  // };
 
   useEffect(() => {
     setSearch(searchParams.get("keyword"));
@@ -198,12 +199,6 @@ export function MainContextProvider({ children }) {
         setSearchParams,
         loginModalRef,
         showLoginModal,
-        // loadWishlist,
-        // setLoadWishlist,
-        // getWishlistData,
-        // setGetWishListData,
-        // like,
-        // setLike,
         setWToS,
         WToS,
         addRemoveWishlistprocessed,
@@ -236,7 +231,7 @@ export function MainContextProvider({ children }) {
         recipientInfo,
         setRecipientInfo,
         paymentInfo,
-        setPaymentInfo
+        setPaymentInfo,
       }}
     >
       {children}

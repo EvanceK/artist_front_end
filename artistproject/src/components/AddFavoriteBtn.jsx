@@ -20,13 +20,13 @@ export default function AddFavoriteBtn({ paintingId }) {
   function handleClick() {
     // console.log("Favornewclicked: ", paintingId);
     setAddPainting({ paintingId: paintingId });
-    console.log("step 1: clicked");
+    // console.log("step 1: clicked");
   }
   useEffect(() => {
     if (addPainting === null) return;
     if (addPainting) {
       !liked ? addWishlist() : removeWishlist(paintingId);
-      console.log("step2: execute add/ remove");
+      // console.log("step2: execute add/ remove");
     }
   }, [addPainting]);
 
@@ -40,7 +40,7 @@ export default function AddFavoriteBtn({ paintingId }) {
         // setLike(!like);
         setaddRemoveWishlistprocessed(!addRemoveWishlistprocessed);
         setLiked(true);
-        console.log("step 3: add!");
+        // console.log("step 3: add!");
       } else {
         showLoginModal();
         console.log("please login");
@@ -56,7 +56,7 @@ export default function AddFavoriteBtn({ paintingId }) {
       await axiosInstance.delete(api);
       setaddRemoveWishlistprocessed(!addRemoveWishlistprocessed);
       setLiked(false);
-      console.log("step 3: removed!");
+      // console.log("step 3: removed!");
     } catch (e) {
       console.log(e);
     }
@@ -74,7 +74,7 @@ export default function AddFavoriteBtn({ paintingId }) {
           setLiked(true);
         }
       });
-    console.log("step 6: check localStorage to setLiked", liked);
+    // console.log("step 6: check localStorage to setLiked", liked);
 
     setResetColor(!resetColor);
   }, [WToS]);
