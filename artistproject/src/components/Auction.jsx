@@ -16,7 +16,10 @@ export default function Auction() {
   const [breAmoutArray, setBreAmoutArray] = useState();
   const [auctionList, setAuctionList] = useState();
   const [placeBid, setPlaceBid] = useState();
-
+  const [selectedOption, setSelectedOption] = useState("");
+  const [selectionValue, setSelectionValue] = useState();
+  const [inputValue, setInputValue] = useState("");
+  const [finalBidAmount, setFinalBidAmount] = useState();
   const { reLoadBiddingHistory, setReLoadBiddingHistory, showLoginModal } =
     useContext(MainContext);
   const path = import.meta.env.VITE_DATA_HOST_API;
@@ -24,13 +27,70 @@ export default function Auction() {
   //Post placeBid
   const handleClickPlaceBid = () => {
     if (!localStorage.getItem("token")) showLoginModal();
-    console.log("placeBid!");
-    console.log("ID:", painting.paintingId);
-    setPlaceBid({
-      paintingId: painting.paintingId,
-      bidAmount: "2000",
-    });
+    // console.log("placeBid!");
+    // console.log("ID:", painting.paintingId);
+    // setPlaceBid({
+    //   paintingId: painting.paintingId,
+    //   bidAmount: "2000",
+    // });
+    if (placeBid) postPlaceBid();
+    setReLoadBiddingHistory(!reLoadBiddingHistory);
   };
+
+  useEffect(() => {
+    if (selectionValue) setFinalBidAmount(selectionValue);
+    if (inputValue) setFinalBidAmount(inputValue);
+  }, [inputValue, selectionValue]);
+  useEffect(() => {
+    console.log(finalBidAmount);
+    if (finalBidAmount)
+      setPlaceBid({
+        paintingId: painting.paintingId,
+        bidAmount: finalBidAmount,
+      });
+  }, [finalBidAmount]);
+
+  // Function to handle changes in the textbox
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    // console.log(value);
+    setInputValue(value);
+    setSelectedOption("Bidding amount ..."); // Reset if no match found
+
+    // Check if the input matches any option value and update selectedOption
+    // if (value === "1234") {
+    //   setSelectedOption("option1");
+    // } else if (value === "5678") {
+    //   setSelectedOption("option2");
+    // } else if (value === "91011") {
+    //   setSelectedOption("option3");
+    // } else {
+    // setSelectedOption(""); // Reset if no match found
+    // }
+  };
+  const handleSelectChange = (event) => {
+    setSelectedOption(event.target.value);
+    setInputValue("");
+    const value = event.target.value;
+
+    // Extract the number part from the value
+    const numberPart = value.match(/\d{1,3}(?:,\d{3})*/);
+
+    if (numberPart) {
+      // Remove commas and convert the string back to a number
+      const normalValue = parseFloat(numberPart[0].replace(/,/g, ""));
+      // Check if it's a valid number
+      if (!isNaN(normalValue) && isFinite(normalValue)) {
+        // console.log(normalValue);
+        setSelectionValue(normalValue);
+      } else {
+        console.error("Not a valid number");
+      }
+    } else {
+      console.error("No number found in the string");
+    }
+  };
+
   const postPlaceBid = async () => {
     const api = path + "/api/bidding/bid";
     try {
@@ -41,10 +101,10 @@ export default function Auction() {
       console.log(e.response.data);
     }
   };
-  useEffect(() => {
-    if (placeBid) postPlaceBid();
-    setReLoadBiddingHistory(!reLoadBiddingHistory);
-  }, [placeBid]);
+  // useEffect(() => {
+  //   if (placeBid) postPlaceBid();
+  //   setReLoadBiddingHistory(!reLoadBiddingHistory);
+  // }, [placeBid]);
   // Fetch painting data
   const getdata = async () => {
     const api = path + "/api/bidding";
@@ -113,10 +173,10 @@ export default function Auction() {
     setAuctionList(buildAcutionList());
   }, [biddingHistory]);
 
-  useEffect(() => {
-    if (painting) console.log("painting:", painting);
-    if (biddingHistory) console.log("biddingHistory:", biddingHistory);
-  }, [painting, biddingHistory]);
+  // useEffect(() => {
+  // if (painting) console.log("painting:", painting);
+  // if (biddingHistory) console.log("biddingHistory:", biddingHistory);
+  // }, [painting, biddingHistory]);
 
   const buildBreadCrumb = useCallback(() => {
     if (!painting) return; // Exit if painting is undefined
@@ -199,16 +259,14 @@ export default function Auction() {
               <select
                 className="form-select"
                 aria-label="Default select example"
+                value={selectedOption}
+                onChange={handleSelectChange}
               >
+                <option defaultValue={0}>Bidding amount ...</option>
                 {breAmoutArray
                   ? breAmoutArray.map((b, i) => {
                       return (
-                        <option
-                          key={i}
-                          defaultValue={new Intl.NumberFormat("en-IN", {
-                            maximumSignificantDigits: 3,
-                          }).format(b)}
-                        >
+                        <option key={i} defaultValue={b}>
                           ${" "}
                           {new Intl.NumberFormat("en-IN", {
                             maximumSignificantDigits: 3,
@@ -228,6 +286,8 @@ export default function Auction() {
               <input
                 className="form-control"
                 placeholder="optional amount"
+                value={inputValue}
+                onChange={handleInputChange}
               ></input>
               <div className="cardBtn d-flex justify-content-center m-5">
                 <AddFavoriteBtn paintingId={painting.paintingId} />
