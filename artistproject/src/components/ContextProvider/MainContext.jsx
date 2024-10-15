@@ -34,6 +34,21 @@ export function MainContextProvider({ children }) {
   const [requestPageNumber, setRequestPageNumber] = useState(1);
   const { isLogin } = useContext(UserContext);
 
+  const [recipientInfo, setRecipientInfo] = useState({
+    name: "",
+    phone: "",
+    address: "",
+  });
+
+  const [paymentInfo, setPaymentInfo] = useState({
+    cardNumber1: "",
+    cardNumber2: "",
+    cardNumber3: "",
+    cardNumber4: "",
+    expirationDate: "",
+    cvc: ""
+  });
+
   //信用卡號輸入
   const [cardNumber1, setCardNumber1] = useState("");
   const [cardNumber2, setCardNumber2] = useState("");
@@ -55,6 +70,27 @@ export function MainContextProvider({ children }) {
     }
   };
 
+  //表單驗證狀態
+  const [errors, setErrors] = useState({});
+
+  const validateForm = (recipientInfo, paymentInfo) => {
+    const newErrors = {};
+
+    //驗證收件人資訊
+    if(!recipientInfo.name) newErrors.name = "Name is required";
+    if(!recipientInfo.phone) newErrors.phone = "Phone is required";
+    if(!recipientInfo.address) newErrors.address = "Address is required";
+
+    //驗證付款
+    if(!paymentInfo.cardNumber1 || !paymentInfo.cardNumber2 || !paymentInfo.cardNumber3 || !paymentInfo.cardNumber4)
+      newErrors.cardNumber = "Complete card number is required";
+    if(!paymentInfo.expirationDate) newErrors.expirationDate = "ExpirationDate is required";
+    if(!paymentInfo.cvv) newErrors.cvv = "CVV is required";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0; //如果沒有錯誤則返回true
+  }
+
   // methods for loading data
   const getArtistList = async () => {
     const api = path + "/ArtController/findall";
@@ -67,7 +103,7 @@ export function MainContextProvider({ children }) {
       console.log(error);
     }
   };
-  const getWishList = useCallback(async () => {
+  const getWishList = async () => {
     const authorization = localStorage.getItem("token");
     const api = path + "/api/wishlist";
 
@@ -81,17 +117,17 @@ export function MainContextProvider({ children }) {
         console.log(error);
       }
     }
-  }, []);
+  };
   useEffect(() => {
     if (wishlistResult) {
       const paintingIdArray = wishlistResult.map((w) => w.paintingId);
       localStorage.setItem("Wishlist", JSON.stringify(wishlistResult));
       localStorage.setItem("paintingIdArray", JSON.stringify(paintingIdArray));
-      setWToS(localStorage.getItem("paintingIdArray"));
       console.log("step 5: record to localStorage", WToS);
+      setWToS(!WToS);
     }
     // setLike(!like);
-  }, [wishlistResult, getWishList]);
+  }, [wishlistResult]);
   // useEffect for preload data
   useEffect(() => {
     getWishList();
@@ -195,6 +231,12 @@ export function MainContextProvider({ children }) {
         cardNumber3Ref,
         cardNumber4Ref,
         handleCardNumberChange,
+        validateForm,
+        errors,
+        recipientInfo,
+        setRecipientInfo,
+        paymentInfo,
+        setPaymentInfo
       }}
     >
       {children}

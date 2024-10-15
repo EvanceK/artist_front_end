@@ -16,8 +16,6 @@ export default function LoginModal() {
     loadWishlist,
     showIncorrectAccountModal,
     showIncorrectPasswordModal,
-    like,
-    setLike,
   } = useContext(MainContext);
   const [data, setData] = useState({
     email: "",
@@ -42,7 +40,7 @@ export default function LoginModal() {
       // console.log(result);
       localStorage.setItem("token", result.data.token);
       localStorage.setItem("nickName", result.data.nickName);
-      setLoadWishlist(!loadWishlist);
+      // setLoadWishlist(!loadWishlist);
       setIsLogin(true);
     } catch (error) {
       console.log(error);
