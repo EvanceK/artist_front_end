@@ -7,6 +7,10 @@ import Welcome from "./pages/Welcome";
 import MainPage from "./pages/MainPage";
 
 import $ from "jquery";
+import StaffDashboar from "./pages/StaffDashboar";
+import PaintingMgn from "./pages/MainPageComponents/StaffDashBoardpages/PaintingMgn";
+import StaffLoginModal from "./components/Modal/StaffLoginModal";
+import ArtistMng from "./pages/MainPageComponents/StaffDashBoardpages/ArtistMng";
 
 export default function App() {
   const [userName, setUserName] = useState();
@@ -20,7 +24,13 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Welcome />}></Route>
           <Route path="/home/*" element={<MainPage />}></Route>
+          {/*要登入員工才可以看到的 */}
+          <Route path="staffdashboard" element={<StaffDashboar />}>
+            <Route index element={<ArtistMng />} />
+            <Route path="paintingmgn" element={<PaintingMgn />} />
+          </Route>
         </Routes>
+        <StaffLoginModal />
       </UserContext.Provider>
     </>
   );
