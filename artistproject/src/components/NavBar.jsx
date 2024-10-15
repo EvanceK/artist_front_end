@@ -62,10 +62,11 @@ export default function NavBar() {
     };
 
     updateWishlistNumber(); // Immediately recheck wishlist number
-  }, [WToS, isLogin]); // Depend on 'like' and 'loadWishlist'
+  }, [WToS, isLogin]);
 
   useEffect(() => {
     setWishlistNumber(paintingIdArray ? paintingIdArray.length : "");
+    console.log("step 6: change Navbar wishlist number");
   }, [paintingIdArray]);
 
   useEffect(() => {

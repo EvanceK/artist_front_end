@@ -88,7 +88,7 @@ export function MainContextProvider({ children }) {
       localStorage.setItem("Wishlist", JSON.stringify(wishlistResult));
       localStorage.setItem("paintingIdArray", JSON.stringify(paintingIdArray));
       console.log("step 5: record to localStorage", WToS);
-      setWToS(localStorage.getItem("paintingIdArray"));
+      setWToS(!WToS);
     }
     // setLike(!like);
   }, [wishlistResult]);
