@@ -3,14 +3,20 @@ import { useContext, useEffect, useState } from "react";
 import axiosInstance from "../../../axiosConfig";
 export default function EditAccount() {
   const path = import.meta.env.VITE_DATA_HOST_API;
+  const Authorization = localStorage.getItem("token");
   const api = path + "/customers/EditAccount";
   const [data, setData] = useState({
     name: "",
     nickName: "",
     phone: "",
     address: "",
-    password: "",
   });
+  // const [cust, setCust] = useState({
+  //   name: "",
+  //   nickName: "",
+  //   phone: "",
+  //   address: "",
+  // });
   const getCustomer = async()=>{
     const path=import.meta.env.VITE_DATA_HOST_API;
     const Authorization = localStorage.getItem("token");
@@ -20,7 +26,9 @@ export default function EditAccount() {
       const result = await axiosInstance.get(api);
       // const result = await axios.get(api);
       console.log(result.data);
+      // setData(result.data)
       setData(result.data)
+      // handleChange();
     }else{
       showLogingModal();
       console.log("please login")
@@ -32,18 +40,22 @@ export default function EditAccount() {
   },[])
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
+    // console.log(name, value);
     setData({ ...data, [name]: value });
     console.log(data);
   };
-  const submit = async (e) => {
+  const submit = async () => {
     try {
-      const result = await axios.post(api, data, {
+       console.log(data);
+      if(Authorization){
+         const result = await axiosInstance.put(api, data, {
+      // const result = await axios.put(api, data, {
         headers: {
           "Content-Type": "application/json",
         },
       });
       console.log(result);
+    }
     } catch (error) {
       console.log(error);
     }
@@ -152,8 +164,7 @@ export default function EditAccount() {
             <div className="row d-flex justify-content-center m-5">
               <div
                 className="btn col-3 btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#SignupSuccess"
+                data-bs-dismiss="modal"
                 onClick={submit}
               >
                 SIGN UP
