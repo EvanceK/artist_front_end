@@ -23,6 +23,7 @@ export default function Auction() {
 
   //Post placeBid
   const handleClickPlaceBid = () => {
+    if (!localStorage.getItem("token")) showLoginModal();
     console.log("placeBid!");
     console.log("ID:", painting.paintingId);
     setPlaceBid({
@@ -36,8 +37,8 @@ export default function Auction() {
       const result = await axiosInstance.post(`${api}`, placeBid);
       console.log(result);
     } catch (e) {
-      showLoginModal();
-      console.log(e);
+      alert(e.response.data);
+      console.log(e.response.data);
     }
   };
   useEffect(() => {
