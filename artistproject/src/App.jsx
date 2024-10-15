@@ -11,6 +11,7 @@ import StaffDashboar from "./pages/StaffDashboar";
 import PaintingMgn from "./pages/MainPageComponents/StaffDashBoardpages/PaintingMgn";
 import StaffLoginModal from "./components/Modal/StaffLoginModal";
 import ArtistMng from "./pages/MainPageComponents/StaffDashBoardpages/ArtistMng";
+import OrderMgn from "./pages/MainPageComponents/StaffDashBoardpages/OrderMgn";
 // import MemberLogin from "./components/Modal/MemberLogin";
 
 export default function App() {
@@ -29,6 +30,7 @@ export default function App() {
           <Route path="staffdashboard" element={<StaffDashboar />}>
             <Route index element={<ArtistMng />} />
             <Route path="paintingmgn" element={<PaintingMgn />} />
+            <Route path="ordermgn" element={<OrderMgn />} />
           </Route>
         </Routes>
         <StaffLoginModal />

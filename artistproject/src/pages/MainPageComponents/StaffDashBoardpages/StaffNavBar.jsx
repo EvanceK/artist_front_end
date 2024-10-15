@@ -50,6 +50,15 @@ export default function StaffNavBar() {
                   Plaiting Managerment
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link
+                  className="nav-link "
+                  aria-current="page"
+                  to="ordermgn"
+                >
+                  Order Managerment
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
