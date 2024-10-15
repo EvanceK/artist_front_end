@@ -5,11 +5,15 @@ export default function PasswordChanged() {
   const path=import.meta.env.VITE_DATA_HOST_API;
   const Authorization = localStorage.getItem("token");
   const api= path + "/customers/initEditData";
+
   const[password,setPassword] = useState({
     newPassword:"",
     confirmPassword:""
   });
   const [data,setData]=useState();
+  const [error, setError] = useState(""); // 用來存放密碼不匹配的錯誤訊息
+  const [passwordsMatch, setPasswordsMatch] = useState(false); // 控制勾勾顯示
+
   const getData = async()=>{
     const api= path + "/customers/initEditData";
     if(Authorization){
@@ -22,17 +26,33 @@ export default function PasswordChanged() {
       console.log("please login")
     }
   };
-  const handleChange=(e) => {
-    const { name, value } = e.target;
-    setPassword((prevState) => {
-      const updatedPassword = { ...prevState, [name]: value };
 
-      console.log(updatedPassword); // 這裡的 updatedPassword 是更新後的狀態
-      return updatedPassword;
-      
-      
-    });
-  };
+ // 處理輸入變更並即時檢查密碼是否一致
+ const handleChange = (e) => {
+  const { name, value } = e.target;
+  setPassword((prevState) => {
+    const updatedPassword = { ...prevState, [name]: value };
+
+    // 當兩個密碼都有值，且相同時才顯示"Passwords match!"
+    if (
+      updatedPassword.newPassword &&
+      updatedPassword.confirmPassword &&
+      updatedPassword.newPassword === updatedPassword.confirmPassword
+    ) {
+      setPasswordsMatch(true);
+      setError("");
+    } else if (updatedPassword.confirmPassword) {
+      setPasswordsMatch(false);
+      setError("Passwords do not match!");
+    } else {
+      setError(""); // 如果confirmPassword沒填，清空錯誤訊息
+      setPasswordsMatch(false); // 確保還沒輸入確認密碼時不顯示勾勾
+    }
+
+    return updatedPassword;
+  });
+
+     
   const submit= async ()=>{
     try {
       console.log(password);
@@ -48,7 +68,19 @@ export default function PasswordChanged() {
      console.log(error);
    }
   }
-  const isPasswordMatch = password.confirmPassword && password.newPassword === password.confirmPassword;
+  // 處理表單提交
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // 驗證密碼是否匹配
+    if (newPassword !== confirmPassword) {
+      setError("Passwords do not match!");
+    } else {
+      setError(""); // 清空錯誤訊息
+      // 如果匹配，執行其他邏輯（例如提交表單）
+      console.log("Password match. Submitting form...");
+      // 可以在這裡執行提交的 API 請求或其他邏輯
+    }
+  };
   return (
           <div className="PasswordChanged" id="PasswordChanged">
             <div className="py-5 d-flex justify-content-center">
@@ -69,20 +101,23 @@ export default function PasswordChanged() {
                        name="newPassword" 
                        required>
                 </input>
-                <div className="valid-feedback">Valid.</div>
+                {/* 只有在密碼匹配時顯示勾勾 */}
+            {passwordsMatch && password.newPassword && (
+              <div className="valid-feedback">Passwords match!</div>
+            )}
                 <div className="invalid-feedback">Please fill out this field.</div>
               </div>
               <div className="form-group">
                 <label className="mt-3">Please confirm your password:</label>
                 <input type="password " 
-                       className={`form-control mt-3  ${password.confirmPassword ? (isPasswordMatch ? 'is-valid' : 'is-invalid') : ''}`}
+                       className="form-control mt-3"
                        style={{backgroundColor: "light"}} 
                        onChange={handleChange} 
                        name="confirmPassword" 
                        required>
                 </input>
-                <div className="valid-feedback">Passwords match.</div>
-                <div className="invalid-feedback">Passwords do not match.</div>
+                {/* 顯示錯誤訊息 */}
+      {error && <div className="text-danger">{error}</div>}
               </div>
             </div>
             <div className="row my-5 mx-auto justify-content-center">
