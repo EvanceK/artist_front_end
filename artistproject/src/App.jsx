@@ -11,6 +11,7 @@ import StaffDashboar from "./pages/StaffDashboar";
 import PaintingMgn from "./pages/MainPageComponents/StaffDashBoardpages/PaintingMgn";
 import StaffLoginModal from "./components/Modal/StaffLoginModal";
 import ArtistMng from "./pages/MainPageComponents/StaffDashBoardpages/ArtistMng";
+// import MemberLogin from "./components/Modal/MemberLogin";
 
 export default function App() {
   const [userName, setUserName] = useState();
@@ -31,6 +32,7 @@ export default function App() {
           </Route>
         </Routes>
         <StaffLoginModal />
+        {/* <MemberLogin /> */}
       </UserContext.Provider>
     </>
   );
