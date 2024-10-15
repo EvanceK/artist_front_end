@@ -1,6 +1,7 @@
 import React from "react";
 import { useContext, useEffect, useState } from "react";
 import axiosInstance from "../axiosConfig";
+import { MainContext } from "./ContextProvider/MainContext"; 
 
 function CustomerInfo() {
   const [customer,setCustomer]=useState({
