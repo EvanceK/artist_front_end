@@ -28,10 +28,13 @@ body {
   flex-direction: column;
 }
 .homelayout,
-.cusdash,
-.staffDashboard {
+.cusdash {
   min-height: 80vh;
   margin-top: 170px;
+}
+.staffDashboard {
+  min-height: 80vh;
+  margin-top: 50px;
 }
 #root {
   overflow: hidden;
