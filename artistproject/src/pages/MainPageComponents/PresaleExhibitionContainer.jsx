@@ -42,7 +42,8 @@ export default function PresaleExhibitionContainer() {
     console.log(plaintingTypeName);
     // setArtisList(plaintingTypeName);
   }, [data]);
-  if (data)
+
+  if (data) {
     return (
       <>
         <div className="container ">
@@ -107,4 +108,7 @@ export default function PresaleExhibitionContainer() {
         </div>
       </>
     );
+  } else {
+    return <></>;
+  }
 }
