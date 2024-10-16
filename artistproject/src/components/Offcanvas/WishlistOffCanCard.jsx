@@ -8,13 +8,9 @@ export default function WishlistOffCanCard({ wishlisProps }) {
     useContext(MainContext);
   const removeWishlist = async (event) => {
     const api = path + `/api/wishlist/${event.target.id}`;
-    // console.log(event.target.id);
     const result = await axiosInstance.delete(api);
-    // console.log(result);
-    // setLoadWishlist(!loadWishlist);
-    // setLike(!like);
     setaddRemoveWishlistprocessed(!addRemoveWishlistprocessed);
-    // setGetWishListData(!getWishlistData);
+
   };
   return (
     <>

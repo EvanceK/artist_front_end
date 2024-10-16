@@ -32,6 +32,7 @@ import ConfirmOrder from "./MainPageComponents/ConfirmOrder";
 import MyWallet from "./MainPageComponents/MyWallet";
 import BiddingHistoryOffcanvas from "../components/Offcanvas/BiddingHistoryOffcanvas";
 import ChangeCreditCardModal from "../components/Modal/ChangeCreditCardModal";
+import MyWishList from "./MainPageComponents/MyWishList";
 
 export default function MainPage() {
   return (
@@ -77,6 +78,7 @@ export default function MainPage() {
             <Route path="MyWallet" element={<MyWallet />} />
             <Route path="ConfirmOrder" element={<ConfirmOrder />} />
             <Route path="OrderPage" element={<OrderPage />} />
+            <Route path="MyWishList" element={<MyWishList />} />
           </Route>
         </Routes>
         {/* modal for navbar vv */}
