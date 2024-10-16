@@ -1,17 +1,23 @@
 import { useEffect, useState } from "react";
-import axiosInstance from "../../../axiosConfig";
+
 import PropTypes from "prop-types";
 
 export default function WinningRecordsCard({
     WinningRecordsCardProps,
-    selectedItems,
-    setSelectedItems,
-    isChecked,
+  
     isSelecAllChecked,
-    setIsSelecAllChecked,
+    
     handleItemChange
 
 }) {
+    useEffect(() => {
+        console.log("re");
+        setIsCheck(isSelecAllChecked);
+        
+    },[isSelecAllChecked])
+
+    const [isChecked, setIsCheck] = useState ();
+    
   
   return (
     <div className="pb-5 border-bottom">
@@ -67,6 +73,6 @@ WinningRecordsCard.propTypes = {
         price: PropTypes.number.isRequired,
 
       }).isRequired,
-      isChecked: PropTypes.bool.isRequired,
+      isSelecAllChecked: PropTypes.bool.isRequired,
   handleItemChange: PropTypes.func.isRequired,
     };

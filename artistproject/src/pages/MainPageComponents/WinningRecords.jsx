@@ -10,7 +10,10 @@ export default function WinningRecords() {
   //管理選中的項目
   const [selectedItems, setSelectedItems] = useState([]);
   // 管理selectAll選中的狀態
-  const [isSelecAllChecked, setIsSelecAllChecked] = useState(false);
+  const [isSelecAllChecked, setIsSelecAllChecked] = useState();
+
+  
+
    //讀取後端api
    const path = import.meta.env.VITE_DATA_HOST_API;
    const Authorization = localStorage.getItem("token");
@@ -30,19 +33,30 @@ export default function WinningRecords() {
 
   // 當selet All 被選中或取消選中
   const handleSelectedAllChange = (e) => {
-    const isChecked = e.target.checked;
-    // 更新"select All"的狀態
-    setIsSelecAllChecked(isChecked);
-
-    if (isChecked) {
-        // 如果全選的話將所有項目的id加入到selectedItems中
-      const allItemIds = winningRecords.map((item) => item.paintingId);
-      setSelectedItems(allItemIds);
-    } else {
-      //取消選中所有項目
-      setSelectedItems([]);
-    }
+    
+    setIsSelecAllChecked(e.target.checked)
+    console.log("clicked" , isSelecAllChecked);
   };
+
+  useEffect (() => {
+    const sa = [];
+    if(isSelecAllChecked){
+        winningRecords.map((bp) =>  {
+            sa.push(bp.paintingId);
+    
+        });
+        } 
+        setSelectedItems(sa);
+    console.log(isSelecAllChecked);
+    
+  },[isSelecAllChecked])
+
+  useEffect(() => {
+    console.log(isSelecAllChecked,"finall array",selectedItems);
+    
+  },[selectedItems]);
+
+  
 
   // 處理單個 item checkbox 的變化
   const handleItemChange = (paintingId) => {
@@ -74,12 +88,12 @@ export default function WinningRecords() {
     setWinningRecordsCard(
       winningRecords.length > 0
         ? winningRecords.map((bp, i) => {
-            return <WinningRecordsCard key={i} WinningRecordsCardProps={bp} />;
+            return <WinningRecordsCard key={i} WinningRecordsCardProps={bp } isSelecAllChecked={isSelecAllChecked}/>;  
           })
         : "1"
     );
     console.log(winningRecordsCard);
-  }, [winningRecords]);
+  }, [winningRecords,isSelecAllChecked]);
 
   const navigate = useNavigate();
 
@@ -101,7 +115,7 @@ export default function WinningRecords() {
               checked={isSelecAllChecked}
               onChange={handleSelectedAllChange} // 當狀態改變時觸發事件處理
             />
-            <label className="form-check-label" htmlFor="selectAll">
+            <label className="form-check-label" htmlFor="selectAll" >
               Select All
             </label>
           </div>
