@@ -46,7 +46,7 @@ export function MainContextProvider({ children }) {
     cardNumber3: "",
     cardNumber4: "",
     expirationDate: "",
-    cvv: ""
+    cvv: "",
   });
 
   //信用卡號輸入
@@ -65,7 +65,7 @@ export function MainContextProvider({ children }) {
     if (/^\d{0,4}$/.test(value)) {
       setPaymentInfo((prevPaymentInfo) => ({
         ...prevPaymentInfo,
-        [field]: value,  // 更新對應的卡號欄位
+        [field]: value, // 更新對應的卡號欄位
       }));
       if (value.length === 4 && nextRef) {
         console.log(nextRef);
@@ -77,47 +77,51 @@ export function MainContextProvider({ children }) {
   //有效日期的onChange
   const handleExpirationDateChange = (e) => {
     const value = e.target.value;
-    setPaymentInfo({...paymentInfo, expirationDate:value });
-    };
+    setPaymentInfo({ ...paymentInfo, expirationDate: value });
+  };
 
-    //CVV的onChange
-    const handleCvvChange = (e) => {
-      const value = e.target.value;
-      setPaymentInfo({...paymentInfo, cvv:value });
-      };
-  
+  //CVV的onChange
+  const handleCvvChange = (e) => {
+    const value = e.target.value;
+    setPaymentInfo({ ...paymentInfo, cvv: value });
+  };
 
   //表單驗證狀態
   const [errors, setErrors] = useState({});
 
   const validateForm = (recipientInfo, paymentInfo) => {
     const newErrors = {};
-    if(recipientInfo){
-    //驗證收件人資訊
-    if(!recipientInfo.name) newErrors.name = "Name is required";
-    if(!recipientInfo.phone) newErrors.phone = "Phone is required";
-    if(!recipientInfo.address) newErrors.address = "Address is required";
-  }
-    if(paymentInfo){
-    //驗證付款
-    if(!paymentInfo.cardNumber1 || !paymentInfo.cardNumber2 || !paymentInfo.cardNumber3 || !paymentInfo.cardNumber4)
-      newErrors.cardNumber = "Complete card number is required";
-
-    if(!paymentInfo.expirationDate) {
-      newErrors.expirationDate = "ExpirationDate is required";
-    } else if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(paymentInfo.expirationDate)) {
-      newErrors.expirationDate = "Expiration date must be in MM/YY format";
+    if (recipientInfo) {
+      //驗證收件人資訊
+      if (!recipientInfo.name) newErrors.name = "Name is required";
+      if (!recipientInfo.phone) newErrors.phone = "Phone is required";
+      if (!recipientInfo.address) newErrors.address = "Address is required";
     }
+    if (paymentInfo) {
+      //驗證付款
+      if (
+        !paymentInfo.cardNumber1 ||
+        !paymentInfo.cardNumber2 ||
+        !paymentInfo.cardNumber3 ||
+        !paymentInfo.cardNumber4
+      )
+        newErrors.cardNumber = "Complete card number is required";
 
-    if(!paymentInfo.cvv) {
-      newErrors.cvv = "CVV is required";
-    } else if (!/^\d{3}$/.test(paymentInfo.cvv)) {
-      newErrors.cvv = "Expiration date must be a 3-digit number";
+      if (!paymentInfo.expirationDate) {
+        newErrors.expirationDate = "ExpirationDate is required";
+      } else if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(paymentInfo.expirationDate)) {
+        newErrors.expirationDate = "Expiration date must be in MM/YY format";
+      }
+
+      if (!paymentInfo.cvv) {
+        newErrors.cvv = "CVV is required";
+      } else if (!/^\d{3}$/.test(paymentInfo.cvv)) {
+        newErrors.cvv = "Expiration date must be a 3-digit number";
+      }
     }
-  }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0; //如果沒有錯誤則返回true
-  }
+  };
 
   // methods for loading data
   const getArtistList = async () => {
@@ -158,7 +162,7 @@ export function MainContextProvider({ children }) {
   }, [wishlistResult]);
   // useEffect for preload data
   useEffect(() => {
-    getWishList();
+    if (isLogin) getWishList();
   }, [isLogin, addRemoveWishlistprocessed]);
 
   // Create a Provider component
@@ -252,13 +256,13 @@ export function MainContextProvider({ children }) {
         cardNumber4Ref,
         handleCardNumberChange,
         handleExpirationDateChange,
-    handleCvvChange,
+        handleCvvChange,
         validateForm,
         errors,
         recipientInfo,
         setRecipientInfo,
         paymentInfo,
-        setPaymentInfo
+        setPaymentInfo,
       }}
     >
       {children}
