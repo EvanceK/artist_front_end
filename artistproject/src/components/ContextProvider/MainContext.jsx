@@ -31,6 +31,7 @@ export function MainContextProvider({ children }) {
   //vv for searching 功能用的變數：
   const [search, setSearch] = useState();
   const [searchParams, setSearchParams] = useSearchParams();
+  const searchResultRef = useRef(null);
   const [requestPageNumber, setRequestPageNumber] = useState(1);
   const { isLogin } = useContext(UserContext);
 
@@ -227,6 +228,7 @@ export function MainContextProvider({ children }) {
         search,
         setSearch,
         searchParams,
+        searchResultRef,
         setSearchParams,
         loginModalRef,
         showLoginModal,

@@ -47,19 +47,6 @@ export default function MainPage() {
             <Route path=":id" element={<ViewByArtistContainer />} />
             <Route path="/auction/:id" element={<Auction />} />
             <Route
-              path="IncorrectAccountModal"
-              element={<IncorrectAccountModal />}
-            />
-            <Route
-              path="IncorrectPasswordModal"
-              element={<IncorrectPasswordModal />}
-            />
-            <Route
-              path="PasswordResetEmailModal"
-              element={<PasswordResetEmailModal />}
-            />
-
-            <Route
               path="/reset-password/:token"
               element={<PasswordChanged />}
             />

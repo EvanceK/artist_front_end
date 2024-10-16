@@ -6,6 +6,8 @@ import Pagination from "../../components/Pagination";
 import Carousel from "../../components/Carousel";
 import { MainContext } from "../../components/ContextProvider/MainContext";
 import PresaleExhibitionContainer from "./PresaleExhibitionContainer";
+import MaybeLiked from "./MaybeLiked";
+
 export default function ViewContainer() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const [data, setData] = useState([]);
@@ -15,8 +17,13 @@ export default function ViewContainer() {
   const [totalPage, setTotalPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [cardsView, setCardsView] = useState();
-  const { search, searchParams, requestPageNumber, setRequestPageNumber } =
-    useContext(MainContext);
+  const {
+    search,
+    searchParams,
+    requestPageNumber,
+    setRequestPageNumber,
+    searchResultRef,
+  } = useContext(MainContext);
 
   // Fetch data
   const getdata = async () => {
@@ -64,7 +71,7 @@ export default function ViewContainer() {
   useEffect(() => {
     setCardsView(
       <>
-        <div className="container">
+        <div className="container" ref={searchResultRef}>
           <h2>And More...</h2>
           {totalPage == 1 ? (
             ""
@@ -110,7 +117,9 @@ export default function ViewContainer() {
   }, [data]);
   return (
     <>
+      <MaybeLiked />
       <PresaleExhibitionContainer />
+
       <br></br>
 
       {cardsView}

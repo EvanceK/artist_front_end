@@ -17,15 +17,15 @@ export default function NavBar() {
     artistList,
     getArtistList,
     getWishList,
-    setRequestPageNumber,
-    setSearch,
-    search,
-    searchParams,
-    setSearchParams,
-    PasswordChangedRef,
-    showPasswordChangedRef,
+    // setRequestPageNumber,
+    // setSearch,
+    // search,
+    // searchParams,
+    // setSearchParams,
+    // PasswordChangedRef,
+    // showPasswordChangedRef,
     reLoadBiddingNum,
-    setReLoadBiddingNum,
+    // setReLoadBiddingNum,
   } = useContext(MainContext);
 
   const [accountfeild, setAccountfeild] = useState();
@@ -229,16 +229,6 @@ export default function NavBar() {
                   );
                 })}
               </ul>
-            </li>
-
-            <li>
-              <button
-                type="button"
-                className="btn "
-                onClick={showPasswordChangedRef}
-              >
-                PassReEmailModel
-              </button>
             </li>
           </ul>
           <div className="d-flex align-items-center">

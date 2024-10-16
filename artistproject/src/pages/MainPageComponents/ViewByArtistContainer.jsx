@@ -102,7 +102,14 @@ export default function ViewByArtistContainer() {
             // <span className="visually-hidden">Loading...</span>
             // </div>
             data.map((d, i) => {
-              return <MyCard key={i} Paintings={d} />;
+              return (
+                <MyCard
+                  key={i}
+                  Paintings={d}
+                  minWidth="15rem"
+                  imgHeight="15rem"
+                />
+              );
             })
           )}
           <hr></hr>

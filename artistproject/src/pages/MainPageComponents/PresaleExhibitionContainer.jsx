@@ -1,7 +1,8 @@
 import axios from "axios";
 import MyCard from "../../components/MyCard";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Pagination from "../../components/Pagination";
+import { MainContext } from "../../components/ContextProvider/MainContext";
 
 export default function PresaleExhibitionContainer() {
   // const api = "http://localhost:8080/PTController/findall";
@@ -9,17 +10,18 @@ export default function PresaleExhibitionContainer() {
   const api = path + "/PTController/findAllPresaleExhibition";
   const [data, setData] = useState([]);
   const [totalPage, setTotalPage] = useState(1);
-  const [requestPageNumber, setRequestPageNumber] = useState(1);
-  const [artisList, setArtisList] = useState([]);
+  // const [requestPageNumber, setRequestPageNumber] = useState(1);
+  // const [artisList, setArtisList] = useState([]);
+  const { requestPageNumber, setRequestPageNumber } = useContext(MainContext);
 
   //撈取資料庫
   const getdata = async () => {
     try {
       const result = await axios.get(
-        `${api}?currentPage=${requestPageNumber}&pageSize=10`
+        `${api}?currentPage=${requestPageNumber}&pageSize=4`
       );
       setData(result.data.paintingsList);
-      console.log(result.data);
+      // console.log("presales:", result.data);
       setTotalPage(result.data.totalPage || 1);
     } catch (error) {
       console.log(error);
@@ -28,7 +30,7 @@ export default function PresaleExhibitionContainer() {
 
   useEffect(() => {
     getdata();
-  }, []);
+  }, [requestPageNumber]);
 
   useEffect(() => {
     const plaintingTypeName = data
@@ -38,27 +40,43 @@ export default function PresaleExhibitionContainer() {
       )
       .map((t) => t.artisName);
     console.log(plaintingTypeName);
-    setArtisList(plaintingTypeName);
+    // setArtisList(plaintingTypeName);
   }, [data]);
 
-  return (
-    <>
-      <div className="container ">
-        <div className="h2 mt-5"> Coming Soon</div>
-        {totalPage == 1 ? (
-          ""
-        ) : (
-          <Pagination
-            totalPage={totalPage}
-            requestPageNumber={requestPageNumber}
-            onPageChange={setRequestPageNumber}
-          />
-        )}
-        {artisList.map((d, i) => {
+  if (data.length > 0) {
+    return (
+      <>
+        <div className="container ">
+          <div className="h2 mt-5"> Coming Soon</div>
+          {totalPage == 1 ? (
+            ""
+          ) : (
+            <Pagination
+              totalPage={totalPage}
+              requestPageNumber={requestPageNumber}
+              onPageChange={setRequestPageNumber}
+            />
+          )}
+
+          <div className="divByArtis ">
+            <div className="list">
+              {data.map((d, i) => {
+                // console.log("d:", d);
+                return (
+                  <MyCard
+                    key={i}
+                    Paintings={d}
+                    minWidth="22rem"
+                    imgHeight="18rem"
+                    cardClass="shadow"
+                  />
+                );
+              })}
+              {/* {artisList.map((d, i) => {
           return (
             <>
               <div className="divByArtis ">
-                {/* <p className="h2">Artis： {d}</p> */}
+                <p className="h2">Artis： {d}</p>
                 <div className="list">
                   {
                     data
@@ -83,8 +101,14 @@ export default function PresaleExhibitionContainer() {
               <hr></hr>
             </>
           );
-        })}
-      </div>
-    </>
-  );
+        })} */}
+            </div>
+          </div>
+          <hr />
+        </div>
+      </>
+    );
+  } else {
+    return <></>;
+  }
 }

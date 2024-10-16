@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import AddFavoriteBtn from "./AddFavoriteBtn";
 import CountDown from "./CountDown";
-export default function MyCard({ Paintings, minWidth, imgHeight }) {
+export default function MyCard({ Paintings, minWidth, imgHeight, cardClass }) {
   const navigate = useNavigate();
 
   const placeBid = (e) => {
@@ -13,7 +13,7 @@ export default function MyCard({ Paintings, minWidth, imgHeight }) {
   };
 
   return (
-    <div className="cards d-flex flex-column align-items-center">
+    <div className={`cards d-flex flex-column align-items-center ${cardClass}`}>
       <div
         className="photoFrame d-flex flex-column "
         style={{ minWidth: `${minWidth}` }}
@@ -102,4 +102,5 @@ MyCard.propTypes = {
   }).isRequired,
   minWidth: PropTypes.string,
   imgHeight: PropTypes.string,
+  cardClass: PropTypes.string,
 };
