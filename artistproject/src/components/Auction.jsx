@@ -278,7 +278,19 @@ export default function Auction() {
             </div>
             <div className="col d-flex flex-column">
               <div className="countdown d-flex justify-content-center align-items-center m-3">
-                <CountDown datetime={painting.uploadDate} />
+                <CountDown
+                  datetime={painting.uploadDate}
+                  config={{
+                    days: true,
+                    hours: true,
+                    minutes: true,
+                    seconds: true,
+                    CountDownClass:
+                      "d-flex justify-content-end align-items-end",
+                    textClass: "h4",
+                    clockClass: "h1",
+                  }}
+                />
 
                 {/* <strong className="h1 ms-4">10H 23m 41s</strong> */}
               </div>
@@ -324,21 +336,21 @@ export default function Auction() {
                 onChange={handleInputChange}
               ></input>
               <a
-              className="d-flex"
-              href="#biddingHistoryOffcanvas"
-              role="button"
-              data-bs-toggle="offcanvas"
-              aria-controls="BiddingHistoryModal"
+                className="d-flex"
+                href="#biddingHistoryOffcanvas"
+                role="button"
+                data-bs-toggle="offcanvas"
+                aria-controls="BiddingHistoryModal"
               >
-              <div className="cardBtn d-flex justify-content-center m-5">
-                <AddFavoriteBtn paintingId={painting.paintingId} />
-                <span
-                  className="btn btn-primary mx-3"
-                  onClick={handleClickPlaceBid}
-                >
-                  PLACE BID
-                </span>
-              </div>
+                <div className="cardBtn d-flex justify-content-center m-5">
+                  <AddFavoriteBtn paintingId={painting.paintingId} />
+                  <span
+                    className="btn btn-primary mx-3"
+                    onClick={handleClickPlaceBid}
+                  >
+                    PLACE BID
+                  </span>
+                </div>
               </a>
               <div className="row shipment">
                 <div className="row m-3">

@@ -2,7 +2,8 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
 import AddFavoriteBtn from "./AddFavoriteBtn";
-export default function MyCard({ Paintings }) {
+import CountDown from "./CountDown";
+export default function MyCard({ Paintings, minWidth, imgHeight }) {
   const navigate = useNavigate();
 
   const placeBid = (e) => {
@@ -13,7 +14,10 @@ export default function MyCard({ Paintings }) {
 
   return (
     <div className="cards d-flex flex-column align-items-center">
-      <div className="photoFrame d-flex flex-column ">
+      <div
+        className="photoFrame d-flex flex-column "
+        style={{ minWidth: `${minWidth}` }}
+      >
         <div className="card-body">
           {/* <h5 className="card-title">{Paintings.paintingName}</h5> */}
 
@@ -54,6 +58,7 @@ export default function MyCard({ Paintings }) {
           <img
             src={Paintings.smallUrl}
             className="card-img-top"
+            style={{ height: `${imgHeight}` }}
             alt={Paintings.paintingName}
           />
         </div>
@@ -61,6 +66,18 @@ export default function MyCard({ Paintings }) {
       <p className="card-text ">
         {Paintings.paintingId}: {Paintings.paintingName}
       </p>
+      <CountDown
+        datetime={Paintings.uploadDate}
+        config={{
+          days: true,
+          hours: true,
+          minutes: false,
+          seconds: true,
+          textClass: "h6",
+          clockClass: "h4",
+          CountDownClass: "d-flex align-items-end",
+        }}
+      />
     </div>
   );
 }
@@ -83,4 +100,6 @@ MyCard.propTypes = {
     style: PropTypes.string,
     uploadDate: PropTypes.string,
   }).isRequired,
+  minWidth: PropTypes.string,
+  imgHeight: PropTypes.string,
 };

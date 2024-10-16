@@ -16,7 +16,7 @@ import Deposit from "../components/Modal/DepositModal";
 import DeleteAccount from "./MainPageComponents/MyAccountComponents/DeleteAccount";
 import ViewContainer from "./MainPageComponents/ViewContainer";
 import MyAccount from "./MainPageComponents/MyAccount";
-import PaintingsListContainer from "./MainPageComponents/ArtistViewContainer";
+
 import { MainContextProvider } from "../components/ContextProvider/MainContext";
 import ViewByArtistContainer from "./MainPageComponents/ViewByArtistContainer";
 import Auction from "../components/Auction";
@@ -32,8 +32,6 @@ import ConfirmOrder from "./MainPageComponents/ConfirmOrder";
 import MyWallet from "./MainPageComponents/MyWallet";
 import BiddingHistoryOffcanvas from "../components/Offcanvas/BiddingHistoryOffcanvas";
 import ChangeCreditCardModal from "../components/Modal/ChangeCreditCardModal";
-import StaffDashboar from "./StaffDashboar";
-import PaintingMgn from "./MainPageComponents/StaffDashBoardpages/PaintingMgn";
 
 export default function MainPage() {
   return (
@@ -45,7 +43,6 @@ export default function MainPage() {
           <Route path="/" element={<HomeLayout />}>
             <Route index element={<ViewContainer />} />
 
-            <Route path="/byArtist" element={<PaintingsListContainer />} />
             <Route path=":id" element={<ViewByArtistContainer />} />
             <Route path="/auction/:id" element={<Auction />} />
             <Route
