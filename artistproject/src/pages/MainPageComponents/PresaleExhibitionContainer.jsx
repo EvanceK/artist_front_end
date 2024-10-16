@@ -43,7 +43,7 @@ export default function PresaleExhibitionContainer() {
     // setArtisList(plaintingTypeName);
   }, [data]);
 
-  if (data) {
+  if (data.length > 0) {
     return (
       <>
         <div className="container ">
