@@ -52,38 +52,91 @@ export default function OrderMgn() {
       <div className="row">
         <form className="col-3">
           <div className="mb-3">
-            <label htmlFor="exampleInputEmail" className="form-label">
-              Name
+            <label htmlFor="orderNum" className="form-label">
+              OrderNum
             </label>
             <input
               type="text"
               className="form-control"
-              id="exampleInputEmail"
+              id="orderNum"
               aria-describedby="emailHelp"
             />
-            {/* <div id="emailHelp" className="form-text">
-            We'll never share your email with anyone else.
-          </div> */}
           </div>
           <div className="mb-3">
-            <label htmlFor="exampleInput" className="form-label">
-              Desciption
+          <label htmlFor="customerId" className="form-label">
+              Order_Date
             </label>
-            <textarea
+            <input
               type="text"
-              rows="5"
               className="form-control"
-              id="exampleInput"
+              id="customerId"
+              aria-describedby="emailHelp"
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="exampleInputPassword" className="form-label">
-              Profile URL
+          <label htmlFor="customerId" className="form-label">
+              CustmerId
             </label>
             <input
-              type="current-password"
+              type="text"
               className="form-control"
-              id="exampleInputPassword"
+              id="customerId"
+              aria-describedby="emailHelp"
+            />
+          </div>
+          <div className="mb-3">
+          <label htmlFor="customerId" className="form-label">
+              Status
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="customerId"
+              aria-describedby="emailHelp"
+            />
+          </div>
+          <div className="mb-3">
+          <label htmlFor="customerId" className="form-label">
+              Delivery_Address
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="customerId"
+              aria-describedby="emailHelp"
+            />
+          </div>
+          <div className="mb-3">
+          <label htmlFor="customerId" className="form-label">
+          Att_Name
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="customerId"
+              aria-describedby="emailHelp"
+            />
+          </div>
+          <div className="mb-3">
+          <label htmlFor="customerId" className="form-label">
+          Att_Phone
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="customerId"
+              aria-describedby="emailHelp"
+            />
+          </div>
+          <div className="mb-3">
+          <label htmlFor="customerId" className="form-label">
+          Delivery_Instrictions
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="customerId"
+              aria-describedby="emailHelp"
             />
           </div>
           <div className="mb-3 form-check">
@@ -108,8 +161,14 @@ export default function OrderMgn() {
           <table className="table table-hover">
             <thead>
               <tr>
-                <th scope="col">#Id</th>
-                <th scope="col">Name</th>
+                <th scope="col">Order_Number</th>
+                {/* <th scope="col">Order_Date</th> */}
+                <th scope="col">Customer_Id</th>
+                <th scope="col">Status</th>
+                {/* <th scope="col">Delivery_Address</th>
+                <th scope="col">Att_Name</th>
+                <th scope="col">Att_Phone</th>
+                <th scope="col">Delivery_Instrictions</th> */}
                 <th scope="col">Modify</th>
               </tr>
             </thead>

@@ -237,7 +237,6 @@ export default function Auction() {
   if (painting)
     return (
       <>
-        <Carousel></Carousel>
         <div className="container my-5">
           {breadcrumb}
           <h2>{painting.paintingName}</h2>

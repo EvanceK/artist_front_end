@@ -33,7 +33,7 @@ function MemberNav (){
             </li>
 
             <li className="nav-item">
-            <Link className={`nav-link ${location.pathname === '/home/cusdashboard/MyWishlist' ? 'active border-bottom' : ''}`} to="/home/cusdashboard/MyWishlist">
+            <Link className={`nav-link ${location.pathname === '/home/cusdashboard/MyWishList' ? 'active border-bottom' : ''}`} to="/home/cusdashboard/MyWishList">
             My Wishlist
             </Link>
             </li>
