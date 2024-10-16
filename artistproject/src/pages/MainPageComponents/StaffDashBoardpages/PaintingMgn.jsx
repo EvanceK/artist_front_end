@@ -42,7 +42,7 @@ export default function PaintingMgn() {
   };
 
   const getdata = useCallback(async () => {
-    const api = path + "/ArtController/artists";
+    const api = path + "/PTController/artists";
     if (!selectedOption) return; // Prevent call if artistId is not available
 
     try {

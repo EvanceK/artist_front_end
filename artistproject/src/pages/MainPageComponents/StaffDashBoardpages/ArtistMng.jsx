@@ -17,7 +17,7 @@ export default function ArtistMng() {
     // 等同 $.ajax(" get blablablba ")
     try {
       const result = await axiosInstance.get(`${api}`);
-      // console.log(result.data);
+      console.log(result.data);
       setArtisList(result.data);
     } catch (error) {
       console.log(error);
@@ -55,14 +55,16 @@ export default function ArtistMng() {
   const onSubmit = (data) => {
     console.log(data);
   };
-  useEffect(() => {
-    //監聽行為 for 即時性變更值， 會搭配SetValue 使用。
-    const subcription = watch((value, attr) => {
-      console.log(value, attr);
-    });
 
-    return subcription.unsubscribe(); // useEffect 裡面有監聽行為需要移除避免無窮低迴
-  }, [watch]);
+  //for 監聽輸入用。 目前先註解
+  // useEffect(() => {
+  //   //監聽行為 for 即時性變更值， 會搭配SetValue 使用。
+  //   const subcription = watch((value, attr) => {
+  //     console.log(value, attr);
+  //   });
+
+  //   return subcription.unsubscribe(); // useEffect 裡面有監聽行為需要移除避免無窮低迴
+  // }, [watch]);
 
   return (
     <>
@@ -70,6 +72,16 @@ export default function ArtistMng() {
       <div className="row">
         <form className="col-3" onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-3">
+            <label htmlFor="artistName" className="form-label">
+              Id
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="artistName"
+              aria-describedby="emailHelp"
+              {...register("artistId")}
+            />
             <label htmlFor="artistName" className="form-label">
               Name
             </label>
@@ -103,8 +115,8 @@ export default function ArtistMng() {
             <input
               type="password"
               className="form-control"
-              id="profileUrl"
-              {...register("profileUrl")}
+              id="url"
+              {...register("url")}
             />
           </div>
           <div className="mb-3 form-check">
