@@ -34,8 +34,8 @@ const SearchComponent = () => {
       // Scroll to the results section if there's a valid query
     } else {
       setSearchParams({ keyword: search }); // Update the URL query param
-      searchResultRef.current.scrollIntoView({ behavior: "smooth" });
       navigate("/home?keyword=" + search, { replace: true });
+      // searchResultRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }
   useEffect(() => {
@@ -66,6 +66,8 @@ const SearchComponent = () => {
         onChange={(e) => {
           setSearch(e.target.value);
           console.log(e.target.value);
+          navigate("/home", { replace: true });
+          searchResultRef.current.scrollIntoView({ behavior: "smooth" });
         }} // Capture input changes
         aria-label="Search"
       />
