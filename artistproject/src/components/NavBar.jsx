@@ -186,8 +186,11 @@ export default function NavBar() {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+        <div
+          className="collapse navbar-collapse m-2"
+          id="navbarSupportedContent"
+        >
+          <ul className="navbar-nav me-auto m-2 mb-lg-0">
             <li className="nav-item">
               <Link className="nav-link" to="/home" aria-current="page">
                 Home
