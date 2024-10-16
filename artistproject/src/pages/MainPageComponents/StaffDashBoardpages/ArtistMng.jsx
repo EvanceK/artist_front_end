@@ -5,6 +5,12 @@ export default function ArtistMng() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const [artistList, setArtisList] = useState([]); //所有作家名單 目前for navBar 選單用
   const [artistTable, setArtistTable] = useState();
+  const [inputData,setInputData] = useState({
+    artistId:"",
+    artistName:"",
+    desciption:"",
+    url:"",
+})
   const {
     register, //Form state
     handleSubmit, //submit action
@@ -30,6 +36,14 @@ export default function ArtistMng() {
   useEffect(() => {
     if (artistList) setArtistTable(buildArtistTable());
   }, [artistList]);
+  const editartist= (e) => {
+    console.log();
+    console.log(artistList);
+    const { name, value } = e.target;
+    // console.log(name, value);
+    setInputData({ ...artistList, [name]: value });
+    // console.log(data);
+  };
 
   const buildArtistTable = () => {
     return artistList.map((a, i) => {
@@ -40,7 +54,7 @@ export default function ArtistMng() {
           <td>{a.artistName}</td>
           <td className="col-4">
             <div className="row d-flex">
-              <div className="btn col-4" id={a.artistId}>
+              <div className="btn col-4" id={a.artistId} onClick={editartist}>
                 Edit
               </div>
               <div className="btn btn-danger col-4" id={a.artistId}>
@@ -81,6 +95,7 @@ export default function ArtistMng() {
               id="artistName"
               aria-describedby="emailHelp"
               {...register("artistId")}
+              value={inputData.artistId}
             />
             <label htmlFor="artistName" className="form-label">
               Name

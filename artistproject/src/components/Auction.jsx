@@ -334,23 +334,25 @@ export default function Auction() {
                 value={inputValue}
                 onChange={handleInputChange}
               ></input>
-              <a
-                className="d-flex"
-                href="#biddingHistoryOffcanvas"
-                role="button"
-                data-bs-toggle="offcanvas"
-                aria-controls="BiddingHistoryModal"
-              >
+              
                 <div className="cardBtn d-flex justify-content-center m-5">
                   <AddFavoriteBtn paintingId={painting.paintingId} />
+                  <a
+                   className="d-flex"
+                   href="#biddingHistoryOffcanvas"
+                   role="button"
+                   data-bs-toggle="offcanvas"
+                   aria-controls="BiddingHistoryModal"
+                   >
                   <span
                     className="btn btn-primary mx-3"
                     onClick={handleClickPlaceBid}
                   >
                     PLACE BID
                   </span>
+                  </a>
                 </div>
-              </a>
+              
               <div className="row shipment">
                 <div className="row m-3">
                   <div className="col-1">
