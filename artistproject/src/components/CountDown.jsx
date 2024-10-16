@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
-export default function CountDown({ datetime }) {
+export default function CountDown({ datetime, config }) {
   const DateTime = datetime;
+
   // Calculate the "Coming Soon" date (3 days after the given DateTime)
   const comingSoonDate = new Date(DateTime);
-  comingSoonDate.setDate(comingSoonDate.getDate() + 3);
+  comingSoonDate.setDate(comingSoonDate.getDate() + 1);
 
   // Calculate the "Close In" date (10 days after "Coming Soon" date)
   const closeInDate = new Date(comingSoonDate);
-  closeInDate.setDate(closeInDate.getDate() + 10);
+  closeInDate.setDate(closeInDate.getDate() + 2);
 
   const [isClosed, setIsClosed] = useState(false);
   const [isOnGoing, setIsOnGoing] = useState(false);
@@ -27,13 +28,9 @@ export default function CountDown({ datetime }) {
       const timeUntilComingSoon = comingSoonDate - now; // Time until "Coming Soon" period ends
       const timeUntilCloseIn = closeInDate - now; // Time until "Close In" period ends
 
-      let days;
-      let hours;
-      let minutes;
-      let seconds;
+      let days, hours, minutes, seconds;
 
       if (timeUntilCloseIn > 0) {
-        // "Close In" period
         if (timeUntilComingSoon > 0) {
           // "Coming Soon" period
           setIsOnGoing(false);
@@ -76,21 +73,34 @@ export default function CountDown({ datetime }) {
   return (
     <>
       {!isClosed ? (
-        <>
+        <div className={`${config.CountDownClass}`}>
           {!isOnGoing ? (
-            <span className="me-3">Coming Soon </span>
+            <span className={`me-3 text-info ${config.textClass}`}>
+              Coming Soon{" "}
+            </span>
           ) : (
-            <span className="me-3">CLOSE IN </span>
+            <span className={`me-3 text-success ${config.textClass}`}>
+              CLOSE IN{" "}
+            </span>
           )}
-          <div className="datetime h2">
-            {remainingTime.days > 0 ? `${remainingTime.days} day` : ""}
-            {remainingTime.hours > 0 ? ` ${remainingTime.hours} h ` : ""}
-            {remainingTime.minutes > 0 ? ` ${remainingTime.minutes} m ` : ""}
-            {remainingTime.seconds > 0 ? ` ${remainingTime.seconds} s ` : ""}
+          <div className={`datetime ${config.clockClass}`}>
+            {/* Render based on the config and remainingTime */}
+            {config?.days && remainingTime.days > 0
+              ? `${remainingTime.days} day `
+              : ""}
+            {config?.hours && remainingTime.hours > 0
+              ? ` ${remainingTime.hours} h `
+              : ""}
+            {config?.minutes && remainingTime.minutes > 0
+              ? ` ${remainingTime.minutes} m `
+              : ""}
+            {config?.seconds && remainingTime.seconds > 0
+              ? ` ${remainingTime.seconds} s `
+              : ""}
           </div>
-        </>
+        </div>
       ) : (
-        <span className="h1 text-danger">CLOSED! </span>
+        <span className={`h1 text-danger ${config.textClass}`}>CLOSED! </span>
       )}
     </>
   );
@@ -98,4 +108,13 @@ export default function CountDown({ datetime }) {
 
 CountDown.propTypes = {
   datetime: PropTypes.instanceOf(Date).isRequired, // Use instanceOf for Date objects
+  config: PropTypes.shape({
+    days: PropTypes.bool,
+    hours: PropTypes.bool,
+    minutes: PropTypes.bool,
+    seconds: PropTypes.bool,
+    clockClass: PropTypes.string,
+    textClass: PropTypes.string,
+    CountDownClass: PropTypes.string,
+  }).isRequired,
 };

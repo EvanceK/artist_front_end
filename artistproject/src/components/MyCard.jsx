@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
 import AddFavoriteBtn from "./AddFavoriteBtn";
+import CountDown from "./CountDown";
 export default function MyCard({ Paintings }) {
   const navigate = useNavigate();
 
@@ -61,6 +62,18 @@ export default function MyCard({ Paintings }) {
       <p className="card-text ">
         {Paintings.paintingId}: {Paintings.paintingName}
       </p>
+      <CountDown
+        datetime={Paintings.uploadDate}
+        config={{
+          days: true,
+          hours: true,
+          minutes: false,
+          seconds: true,
+          textClass: "h6",
+          clockClass: "h5",
+          CountDownClass: "d-flex",
+        }}
+      />
     </div>
   );
 }
