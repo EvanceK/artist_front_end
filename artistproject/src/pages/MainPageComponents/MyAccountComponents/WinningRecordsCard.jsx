@@ -2,7 +2,16 @@ import { useEffect, useState } from "react";
 import axiosInstance from "../../../axiosConfig";
 import PropTypes from "prop-types";
 
-export default function WinningRecordsCard({WinningRecordsCardProps}) {
+export default function WinningRecordsCard({
+    WinningRecordsCardProps,
+    selectedItems,
+    setSelectedItems,
+    isChecked,
+    isSelecAllChecked,
+    setIsSelecAllChecked,
+    handleItemChange
+
+}) {
   
   return (
     <div className="pb-5 border-bottom">
@@ -13,6 +22,8 @@ export default function WinningRecordsCard({WinningRecordsCardProps}) {
             type="checkbox"
             value=""
             id="select"
+            checked={isChecked} // 確保 checkbox 的狀態同步
+            onChange={handleItemChange} // 當狀態改變時觸發事件處理
           />
         </div>
         <div className="d-flex justify-content-center col-6">
@@ -53,7 +64,9 @@ WinningRecordsCard.propTypes = {
         artisName: PropTypes.string.isRequired,
         paintingName: PropTypes.string.isRequired,
         smallUrl: PropTypes.string.isRequired,
-        price: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired,
 
       }).isRequired,
+      isChecked: PropTypes.bool.isRequired,
+  handleItemChange: PropTypes.func.isRequired,
     };
