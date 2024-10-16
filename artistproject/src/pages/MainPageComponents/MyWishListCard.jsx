@@ -1,22 +1,33 @@
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import axiosInstance from "../../axiosConfig";
 import { MainContext } from "../../components/ContextProvider/MainContext";
+import {useNavigate } from "react-router-dom";
 
 const path = import.meta.env.VITE_DATA_HOST_API;
 export default function MyWishListCard({ wishlisProps, minWidth, imgHeight }) {
-  const { setaddRemoveWishlistprocessed, addRemoveWishlistprocessed } =
-    useContext(MainContext);
+  const { setaddRemoveWishlistprocessed,
+     addRemoveWishlistprocessed } =
+     useContext(MainContext);
+  const divRef = useRef(null);
+  const navigate = useNavigate();
   const removeWishlist = async (event) => {
     const api = path + `/api/wishlist/${event.target.id}`;
     const result = await axiosInstance.delete(api);
     setaddRemoveWishlistprocessed(!addRemoveWishlistprocessed);
 
   };
+  const placeBid = (e) => {
+    if(divRef.current){
+      console.log(divRef.current.id);
+      navigate(`/home/auction/${divRef.current.id}`);
+    }
+  };
   return (
     <>
       <div className="cards d-flex flex-column align-items-center">
         <div className="photoFrame"  style={{ minWidth: `${minWidth}` }}>
+          <div id={wishlisProps.paintingId} onClick={placeBid} ref={divRef}>
             <div className="d-flex justify-content-center">
             <img
                 className="img-fluid"
@@ -30,6 +41,7 @@ export default function MyWishListCard({ wishlisProps, minWidth, imgHeight }) {
             <div>{wishlisProps.artisName}</div>
             <div>{wishlisProps.price}</div>
             </label>
+          </div>
             <div className="d-flex justify-content-center align-items-center ">
             <div
                 className="btn d-flex justify-content-center"
