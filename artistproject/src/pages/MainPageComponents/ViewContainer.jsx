@@ -6,6 +6,7 @@ import Pagination from "../../components/Pagination";
 import Carousel from "../../components/Carousel";
 import { MainContext } from "../../components/ContextProvider/MainContext";
 import PresaleExhibitionContainer from "./PresaleExhibitionContainer";
+import MaybeLiked from "./MaybeLiked";
 export default function ViewContainer() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const [data, setData] = useState([]);
@@ -110,7 +111,9 @@ export default function ViewContainer() {
   }, [data]);
   return (
     <>
+      <MaybeLiked />
       <PresaleExhibitionContainer />
+
       <br></br>
 
       {cardsView}

@@ -4,10 +4,10 @@ import { useContext, useEffect, useState } from "react";
 import Pagination from "../../components/Pagination";
 import { MainContext } from "../../components/ContextProvider/MainContext";
 
-export default function PresaleExhibitionContainer() {
+export default function MaybeLiked() {
   // const api = "http://localhost:8080/PTController/findall";
   const path = import.meta.env.VITE_DATA_HOST_API;
-  const api = path + "/PTController/findAllPresaleExhibition";
+  const api = path + "/PTController/topfavorites";
   const [data, setData] = useState([]);
   const [totalPage, setTotalPage] = useState(1);
   // const [requestPageNumber, setRequestPageNumber] = useState(1);
@@ -17,11 +17,9 @@ export default function PresaleExhibitionContainer() {
   //撈取資料庫
   const getdata = async () => {
     try {
-      const result = await axios.get(
-        `${api}?currentPage=${requestPageNumber}&pageSize=4`
-      );
+      const result = await axios.get(`${api}?pageSize=3`);
       setData(result.data.paintingsList);
-      // console.log("presales:", result.data);
+      console.log("maybeliked:", result.data);
       setTotalPage(result.data.totalPage || 1);
     } catch (error) {
       console.log(error);
@@ -46,8 +44,8 @@ export default function PresaleExhibitionContainer() {
   return (
     <>
       <div className="container ">
-        <div className="h2 mt-5"> Coming Soon</div>
-        {totalPage == 1 ? (
+        <div className="h2 mt-5"> Most wanted...</div>
+        {/* {totalPage == 1 ? (
           ""
         ) : (
           <Pagination
@@ -55,7 +53,7 @@ export default function PresaleExhibitionContainer() {
             requestPageNumber={requestPageNumber}
             onPageChange={setRequestPageNumber}
           />
-        )}
+        )} */}
 
         <div className="divByArtis ">
           <div className="list">
@@ -71,39 +69,9 @@ export default function PresaleExhibitionContainer() {
                 />
               );
             })}
-            {/* {artisList.map((d, i) => {
-          return (
-            <>
-              <div className="divByArtis ">
-                <p className="h2">Artis： {d}</p>
-                <div className="list">
-                  {
-                    data
-                      .filter((item) => item.artisName === d)
-                      .map((d, i) => {
-                        return (
-                          <MyCard
-                            key={i}
-                            Paintings={d}
-                            minWidth="22rem"
-                            imgHeight="18rem"
-                          />
-                        );
-                      })
-                    // data.map((d, i) => {
-                    //   return <MyCard key={i} Paintings={d} />;
-                    //   // return <MyCard key={i} photo={d.smallUrl} altText={d.paintingName} />;
-                    // })
-                  }
-                </div>
-              </div>
-              <hr></hr>
-            </>
-          );
-        })} */}
           </div>
+          <hr />
         </div>
-        <hr />
       </div>
     </>
   );
