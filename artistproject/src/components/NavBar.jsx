@@ -17,15 +17,15 @@ export default function NavBar() {
     artistList,
     getArtistList,
     getWishList,
-    setRequestPageNumber,
-    setSearch,
-    search,
-    searchParams,
-    setSearchParams,
-    PasswordChangedRef,
-    showPasswordChangedRef,
+    // setRequestPageNumber,
+    // setSearch,
+    // search,
+    // searchParams,
+    // setSearchParams,
+    // PasswordChangedRef,
+    // showPasswordChangedRef,
     reLoadBiddingNum,
-    setReLoadBiddingNum,
+    // setReLoadBiddingNum,
   } = useContext(MainContext);
 
   const [accountfeild, setAccountfeild] = useState();

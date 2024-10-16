@@ -42,36 +42,36 @@ export default function PresaleExhibitionContainer() {
     console.log(plaintingTypeName);
     // setArtisList(plaintingTypeName);
   }, [data]);
+  if (data)
+    return (
+      <>
+        <div className="container ">
+          <div className="h2 mt-5"> Coming Soon</div>
+          {totalPage == 1 ? (
+            ""
+          ) : (
+            <Pagination
+              totalPage={totalPage}
+              requestPageNumber={requestPageNumber}
+              onPageChange={setRequestPageNumber}
+            />
+          )}
 
-  return (
-    <>
-      <div className="container ">
-        <div className="h2 mt-5"> Coming Soon</div>
-        {totalPage == 1 ? (
-          ""
-        ) : (
-          <Pagination
-            totalPage={totalPage}
-            requestPageNumber={requestPageNumber}
-            onPageChange={setRequestPageNumber}
-          />
-        )}
-
-        <div className="divByArtis ">
-          <div className="list">
-            {data.map((d, i) => {
-              // console.log("d:", d);
-              return (
-                <MyCard
-                  key={i}
-                  Paintings={d}
-                  minWidth="22rem"
-                  imgHeight="18rem"
-                  cardClass="shadow"
-                />
-              );
-            })}
-            {/* {artisList.map((d, i) => {
+          <div className="divByArtis ">
+            <div className="list">
+              {data.map((d, i) => {
+                // console.log("d:", d);
+                return (
+                  <MyCard
+                    key={i}
+                    Paintings={d}
+                    minWidth="22rem"
+                    imgHeight="18rem"
+                    cardClass="shadow"
+                  />
+                );
+              })}
+              {/* {artisList.map((d, i) => {
           return (
             <>
               <div className="divByArtis ">
@@ -101,10 +101,10 @@ export default function PresaleExhibitionContainer() {
             </>
           );
         })} */}
+            </div>
           </div>
+          <hr />
         </div>
-        <hr />
-      </div>
-    </>
-  );
+      </>
+    );
 }
