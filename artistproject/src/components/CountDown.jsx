@@ -116,5 +116,5 @@ CountDown.propTypes = {
     clockClass: PropTypes.string,
     textClass: PropTypes.string,
     CountDownClass: PropTypes.string,
-  }).isRequired,
+  }),
 };

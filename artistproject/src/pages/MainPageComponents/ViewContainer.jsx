@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import Pagination from "../../components/Pagination";
 import Carousel from "../../components/Carousel";
 import { MainContext } from "../../components/ContextProvider/MainContext";
+import PresaleExhibitionContainer from "./PresaleExhibitionContainer";
 export default function ViewContainer() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const [data, setData] = useState([]);
@@ -64,6 +65,7 @@ export default function ViewContainer() {
     setCardsView(
       <>
         <div className="container">
+          <h2>And More...</h2>
           {totalPage == 1 ? (
             ""
           ) : (
@@ -81,7 +83,14 @@ export default function ViewContainer() {
               </div>
             ) : (
               data.map((d, i) => {
-                return <MyCard key={i} Paintings={d} />;
+                return (
+                  <MyCard
+                    key={i}
+                    Paintings={d}
+                    minWidth="15rem"
+                    imgHeight="15rem"
+                  />
+                );
               })
             )}
             <hr></hr>
@@ -101,39 +110,10 @@ export default function ViewContainer() {
   }, [data]);
   return (
     <>
-      <Carousel></Carousel>
+      <PresaleExhibitionContainer />
       <br></br>
+
       {cardsView}
     </>
   );
-  //  return (
-  //   <>
-  //     <Carousel></Carousel>
-  //     <br></br>
-  //     <div className="container">
-  //       <Pagination
-  //         totalPage={totalPage}
-  //         requestPageNumber={requestPageNumber}
-  //         onPageChange={setRequestPageNumber}
-  //       />
-  //       <div className="container d-flex flex-wrap">
-  //         {loading ? (
-  //           <div className="spinner-border text-info" role="status">
-  //             <span className="visually-hidden">Loading...</span>
-  //           </div>
-  //         ) : (
-  //           data.map((d, i) => {
-  //             return <MyCard key={i} Paintings={d} />;
-  //           })
-  //         )}
-  //         <hr></hr>
-  //       </div>
-  //       <Pagination
-  //         totalPage={totalPage}
-  //         requestPageNumber={requestPageNumber}
-  //         onPageChange={setRequestPageNumber}
-  //       />
-  //     </div>
-  //   </>
-  // );
 }

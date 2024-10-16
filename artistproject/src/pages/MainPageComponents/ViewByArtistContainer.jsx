@@ -10,7 +10,7 @@ import * as bootstrap from "bootstrap"; // Import Bootstrap as a module
 
 export default function ViewByArtistContainer() {
   const path = import.meta.env.VITE_DATA_HOST_API;
-  const api = path + "/ArtController/artists";
+  const api = path + "/PTController/artists";
   const { id } = useParams();
   // const { artistList, getArtistList } = useContext(MainPageContext);
   const { artistList, getArtistList } = useContext(MainContext);
