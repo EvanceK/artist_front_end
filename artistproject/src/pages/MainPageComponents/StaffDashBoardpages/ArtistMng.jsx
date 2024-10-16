@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../axiosConfig";
-
+import { useForm } from "react-hook-form";
 export default function ArtistMng() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const [artistList, setArtisList] = useState([]); //所有作家名單 目前for navBar 選單用
   const [artistTable, setArtistTable] = useState();
+  const {
+    register, //Form state
+    handleSubmit, //submit action
+    watch, //watching form control change
+    setValue, //set value from watched control
+  } = useForm();
   // methods for loading data
   const getArtistList = async () => {
     const api = path + "/ArtController/findall";
@@ -46,53 +52,69 @@ export default function ArtistMng() {
       );
     });
   };
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+  useEffect(() => {
+    //監聽行為 for 即時性變更值， 會搭配SetValue 使用。
+    const subcription = watch((value, attr) => {
+      console.log(value, attr);
+    });
+
+    return subcription.unsubscribe(); // useEffect 裡面有監聽行為需要移除避免無窮低迴
+  }, [watch]);
+
   return (
     <>
       <div className="h1 mt-5">Artist Managerment</div>
       <div className="row">
-        <form className="col-3">
+        <form className="col-3" onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-3">
-            <label htmlFor="exampleInputEmail1" className="form-label">
+            <label htmlFor="artistName" className="form-label">
               Name
             </label>
             <input
               type="text"
               className="form-control"
-              id="exampleInputEmail1"
+              id="artistName"
               aria-describedby="emailHelp"
+              {...register("artistName")}
             />
             {/* <div id="emailHelp" className="form-text">
             We'll never share your email with anyone else.
           </div> */}
           </div>
           <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label">
+            <label htmlFor="desciption" className="form-label">
               Desciption
             </label>
             <textarea
               type="text"
               rows="5"
               className="form-control"
-              id="exampleInputPassword1"
+              id="desciption"
+              {...register("desciption")}
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label">
+            <label htmlFor="profileUrl" className="form-label">
               Profile URL
             </label>
             <input
               type="password"
               className="form-control"
-              id="exampleInputPassword1"
+              id="profileUrl"
+              {...register("profileUrl")}
             />
           </div>
           <div className="mb-3 form-check">
             <input
               type="checkbox"
               className="form-check-input"
-              id="exampleCheck1"
+              id="confirmed"
+              {...register("confirmed")}
             />
-            <label className="form-check-label" htmlFor="exampleCheck1">
+            <label className="form-check-label" htmlFor="confirmed">
               Confirmed
             </label>
           </div>
