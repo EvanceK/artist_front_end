@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axiosInstance from "../axiosConfig";
+import { MainContext } from "./ContextProvider/MainContext";
 
 const SearchComponent = () => {
   const [search, setSearch] = useState(""); // State to store the search term
   const [searchParams, setSearchParams] = useSearchParams();
+  const { searchResultRef } = useContext(MainContext);
   const navigate = useNavigate();
 
   const handleSearch = async (e) => {
     e.preventDefault();
+
     setSearchParam();
     // if (search.trim() === "") {
     //   console.log("empty search", search);
@@ -28,8 +31,10 @@ const SearchComponent = () => {
       console.log("empty search", search);
       setSearchParams({}); // Clear the query string
       navigate("/home", { replace: true });
+      // Scroll to the results section if there's a valid query
     } else {
       setSearchParams({ keyword: search }); // Update the URL query param
+      searchResultRef.current.scrollIntoView({ behavior: "smooth" });
       navigate("/home?keyword=" + search, { replace: true });
     }
   }
