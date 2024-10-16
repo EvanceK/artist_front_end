@@ -230,16 +230,6 @@ export default function NavBar() {
                 })}
               </ul>
             </li>
-
-            <li>
-              <button
-                type="button"
-                className="btn "
-                onClick={showPasswordChangedRef}
-              >
-                PassReEmailModel
-              </button>
-            </li>
           </ul>
           <div className="d-flex align-items-center">
             <a
