@@ -1,8 +1,8 @@
-import axios from "axios";
 import MyCard from "../../components/MyCard";
 import { useContext, useEffect, useState } from "react";
 import Pagination from "../../components/Pagination";
 import { MainContext } from "../../components/ContextProvider/MainContext";
+import axiosInstance from "../../axiosConfig";
 
 export default function PresaleExhibitionContainer() {
   // const api = "http://localhost:8080/PTController/findall";
@@ -17,7 +17,7 @@ export default function PresaleExhibitionContainer() {
   //撈取資料庫
   const getdata = async () => {
     try {
-      const result = await axios.get(
+      const result = await axiosInstance.get(
         `${api}?currentPage=${requestPageNumber}&pageSize=4`
       );
       setData(result.data.paintingsList);

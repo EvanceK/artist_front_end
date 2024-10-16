@@ -96,6 +96,7 @@ export default function ViewContainer() {
                     Paintings={d}
                     minWidth="15rem"
                     imgHeight="15rem"
+                    textSize="12px"
                   />
                 );
               })

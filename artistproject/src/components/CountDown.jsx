@@ -10,7 +10,7 @@ export default function CountDown({ datetime, config }) {
 
   // Calculate the "Close In" date (10 days after "Coming Soon" date)
   const closeInDate = new Date(comingSoonDate);
-  closeInDate.setDate(closeInDate.getDate() + 2);
+  closeInDate.setDate(closeInDate.getDate() + 3);
 
   const [isClosed, setIsClosed] = useState(false);
   const [isOnGoing, setIsOnGoing] = useState(false);
@@ -107,7 +107,8 @@ export default function CountDown({ datetime, config }) {
 }
 
 CountDown.propTypes = {
-  datetime: PropTypes.instanceOf(Date).isRequired, // Use instanceOf for Date objects
+  datetime: PropTypes.string.isRequired, // Use instanceOf for Date objects
+  // datetime: PropTypes.instanceOf(Date).isRequired, // Use instanceOf for Date objects
   config: PropTypes.shape({
     days: PropTypes.bool,
     hours: PropTypes.bool,

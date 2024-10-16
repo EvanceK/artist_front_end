@@ -1,4 +1,25 @@
+import axiosInstance from "../axiosConfig";
+import { useState, useEffect } from "react";
 export default function Carousel() {
+  const path = import.meta.env.VITE_DATA_HOST_API;
+  const api = path + "/PTController/topfavorites";
+  const [data, setData] = useState([]);
+  //撈取資料庫
+  const getdata = async () => {
+    try {
+      const result = await axiosInstance.get(`${api}?pageSize=3`);
+      setData(result.data.paintingsList);
+      console.log("Carousel:", result.data);
+      // setTotalPage(result.data.totalPage || 1);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getdata();
+  }, []);
+
   return (
     <>
       <div className="container">
