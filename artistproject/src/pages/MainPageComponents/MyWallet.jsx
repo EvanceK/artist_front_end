@@ -1,6 +1,23 @@
-import MemberNav from "../../components/MemberNav";
+import { useState } from "react";
+import MywalletCard from "./MyAccountComponents/MyWalletCard";
+
 
 function MyWallet() {
+
+  //讀取後端api
+  const path = import.meta.env.VITE_DATA_HOST_API;
+  const Authorization = localStorage.getItem("token");
+  const api = path + "/customers/mywallet";
+
+  //API 返回錢包記錄
+  const [walletInfo, setWalletInfo] = useState({
+    bankAccount: "1234567890",
+    creditCardNo: "4111111111111111",
+    bankBalance: 640.0,
+    biddingHistory: []
+  });
+
+  
 
   return (
     <div className="container mt-5 mb-5">
@@ -47,10 +64,7 @@ function MyWallet() {
           <div className="h3 text-end">$ 120,000</div>
         </div>
         <div className="underline"></div>
-        <div className="d-flex justify-content-between h5 mt-3 px-5">
-            <span>2024/10/02</span>
-            <span>+500</span>
-        </div>
+        <div className="mt-3">{MywalletCard}</div>
         <div className="d-flex justify-content-between h5 mt-3 px-5">
             <span>2024/10/02</span>
             <span>+500</span>

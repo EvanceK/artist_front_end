@@ -12,6 +12,12 @@ export default function ArtistMng() {
     desciption: "",
     url: "",
   });
+  // const [inputData2, setInputData2] = useState({
+  //   artistId: "",
+  //   artistName: "",
+  //   desciption: "",
+  //   url: "",
+  // });
   const {
     register, //Form state
     handleSubmit, //submit action
@@ -47,17 +53,30 @@ export default function ArtistMng() {
       const result = await axios.get(`${api}`);
       console.log(result.data);
       setInputData(result.data);
+      
+      
     } catch (error) {
       console.log(error);
     }
   };
+  useEffect(()=>{
+    if(inputData)
+    document.getElementById("artistId").value=inputData.artistId;
+    setValue("artistId",inputData.artistId)
+    document.getElementById("artistName").value=inputData.artistName;
+    setValue("artistName",inputData.artistName)
+    document.getElementById("desciption").value=inputData.desciption;
+    setValue("desciption",inputData.desciption)
+    document.getElementById("url").value=inputData.url;
+    setValue("url",inputData.url)
+  },[inputData])
   const deleteArtist = async(event)=>{
     const id = event.target.id;
     console.log(id);
     const api = path + "/ArtController/"+id;
     // 等同 $.ajax(" get blablablba ")
     try {
-      const result = await axios.delete(`${api}`);
+      // const result = await axios.delete(`${api}`);
       console.log(result.data);
     } catch (error) {
       console.log("delete"+error);
@@ -99,19 +118,21 @@ export default function ArtistMng() {
     console.log(result.data);
   }
   useEffect(()=>{
-
-  },[])
+    console.log(inputData);
+  },[inputData])
+ 
   const onSubmit = (data) => {
     console.log(data);
-    setInputData(data);
-    console.log(inputData);
     //確認資料
     if(data.confirmed){
       try {
         //確認有沒有id
        if(data.artistId==""){
+        setInputData(data);
+        console.log(inputData);
         createArtist();
        }else{
+        setInputData(data);
         updataArtist();
        }
       } catch (error) {
@@ -122,15 +143,17 @@ export default function ArtistMng() {
     }
   };
 
-  //for 監聽輸入用。 目前先註解
-  // useEffect(() => {
-  //   //監聽行為 for 即時性變更值， 會搭配SetValue 使用。
-  //   const subcription = watch((value, attr) => {
-  //     console.log(value, attr);
-  //   });
+  // for 監聽輸入用。 目前先註解
+  useEffect(() => {
+    //監聽行為 for 即時性變更值， 會搭配SetValue 使用。
+    const subcription = watch((value, {name}) => {
+      console.log(value, attr);
+      if(name=="artistId")
+      setValue(name,value);
+    });
 
-  //   return subcription.unsubscribe(); // useEffect 裡面有監聽行為需要移除避免無窮低迴
-  // }, [watch]);
+    return subcription.unsubscribe(); // useEffect 裡面有監聽行為需要移除避免無窮低迴
+  }, [watch("artistId")]);
 
   return (
     <>
@@ -147,7 +170,6 @@ export default function ArtistMng() {
               id="artistId"
               aria-describedby="emailHelp"
               {...register("artistId")}
-              value={inputData.artistId}
               readOnly
             />
             <label htmlFor="artistName" className="form-label">
@@ -181,7 +203,7 @@ export default function ArtistMng() {
               Profile URL
             </label>
             <input
-              type="password"
+              type="text"
               className="form-control"
               id="url"
               {...register("url")}
