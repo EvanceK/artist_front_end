@@ -1,5 +1,5 @@
 import { MainContext } from "../ContextProvider/MainContext";
-import { useContext, useState, useEffect, useRef } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import * as bootstrap from "bootstrap";
 import axiosInstance from "../../axiosConfig";
 
@@ -8,13 +8,11 @@ import jsondata from "../../placeholderData/bank_data.json";
 export default function ChangeCreditCardModal() {
   //讀取後端api
   const path = import.meta.env.VITE_DATA_HOST_API;
-
   const api = path + "/customers/editcreditcard";
 
   // 視窗管理
-
-  const ChangeCreditCardModalRef = useRef(null);
-
+  const ChangeCreditCardModalRef = useRef();
+ 
   //API 寫入信用卡資訊
   const [creditcardInfo, setCreditcardInfo] = useState({
     creditCardNo: "4111111111111111",
@@ -64,7 +62,6 @@ export default function ChangeCreditCardModal() {
   //送出表單
   const submit = async () => {
      
-    
     try {
       const fullCardNumber = `${creditCardNoInfo.cardNumber1}${creditCardNoInfo.cardNumber2}${creditCardNoInfo.cardNumber3}${creditCardNoInfo.cardNumber4}`;
       // 構建要提交的數據，將合併後的信用卡號放入
@@ -79,10 +76,11 @@ export default function ChangeCreditCardModal() {
           "Content-Type": "application/json",
         },
       });
-      console.log(result);
-      const modalInstance = new bootstrap.Modal(ChangeCreditCardModalRef.current);
-      console.log("line 62 :",ChangeCreditCardModalRef.current);
-      modalInstance.hide();
+      // console.log(result);
+      const modalInstance = bootstrap.Modal.getInstance(ChangeCreditCardModalRef.current);
+        if (modalInstance) {
+          modalInstance.hide(); // 隱藏模態框
+        }
     } catch (error) {
       console.log(error);
     }
