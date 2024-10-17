@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import axiosInstance from "../../../axiosConfig";
+import { useForm } from "react-hook-form";
 
 export default function PaintingMgn() {
   const path = import.meta.env.VITE_DATA_HOST_API;
@@ -9,6 +10,13 @@ export default function PaintingMgn() {
   const [paintingData, setPaintingData] = useState();
   const [paintingTable, setPaintingTable] = useState();
   // methods for loading data
+  const {
+    register, //Form state
+    handleSubmit, //submit action
+    watch, //watching form control change
+    setValue, //set value from watched control
+  } = useForm();
+  
   const getArtistList = async () => {
     const api = path + "/ArtController/findall";
     // 等同 $.ajax(" get blablablba ")
@@ -53,7 +61,28 @@ export default function PaintingMgn() {
       console.log(error);
     }
   }
-
+  const onSubmit = (data) => {
+    console.log(data);
+    //確認資料
+    if(data.confirmed){
+      try {
+        //確認有沒有id
+       if(data.artistId==""){
+        setInputData(data);
+        console.log(inputData);
+        createArtist();
+       }else{
+        setInputData(data);
+        updataArtist();
+       }
+      } catch (error) {
+        console.log(error);
+      }
+    }else{
+      alert("Please Confirmed")
+    }
+  };
+  
   const getdata = useCallback(async () => {
     const api = path + "/PTController/artists";
     if (!selectedOption) return; // Prevent call if artistId is not available
@@ -110,7 +139,7 @@ export default function PaintingMgn() {
     <>
       <div className="h1 mt-5">Paningting Management</div>
       <div className="row">
-        <form className="col-3">
+        <form className="col-3" onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-3">
             <label htmlFor="exampleInputPassword1" className="form-label">
               Artist Name
@@ -119,6 +148,7 @@ export default function PaintingMgn() {
             <select
               className="form-select"
               aria-label="Default select example"
+              {...register("artisName")}
               value={selectedOption}
               onChange={handleSelectChange}
             >
@@ -135,38 +165,39 @@ export default function PaintingMgn() {
               className="form-control"
               id="paintigName"
               aria-describedby="emailHelp"
+              {...register("paintingName")}
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="Photo" className="form-label">
+            <label htmlFor="Photo" className="form-label" >
               Photo
             </label>
-            <input type="file" className="form-control" id="Photo" />
+            <input type="file" className="form-control" id="Photo" {...register("photo")}/>
           </div>
           <div className="mb-3">
             <label htmlFor="date" className="form-label">
               Date
             </label>
-            <input type="text" className="form-control" id="date" />
+            <input type="text" className="form-control" id="date"{...register("paintingName")} />
           </div>
 
           <div className="mb-3">
             <label htmlFor="Style" className="form-label">
               Style
             </label>
-            <input type="text" className="form-control" id="Style" />
+            <input type="text" className="form-control" id="Style" {...register("style")}/>
           </div>
           <div className="mb-3">
             <label htmlFor="genre" className="form-label">
               Genre
             </label>
-            <input type="text" className="form-control" id="genre" />
+            <input type="text" className="form-control" id="genre"{...register("genre")} />
           </div>
           <div className="mb-3">
             <label htmlFor="genre" className="form-label">
               Price
             </label>
-            <input type="text" className="form-control" id="genre" />
+            <input type="text" className="form-control" id="genre" {...register("price")}/>
           </div>
 
           <div className="mb-3 form-check">
@@ -179,7 +210,7 @@ export default function PaintingMgn() {
               Confirmed
             </label>
           </div>
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="btn btn-primary" {...register("confirmed")}>
             Submit
           </button>
         </form>
