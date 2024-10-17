@@ -81,7 +81,7 @@ export default function ViewContainer() {
       setCardsView(
         <>
           <div className="container" ref={searchResultRef}>
-            {search ? <h2>And More...</h2> : <h2> Search result...</h2>}
+            {search ? <h2> Search result...</h2> : <h2>And More...</h2>}
             {totalPage == 1 ? (
               ""
             ) : (

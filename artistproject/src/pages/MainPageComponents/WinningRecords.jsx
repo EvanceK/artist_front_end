@@ -18,6 +18,7 @@ export default function WinningRecords() {
   const api = path + "/customers/mywinningrecords";
 
   const [winningRecordsCard, setWinningRecordsCard] = useState();
+  
   //API 返回得標記錄
   const [winningRecords, setWinningRecords] = useState({
     paintingId: "PT0001",

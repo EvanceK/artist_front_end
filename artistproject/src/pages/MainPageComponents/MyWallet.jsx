@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MywalletCard from "./MyAccountComponents/MyWalletCard";
+import axiosInstance from "../../axiosConfig";
 
 
 function MyWallet() {
@@ -17,6 +18,44 @@ function MyWallet() {
     biddingHistory: []
   });
 
+
+  
+  // 錢包記錄
+  const [myWalletCard, setMyWalletCard] = useState();
+
+  // 取得wallet記錄
+  const getwalletInfo= async () => {
+    if (Authorization) {
+      //axiosInstance就有回傳token的功能
+      const result = await axiosInstance.get(api);
+      console.log("line 28 :", result.data);
+      setWalletInfo(result.data);
+      console.log("line 31", walletInfo);
+    }
+  };
+
+  useEffect(() => {
+    getwalletInfo();
+  }, []);
+
+  useEffect(() => {
+    setMyWalletCard(
+      walletInfo.biddingHistory.length > 0
+        ? walletInfo.biddingHistory.map((bp, i) => {
+            return (
+              <MywalletCard
+                key={i}
+                MyWallCardProps={bp}
+              />
+            
+            );
+          })
+        : "1"
+    );
+    console.log(myWalletCard);
+  }, [walletInfo.biddingHistory]);
+ 
+  
   
 
   return (
@@ -35,8 +74,8 @@ function MyWallet() {
             <p>Credit Card Number :</p>
           </div>
           <div className="text-star w-50">
-            <p>823 Nextbank</p>
-            <p>4065-1352-****-7596</p>
+            <p>{walletInfo.bankAccount}</p>
+            <p>{walletInfo.creditCardNo}</p>
           </div>
         </div>
         <div className="btn m-4 " 
@@ -61,25 +100,11 @@ function MyWallet() {
         {/* 錢包資訊區塊 */}
         <div className="d-flex justify-content-between h2  px-5 mt-5">
           <div className="h3 text-star">Current Balance :</div>
-          <div className="h3 text-end">$ 120,000</div>
+          <div className="h3 text-end">{walletInfo.bankBalance}</div>
         </div>
         <div className="underline"></div>
-        <div className="mt-3">{MywalletCard}</div>
-        <div className="d-flex justify-content-between h5 mt-3 px-5">
-            <span>2024/10/02</span>
-            <span>+500</span>
-        </div>
-        <div className="d-flex justify-content-between h5 mt-3 px-5">
-            <span>2024/10/02</span>
-            <span>+500</span>
-        </div>
-        <div className="d-flex justify-content-between h5 mt-3 px-5">
-            <span>2024/10/02</span>
-            <span>-500</span>
-        </div>
-        <div className="d-flex justify-content-between h5 mt-3 px-5">
-            <span>2024/10/02</span>
-            <span>+500</span>
+        <div>
+          {myWalletCard }
         </div>
       </div>
     </div>
