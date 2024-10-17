@@ -13,7 +13,7 @@ export default function MaybeLiked() {
     try {
       const result = await axiosInstance.get(`${api}?pageSize=3`);
       setData(result.data.paintingsList);
-      console.log("maybeliked:", result.data);
+      // console.log("maybeliked:", result.data);
     } catch (error) {
       console.log(error);
     }
@@ -30,7 +30,7 @@ export default function MaybeLiked() {
           index === self.findIndex((t) => t.artisName === item.artisName)
       )
       .map((t) => t.artisName);
-    console.log(plaintingTypeName);
+    // console.log(plaintingTypeName);
     // setArtisList(plaintingTypeName);
   }, [data]);
 
