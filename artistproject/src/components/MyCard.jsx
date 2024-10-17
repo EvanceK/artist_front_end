@@ -77,7 +77,7 @@ export default function MyCard({
         config={{
           days: true,
           hours: true,
-          minutes: false,
+          minutes: true,
           seconds: true,
           textClass: "h6",
           clockClass: "h4",
