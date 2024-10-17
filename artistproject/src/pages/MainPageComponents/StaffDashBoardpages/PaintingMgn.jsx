@@ -7,6 +7,8 @@ export default function PaintingMgn() {
   const [artistList, setArtisList] = useState([]); //所有作家名單 目前for navBar 選單用
   const [artistSelectionList, setArtistSelectionList] = useState();
   const [selectedOption, setSelectedOption] = useState("");
+  const [inputData, setInputData] = useState();
+  const [readData, setReadData] = useState();//儲存edit的data並顯示在inputbox
   const [paintingData, setPaintingData] = useState();
   const [paintingTable, setPaintingTable] = useState();
   // methods for loading data
@@ -51,38 +53,73 @@ export default function PaintingMgn() {
   const getPaintdata = async (event)=>{
     const id = event.target.id
     console.log(id);
-    const api = path + "/PTController/findpaintingid/"+id;
+    const api = path + "/PTController/findpaintingid/";
     // 等同 $.ajax(" get blablablba ")
     try {
-      const result = await axiosInstance.get(`${api}`);
+      const result = await axiosInstance.get(`${api}${id}`);
       console.log(result.data);
-      //setInputData(result.data);
+      setReadData(result.data);
     } catch (error) {
       console.log(error);
     }
   }
+
+  useEffect(()=>{
+    if(readData){
+      updataPainting()
+      document.getElementById("artistId").value=readData.artistId
+      setValue("artistId",readData.artistId)
+      document.getElementById("paintingId").value=readData.paintingId
+      setValue("paintingId",readData.paintingId)
+      document.getElementById("paintingName").value=readData.paintingName
+      setValue("paintingName",readData.paintingName)
+      document.getElementById("date").value = readData.date;
+      setValue("date", readData.date);
+      document.getElementById("style").value = readData.style;
+      setValue("style", readData.style);
+      document.getElementById("genre").value = readData.genre;
+      setValue("genre", readData.genre);
+      document.getElementById("price").value = readData.price;
+      setValue("price", readData.price);
+    }
+  },[readData])
+
+const updataPainting = async ()=>{
+  try{
+    console.log(readData);
+    
+    const api = path + "/PTController/editPainting";
+    const result = await axiosInstance.put(api,readData)
+    console.log(result.data);
+    
+  }catch(error){
+    console.log(error);
+  }
+};
+
   const onSubmit = (data) => {
-    console.log(data);
     //確認資料
     if(data.confirmed){
-      try {
-        //確認有沒有id
-       if(data.artistId==""){
-        setInputData(data);
-        console.log(inputData);
-        createArtist();
-       }else{
-        setInputData(data);
-        updataArtist();
-       }
-      } catch (error) {
-        console.log(error);
-      }
+     console.log(data);
+     setInputData(data);
     }else{
-      alert("Please Confirmed")
+      alert("Please Confirmed");
     }
   };
-  
+  useEffect(()=>{
+    try {
+      //確認有沒有id
+     if(inputData.paintingId==""){
+      createPainting();
+     }else{
+      // setReadData(inputData)
+      // updataPainting();
+     }
+    } catch (error) {
+      console.log(error);
+    }
+  },[inputData])
+
   const getdata = useCallback(async () => {
     const api = path + "/PTController/artists";
     if (!selectedOption) return; // Prevent call if artistId is not available
@@ -137,7 +174,7 @@ export default function PaintingMgn() {
 
   return (
     <>
-      <div className="h1 mt-5">Paningting Management</div>
+      <div className="h1 mt-5">Painting Management</div>
       <div className="row">
         <form className="col-3" onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-3">
@@ -157,13 +194,39 @@ export default function PaintingMgn() {
             </select>
           </div>
           <div className="mb-3">
-            <label htmlFor="exampleInputEmail1" className="form-label">
-              Paintig Name
+            <label htmlFor="artistId" className="form-label">
+              Artist Id
             </label>
             <input
               type="text"
               className="form-control"
-              id="paintigName"
+              id="artistId"
+              aria-describedby="emailHelp"
+              {...register("artistId")}
+              readOnly
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="paintingId" className="form-label">
+              Painting Id
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="paintingId"
+              aria-describedby="emailHelp"
+              {...register("paintingId")}
+              readOnly
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="exampleInputEmail1" className="form-label">
+              Painting Name
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="paintingName"
               aria-describedby="emailHelp"
               {...register("paintingName")}
             />
@@ -178,14 +241,14 @@ export default function PaintingMgn() {
             <label htmlFor="date" className="form-label">
               Date
             </label>
-            <input type="text" className="form-control" id="date"{...register("paintingName")} />
+            <input type="text" className="form-control" id="date"{...register("date")} />
           </div>
 
           <div className="mb-3">
-            <label htmlFor="Style" className="form-label">
+            <label htmlFor="style" className="form-label">
               Style
             </label>
-            <input type="text" className="form-control" id="Style" {...register("style")}/>
+            <input type="text" className="form-control" id="style" {...register("style")}/>
           </div>
           <div className="mb-3">
             <label htmlFor="genre" className="form-label">
@@ -194,10 +257,10 @@ export default function PaintingMgn() {
             <input type="text" className="form-control" id="genre"{...register("genre")} />
           </div>
           <div className="mb-3">
-            <label htmlFor="genre" className="form-label">
+            <label htmlFor="price" className="form-label">
               Price
             </label>
-            <input type="text" className="form-control" id="genre" {...register("price")}/>
+            <input type="text" className="form-control" id="price" {...register("price")}/>
           </div>
 
           <div className="mb-3 form-check">
@@ -205,12 +268,13 @@ export default function PaintingMgn() {
               type="checkbox"
               className="form-check-input"
               id="exampleCheck1"
+              {...register("confirmed")}
             />
             <label className="form-check-label" htmlFor="exampleCheck1">
               Confirmed
             </label>
           </div>
-          <button type="submit" className="btn btn-primary" {...register("confirmed")}>
+          <button type="submit" className="btn btn-primary" >
             Submit
           </button>
         </form>
