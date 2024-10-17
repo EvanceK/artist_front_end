@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useParams } from "react-router-dom";
 import { useState } from "react";
 import { UserContext } from "./components/ContextProvider/UserContext";
 
@@ -11,12 +11,13 @@ import PaintingMgn from "./pages/MainPageComponents/StaffDashBoardpages/Painting
 import StaffLoginModal from "./components/Modal/StaffLoginModal";
 import ArtistMng from "./pages/MainPageComponents/StaffDashBoardpages/ArtistMng";
 import OrderMgn from "./pages/MainPageComponents/StaffDashBoardpages/OrderMgn";
+import Resetpassword from "./pages/resetpassword";
 // import MemberLogin from "./components/Modal/MemberLogin";
 
 export default function App() {
   const [userName, setUserName] = useState();
   const [isLogin, setIsLogin] = useState(!!localStorage.getItem("token"));
-
+  useParams
   return (
     <>
       <UserContext.Provider
@@ -29,6 +30,7 @@ export default function App() {
             <Route path="paintingmgn" element={<PaintingMgn />} />
             <Route path="ordermgn" element={<OrderMgn />} />
           </Route>
+            <Route path=":token"element={<Resetpassword/>}/>
           <Route path="/home/*" element={<MainPage />}></Route>
           {/*要登入員工才可以看到的 */}
         </Routes>
