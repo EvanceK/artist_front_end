@@ -35,6 +35,14 @@ export function MainContextProvider({ children }) {
   const [requestPageNumber, setRequestPageNumber] = useState(1);
   const { isLogin } = useContext(UserContext);
 
+  // E-mail 暫存
+  const [email, setEmail] = useState("");
+
+   // 更新 email 的函數
+   const handleEmail = (newEmail) => {
+    setEmail(newEmail);  // 將新的 email 更新到全局狀態
+  };
+
   const [recipientInfo, setRecipientInfo] = useState({
     name: "",
     phone: "",
@@ -265,6 +273,10 @@ export function MainContextProvider({ children }) {
         setRecipientInfo,
         paymentInfo,
         setPaymentInfo,
+
+        email,
+        setEmail,
+        handleEmail,
       }}
     >
       {children}

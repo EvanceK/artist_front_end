@@ -12,62 +12,58 @@ export default function WinningRecords() {
   // 管理selectAll選中的狀態
   const [isSelecAllChecked, setIsSelecAllChecked] = useState();
 
-  
+  //讀取後端api
+  const path = import.meta.env.VITE_DATA_HOST_API;
+  const Authorization = localStorage.getItem("token");
+  const api = path + "/customers/mywinningrecords";
 
-   //讀取後端api
-   const path = import.meta.env.VITE_DATA_HOST_API;
-   const Authorization = localStorage.getItem("token");
-   const api = path + "/customers/mywinningrecords";
-   
-   const [winningRecordsCard, setWinningRecordsCard] = useState();
-   //API 返回得標記錄
-   const [winningRecords, setWinningRecords] = useState({
-     paintingId: "PT0001",
-     paintingName: "The Virgin and Child (The Madonna of the Rose)",
-     artistId: "AR0001",
-     artisName: "Giovanni Antonio Boltraffio",
-     smallUrl:
-       "https://uploads7.wikiart.org/images/giovanni-antonio-boltraffio/the-virgin-and-child-the-madonna-of-the-rose.jpg!Large.jpg",
-     price: 3150.0,
-   });
+  const [winningRecordsCard, setWinningRecordsCard] = useState();
+  //API 返回得標記錄
+  const [winningRecords, setWinningRecords] = useState({
+    paintingId: "PT0001",
+    paintingName: "The Virgin and Child (The Madonna of the Rose)",
+    artistId: "AR0001",
+    artisName: "Giovanni Antonio Boltraffio",
+    smallUrl:
+      "https://uploads7.wikiart.org/images/giovanni-antonio-boltraffio/the-virgin-and-child-the-madonna-of-the-rose.jpg!Large.jpg",
+    price: 3150.0,
+  });
 
   // 當selet All 被選中或取消選中
   const handleSelectedAllChange = (e) => {
-    
-    setIsSelecAllChecked(e.target.checked)
-    console.log("clicked" , isSelecAllChecked);
+    setIsSelecAllChecked(e.target.checked);
+    console.log("clicked", isSelecAllChecked);
   };
 
-  useEffect (() => {
+  useEffect(() => {
     const sa = [];
-    if(isSelecAllChecked){
-        winningRecords.map((bp) =>  {
-            sa.push(bp.paintingId);
-    
-        });
-        } 
-        setSelectedItems(sa);
+    if (isSelecAllChecked) {
+      winningRecords.map((bp) => {
+        sa.push(bp.paintingId);
+      });
+    } else{
+      setSelectedItems([]);
+    }
+    setSelectedItems(sa);
     console.log(isSelecAllChecked);
-    
-  },[isSelecAllChecked])
+  }, [isSelecAllChecked]);
 
   useEffect(() => {
-    console.log(isSelecAllChecked,"finall array",selectedItems);
-    
-  },[selectedItems]);
-
-  
+    console.log(isSelecAllChecked, "finall array", selectedItems);
+  }, [selectedItems]);
 
   // 處理單個 item checkbox 的變化
   const handleItemChange = (paintingId) => {
-    setSelectedItems(prevSelected => 
-      prevSelected.includes(paintingId)
-        ? prevSelected.filter(selectedPaintingId => selectedPaintingId !== paintingId)  // 如果已選中，則取消選中
-        : [...prevSelected, paintingId]  // 如果未選中，則加入選中項目
+    setSelectedItems(
+      (prevSelected) =>
+        prevSelected.includes(paintingId)
+          ? prevSelected.filter(
+              (selectedPaintingId) => selectedPaintingId !== paintingId
+            ) // 如果已選中，則取消選中
+          : [...prevSelected, paintingId] // 如果未選中，則加入選中項目
     );
   };
 
- 
   // 取得得標記錄
   const getWinningRecords = async () => {
     if (Authorization) {
@@ -88,12 +84,18 @@ export default function WinningRecords() {
     setWinningRecordsCard(
       winningRecords.length > 0
         ? winningRecords.map((bp, i) => {
-            return <WinningRecordsCard key={i} WinningRecordsCardProps={bp } isSelecAllChecked={isSelecAllChecked}/>;  
+            return (
+              <WinningRecordsCard
+                key={i}
+                WinningRecordsCardProps={bp}
+                isSelecAllChecked={isSelecAllChecked}
+              />
+            );
           })
         : "1"
     );
     console.log(winningRecordsCard);
-  }, [winningRecords,isSelecAllChecked]);
+  }, [winningRecords, isSelecAllChecked]);
 
   const navigate = useNavigate();
 
@@ -115,7 +117,7 @@ export default function WinningRecords() {
               checked={isSelecAllChecked}
               onChange={handleSelectedAllChange} // 當狀態改變時觸發事件處理
             />
-            <label className="form-check-label" htmlFor="selectAll" >
+            <label className="form-check-label" htmlFor="selectAll">
               Select All
             </label>
           </div>
@@ -125,8 +127,7 @@ export default function WinningRecords() {
   isChecked={selectedItems.includes(record.paintingId)} // 確保計算結果傳遞進去
   handleItemChange={() => handleItemChange(record.paintingId)} // 傳遞變更處理函數
 /> */}
-
-          {winningRecordsCard}
+          <div className="p-4">{winningRecordsCard}</div>
 
           <div className="row d-flex justify-content-end">
             <div className="col-4">

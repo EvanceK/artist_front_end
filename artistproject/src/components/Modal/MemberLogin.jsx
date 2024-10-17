@@ -5,7 +5,7 @@ import { UserContext } from "../ContextProvider/UserContext";
 // import { MainPageContext } from "../ContextProvider/MainPageContext";
 import { MainContext } from "../ContextProvider/MainContext";
 import $ from "jquery";
-export default function LoginModal() {
+export default function MemberLogin() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const api = path + "/customers/login";
   const { setUserName, setIsLogin } = useContext(UserContext);
@@ -58,7 +58,7 @@ export default function LoginModal() {
     <div
       ref={loginModalRef}
       className="modal fade"
-      id="LoginModal"
+      id="MemberLogin"
       data-bs-backdrop="static"
       data-bs-keyboard="false"
       tabIndex="-1"

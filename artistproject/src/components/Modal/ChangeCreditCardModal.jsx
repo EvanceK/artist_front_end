@@ -1,16 +1,85 @@
 import { MainContext } from "../ContextProvider/MainContext";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import * as bootstrap from "bootstrap";
 import axiosInstance from "../../axiosConfig";
 import axios from "axios";
 import jsondata from "../../placeholderData/bank_data.json";
 
-
-
 export default function ChangeCreditCardModal() {
+
+ 
+
+  //讀取後端api
+  const path = import.meta.env.VITE_DATA_HOST_API;
+  const Authorization = localStorage.getItem("token");
+  const api = path + "/customers/editcreditcard";
+
+  //API 寫入信用卡資訊
+  const [creditcardInfo, setCreditcardInfo] = useState({
+    creditCardNo: "4111111111111111",
+    bankAccount: "1234567890",
+  });
+
+  //先存我的信用卡資訊
+  const [creditCardNoInfo, setcreditCardNoInfo] = useState({
+    cardNumber1: "",
+    cardNumber2: "",
+    cardNumber3: "",
+    cardNumber4: "",
+    bankAccount: "",
+  });
+
+
+  // 輸入信用卡號時更新卡號
+  const handleCreditNumberChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    setCreditcardInfo({ ...creditcardInfo, [name]: value });
+    console.log(creditcardInfo);
+  };
+
+   //當使用者選擇某個銀行時更新selectedBank
+   const handleBankChange = (e) => {
+    setSelectedBank(e.target.value);
+    setSelectedBank(selectedBank);
+    setCreditcardInfo({
+      ...creditcardInfo, // 保留其他信息不變
+      bankAccount: selectedBank, // 更新銀行信息
+    });
+  };
+  console.log("line50 bankAccount :" , creditcardInfo.bankAccount);
   
+  
+
+  
+
+  //送出表單
+  const submit = async () => {
+    try {
+       // 合併四個部分的信用卡號
+    const fullCardNumber = `${creditCardNoInfo.cardNumber1}${creditCardNoInfo.cardNumber2}${creditCardNoInfo.cardNumber3}${creditCardNoInfo.cardNumber4}`;
+
+    // 構建要提交的數據，將合併後的信用卡號放入
+    const dataToSubmit = {
+      ...creditcardInfo,
+      creditCardNo: fullCardNumber, // 合併後的信用卡號
+    };
+      console.log("line65", dataToSubmit);
+      
+      const result = await axios.put(api, dataToSubmit, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const ChangeCreditCardModalRef = useRef(null);
+
   const {
-    ChangeCreditCardModalRef,
     cardNumber2Ref,
     cardNumber3Ref,
     cardNumber4Ref,
@@ -33,6 +102,7 @@ export default function ChangeCreditCardModal() {
     e.preventDefault();
     const isValid = validateForm(null, paymentInfo);
     if (isValid) {
+      submit();
       const model = new bootstrap.Modal(ChangeCreditCardModalRef.current);
       model.hide();
     } else {
@@ -40,12 +110,7 @@ export default function ChangeCreditCardModal() {
     }
   };
 
-
-
-  //當使用者選擇某個銀行時更新selectedBank
-  const handleBankChange = (e) => {
-    setSelectedBank(e.target.value);
-  };
+ 
 
   return (
     <div
@@ -78,6 +143,7 @@ export default function ChangeCreditCardModal() {
                   <div className="h5  gap-3 ">Bank :</div>
                   <select
                     className="form-select"
+                    name="bankAccount"
                     value={selectedBank}
                     onChange={handleBankChange}
                     // onClick={handleBankClick}
@@ -85,12 +151,11 @@ export default function ChangeCreditCardModal() {
                     <option value="">Select a bank</option>
                     {banks.map((bank) => (
                       <option key={bank.code} value={bank.code}>
-                        {bank.code}{bank.name}
+                        {bank.code}
+                        {bank.name}
                       </option>
                     ))}
                   </select>
-
-              
 
                   <div className="h5  mt-4">Credit card number :</div>
 
@@ -98,41 +163,49 @@ export default function ChangeCreditCardModal() {
                     <input
                       type="text"
                       className="txtbox col-2 text-center"
+                      name="cardNumber1"
                       value={paymentInfo.cardNumber1}
-                      onChange={(e) =>
-                        handleCardNumberChange(e, "cardNumber1", cardNumber2Ref)
-                      }
+                      onChange={(e) =>{
+                        handleCardNumberChange(e, "cardNumber1", cardNumber2Ref);
+                        handleCreditNumberChange(e);
+                      }}
                       maxLength="4"
                     />{" "}
                     —
                     <input
                       type="text"
                       className="txtbox col-2 text-center"
+                      name="cardNumber2"
                       value={paymentInfo.cardNumber2}
                       ref={cardNumber2Ref}
-                      onChange={(e) =>
-                        handleCardNumberChange(e, "cardNumber2", cardNumber3Ref)
-                      }
+                      onChange={(e) =>{
+                        handleCardNumberChange(e, "cardNumber2", cardNumber3Ref);
+                        handleCreditNumberChange(e);
+                      }}
                     />{" "}
                     —
                     <input
                       type="text"
                       className="txtbox col-2 text-center"
+                      name="cardNumber3"
                       value={paymentInfo.cardNumber3}
                       ref={cardNumber3Ref}
-                      onChange={(e) =>
-                        handleCardNumberChange(e, "cardNumber3", cardNumber4Ref)
-                      }
+                      onChange={(e) =>{
+                        handleCardNumberChange(e, "cardNumber3", cardNumber4Ref);
+                        handleCreditNumberChange(e);
+                      }}
                     />{" "}
                     —
                     <input
                       type="text"
                       className="txtbox col-2 text-center"
+                      name="cardNumber4"
                       value={paymentInfo.cardNumber4}
                       ref={cardNumber4Ref}
-                      onChange={(e) =>
-                        handleCardNumberChange(e, "cardNumber4", null)
-                      }
+                      onChange={(e) =>{
+                        handleCardNumberChange(e, "cardNumber4", null);
+                        handleCreditNumberChange(e);
+                      }}
                       maxLength="4"
                     />
                     <div className="row d-flex justify-content-center  m-3 ">

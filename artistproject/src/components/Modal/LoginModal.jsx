@@ -8,7 +8,8 @@ import $ from "jquery";
 export default function LoginModal() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const api = path + "/customers/login";
-  const { setUserName, setIsLogin } = useContext(UserContext);
+  const { setUserName, setIsLogin, } = useContext(UserContext);
+  const {handleEmail } = useContext(MainContext);
 
   const {
     loginModalRef,
@@ -43,8 +44,11 @@ export default function LoginModal() {
       // setLoadWishlist(!loadWishlist);
       setIsLogin(true);
     } catch (error) {
+      handleEmail(data.email);  // 將用戶輸入的 email 保存到 context 中
       console.log(error);
+
       if (error.response.data === "Email doesn't exist") {
+        
         showIncorrectAccountModal();
       } else if (error.response.data === "Invalid password") {
         showIncorrectPasswordModal();
@@ -91,7 +95,7 @@ export default function LoginModal() {
                 <h2 className="d-flex m-5 ">Sign Up or Log In</h2>
                 <div className="d-block">
                   <div className="row mt-5 m-2">
-                    <label className="col-3" htmlFor="email">
+                    <label className="col-3" htmlFor="email" >
                       Email:
                     </label>
                     <input
