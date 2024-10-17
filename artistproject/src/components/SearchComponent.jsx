@@ -39,7 +39,7 @@ const SearchComponent = () => {
     }
   }
   useEffect(() => {
-    setSearchParam();
+    if (search) setSearchParam();
   }, [search]);
 
   // const fetchSearchResults = async (keyword) => {
