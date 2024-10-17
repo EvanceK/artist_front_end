@@ -3,14 +3,16 @@ import { useState, useEffect } from "react";
 export default function Carousel() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const api = path + "/PTController/topfavorites";
-  const [data, setData] = useState([]);
+  const [paintingsCount, setPaintingsCount] = useState([]);
+  const [paintingsList, setPaintingsList] = useState();
   const [CarouselItem, setCarouselItem] = useState();
   //撈取資料庫
   const getdata = async () => {
     try {
       const result = await axiosInstance.get(`${api}?pageSize=3`);
-      setData(result.data.paintingsList);
-      console.log("Carousel:", result.data);
+      setPaintingsList(result.data.paintingsList);
+      setPaintingsCount(result.data.paintingsCount);
+      // console.log("Carousel:", result.data);
       // setTotalPage(result.data.totalPage || 1);
     } catch (error) {
       console.log(error);
@@ -22,20 +24,46 @@ export default function Carousel() {
   }, []);
 
   useEffect(() => {
-    setCarouselItem(buildCarouselItems());
-  }, [data]);
+    if (paintingsCount) {
+      console.log("paintingsCount", paintingsCount);
+      setCarouselItem(buildCarouselItems());
+    }
+    if (paintingsList) {
+      console.log("paintingsList", paintingsList);
+      setCarouselItem(buildCarouselItems());
+    }
+  }, [paintingsList, paintingsCount]);
   const buildCarouselItems = () => {
-    return (
-      <>
-        <div className="carousel-item active">
-          <img
-            src="../../src/assets/Carousel1.png"
-            className="d-block w-100"
-            alt="picture 1"
-          />
-        </div>
-      </>
-    );
+    if (paintingsList)
+      return paintingsList.map((p, i) => {
+        return (
+          <>
+            <div className="carousel-item active">
+              <div
+                className=""
+                style={{
+                  position: "relative",
+                  display: "block",
+                  height: "180px",
+                }}
+              >
+                <img
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    // height: "150px",
+                    width: "150px",
+                  }}
+                  src={p.smallUrl}
+                  className="d-block w-100"
+                  alt={p.paintingName}
+                />
+              </div>
+            </div>
+          </>
+        );
+      });
   };
 
   return (
@@ -48,7 +76,7 @@ export default function Carousel() {
         >
           <div className="carousel-inner">
             {CarouselItem}
-            <div className="carousel-item active">
+            {/* <div className="carousel-item active">
               <img
                 src="../../src/assets/Carousel1.png"
                 className="d-block w-100"
@@ -68,7 +96,7 @@ export default function Carousel() {
                 className="d-block w-100"
                 alt="picture 3"
               />
-            </div>
+            </div> */}
           </div>
           <button
             className="carousel-control-prev"

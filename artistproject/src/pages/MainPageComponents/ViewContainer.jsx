@@ -59,12 +59,12 @@ export default function ViewContainer() {
   };
   useEffect(() => {
     if (searchData) {
-      console.log(Math.ceil(searchData.length / 10));
+      // console.log(Math.ceil(searchData.length / 10));
       setTotalPage(Math.ceil(searchData.length / 10));
       const startIndex = (requestPageNumber - 1) * 10;
       const endIndex = requestPageNumber * 10;
       const dataArray = searchData.slice(startIndex, endIndex);
-      console.log("dataArray:", dataArray);
+      // console.log("dataArray:", dataArray);
       setData(searchData.slice(startIndex, endIndex));
     }
   }, [searchData]);

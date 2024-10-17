@@ -39,7 +39,7 @@ export default function PresaleExhibitionContainer() {
           index === self.findIndex((t) => t.artisName === item.artisName)
       )
       .map((t) => t.artisName);
-    console.log(plaintingTypeName);
+    // console.log(plaintingTypeName);
     // setArtisList(plaintingTypeName);
   }, [data]);
 
