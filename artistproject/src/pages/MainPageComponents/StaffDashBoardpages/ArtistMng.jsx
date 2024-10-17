@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../axiosConfig";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 export default function ArtistMng() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const [artistList, setArtisList] = useState([]); //所有作家名單 目前for navBar 選單用
@@ -36,15 +37,33 @@ export default function ArtistMng() {
   useEffect(() => {
     if (artistList) setArtistTable(buildArtistTable());
   }, [artistList]);
-  const editartist = (e) => {
-    console.log();
-    console.log(artistList);
-    const { name, value } = e.target;
-    // console.log(name, value);
-    setInputData({ ...artistList, [name]: value });
-    // console.log(data);
-  };
 
+  const editartist = async (event) => {
+    const id = event.target.id;
+    console.log(id);
+    const api = path + "/ArtController/"+id;
+    // 等同 $.ajax(" get blablablba ")
+    try {
+      const result = await axios.get(`${api}`);
+      console.log(result.data);
+      setInputData(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const deleteArtist = async(event)=>{
+    const id = event.target.id;
+    console.log(id);
+    const api = path + "/ArtController/"+id;
+    // 等同 $.ajax(" get blablablba ")
+    try {
+      const result = await axios.delete(`${api}`);
+      console.log(result.data);
+    } catch (error) {
+      console.log("delete"+error);
+    }
+  };
+  
   const buildArtistTable = () => {
     return artistList.map((a, i) => {
       console.log(a);
@@ -57,7 +76,7 @@ export default function ArtistMng() {
               <div className="btn col-5" id={a.artistId} onClick={editartist}>
                 Edit
               </div>
-              <div className="btn btn-danger col-5" id={a.artistId}>
+              <div className="btn btn-danger col-5" id={a.artistId} onClick={deleteArtist}>
                 Delete
               </div>
             </div>
@@ -66,8 +85,41 @@ export default function ArtistMng() {
       );
     });
   };
+  //有id就對資料進行修改
+  const updataArtist= async()=>{
+    const api = path +"/ArtController/editArtist";
+
+    const result = await axios.put(`${api}`,inputData);
+    console.log(result.data);
+  }
+  //沒有id時就建立一個新的
+  const createArtist= async()=>{
+    const api = path + "/ArtController/createArtist";
+    const result = await axiosInstance.post(`${api}`,inputData);
+    console.log(result.data);
+  }
+  useEffect(()=>{
+
+  },[])
   const onSubmit = (data) => {
     console.log(data);
+    setInputData(data);
+    console.log(inputData);
+    //確認資料
+    if(data.confirmed){
+      try {
+        //確認有沒有id
+       if(data.artistId==""){
+        createArtist();
+       }else{
+        updataArtist();
+       }
+      } catch (error) {
+        console.log(error);
+      }
+    }else{
+      alert("Please Confirmed")
+    }
   };
 
   //for 監聽輸入用。 目前先註解
@@ -86,16 +138,17 @@ export default function ArtistMng() {
       <div className="row">
         <form className="col-3" onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-3">
-            <label htmlFor="artistName" className="form-label">
+            <label htmlFor="artistId" className="form-label">
               Id
             </label>
             <input
               type="text"
               className="form-control"
-              id="artistName"
+              id="artistId"
               aria-describedby="emailHelp"
               {...register("artistId")}
               value={inputData.artistId}
+              readOnly
             />
             <label htmlFor="artistName" className="form-label">
               Name

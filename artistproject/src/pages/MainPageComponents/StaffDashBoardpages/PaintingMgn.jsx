@@ -40,6 +40,19 @@ export default function PaintingMgn() {
     setSelectedOption(event.target.value);
     console.log(event.target.value);
   };
+  const getPaintdata = async (event)=>{
+    const id = event.target.id
+    console.log(id);
+    const api = path + "/PTController/findpaintingid/"+id;
+    // 等同 $.ajax(" get blablablba ")
+    try {
+      const result = await axiosInstance.get(`${api}`);
+      console.log(result.data);
+      //setInputData(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const getdata = useCallback(async () => {
     const api = path + "/PTController/artists";
@@ -80,7 +93,7 @@ export default function PaintingMgn() {
 
           <td className="d-flex align-items-center justify-conten-center">
             <div className="row d-flex ">
-              <div className="btn col-5" id={a.artistId}>
+              <div className="btn col-5" id={a.paintingId} onClick={getPaintdata}>
                 Edit
               </div>
               <div className="btn btn-danger col-5" id={a.artistId}>
