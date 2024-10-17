@@ -6,6 +6,8 @@ export default function ArtistMng() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const [artistList, setArtisList] = useState([]); //所有作家名單 目前for navBar 選單用
   const [artistTable, setArtistTable] = useState();
+  const [uploadToggle, setUploadToggle] = useState();
+  const [readData, setReadData] = useState();
   const [inputData, setInputData] = useState({
     artistId: "",
     artistName: "",
@@ -21,6 +23,7 @@ export default function ArtistMng() {
   const {
     register, //Form state
     handleSubmit, //submit action
+    unregister,
     watch, //watching form control change
     setValue, //set value from watched control
   } = useForm();
@@ -47,42 +50,42 @@ export default function ArtistMng() {
   const editartist = async (event) => {
     const id = event.target.id;
     console.log(id);
-    const api = path + "/ArtController/"+id;
+    const api = path + "/ArtController/" + id;
     // 等同 $.ajax(" get blablablba ")
     try {
-      const result = await axios.get(`${api}`);
+      const result = await axiosInstance.get(`${api}`);
       console.log(result.data);
-      setInputData(result.data);
-      
-      
+      setReadData(result.data);
+      // setInputData(result.data);
     } catch (error) {
       console.log(error);
     }
   };
-  useEffect(()=>{
-    if(inputData)
-    document.getElementById("artistId").value=inputData.artistId;
-    setValue("artistId",inputData.artistId)
-    document.getElementById("artistName").value=inputData.artistName;
-    setValue("artistName",inputData.artistName)
-    document.getElementById("desciption").value=inputData.desciption;
-    setValue("desciption",inputData.desciption)
-    document.getElementById("url").value=inputData.url;
-    setValue("url",inputData.url)
-  },[inputData])
-  const deleteArtist = async(event)=>{
+  useEffect(() => {
+    if (readData) {
+      document.getElementById("artistId").value = readData.artistId;
+      setValue("artistId", readData.artistId);
+      document.getElementById("artistName").value = readData.artistName;
+      setValue("artistName", readData.artistName);
+      document.getElementById("desciption").value = readData.desciption;
+      setValue("desciption", readData.desciption);
+      document.getElementById("url").value = readData.url;
+      setValue("url", readData.url);
+    }
+  }, [readData]);
+  const deleteArtist = async (event) => {
     const id = event.target.id;
     console.log(id);
-    const api = path + "/ArtController/"+id;
+    const api = path + "/ArtController/" + id;
     // 等同 $.ajax(" get blablablba ")
     try {
       // const result = await axios.delete(`${api}`);
       console.log(result.data);
     } catch (error) {
-      console.log("delete"+error);
+      console.log("delete" + error);
     }
   };
-  
+
   const buildArtistTable = () => {
     return artistList.map((a, i) => {
       console.log(a);
@@ -95,7 +98,11 @@ export default function ArtistMng() {
               <div className="btn col-5" id={a.artistId} onClick={editartist}>
                 Edit
               </div>
-              <div className="btn btn-danger col-5" id={a.artistId} onClick={deleteArtist}>
+              <div
+                className="btn btn-danger col-5"
+                id={a.artistId}
+                onClick={deleteArtist}
+              >
                 Delete
               </div>
             </div>
@@ -105,55 +112,65 @@ export default function ArtistMng() {
     });
   };
   //有id就對資料進行修改
-  const updataArtist= async()=>{
-    const api = path +"/ArtController/editArtist";
+  const updataArtist = async () => {
+    const api = path + "/ArtController/editArtist";
 
-    const result = await axios.put(`${api}`,inputData);
+    const result = await axios.put(`${api}`, inputData);
     console.log(result.data);
-  }
+  };
   //沒有id時就建立一個新的
-  const createArtist= async()=>{
-    const api = path + "/ArtController/createArtist";
-    const result = await axiosInstance.post(`${api}`,inputData);
-    console.log(result.data);
-  }
-  useEffect(()=>{
+  const createArtist = async () => {
     console.log(inputData);
-  },[inputData])
- 
+    try {
+      const api = path + "/ArtController/createArtist";
+      const result = await axiosInstance.post(api, inputData);
+      console.log(result.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(() => {
+    try {
+      //確認有沒有id
+      if (inputData.artistId == "") {
+        console.log(inputData);
+        createArtist();
+      } else {
+        setInputData(inputData);
+        updataArtist();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    console.log(inputData);
+  }, [inputData]);
+
   const onSubmit = (data) => {
     console.log(data);
     //確認資料
-    if(data.confirmed){
-      try {
-        //確認有沒有id
-       if(data.artistId==""){
-        setInputData(data);
-        console.log(inputData);
-        createArtist();
-       }else{
-        setInputData(data);
-        updataArtist();
-       }
-      } catch (error) {
-        console.log(error);
-      }
-    }else{
-      alert("Please Confirmed")
-    }
+    // if (data.confirmed) {
+    unregister("confirmed");
+    console.log("unregister: ", data);
+    setInputData(data);
+    // } else {
+    // alert("Please Confirmed");
+    // }
   };
 
   // for 監聽輸入用。 目前先註解
-  useEffect(() => {
-    //監聽行為 for 即時性變更值， 會搭配SetValue 使用。
-    const subcription = watch((value, {name}) => {
-      console.log(value, attr);
-      if(name=="artistId")
-      setValue(name,value);
-    });
+  // useEffect(() => {
+  //   //監聽行為 for 即時性變更值， 會搭配SetValue 使用。
+  //   const subcription = watch((value, { name }) => {
+  //     console.log(value, name);
+  //     // setValue(name, value);
+  //     if (name == "artistId") setValue(name, value);
+  //     if (name == "artistName") setValue(name, value);
+  //     if (name == "desciption") setValue(name, value);
+  //     if (name == "url") setValue(name, value);
+  //   });
 
-    return subcription.unsubscribe(); // useEffect 裡面有監聽行為需要移除避免無窮低迴
-  }, [watch("artistId")]);
+  //   return subcription.unsubscribe(); // useEffect 裡面有監聽行為需要移除避免無窮低迴
+  // }, [watch]);
 
   return (
     <>
@@ -214,7 +231,7 @@ export default function ArtistMng() {
               type="checkbox"
               className="form-check-input"
               id="confirmed"
-              {...register("confirmed")}
+              // {...register("confirmed")}
             />
             <label className="form-check-label" htmlFor="confirmed">
               Confirmed
