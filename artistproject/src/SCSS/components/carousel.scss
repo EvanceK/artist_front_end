@@ -3,3 +3,16 @@
   // max-height: 50vh;
   // background-color: grey;
 }
+.carousel-inner {
+  background-image: url("../src/assets/carousel.png");
+  background-size: cover;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%; /* Adjust as needed */
+  height: fit-content; /* Adjust as needed */
+  .carousel-item {
+    background-color: rgba($primary, 80%);
+    height: 380px;
+  }
+}
