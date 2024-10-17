@@ -44,65 +44,46 @@ export default function Carousel() {
       return paintingsList.map((p, i) => {
         return (
           <div key={i} className="carousel-item active">
-            <div
+            {/* <div
               className="position-relative"
               style={{
                 // position: "relative",
                 display: "flex",
                 height: "380px",
               }}
-            >
-              <div
-                className="card "
-                style={{
-                  width: "12rem",
-                  height: "15rem",
-                  position: "absolute",
-                  left: "15%",
-                  top: "15%",
-                  backgroundColor: "transparent",
-                  borderColor: "transparent",
-                }}
-              >
-                <img
-                  src={p.smallUrl}
-                  className="img-fluid shawdown-sm"
-                  alt={p.paintingName}
-                />
-                <div className="card-body"></div>
-              </div>
-              <div
-                className="text d-flex flex-column w-100"
-                style={{
-                  position: "absolute",
-                  top: "30%",
-                  left: "35%",
-                  color: "#FFF",
-                }}
-              >
-                <p className="h1">{p.paintingName}</p>
-                <p className="h4 ms-5"> by {p.artisName}</p>
-                <p className="h4 ms-5">{p.date}</p>
-                <p className="ms-5">
-                  Has{" "}
-                  <span className="text-secondary h1">
-                    {" "}
-                    {paintingsCount[i].count}{" "}
-                  </span>{" "}
-                  bids
-                </p>
-                <div className="row">
-                  <span
-                    className="btn btn-primary mx-3 col-2"
-                    id={p.paintingId}
-                    onClick={placeBid}
-                  >
-                    PLACE BID
-                  </span>
-                </div>
+            > */}
+            <div className="card ">
+              <img
+                src={p.smallUrl}
+                className="img-fluid shawdown-sm"
+                alt={p.paintingName}
+              />
+              <div className="card-body"></div>
+            </div>
+            <div className="text ">
+              <p className="pName">{p.paintingName}</p>
+              <p className="aName ms-5"> by {p.artisName}</p>
+              <p className="pDate ms-5">{p.date}</p>
+              <p className="ms-5">
+                Has{" "}
+                <span className="text-secondary h1">
+                  {" "}
+                  {paintingsCount[i].count}{" "}
+                </span>{" "}
+                bids
+              </p>
+              <div className="row">
+                <span
+                  className="btn btn-primary col-2"
+                  id={p.paintingId}
+                  onClick={placeBid}
+                >
+                  PLACE BID
+                </span>
               </div>
             </div>
           </div>
+          // </div>
         );
       });
   };
