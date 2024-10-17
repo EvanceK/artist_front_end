@@ -43,22 +43,30 @@ export default function ViewContainer() {
   };
 
   const getSearch = async () => {
-    const api = path + `/PTController/search?${searchParams}`;
-    const result = await axiosInstance.get(api);
-    setSearchData(result.data);
+    try {
+      const api = path + `/PTController/search?${searchParams}`;
+      const result = await axiosInstance.get(api);
+      setSearchData(result.data);
 
-    setData(result.data);
+      setData(result.data);
+    } catch (e) {
+      // if (e.response.status == 400) {
+      //   setData(["Nothing found..."]);
+      //   setSearchData(["Nothing found..."]);
+      console.log(e);
+    }
     // setTotalPage(1);
   };
   useEffect(() => {
-    console.log(Math.ceil(searchData.length / 10));
-    setTotalPage(Math.ceil(searchData.length / 10));
-    const startIndex = (requestPageNumber - 1) * 10;
-    const endIndex = requestPageNumber * 10;
-    const dataArray = searchData.slice(startIndex, endIndex);
-    console.log("dataArray:", dataArray);
-
-    setData(searchData.slice(startIndex, endIndex));
+    if (searchData) {
+      console.log(Math.ceil(searchData.length / 10));
+      setTotalPage(Math.ceil(searchData.length / 10));
+      const startIndex = (requestPageNumber - 1) * 10;
+      const endIndex = requestPageNumber * 10;
+      const dataArray = searchData.slice(startIndex, endIndex);
+      console.log("dataArray:", dataArray);
+      setData(searchData.slice(startIndex, endIndex));
+    }
   }, [searchData]);
 
   useEffect(() => {
@@ -69,52 +77,53 @@ export default function ViewContainer() {
     }
   }, [requestPageNumber, search, searchParams]); // Fetch data when page changes
   useEffect(() => {
-    setCardsView(
-      <>
-        <div className="container" ref={searchResultRef}>
-          <h2>And More...</h2>
-          {totalPage == 1 ? (
-            ""
-          ) : (
-            <Pagination
-              totalPage={totalPage}
-              requestPageNumber={requestPageNumber}
-              onPageChange={setRequestPageNumber}
-            />
-          )}
-
-          <div className="container d-flex flex-wrap">
-            {loading ? (
-              <div className="spinner-border text-info" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </div>
+    if (data)
+      setCardsView(
+        <>
+          <div className="container" ref={searchResultRef}>
+            {search ? <h2>And More...</h2> : <h2> Search result...</h2>}
+            {totalPage == 1 ? (
+              ""
             ) : (
-              data.map((d, i) => {
-                return (
-                  <MyCard
-                    key={i}
-                    Paintings={d}
-                    minWidth="15rem"
-                    imgHeight="15rem"
-                    textSize="12px"
-                  />
-                );
-              })
+              <Pagination
+                totalPage={totalPage}
+                requestPageNumber={requestPageNumber}
+                onPageChange={setRequestPageNumber}
+              />
             )}
-            <hr></hr>
+
+            <div className="container d-flex flex-wrap">
+              {loading ? (
+                <div className="spinner-border text-info" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+              ) : (
+                data.map((d, i) => {
+                  return (
+                    <MyCard
+                      key={i}
+                      Paintings={d}
+                      minWidth="15rem"
+                      imgHeight="15rem"
+                      textSize="12px"
+                    />
+                  );
+                })
+              )}
+              <hr></hr>
+            </div>
+            {totalPage == 1 ? (
+              ""
+            ) : (
+              <Pagination
+                totalPage={totalPage}
+                requestPageNumber={requestPageNumber}
+                onPageChange={setRequestPageNumber}
+              />
+            )}
           </div>
-          {totalPage == 1 ? (
-            ""
-          ) : (
-            <Pagination
-              totalPage={totalPage}
-              requestPageNumber={requestPageNumber}
-              onPageChange={setRequestPageNumber}
-            />
-          )}
-        </div>
-      </>
-    );
+        </>
+      );
   }, [data]);
   return (
     <>

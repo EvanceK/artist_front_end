@@ -18,7 +18,7 @@ export default function PresaleExhibitionContainer() {
   const getdata = async () => {
     try {
       const result = await axiosInstance.get(
-        `${api}?currentPage=${requestPageNumber}&pageSize=4`
+        `${api}?currentPage=${requestPageNumber}&pageSize=5`
       );
       setData(result.data.paintingsList);
       // console.log("presales:", result.data);

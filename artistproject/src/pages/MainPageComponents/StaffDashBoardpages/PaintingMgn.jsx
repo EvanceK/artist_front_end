@@ -69,17 +69,21 @@ export default function PaintingMgn() {
         <tr key={i}>
           <th scope="row">{a.paintingId}</th>
           <td>{a.paintingName}</td>
-          <td>{a.price}</td>
+          <td className="text-end">
+            {new Intl.NumberFormat("en-IN", {
+              // maximumSignificantDigits: 3,
+            }).format(a.price)}
+          </td>
           <td>{a.uploadDate}</td>
           <td>{a.delicated}</td>
           <td>{a.status}</td>
 
-          <td className="col-4">
-            <div className="row d-flex">
-              <div className="btn col-4" id={a.artistId}>
+          <td className="d-flex align-items-center justify-conten-center">
+            <div className="row d-flex ">
+              <div className="btn col-5" id={a.artistId}>
                 Edit
               </div>
-              <div className="btn btn-danger col-4" id={a.artistId}>
+              <div className="btn btn-danger col-5" id={a.artistId}>
                 Delete
               </div>
             </div>
@@ -95,17 +99,6 @@ export default function PaintingMgn() {
       <div className="row">
         <form className="col-3">
           <div className="mb-3">
-            <label htmlFor="exampleInputEmail1" className="form-label">
-              Paintig Name
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="paintigName"
-              aria-describedby="emailHelp"
-            />
-          </div>
-          <div className="mb-3">
             <label htmlFor="exampleInputPassword1" className="form-label">
               Artist Name
             </label>
@@ -119,6 +112,17 @@ export default function PaintingMgn() {
               <option defaultValue={0}>select an artist ...</option>
               {artistSelectionList}
             </select>
+          </div>
+          <div className="mb-3">
+            <label htmlFor="exampleInputEmail1" className="form-label">
+              Paintig Name
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="paintigName"
+              aria-describedby="emailHelp"
+            />
           </div>
           <div className="mb-3">
             <label htmlFor="Photo" className="form-label">

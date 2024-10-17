@@ -5,12 +5,12 @@ export default function ArtistMng() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const [artistList, setArtisList] = useState([]); //所有作家名單 目前for navBar 選單用
   const [artistTable, setArtistTable] = useState();
-  const [inputData,setInputData] = useState({
-    artistId:"",
-    artistName:"",
-    desciption:"",
-    url:"",
-})
+  const [inputData, setInputData] = useState({
+    artistId: "",
+    artistName: "",
+    desciption: "",
+    url: "",
+  });
   const {
     register, //Form state
     handleSubmit, //submit action
@@ -36,7 +36,7 @@ export default function ArtistMng() {
   useEffect(() => {
     if (artistList) setArtistTable(buildArtistTable());
   }, [artistList]);
-  const editartist= (e) => {
+  const editartist = (e) => {
     console.log();
     console.log(artistList);
     const { name, value } = e.target;
@@ -52,12 +52,12 @@ export default function ArtistMng() {
         <tr key={i}>
           <th scope="row">{a.artistId}</th>
           <td>{a.artistName}</td>
-          <td className="col-4">
-            <div className="row d-flex">
-              <div className="btn col-4" id={a.artistId} onClick={editartist}>
+          <td className="d-flex align-items-center justify-content-center">
+            <div className="row d-flex justify-content-center align-items-center ">
+              <div className="btn col-5" id={a.artistId} onClick={editartist}>
                 Edit
               </div>
-              <div className="btn btn-danger col-4" id={a.artistId}>
+              <div className="btn btn-danger col-5" id={a.artistId}>
                 Delete
               </div>
             </div>
@@ -159,7 +159,9 @@ export default function ArtistMng() {
               <tr>
                 <th scope="col">#Id</th>
                 <th scope="col">Name</th>
-                <th scope="col">Modify</th>
+                <th scope="col" className="text-center">
+                  Modify
+                </th>
               </tr>
             </thead>
             <tbody style={{ maxHeight: "380px", overflowY: "auto" }}>
