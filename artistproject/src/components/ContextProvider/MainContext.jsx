@@ -38,9 +38,9 @@ export function MainContextProvider({ children }) {
   // E-mail 暫存
   const [email, setEmail] = useState("");
 
-   // 更新 email 的函數
-   const handleEmail = (newEmail) => {
-    setEmail(newEmail);  // 將新的 email 更新到全局狀態
+  // 更新 email 的函數
+  const handleEmail = (newEmail) => {
+    setEmail(newEmail); // 將新的 email 更新到全局狀態
   };
 
   const [recipientInfo, setRecipientInfo] = useState({
@@ -152,7 +152,7 @@ export function MainContextProvider({ children }) {
       try {
         const result = await axiosInstance.get(`${api}`);
         setWishlistResult(result.data);
-        console.log("step 4: got wishlsht from data");
+        // console.log("step 4: got wishlsht from data");
       } catch (error) {
         showLoginModal();
         console.log(error);
@@ -164,7 +164,7 @@ export function MainContextProvider({ children }) {
       const paintingIdArray = wishlistResult.map((w) => w.paintingId);
       localStorage.setItem("Wishlist", JSON.stringify(wishlistResult));
       localStorage.setItem("paintingIdArray", JSON.stringify(paintingIdArray));
-      console.log("step 5: record to localStorage", WToS);
+      // console.log("step 5: record to localStorage", WToS);
       setWToS(!WToS);
     }
     // setLike(!like);

@@ -4,6 +4,7 @@ export default function Carousel() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const api = path + "/PTController/topfavorites";
   const [data, setData] = useState([]);
+  const [CarouselItem, setCarouselItem] = useState();
   //撈取資料庫
   const getdata = async () => {
     try {
@@ -20,6 +21,23 @@ export default function Carousel() {
     getdata();
   }, []);
 
+  useEffect(() => {
+    setCarouselItem(buildCarouselItems());
+  }, [data]);
+  const buildCarouselItems = () => {
+    return (
+      <>
+        <div className="carousel-item active">
+          <img
+            src="../../src/assets/Carousel1.png"
+            className="d-block w-100"
+            alt="picture 1"
+          />
+        </div>
+      </>
+    );
+  };
+
   return (
     <>
       <div className="container">
@@ -29,6 +47,7 @@ export default function Carousel() {
           data-bs-ride="carousel"
         >
           <div className="carousel-inner">
+            {CarouselItem}
             <div className="carousel-item active">
               <img
                 src="../../src/assets/Carousel1.png"
