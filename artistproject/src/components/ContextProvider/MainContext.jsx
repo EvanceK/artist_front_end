@@ -154,7 +154,7 @@ export function MainContextProvider({ children }) {
         setWishlistResult(result.data);
         // console.log("step 4: got wishlsht from data");
       } catch (error) {
-        showLoginModal();
+        // showLoginModal();
         console.log(error);
       }
     }

@@ -7,8 +7,10 @@ import Carousel from "../../components/Carousel";
 import { MainContext } from "../../components/ContextProvider/MainContext";
 import PresaleExhibitionContainer from "./PresaleExhibitionContainer";
 import MaybeLiked from "./MaybeLiked";
+import { useNavigate } from "react-router-dom";
 
 export default function ViewContainer() {
+  const navigate = useNavigate();
   const path = import.meta.env.VITE_DATA_HOST_API;
   const [data, setData] = useState([]);
   const [searchData, setSearchData] = useState([]);
@@ -38,6 +40,8 @@ export default function ViewContainer() {
       // console.log("viewcontainer: ", result);
     } catch (error) {
       console.log(error);
+      alert("Server is out");
+      navigate("/");
     }
     setLoading(false);
   };

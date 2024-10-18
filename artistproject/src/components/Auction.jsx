@@ -57,7 +57,6 @@ export default function Auction() {
   }, [finalBidAmount]);
 
   const handleTimeUp = (state) => {
-    console.log("Time is up! Disabling component...");
     setIsvalid(state);
     // Perform any actions like disabling the parent component here
   };
