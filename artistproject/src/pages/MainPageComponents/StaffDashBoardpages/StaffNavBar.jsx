@@ -71,6 +71,12 @@ export default function StaffNavBar() {
                   Order Managerment
                 </Link>
               </li>
+
+              <li className="nav-item">
+                <Link className="nav-link " aria-current="page" to="staffmgn">
+                  Staff Managerment
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
