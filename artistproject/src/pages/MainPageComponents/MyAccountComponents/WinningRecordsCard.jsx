@@ -22,8 +22,8 @@ export default function WinningRecordsCard({
   //   console.log(e.target.id);
   //   if (e.checked) setSelectedItems(selectedItems.push(e.target.id));
   //   else setSelectedItems(selectedItems.filter((e) => e !== e.target.id));
-
   // };
+
   const handleItemChange = (e) => {
     setIsSelecAll(false);
     const isChecked = e.target.checked;

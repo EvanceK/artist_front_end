@@ -21,6 +21,8 @@ export default function Auction() {
   const [inputValue, setInputValue] = useState("");
   const [finalBidAmount, setFinalBidAmount] = useState();
   const [selectinOptionList, setSelectinOptionList] = useState();
+  const [placeBidBtn, setPlaceBidBtn] = useState();
+
   const { reLoadBiddingHistory, setReLoadBiddingHistory, showLoginModal } =
     useContext(MainContext);
   const path = import.meta.env.VITE_DATA_HOST_API;
@@ -38,6 +40,26 @@ export default function Auction() {
     console.log("step 1: click Bidbtn");
   };
 
+  useEffect(() => {
+    isButtonDisabled
+      ? setPlaceBidBtn(
+          <a
+            className="d-flex"
+            href="#biddingHistoryOffcanvas"
+            role="button"
+            data-bs-toggle="offcanvas"
+            aria-controls="BiddingHistoryModal"
+          >
+            <span
+              className="btn btn-primary mx-3"
+              onClick={handleClickPlaceBid}
+            >
+              PLACE BID
+            </span>
+          </a>
+        )
+      : setPlaceBidBtn(<></>);
+  }, [placeBidBtn]);
   useEffect(() => {
     if (inputValue && !selectionValue) {
       setFinalBidAmount(inputValue);
@@ -71,6 +93,14 @@ export default function Auction() {
     // } else {
     // setSelectedOption(""); // Reset if no match found
     // }
+  };
+  // State to control the button's disabled state
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
+  // Controller function to pass to the CountDown component
+  const handleCountDownControl = (isActive) => {
+    // Disable the button when countdown is ongoing (isActive === true), enable when closed (isActive === false)
+    setIsButtonDisabled(isActive);
   };
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
@@ -289,6 +319,7 @@ export default function Auction() {
                     textClass: "h4",
                     clockClass: "h1",
                   }}
+                  controller={handleCountDownControl}
                 />
 
                 {/* <strong className="h1 ms-4">10H 23m 41s</strong> */}
@@ -334,25 +365,12 @@ export default function Auction() {
                 value={inputValue}
                 onChange={handleInputChange}
               ></input>
-              
-                <div className="cardBtn d-flex justify-content-center m-5">
-                  <AddFavoriteBtn paintingId={painting.paintingId} />
-                  <a
-                   className="d-flex"
-                   href="#biddingHistoryOffcanvas"
-                   role="button"
-                   data-bs-toggle="offcanvas"
-                   aria-controls="BiddingHistoryModal"
-                   >
-                  <span
-                    className="btn btn-primary mx-3"
-                    onClick={handleClickPlaceBid}
-                  >
-                    PLACE BID
-                  </span>
-                  </a>
-                </div>
-              
+
+              <div className="cardBtn d-flex justify-content-center m-5">
+                <AddFavoriteBtn paintingId={painting.paintingId} />
+                {placeBidBtn}
+              </div>
+
               <div className="row shipment">
                 <div className="row m-3">
                   <div className="col-1">
