@@ -70,22 +70,8 @@ function Order() {
 
   return (
     <div className="orderInfo mt-5 row justify-content-center">
-      <div className="h1 underline">Order</div>
-      <div className="col-md-11">
-        <div className="mt-5 d-flex gap-5 align-items-center">
-          <img
-            src={OrangeImage}
-            alt="orange.jpg"
-            style={{ width: "300px", height: "auto" }}
-          ></img>
-          <div>
-            <label className="h2">What a cute orange</label>
-            <br />
-            <label className="h4 grayfont">Orange Chen</label>
-            <br />
-            <label className="h4 grayfont mt-5">$ 120,000</label>
-          </div>
-        </div>
+     
+        
 
         <div className="container mt-5">
           <div className="row justify-content-center">
@@ -187,7 +173,7 @@ function Order() {
             </div>
           </div>
         </div>
-      </div>
+    
     </div>
   );
 }
