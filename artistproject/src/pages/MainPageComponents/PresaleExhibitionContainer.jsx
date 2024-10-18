@@ -10,9 +10,9 @@ export default function PresaleExhibitionContainer() {
   const api = path + "/PTController/findAllPresaleExhibition";
   const [data, setData] = useState([]);
   const [totalPage, setTotalPage] = useState(1);
-  // const [requestPageNumber, setRequestPageNumber] = useState(1);
+  const [requestPageNumber, setRequestPageNumber] = useState(1);
   // const [artisList, setArtisList] = useState([]);
-  const { requestPageNumber, setRequestPageNumber } = useContext(MainContext);
+  // const { requestPageNumber, setRequestPageNumber } = useContext(MainContext);
 
   //撈取資料庫
   const getdata = async () => {

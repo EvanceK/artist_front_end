@@ -6,7 +6,7 @@ export default function ArtistMng() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const [artistList, setArtisList] = useState([]); //所有作家名單 目前for navBar 選單用
   const [artistTable, setArtistTable] = useState();
-  const [uploadToggle, setUploadToggle] = useState();
+  const [uploadToggle, setUploadToggle] = useState(false);
   const [readData, setReadData] = useState();
   const [inputData, setInputData] = useState({
     artistId: "",
@@ -14,12 +14,7 @@ export default function ArtistMng() {
     desciption: "",
     url: "",
   });
-  // const [inputData2, setInputData2] = useState({
-  //   artistId: "",
-  //   artistName: "",
-  //   desciption: "",
-  //   url: "",
-  // });
+
   const {
     register, //Form state
     handleSubmit, //submit action
@@ -27,6 +22,7 @@ export default function ArtistMng() {
     watch, //watching form control change
     setValue, //set value from watched control
   } = useForm();
+
   // methods for loading data
   const getArtistList = async () => {
     const api = path + "/ArtController/findall";
@@ -39,10 +35,11 @@ export default function ArtistMng() {
       console.log(error);
     }
   };
+
   useEffect(() => {
     getArtistList();
-  }, []);
-
+  }, [uploadToggle]);
+  //將資料更新至table
   useEffect(() => {
     if (artistList) setArtistTable(buildArtistTable());
   }, [artistList]);
@@ -73,14 +70,18 @@ export default function ArtistMng() {
       setValue("url", readData.url);
     }
   }, [readData]);
+  //刪除
   const deleteArtist = async (event) => {
     const id = event.target.id;
     console.log(id);
-    const api = path + "/ArtController/" + id;
+    const api = path + "/ArtController/";
     // 等同 $.ajax(" get blablablba ")
     try {
-      // const result = await axios.delete(`${api}`);
+      const result = await axios.delete(`${api}${id}`);
       console.log(result.data);
+      //刷新頁面用
+      setUploadToggle(!uploadToggle)
+      alert("刪除成功")
     } catch (error) {
       console.log("delete" + error);
     }
@@ -116,7 +117,10 @@ export default function ArtistMng() {
     const api = path + "/ArtController/editArtist";
 
     const result = await axios.put(`${api}`, inputData);
-    console.log(result.data);
+    // console.log(result.data);
+    //刷新頁面用
+    setUploadToggle(!uploadToggle)
+    alert("修改成功")
   };
   //沒有id時就建立一個新的
   const createArtist = async () => {
@@ -124,7 +128,10 @@ export default function ArtistMng() {
     try {
       const api = path + "/ArtController/createArtist";
       const result = await axiosInstance.post(api, inputData);
-      console.log(result.data);
+      // console.log(result.data);
+      //刷新頁面用
+      setUploadToggle(!uploadToggle)
+      alert("新稱成功")
     } catch (e) {
       console.log(e);
     }
@@ -132,11 +139,15 @@ export default function ArtistMng() {
   useEffect(() => {
     try {
       //確認有沒有id
-      if (inputData.artistId == "") {
-        console.log(inputData);
-        createArtist();
+      if (inputData.artistId == "") {      
+        if(inputData.artistName&&inputData.desciption&&inputData.url){
+          console.log(inputData);
+          createArtist();
+        }else{
+          alert("欄位不能為空")
+        }
       } else {
-        setInputData(inputData);
+        // setInputData(inputData);
         updataArtist();
       }
     } catch (error) {
@@ -148,13 +159,13 @@ export default function ArtistMng() {
   const onSubmit = (data) => {
     console.log(data);
     //確認資料
-    // if (data.confirmed) {
+    if (data.confirmed) {
     unregister("confirmed");
     console.log("unregister: ", data);
     setInputData(data);
-    // } else {
-    // alert("Please Confirmed");
-    // }
+    } else {
+    alert("Please Confirmed");
+    }
   };
 
   // for 監聽輸入用。 目前先註解
@@ -231,7 +242,7 @@ export default function ArtistMng() {
               type="checkbox"
               className="form-check-input"
               id="confirmed"
-              // {...register("confirmed")}
+              {...register("confirmed")}
             />
             <label className="form-check-label" htmlFor="confirmed">
               Confirmed

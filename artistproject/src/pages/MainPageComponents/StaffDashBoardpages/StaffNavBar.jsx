@@ -63,7 +63,7 @@ export default function StaffNavBar() {
                   aria-current="page"
                   to="paintingmgn"
                 >
-                  Plaiting Managerment
+                  Painting Managerment
                 </Link>
               </li>
               <li className="nav-item">

@@ -1,11 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import axiosInstance from "../axiosConfig";
 import { useState, useEffect } from "react";
 export default function Carousel() {
   const path = import.meta.env.VITE_DATA_HOST_API;
-  const api = path + "/PTController/topfavorites";
+  const api = path + "/PTController/topbiddings";
   const [paintingsCount, setPaintingsCount] = useState([]);
   const [paintingsList, setPaintingsList] = useState();
   const [CarouselItem, setCarouselItem] = useState();
+  const navigate = useNavigate();
   //撈取資料庫
   const getdata = async () => {
     try {
@@ -18,7 +20,11 @@ export default function Carousel() {
       console.log(error);
     }
   };
-
+  const placeBid = (e) => {
+    console.log("placeBid");
+    console.log(e.target.id);
+    navigate(`/home/auction/${e.target.id}`);
+  };
   useEffect(() => {
     getdata();
   }, []);
@@ -37,31 +43,47 @@ export default function Carousel() {
     if (paintingsList)
       return paintingsList.map((p, i) => {
         return (
-          <>
-            <div className="carousel-item active">
-              <div
-                className=""
-                style={{
-                  position: "relative",
-                  display: "block",
-                  height: "180px",
-                }}
-              >
-                <img
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    // height: "150px",
-                    width: "150px",
-                  }}
-                  src={p.smallUrl}
-                  className="d-block w-100"
-                  alt={p.paintingName}
-                />
+          <div key={i} className="carousel-item active">
+            {/* <div
+              className="position-relative"
+              style={{
+                // position: "relative",
+                display: "flex",
+                height: "380px",
+              }}
+            > */}
+            <div className="card ">
+              <img
+                src={p.smallUrl}
+                className="img-fluid shawdown-sm"
+                alt={p.paintingName}
+              />
+              <div className="card-body"></div>
+            </div>
+            <div className="text ">
+              <p className="pName">{p.paintingName}</p>
+              <p className="aName ms-5"> by {p.artisName}</p>
+              <p className="pDate ms-5">{p.date}</p>
+              <p className="ms-5">
+                Has{" "}
+                <span className="text-secondary h1">
+                  {" "}
+                  {paintingsCount[i].count}{" "}
+                </span>{" "}
+                bids
+              </p>
+              <div className="row">
+                <span
+                  className="btn btn-primary col-2"
+                  id={p.paintingId}
+                  onClick={placeBid}
+                >
+                  PLACE BID
+                </span>
               </div>
             </div>
-          </>
+          </div>
+          // </div>
         );
       });
   };
