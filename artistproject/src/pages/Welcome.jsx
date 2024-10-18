@@ -48,15 +48,17 @@ export default function Welcome() {
         <h2>Artist</h2>
       </div>
       <div className="btngroup d-flex justify-content-between">
-        <div className="btn btn-primary ">MEMBER</div>
-        <div className="btn btn-primary">
-          <Link to="/home">EXPLORE</Link>
-        </div>
-        <div className="btn btn-primary ">
+        {/* <div className="btn btn-primary ">
+          <Link to ="">MEMBER</Link></div> */}
+          <div className="btn btn-primary ">
           <Link className="nav-link" to="staffdashboard" aria-current="page">
             for STAFF
           </Link>
         </div>
+        <div className="btn btn-primary">
+          <Link to="/home">EXPLORE</Link>
+        </div>
+        
       </div>
     </div>
   );

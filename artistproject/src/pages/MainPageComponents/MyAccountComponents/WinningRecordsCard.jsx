@@ -3,33 +3,54 @@ import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 export default function WinningRecordsCard({
-    WinningRecordsCardProps,
-    isSelecAllChecked,
-    handleItemChange
-
+  WinningRecordsCardProps,
+  isSelecAllChecked,
+  setIsSelecAll,
+  selectedItems,
+  setSelectedItems,
 }) {
-    useEffect(() => {
-        console.log("re");
-        setIsCheck(isSelecAllChecked);
-        
-    },[isSelecAllChecked])
+  useEffect(() => {
+    console.log("re");
+    setIsCheck(isSelecAllChecked);
+  }, [isSelecAllChecked]);
 
-    const [isChecked, setIsCheck] = useState ();
-    
-  
+  const [isChecked, setIsCheck] = useState();
+  // 處理單個 item checkbox 的變化
+  // const handleItemChange = (e) => {
+  //   setIsSelecAll(false);
+  //   setIsCheck(e.checked);
+  //   console.log(e.target.id);
+  //   if (e.checked) setSelectedItems(selectedItems.push(e.target.id));
+  //   else setSelectedItems(selectedItems.filter((e) => e !== e.target.id));
+
+  // };
+  const handleItemChange = (e) => {
+    setIsSelecAll(false);
+    const isChecked = e.target.checked;
+    const paintingId = e.target.id;
+    setIsCheck(isChecked);
+
+    if (isChecked) {
+      setSelectedItems((prevSelected) => [...prevSelected, paintingId]);
+    } else {
+      setSelectedItems((prevSelected) =>
+        prevSelected.filter((id) => id !== paintingId)
+      );
+    }
+  };
+
   return (
     <div className="pb-5 border-bottom">
       <div className="d-flex justify-content-between row  align-items-center">
-       
-          <input
-            className="form-check-input"
-            type="checkbox"
-            value=""
-            id="select"
-            checked={isChecked} // 確保 checkbox 的狀態同步
-            onChange={handleItemChange} // 當狀態改變時觸發事件處理
-          />
-        
+        <input
+          className="form-check-input"
+          type="checkbox"
+          value=""
+          id={WinningRecordsCardProps.paintingId}
+          checked={isChecked} // 確保 checkbox 的狀態同步
+          onChange={handleItemChange} // 當狀態改變時觸發事件處理
+        />
+
         <div className="d-flex justify-content-center col-6">
           <img
             className="w-50"
@@ -42,7 +63,9 @@ export default function WinningRecordsCard({
           <p>{WinningRecordsCardProps.artisName}</p>
           <br />
           <br />
-          <div className="h4 grayfont mt-5">${WinningRecordsCardProps.price}</div>
+          <div className="h4 grayfont mt-5">
+            ${WinningRecordsCardProps.price}
+          </div>
         </label>
         <div className="d-flex justify-content-center align-items-center col-1">
           {/* <svg
@@ -61,16 +84,17 @@ export default function WinningRecordsCard({
   );
 }
 
-
 WinningRecordsCard.propTypes = {
-    WinningRecordsCardProps: PropTypes.shape({
-       
-        artisName: PropTypes.string.isRequired,
-        paintingName: PropTypes.string.isRequired,
-        smallUrl: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-
-      }).isRequired,
-      isSelecAllChecked: PropTypes.bool.isRequired,
+  WinningRecordsCardProps: PropTypes.shape({
+    artisName: PropTypes.string.isRequired,
+    paintingId: PropTypes.string.isRequired,
+    paintingName: PropTypes.string.isRequired,
+    smallUrl: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+  }).isRequired,
+  isSelecAllChecked: PropTypes.bool.isRequired,
   handleItemChange: PropTypes.func.isRequired,
-    };
+  setIsSelecAll: PropTypes.func.isRequired,
+  selectedItems: PropTypes.shape.isRequired,
+  setSelectedItems: PropTypes.func.isRequired,
+};

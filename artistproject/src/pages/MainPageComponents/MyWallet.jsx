@@ -28,9 +28,9 @@ function MyWallet() {
     if (Authorization) {
       //axiosInstance就有回傳token的功能
       const result = await axiosInstance.get(api);
-      console.log("line 28 :", result.data);
+      // console.log("line 28 :", result.data);
       setWalletInfo(result.data);
-      console.log("line 31", walletInfo);
+     
     }
   };
 
@@ -39,13 +39,19 @@ function MyWallet() {
   }, []);
 
   useEffect(() => {
+    // console.log("line 41", walletInfo.biddingHistory);
+    if(walletInfo)
     setMyWalletCard(
       walletInfo.biddingHistory.length > 0
-        ? walletInfo.biddingHistory.map((bp, i) => {
+        ? walletInfo.biddingHistory.map((bh, i) => {
+          console.log(i);
             return (
+              
+              
               <MywalletCard
                 key={i}
-                MyWallCardProps={bp}
+                biddingHistory={bh}
+                money="mb"
               />
             
             );

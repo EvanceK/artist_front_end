@@ -49,7 +49,7 @@ export default function ChangeCreditCardModal() {
     setSelectedBank(newSelectedBank);
     console.log("line 47:", selectedBank);
   };
-  console.log("line49 bankAccount :", creditcardInfo.bankAccount);
+  // console.log("line49 bankAccount :", creditcardInfo.bankAccount);
 
   // 輸入信用卡號時更新卡號
   const handleCreditNumberChange = (e) => {

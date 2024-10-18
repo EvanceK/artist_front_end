@@ -12,13 +12,18 @@ export default function WinningRecords() {
   // 管理selectAll選中的狀態
   const [isSelecAllChecked, setIsSelecAllChecked] = useState();
 
+  const [isSelecAll, setIsSelecAll] = useState();
+
+  //管理subtotal的狀態
+  const [subtotal, setSubtotal] = useState();
+
   //讀取後端api
   const path = import.meta.env.VITE_DATA_HOST_API;
   const Authorization = localStorage.getItem("token");
   const api = path + "/customers/mywinningrecords";
 
   const [winningRecordsCard, setWinningRecordsCard] = useState();
-  
+
   //API 返回得標記錄
   const [winningRecords, setWinningRecords] = useState({
     paintingId: "PT0001",
@@ -33,6 +38,7 @@ export default function WinningRecords() {
   // 當selet All 被選中或取消選中
   const handleSelectedAllChange = (e) => {
     setIsSelecAllChecked(e.target.checked);
+    setIsSelecAll(e.checked);
     console.log("clicked", isSelecAllChecked);
   };
 
@@ -42,7 +48,7 @@ export default function WinningRecords() {
       winningRecords.map((bp) => {
         sa.push(bp.paintingId);
       });
-    } else{
+    } else {
       setSelectedItems([]);
     }
     setSelectedItems(sa);
@@ -53,18 +59,6 @@ export default function WinningRecords() {
     console.log(isSelecAllChecked, "finall array", selectedItems);
   }, [selectedItems]);
 
-  // 處理單個 item checkbox 的變化
-  const handleItemChange = (paintingId) => {
-    setSelectedItems(
-      (prevSelected) =>
-        prevSelected.includes(paintingId)
-          ? prevSelected.filter(
-              (selectedPaintingId) => selectedPaintingId !== paintingId
-            ) // 如果已選中，則取消選中
-          : [...prevSelected, paintingId] // 如果未選中，則加入選中項目
-    );
-  };
-
   // 取得得標記錄
   const getWinningRecords = async () => {
     if (Authorization) {
@@ -73,7 +67,7 @@ export default function WinningRecords() {
       // const result = await axios.get(api);
       console.log(result.data);
       setWinningRecords(result.data.winningRecords);
-      console.log(winningRecords);
+      console.log("winningRecords: ", winningRecords);
     }
   };
 
@@ -90,6 +84,9 @@ export default function WinningRecords() {
                 key={i}
                 WinningRecordsCardProps={bp}
                 isSelecAllChecked={isSelecAllChecked}
+                setIsSelecAll={setIsSelecAll}
+                selectedItems={selectedItems}
+                setSelectedItems={setSelectedItems}
               />
             );
           })
@@ -115,19 +112,14 @@ export default function WinningRecords() {
             <input
               className="form-check-input "
               type="checkbox"
-              checked={isSelecAllChecked}
+              checked={isSelecAll}
               onChange={handleSelectedAllChange} // 當狀態改變時觸發事件處理
             />
             <label className="form-check-label" htmlFor="selectAll">
               Select All
             </label>
           </div>
-          {/* <WinningRecordsCard
-  key={record.paintingId}
-  WinningRecordsCardProps={record}
-  isChecked={selectedItems.includes(record.paintingId)} // 確保計算結果傳遞進去
-  handleItemChange={() => handleItemChange(record.paintingId)} // 傳遞變更處理函數
-/> */}
+
           <div className="p-4">{winningRecordsCard}</div>
 
           <div className="row d-flex justify-content-end">
