@@ -21,8 +21,13 @@ export default function Auction() {
   const [inputValue, setInputValue] = useState("");
   const [finalBidAmount, setFinalBidAmount] = useState();
   const [selectinOptionList, setSelectinOptionList] = useState();
-  const { reLoadBiddingHistory, setReLoadBiddingHistory, showLoginModal } =
-    useContext(MainContext);
+  const {
+    reLoadBiddingHistory,
+    setReLoadBiddingHistory,
+    showLoginModal,
+
+    isvalid,
+  } = useContext(MainContext);
   const path = import.meta.env.VITE_DATA_HOST_API;
 
   //Post placeBid
@@ -347,6 +352,7 @@ export default function Auction() {
                   <span
                     className="btn btn-primary mx-3"
                     onClick={handleClickPlaceBid}
+                    style={{ visibility: isvalid ? "visible" : "hidden" }}
                   >
                     PLACE BID
                   </span>

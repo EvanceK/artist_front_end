@@ -20,7 +20,7 @@ export function MainContextProvider({ children }) {
   //state for data 共用變數
   // const [loadWishlist, setLoadWishlist] = useState(false);
   // const [getWishlistData, setGetWishListData] = useState(false);
-  const [artistList, setArtisList] = useState([]); //所有作家名單 目前for navBar 選單用
+  const [artistList, setArtisList] = useState([]); //所有作家名單 目前for navBar & 後台 選單用
   const [WToS, setWToS] = useState(false);
   const [wishlistResult, setWishlistResult] = useState();
   const [reLoadBiddingHistory, setReLoadBiddingHistory] = useState(false);
@@ -34,7 +34,8 @@ export function MainContextProvider({ children }) {
   const searchResultRef = useRef(null);
   const [requestPageNumber, setRequestPageNumber] = useState(1);
   const { isLogin } = useContext(UserContext);
-
+  // 管控是否能投標
+  const [isValid, setIsvalid] = useState(false);
   // E-mail 暫存
   const [email, setEmail] = useState("");
 
@@ -240,12 +241,8 @@ export function MainContextProvider({ children }) {
         setSearchParams,
         loginModalRef,
         showLoginModal,
-        // loadWishlist,
-        // setLoadWishlist,
-        // getWishlistData,
-        // setGetWishListData,
-        // like,
-        // setLike,
+        isValid,
+        setIsvalid,
         setWToS,
         WToS,
         addRemoveWishlistprocessed,

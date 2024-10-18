@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { MainContext } from "./ContextProvider/MainContext";
 
 export default function CountDown({ datetime, config }) {
   const DateTime = datetime;
-
+  const { isValid, setIsvalid } = useContext(MainContext);
   // Calculate the "Coming Soon" date (3 days after the given DateTime)
   const comingSoonDate = new Date(DateTime);
   comingSoonDate.setDate(comingSoonDate.getDate() + 3);
@@ -45,6 +46,7 @@ export default function CountDown({ datetime, config }) {
         } else {
           // "Close In" period has started
           setIsOnGoing(true);
+          setIsvalid(true);
           days = Math.floor(timeUntilCloseIn / (1000 * 60 * 60 * 24));
           hours = Math.floor(
             (timeUntilCloseIn % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
@@ -59,6 +61,7 @@ export default function CountDown({ datetime, config }) {
       } else {
         // Countdown has ended, set everything to 0
         setIsClosed(true);
+        setIsvalid(false);
         setRemainingTime({ days: 0, hours: 0, minutes: 0, seconds: 0 });
       }
     };
