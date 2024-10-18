@@ -1,5 +1,21 @@
+import { useForm } from "react-hook-form";
 import projectLogo from "../../assets/LOGO.png";
 export default function StaffLoginModal() {
+  const path = import.meta.env.VITE_DATA_HOST_API;
+  const{
+    register,
+    handleSubmit,
+    watch,
+  } = useForm();
+  const onSubmit = (data) =>{
+    console.log(data);
+    try{
+      const api = path + "/StaffController/login";
+    }catch(error){
+      console.log("登入錯誤:"+error);
+    }
+  };
+
   return (
     <div
       className="modal fade"
@@ -27,7 +43,7 @@ export default function StaffLoginModal() {
               alt="Logo"
             ></img>
           </div>
-          <form action="">
+          <form action="" onSubmit={handleSubmit(onSubmit)} id="myForm">
             <div className="input">
               <h2 className="d-flex m-5">Staff Log In</h2>
               <div className="d-block mt-5 m-2">
@@ -41,6 +57,7 @@ export default function StaffLoginModal() {
                     name="username"
                     type="text"
                     placeholder="Username"
+                    {...register("userName")}
                   />
                 </div>
                 <div className="row m-2">
@@ -53,6 +70,7 @@ export default function StaffLoginModal() {
                     name="password"
                     type="text"
                     placeholder="Password"
+                    {...register("password")}
                   />
                 </div>
               </div>

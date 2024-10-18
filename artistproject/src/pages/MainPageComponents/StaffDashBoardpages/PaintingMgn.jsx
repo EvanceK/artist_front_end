@@ -349,13 +349,11 @@ const updataPainting = async ()=>{
           className="table-responsive col-8"
           style={{ maxHeight: "80vh", overflowY: "auto" }}
         >
-          
             <Pagination
               totalPage={totalPage}
               requestPageNumber={requestPageNumber}
               onPageChange={setRequestPageNumber}
             />
-         
           <table className="table table-hover">
             <thead>
               <tr>
@@ -372,6 +370,11 @@ const updataPainting = async ()=>{
               {paintingTable}
             </tbody>
           </table>
+          <Pagination
+              totalPage={totalPage}
+              requestPageNumber={requestPageNumber}
+              onPageChange={setRequestPageNumber}
+            />
         </div>
       </div>
     </>
