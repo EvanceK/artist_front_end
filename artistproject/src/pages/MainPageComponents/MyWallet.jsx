@@ -43,11 +43,11 @@ function MyWallet() {
     if(walletInfo)
     setMyWalletCard(
       walletInfo.biddingHistory.length > 0
-        ? walletInfo.biddingHistory.map((bp, i) => {
+        ? walletInfo.biddingHistory.map((bh, i) => {
             return (
               <MywalletCard
                 key={i}
-                MyWallCardProps={bp}
+                biddingHistory={bh}
               />
             
             );
