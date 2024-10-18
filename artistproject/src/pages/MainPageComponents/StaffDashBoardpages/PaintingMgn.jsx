@@ -1,12 +1,19 @@
 import { useCallback, useEffect, useState } from "react";
 import axiosInstance from "../../../axiosConfig";
 import { useForm } from "react-hook-form";
+import Pagination from "../../../components/Pagination";
 
 export default function PaintingMgn() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const [artistList, setArtisList] = useState([]); //所有作家名單 目前for navBar 選單用
   const [artistSelectionList, setArtistSelectionList] = useState();
   const [selectedOption, setSelectedOption] = useState("");
+  const [uploadToggle, setUploadToggle] = useState(false);
+  //下面是翻頁用
+  const [data, setData] = useState([]);
+  const [totalPage, setTotalPage] = useState(1);
+  const [requestPageNumber, setRequestPageNumber] = useState(1);
+  //上面是翻頁用
   const [inputData, setInputData] = useState();
   const [readData, setReadData] = useState();//儲存edit的data並顯示在inputbox
   const [paintingData, setPaintingData] = useState();
@@ -18,7 +25,7 @@ export default function PaintingMgn() {
     watch, //watching form control change
     setValue, //set value from watched control
   } = useForm();
-  
+
   const getArtistList = async () => {
     const api = path + "/ArtController/findall";
     // 等同 $.ajax(" get blablablba ")
@@ -66,7 +73,6 @@ export default function PaintingMgn() {
 
   useEffect(()=>{
     if(readData){
-      updataPainting()
       document.getElementById("artistId").value=readData.artistId
       setValue("artistId",readData.artistId)
       document.getElementById("paintingId").value=readData.paintingId
@@ -81,22 +87,42 @@ export default function PaintingMgn() {
       setValue("genre", readData.genre);
       document.getElementById("price").value = readData.price;
       setValue("price", readData.price);
+      document.getElementById("delicated").value = readData.delicated;
+      setValue("delicated", readData.delicated);
+      document.getElementById("status").value = readData.status;
+      setValue("status", readData.status);
     }
   },[readData])
 
-const updataPainting = async ()=>{
+const createPainting= async()=>{
   try{
-    console.log(readData);
+    console.log(inputData);
     
-    const api = path + "/PTController/editPainting";
-    const result = await axiosInstance.put(api,readData)
+    const api = path + "/PTController/createPainting";
+    const result = await axiosInstance.post(api,inputData)
     console.log(result.data);
-    
+    setUploadToggle(!uploadToggle);
+    alert("新增成功")
   }catch(error){
     console.log(error);
   }
 };
+useEffect(()=>{
 
+},[uploadToggle])
+const updataPainting = async ()=>{
+  try{
+    console.log(inputData);
+    const api = path + "/PTController/editPainting";
+    const result = await axiosInstance.put(api,inputData);
+    console.log(result.data);
+    setUploadToggle(!uploadToggle);
+    alert("修改成功")
+  }catch(error){
+    console.log(error);
+  }
+};
+  //將資料寫進inputdata
   const onSubmit = (data) => {
     //確認資料
     if(data.confirmed){
@@ -106,41 +132,67 @@ const updataPainting = async ()=>{
       alert("Please Confirmed");
     }
   };
+  //判斷資料是創建或修改
   useEffect(()=>{
+    if(inputData)
     try {
       //確認有沒有id
      if(inputData.paintingId==""){
-      createPainting();
+      if(inputData.paintingName&&inputData.artistId){
+        createPainting();
+      }else{
+        alert("欄位不可為空");
+      };
      }else{
+      readData.date=inputData.date
       // setReadData(inputData)
-      // updataPainting();
+      updataPainting();
      }
     } catch (error) {
       console.log(error);
     }
   },[inputData])
-
+  //用artistID取得畫作資料
   const getdata = useCallback(async () => {
     const api = path + "/PTController/artists";
     if (!selectedOption) return; // Prevent call if artistId is not available
 
     try {
       const result = await axiosInstance.get(
-        `${api}?artistId=${selectedOption}`
+        `${api}?artistId=${selectedOption}&currentPage=${requestPageNumber}&pageSize=20`
       );
-      console.log(result.data.paintingsList);
+      console.log(result.data);
       setPaintingData(result.data.paintingsList);
+      setTotalPage(result.data.totalPage || 1);
     } catch (error) {
       console.log(error);
     }
   }, [selectedOption]);
+
   useEffect(() => {
     getdata();
-  }, [selectedOption]);
+    setValue("artistId",selectedOption)
+  }, [selectedOption,uploadToggle,requestPageNumber]);
+  //將資料寫進table
   useEffect(() => {
     if (paintingData) setPaintingTable(buildArtistTable());
   }, [paintingData]);
+  //刪除按鈕
+  const deletePaintdata = async(event)=>{
+    const id = event.target.id
+    console.log(id);
+    const api = path + "/PTController/";
+    // 等同 $.ajax(" get blablablba ")
+    try {
+      const result = await axiosInstance.delete(`${api}${id}`);
+      console.log(result.data);
+      setUploadToggle(!uploadToggle)
+      alert("刪除成功")
+    } catch (error) {
+      console.log("刪除失敗"+error);
 
+    }
+  }
   const buildArtistTable = () => {
     return paintingData.map((a, i) => {
       console.log(a);
@@ -162,7 +214,7 @@ const updataPainting = async ()=>{
               <div className="btn col-5" id={a.paintingId} onClick={getPaintdata}>
                 Edit
               </div>
-              <div className="btn btn-danger col-5" id={a.artistId}>
+              <div className="btn btn-danger col-5" id={a.paintingId} onClick={deletePaintdata}>
                 Delete
               </div>
             </div>
@@ -262,7 +314,18 @@ const updataPainting = async ()=>{
             </label>
             <input type="text" className="form-control" id="price" {...register("price")}/>
           </div>
-
+          <div className="mb-3">
+            <label htmlFor="delicated" className="form-label">
+            Delicated
+            </label>
+            <input type="text" className="form-control" id="delicated" {...register("delicated")}/>
+          </div>
+          <div className="mb-3">
+            <label htmlFor="status" className="form-label">
+            Status
+            </label>
+            <input type="text" className="form-control" id="status" {...register("status")}/>
+          </div>
           <div className="mb-3 form-check">
             <input
               type="checkbox"
@@ -283,6 +346,13 @@ const updataPainting = async ()=>{
           className="table-responsive col-8"
           style={{ maxHeight: "80vh", overflowY: "auto" }}
         >
+          
+            <Pagination
+              totalPage={totalPage}
+              requestPageNumber={requestPageNumber}
+              onPageChange={setRequestPageNumber}
+            />
+         
           <table className="table table-hover">
             <thead>
               <tr>

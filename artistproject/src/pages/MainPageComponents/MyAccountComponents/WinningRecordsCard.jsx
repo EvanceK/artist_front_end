@@ -6,6 +6,8 @@ export default function WinningRecordsCard({
   WinningRecordsCardProps,
   isSelecAllChecked,
   setIsSelecAll,
+  selectedItems,
+  setSelectedItems,
 }) {
   useEffect(() => {
     console.log("re");
@@ -14,17 +16,27 @@ export default function WinningRecordsCard({
 
   const [isChecked, setIsCheck] = useState();
   // 處理單個 item checkbox 的變化
+  // const handleItemChange = (e) => {
+  //   setIsSelecAll(false);
+  //   setIsCheck(e.checked);
+  //   console.log(e.target.id);
+  //   if (e.checked) setSelectedItems(selectedItems.push(e.target.id));
+  //   else setSelectedItems(selectedItems.filter((e) => e !== e.target.id));
+
+  // };
   const handleItemChange = (e) => {
     setIsSelecAll(false);
-    setIsCheck(e.checked);
-    // setSelectedItems(
-    //   (prevSelected) =>
-    //     prevSelected.includes(paintingId)
-    //       ? prevSelected.filter(
-    //           (selectedPaintingId) => selectedPaintingId !== paintingId
-    //         ) // 如果已選中，則取消選中
-    //       : [...prevSelected, paintingId] // 如果未選中，則加入選中項目
-    // );
+    const isChecked = e.target.checked;
+    const paintingId = e.target.id;
+    setIsCheck(isChecked);
+
+    if (isChecked) {
+      setSelectedItems((prevSelected) => [...prevSelected, paintingId]);
+    } else {
+      setSelectedItems((prevSelected) =>
+        prevSelected.filter((id) => id !== paintingId)
+      );
+    }
   };
 
   return (
@@ -34,7 +46,7 @@ export default function WinningRecordsCard({
           className="form-check-input"
           type="checkbox"
           value=""
-          id="select"
+          id={WinningRecordsCardProps.paintingId}
           checked={isChecked} // 確保 checkbox 的狀態同步
           onChange={handleItemChange} // 當狀態改變時觸發事件處理
         />
@@ -75,6 +87,7 @@ export default function WinningRecordsCard({
 WinningRecordsCard.propTypes = {
   WinningRecordsCardProps: PropTypes.shape({
     artisName: PropTypes.string.isRequired,
+    paintingId: PropTypes.string.isRequired,
     paintingName: PropTypes.string.isRequired,
     smallUrl: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
@@ -82,4 +95,6 @@ WinningRecordsCard.propTypes = {
   isSelecAllChecked: PropTypes.bool.isRequired,
   handleItemChange: PropTypes.func.isRequired,
   setIsSelecAll: PropTypes.func.isRequired,
+  selectedItems: PropTypes.shape.isRequired,
+  setSelectedItems: PropTypes.func.isRequired,
 };

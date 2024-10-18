@@ -8,12 +8,7 @@ export default function ArtistMng() {
   const [artistTable, setArtistTable] = useState();
   const [uploadToggle, setUploadToggle] = useState(false);
   const [readData, setReadData] = useState();
-  const [inputData, setInputData] = useState({
-    artistId: "",
-    artistName: "",
-    desciption: "",
-    url: "",
-  });
+  const [inputData, setInputData] = useState();
 
   const {
     register, //Form state
@@ -137,6 +132,7 @@ export default function ArtistMng() {
     }
   };
   useEffect(() => {
+    if(inputData)
     try {
       //確認有沒有id
       if (inputData.artistId == "") {      
