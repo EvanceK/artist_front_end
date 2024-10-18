@@ -34,8 +34,7 @@ export function MainContextProvider({ children }) {
   const searchResultRef = useRef(null);
   const [requestPageNumber, setRequestPageNumber] = useState(1);
   const { isLogin } = useContext(UserContext);
-  // 管控是否能投標
-  const [isValid, setIsvalid] = useState(false);
+
   // E-mail 暫存
   const [email, setEmail] = useState("");
 
@@ -241,8 +240,7 @@ export function MainContextProvider({ children }) {
         setSearchParams,
         loginModalRef,
         showLoginModal,
-        isValid,
-        setIsvalid,
+
         setWToS,
         WToS,
         addRemoveWishlistprocessed,

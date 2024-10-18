@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useFetcher, useParams } from "react-router-dom";
 import { useCallback, useContext, useEffect, useState } from "react";
 import Carousel from "./Carousel";
 import axiosInstance from "../axiosConfig";
@@ -21,13 +21,10 @@ export default function Auction() {
   const [inputValue, setInputValue] = useState("");
   const [finalBidAmount, setFinalBidAmount] = useState();
   const [selectinOptionList, setSelectinOptionList] = useState();
-  const {
-    reLoadBiddingHistory,
-    setReLoadBiddingHistory,
-    showLoginModal,
-
-    isvalid,
-  } = useContext(MainContext);
+  const [isvalid, setIsvalid] = useState();
+  const [placeBidBtn, setPlaceBidBtn] = useState();
+  const { reLoadBiddingHistory, setReLoadBiddingHistory, showLoginModal } =
+    useContext(MainContext);
   const path = import.meta.env.VITE_DATA_HOST_API;
 
   //Post placeBid
@@ -58,6 +55,22 @@ export default function Auction() {
         bidAmount: finalBidAmount,
       });
   }, [finalBidAmount]);
+
+  const handleTimeUp = (state) => {
+    console.log("Time is up! Disabling component...");
+    setIsvalid(state);
+    // Perform any actions like disabling the parent component here
+  };
+  useEffect(() => {
+    console.log(isvalid);
+    isvalid
+      ? setPlaceBidBtn(
+          <span className="btn btn-primary mx-3" onClick={handleClickPlaceBid}>
+            PLACE BID
+          </span>
+        )
+      : setPlaceBidBtn(<></>);
+  }, [isvalid]);
 
   // Function to handle changes in the textbox
   const handleInputChange = (e) => {
@@ -294,6 +307,7 @@ export default function Auction() {
                     textClass: "h4",
                     clockClass: "h1",
                   }}
+                  onTimeUp={handleTimeUp} // Pass the callback
                 />
 
                 {/* <strong className="h1 ms-4">10H 23m 41s</strong> */}
@@ -349,13 +363,17 @@ export default function Auction() {
                   data-bs-toggle="offcanvas"
                   aria-controls="BiddingHistoryModal"
                 >
-                  <span
-                    className="btn btn-primary mx-3"
-                    onClick={handleClickPlaceBid}
-                    style={{ visibility: isvalid ? "visible" : "hidden" }}
-                  >
-                    PLACE BID
-                  </span>
+                  {/* {isvalid ? (
+                    <span
+                      className="btn btn-primary mx-3"
+                      onClick={handleClickPlaceBid}
+                    >
+                      PLACE BID
+                    </span>
+                  ) : (
+                    <></>
+                  )} */}
+                  {placeBidBtn}
                 </a>
               </div>
 

@@ -14,7 +14,7 @@ export default function Carousel() {
       const result = await axiosInstance.get(`${api}?pageSize=3`);
       setPaintingsList(result.data.paintingsList);
       setPaintingsCount(result.data.paintingsCount);
-      // console.log("Carousel:", result.data);
+      console.log("Carousel:", result.data);
       // setTotalPage(result.data.totalPage || 1);
     } catch (error) {
       console.log(error);
