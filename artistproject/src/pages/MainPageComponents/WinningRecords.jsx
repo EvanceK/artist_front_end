@@ -11,7 +11,11 @@ export default function WinningRecords() {
   const [selectedItems, setSelectedItems] = useState([]);
   // 管理selectAll選中的狀態
   const [isSelecAllChecked, setIsSelecAllChecked] = useState();
+
   const [isSelecAll, setIsSelecAll] = useState();
+
+  //管理subtotal的狀態
+  const [subtotal, setSubtotal] = useState();
 
   //讀取後端api
   const path = import.meta.env.VITE_DATA_HOST_API;
@@ -19,7 +23,7 @@ export default function WinningRecords() {
   const api = path + "/customers/mywinningrecords";
 
   const [winningRecordsCard, setWinningRecordsCard] = useState();
-
+  
   //API 返回得標記錄
   const [winningRecords, setWinningRecords] = useState({
     paintingId: "PT0001",
@@ -113,12 +117,7 @@ export default function WinningRecords() {
               Select All
             </label>
           </div>
-          {/* <WinningRecordsCard
-  key={record.paintingId}
-  WinningRecordsCardProps={record}
-  isChecked={selectedItems.includes(record.paintingId)} // 確保計算結果傳遞進去
-  handleItemChange={() => handleItemChange(record.paintingId)} // 傳遞變更處理函數
-/> */}
+         
           <div className="p-4">{winningRecordsCard}</div>
 
           <div className="row d-flex justify-content-end">
