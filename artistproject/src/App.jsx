@@ -11,6 +11,8 @@ import PaintingMgn from "./pages/MainPageComponents/StaffDashBoardpages/Painting
 import StaffLoginModal from "./components/Modal/StaffLoginModal";
 import ArtistMng from "./pages/MainPageComponents/StaffDashBoardpages/ArtistMng";
 import OrderMgn from "./pages/MainPageComponents/StaffDashBoardpages/OrderMgn";
+import StaffMgn from "./pages/MainPageComponents/StaffDashBoardpages/StaffMgn";
+
 import Resetpassword from "./pages/resetpassword";
 // import MemberLogin from "./components/Modal/MemberLogin";
 
@@ -29,6 +31,7 @@ export default function App() {
             <Route index element={<ArtistMng />} />
             <Route path="paintingmgn" element={<PaintingMgn />} />
             <Route path="ordermgn" element={<OrderMgn />} />
+            <Route path="staffmgn" element={<StaffMgn />} />
           </Route>
             <Route path=":token"element={<Resetpassword/>}/>
           <Route path="/home/*" element={<MainPage />}></Route>

@@ -14,6 +14,7 @@ export default function ArtistMng() {
     register, //Form state
     handleSubmit, //submit action
     unregister,
+    reset,
     watch, //watching form control change
     setValue, //set value from watched control
   } = useForm();
@@ -49,6 +50,7 @@ export default function ArtistMng() {
       console.log(result.data);
       setReadData(result.data);
       // setInputData(result.data);
+      document.setValue()
     } catch (error) {
       console.log(error);
     }
@@ -115,6 +117,7 @@ export default function ArtistMng() {
     // console.log(result.data);
     //刷新頁面用
     setUploadToggle(!uploadToggle)
+    reset();
     alert("修改成功")
   };
   //沒有id時就建立一個新的
@@ -126,7 +129,8 @@ export default function ArtistMng() {
       // console.log(result.data);
       //刷新頁面用
       setUploadToggle(!uploadToggle)
-      alert("新稱成功")
+      reset();
+      alert("新增成功")
     } catch (e) {
       console.log(e);
     }
@@ -183,7 +187,7 @@ export default function ArtistMng() {
     <>
       <div className="h1 mt-5">Artist Managerment</div>
       <div className="row">
-        <form className="col-3" onSubmit={handleSubmit(onSubmit)}>
+        <form className="col-3" onSubmit={handleSubmit(onSubmit)} id="myForm">
           <div className="mb-3">
             <label htmlFor="artistId" className="form-label">
               Id

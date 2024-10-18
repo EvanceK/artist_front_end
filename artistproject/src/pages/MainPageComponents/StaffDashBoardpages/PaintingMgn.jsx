@@ -24,6 +24,7 @@ export default function PaintingMgn() {
     handleSubmit, //submit action
     watch, //watching form control change
     setValue, //set value from watched control
+    reset,//resetForm
   } = useForm();
 
   const getArtistList = async () => {
@@ -102,6 +103,7 @@ const createPainting= async()=>{
     const result = await axiosInstance.post(api,inputData)
     console.log(result.data);
     setUploadToggle(!uploadToggle);
+    reset();
     alert("新增成功")
   }catch(error){
     console.log(error);
@@ -117,6 +119,7 @@ const updataPainting = async ()=>{
     const result = await axiosInstance.put(api,inputData);
     console.log(result.data);
     setUploadToggle(!uploadToggle);
+    reset();
     alert("修改成功")
   }catch(error){
     console.log(error);

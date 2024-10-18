@@ -1,7 +1,8 @@
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import axiosInstance from "../../axiosConfig";
 import { MainContext } from "../ContextProvider/MainContext";
+import {useNavigate } from "react-router-dom";
 const path = import.meta.env.VITE_DATA_HOST_API;
 export default function WishlistOffCanCard({ wishlisProps }) {
   const { setaddRemoveWishlistprocessed, addRemoveWishlistprocessed } =
@@ -12,9 +13,17 @@ export default function WishlistOffCanCard({ wishlisProps }) {
     setaddRemoveWishlistprocessed(!addRemoveWishlistprocessed);
 
   };
+  const navigate = useNavigate();
+  const divRef = useRef(null);
+  const placeBid = (e) => {
+    if(divRef.current){
+      console.log(divRef.current.id);
+      navigate(`/home/auction/${divRef.current.id}`);
+    }
+  };
   return (
     <>
-      <div className="row align-items-center m-3">
+      <div className="row align-items-center m-3" id={wishlisProps.paintingId} onClick={placeBid} ref={divRef}>
         {/* <input
       className="form-check-input"
       style={{ fontSize: "20px" }}
