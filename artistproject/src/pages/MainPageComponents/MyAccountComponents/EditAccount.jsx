@@ -167,7 +167,7 @@ export default function EditAccount() {
                 data-bs-dismiss="modal"
                 onClick={submit}
               >
-                SIGN UP
+                Confirm
               </div>
             </div>
           </form>
