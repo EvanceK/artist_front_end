@@ -6,11 +6,11 @@ export default function CountDown({ datetime, config }) {
 
   // Calculate the "Coming Soon" date (3 days after the given DateTime)
   const comingSoonDate = new Date(DateTime);
-  comingSoonDate.setDate(comingSoonDate.getDate() + 1);
+  comingSoonDate.setDate(comingSoonDate.getDate() + 3);
 
   // Calculate the "Close In" date (10 days after "Coming Soon" date)
   const closeInDate = new Date(comingSoonDate);
-  closeInDate.setDate(closeInDate.getDate() + 3);
+  closeInDate.setDate(closeInDate.getDate() + 5);
 
   const [isClosed, setIsClosed] = useState(false);
   const [isOnGoing, setIsOnGoing] = useState(false);

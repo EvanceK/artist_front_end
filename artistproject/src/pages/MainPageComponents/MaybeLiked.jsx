@@ -37,7 +37,7 @@ export default function MaybeLiked() {
   return (
     <>
       <div className="container ">
-        <div className="h2 mt-5"> Most wanted...</div>
+        <div className="h2 mt-5"> Most liked...</div>
 
         <div className="divByArtis ">
           <div className="list">
