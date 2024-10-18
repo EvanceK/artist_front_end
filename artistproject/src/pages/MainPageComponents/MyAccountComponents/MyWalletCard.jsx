@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 
-export default function MywalletCard ({biddingHistory}){
+export default function MywalletCard ({biddingHistory,money}){
 
-
+  console.log(money)
     return(
         <div className="d-flex justify-content-between h5 mt-3 px-5">
         
