@@ -3,7 +3,7 @@ import axiosInstance from "../axiosConfig";
 import { useState, useEffect } from "react";
 export default function Carousel() {
   const path = import.meta.env.VITE_DATA_HOST_API;
-  const api = path + "/PTController/topfavorites";
+  const api = path + "/PTController/topbiddings";
   const [paintingsCount, setPaintingsCount] = useState([]);
   const [paintingsList, setPaintingsList] = useState();
   const [CarouselItem, setCarouselItem] = useState();
