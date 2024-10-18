@@ -11,6 +11,7 @@ export default function WinningRecords() {
   const [selectedItems, setSelectedItems] = useState([]);
   // 管理selectAll選中的狀態
   const [isSelecAllChecked, setIsSelecAllChecked] = useState();
+  const [isSelecAll, setIsSelecAll] = useState();
 
   //讀取後端api
   const path = import.meta.env.VITE_DATA_HOST_API;
@@ -18,7 +19,7 @@ export default function WinningRecords() {
   const api = path + "/customers/mywinningrecords";
 
   const [winningRecordsCard, setWinningRecordsCard] = useState();
-  
+
   //API 返回得標記錄
   const [winningRecords, setWinningRecords] = useState({
     paintingId: "PT0001",
@@ -33,6 +34,7 @@ export default function WinningRecords() {
   // 當selet All 被選中或取消選中
   const handleSelectedAllChange = (e) => {
     setIsSelecAllChecked(e.target.checked);
+    setIsSelecAll(e.checked);
     console.log("clicked", isSelecAllChecked);
   };
 
@@ -42,7 +44,7 @@ export default function WinningRecords() {
       winningRecords.map((bp) => {
         sa.push(bp.paintingId);
       });
-    } else{
+    } else {
       setSelectedItems([]);
     }
     setSelectedItems(sa);
@@ -52,18 +54,6 @@ export default function WinningRecords() {
   useEffect(() => {
     console.log(isSelecAllChecked, "finall array", selectedItems);
   }, [selectedItems]);
-
-  // 處理單個 item checkbox 的變化
-  const handleItemChange = (paintingId) => {
-    setSelectedItems(
-      (prevSelected) =>
-        prevSelected.includes(paintingId)
-          ? prevSelected.filter(
-              (selectedPaintingId) => selectedPaintingId !== paintingId
-            ) // 如果已選中，則取消選中
-          : [...prevSelected, paintingId] // 如果未選中，則加入選中項目
-    );
-  };
 
   // 取得得標記錄
   const getWinningRecords = async () => {
@@ -90,6 +80,7 @@ export default function WinningRecords() {
                 key={i}
                 WinningRecordsCardProps={bp}
                 isSelecAllChecked={isSelecAllChecked}
+                setIsSelecAll={setIsSelecAll}
               />
             );
           })
@@ -115,7 +106,7 @@ export default function WinningRecords() {
             <input
               className="form-check-input "
               type="checkbox"
-              checked={isSelecAllChecked}
+              checked={isSelecAll}
               onChange={handleSelectedAllChange} // 當狀態改變時觸發事件處理
             />
             <label className="form-check-label" htmlFor="selectAll">
