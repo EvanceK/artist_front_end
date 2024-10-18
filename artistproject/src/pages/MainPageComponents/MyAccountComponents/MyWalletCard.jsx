@@ -19,9 +19,9 @@ export default function MywalletCard (MyWallCardProps){
 
 MywalletCard.propTypes = {
     MyWallCardProps: PropTypes.shape({
-      // bankAccount: PropTypes.string.isRequired,
-      // creditCardNo: PropTypes.string.isRequired,
-      // bankBalance: PropTypes.number.isRequired, // 使用 number 而不是 Double
+      bankAccount: PropTypes.string,
+      creditCardNo: PropTypes.string,
+      bankBalance: PropTypes.number, // 使用 number 而不是 Double
       biddingHistory: PropTypes.arrayOf( // 定義 biddingHistory 的結構
         PropTypes.shape({
           refundDate: PropTypes.string.isRequired, // 假設 refundDate 是字符串

@@ -30,7 +30,7 @@ function MyWallet() {
       const result = await axiosInstance.get(api);
       console.log("line 28 :", result.data);
       setWalletInfo(result.data);
-      console.log("line 31", walletInfo);
+     
     }
   };
 
@@ -39,6 +39,8 @@ function MyWallet() {
   }, []);
 
   useEffect(() => {
+    console.log("line 41", walletInfo.biddingHistory);
+    if(walletInfo)
     setMyWalletCard(
       walletInfo.biddingHistory.length > 0
         ? walletInfo.biddingHistory.map((bp, i) => {
