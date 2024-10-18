@@ -23,7 +23,7 @@ export default function WinningRecords() {
   const api = path + "/customers/mywinningrecords";
 
   const [winningRecordsCard, setWinningRecordsCard] = useState();
-  
+
   //API 返回得標記錄
   const [winningRecords, setWinningRecords] = useState({
     paintingId: "PT0001",
@@ -67,7 +67,7 @@ export default function WinningRecords() {
       // const result = await axios.get(api);
       console.log(result.data);
       setWinningRecords(result.data.winningRecords);
-      console.log(winningRecords);
+      console.log("winningRecords: ", winningRecords);
     }
   };
 
@@ -85,6 +85,8 @@ export default function WinningRecords() {
                 WinningRecordsCardProps={bp}
                 isSelecAllChecked={isSelecAllChecked}
                 setIsSelecAll={setIsSelecAll}
+                selectedItems={selectedItems}
+                setSelectedItems={setSelectedItems}
               />
             );
           })
@@ -117,7 +119,7 @@ export default function WinningRecords() {
               Select All
             </label>
           </div>
-         
+
           <div className="p-4">{winningRecordsCard}</div>
 
           <div className="row d-flex justify-content-end">
