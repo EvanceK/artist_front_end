@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 import AddFavoriteBtn from "./AddFavoriteBtn";
 import CountDown from "./CountDown";
-import { useEffect, useState } from "react";
 export default function MyCard({
   Paintings,
   minWidth,
@@ -12,33 +11,13 @@ export default function MyCard({
   textSize,
 }) {
   const navigate = useNavigate();
-  const [placeBidBtn, setPlaceBidBtn] = useState();
-  useEffect(() => {
-    isButtonDisabled
-      ? setPlaceBidBtn(
-          <span
-            className="btn btn-primary mx-3"
-            id={Paintings.paintingId}
-            onClick={placeBid}
-          >
-            PLACE BID
-          </span>
-        )
-      : setPlaceBidBtn(<></>);
-  }, [placeBidBtn]);
+
   const placeBid = (e) => {
     console.log("placeBid");
     console.log(e.target.id);
     navigate(`/home/auction/${e.target.id}`);
   };
-  // State to control the button's disabled state
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
-  // Controller function to pass to the CountDown component
-  const handleCountDownControl = (isActive) => {
-    // Disable the button when countdown is ongoing (isActive === true), enable when closed (isActive === false)
-    setIsButtonDisabled(isActive);
-  };
   return (
     <div className={`cards d-flex flex-column align-items-center ${cardClass}`}>
       <div
@@ -72,7 +51,13 @@ export default function MyCard({
           </div>
           <div className="cardBtn d-flex justify-content-center ">
             <AddFavoriteBtn paintingId={Paintings.paintingId} />
-            {placeBidBtn}
+            <span
+              className="btn btn-primary mx-3"
+              id={Paintings.paintingId}
+              onClick={placeBid}
+            >
+              PLACE BID
+            </span>
           </div>
         </div>
         <div className="imgborder">
@@ -98,7 +83,6 @@ export default function MyCard({
           clockClass: "h4",
           CountDownClass: "d-flex align-items-end",
         }}
-        controller={handleCountDownControl}
       />
     </div>
   );

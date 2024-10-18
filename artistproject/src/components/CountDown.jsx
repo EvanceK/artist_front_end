@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
-export default function CountDown({ datetime, config, controller }) {
+export default function CountDown({ datetime, config }) {
   const DateTime = datetime;
 
   // Calculate the "Coming Soon" date (3 days after the given DateTime)
   const comingSoonDate = new Date(DateTime);
-  comingSoonDate.setDate(comingSoonDate.getDate() + 2);
+  comingSoonDate.setDate(comingSoonDate.getDate() + 3);
 
   // Calculate the "Close In" date (10 days after "Coming Soon" date)
   const closeInDate = new Date(comingSoonDate);
@@ -20,11 +20,6 @@ export default function CountDown({ datetime, config, controller }) {
     minutes: 0,
     seconds: 0,
   });
-  useEffect(() => {
-    // Update parent component based on countdown state
-    if (isOnGoing) controller(true); // Enable button when "Close In" starts
-    if (isClosed) controller(false); // Disable button when countdown ends
-  }, [isOnGoing, isClosed]);
 
   useEffect(() => {
     // Function to calculate the remaining time
@@ -123,5 +118,4 @@ CountDown.propTypes = {
     textClass: PropTypes.string,
     CountDownClass: PropTypes.string,
   }),
-  controller: PropTypes.func,
 };
