@@ -34,6 +34,8 @@ export function MainContextProvider({ children }) {
   const searchResultRef = useRef(null);
   const [requestPageNumber, setRequestPageNumber] = useState(1);
   const { isLogin } = useContext(UserContext);
+  //vv for offcanvas 功能用：
+  const biddingHistoryRef = useRef();
 
   // E-mail 暫存
   const [email, setEmail] = useState("");
@@ -186,6 +188,13 @@ export function MainContextProvider({ children }) {
       modal.show();
     }
   };
+  // Function to trigger the offcanvas
+  const showBiddingHistoryRef = () => {
+    if (biddingHistoryRef.current) {
+      const Offcanvas = new bootstrap.Offcanvas(biddingHistoryRef.current); // Use bootstrap.offcanvas directly
+      Offcanvas.show();
+    }
+  };
 
   // Function to trigger the modal
   const showIncorrectAccountModal = () => {
@@ -250,7 +259,7 @@ export function MainContextProvider({ children }) {
         IncorrectPasswordModalRef,
         showIncorrectPasswordModal,
         PasswordChangedRef,
-
+        showBiddingHistoryRef,
         showPasswordChangedRef,
         reLoadBiddingHistory,
         setReLoadBiddingHistory,
@@ -268,7 +277,7 @@ export function MainContextProvider({ children }) {
         setRecipientInfo,
         paymentInfo,
         setPaymentInfo,
-
+        biddingHistoryRef,
         email,
         setEmail,
         handleEmail,

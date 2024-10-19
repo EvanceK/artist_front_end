@@ -8,141 +8,37 @@ import { MainContext } from "./ContextProvider/MainContext";
 
 export default function Auction() {
   const { id } = useParams();
-  const [loading, setLoading] = useState(false);
   const [biddingHistory, setBiddingHistory] = useState();
   const [painting, setPainting] = useState();
   const [breadcrumb, setBreadcrumb] = useState();
   const [highestBre, setHighestBre] = useState();
   const [breAmoutArray, setBreAmoutArray] = useState();
   const [auctionList, setAuctionList] = useState();
-  const [placeBid, setPlaceBid] = useState();
+
+  const [formData, setFormData] = useState({
+    paintingId: "",
+    bidAmount: 0,
+  });
   const [selectedOption, setSelectedOption] = useState("");
-  const [selectionValue, setSelectionValue] = useState();
+
   const [inputValue, setInputValue] = useState("");
-  const [finalBidAmount, setFinalBidAmount] = useState();
+
   const [selectinOptionList, setSelectinOptionList] = useState();
   const [isvalid, setIsvalid] = useState();
   const [placeBidBtn, setPlaceBidBtn] = useState();
-  const { reLoadBiddingHistory, setReLoadBiddingHistory, showLoginModal } =
-    useContext(MainContext);
+  const {
+    reLoadBiddingHistory,
+    setReLoadBiddingHistory,
+    showLoginModal,
+    showBiddingHistoryRef,
+  } = useContext(MainContext);
   const path = import.meta.env.VITE_DATA_HOST_API;
 
-  //Post placeBid
-  const handleClickPlaceBid = () => {
-    if (!localStorage.getItem("token")) showLoginModal();
-    // console.log("ID:", painting.paintingId);
-    // setPlaceBid({
-    //   paintingId: painting.paintingId,
-    //   bidAmount: "2000",
-    // });
-    if (inputValue && !selectionValue) {
-      setFinalBidAmount(inputValue);
-    } else if (selectionValue) {
-      setFinalBidAmount(selectionValue);
-    }
-    console.log("placeBid!");
-  };
-
-  // useEffect(() => {
-  //   if (inputValue && !selectionValue) {
-  //     setFinalBidAmount(inputValue);
-  //   } else if (selectionValue) {
-  //     setFinalBidAmount(selectionValue);
-  //   }
-  // }, [inputValue, selectionValue]);
-
-  useEffect(() => {
-    if (placeBid) postPlaceBid();
-    console.log("step 1: click Bidbtn");
-  }, [placeBid]);
-
-  useEffect(() => {
-    console.log(finalBidAmount);
-    if (finalBidAmount)
-      setPlaceBid({
-        paintingId: painting.paintingId,
-        bidAmount: finalBidAmount,
-      });
-  }, [finalBidAmount]);
-
-  const handleTimeUp = (state) => {
-    setIsvalid(state);
-    // Perform any actions like disabling the parent component here
-  };
-  useEffect(() => {
-    console.log(isvalid);
-    isvalid
-      ? setPlaceBidBtn(
-          <span className="btn btn-primary mx-3" onClick={handleClickPlaceBid}>
-            PLACE BID
-          </span>
-        )
-      : setPlaceBidBtn(<></>);
-  }, [isvalid]);
-
-  // Function to handle changes in the textbox
-  const handleInputChange = (e) => {
-    const value = e.target.value;
-    // console.log(value);
-    setInputValue(value);
-    setSelectedOption("Bidding amount ..."); // Reset if no match found
-
-    // Check if the input matches any option value and update selectedOption
-    // if (value === "1234") {
-    //   setSelectedOption("option1");
-    // } else if (value === "5678") {
-    //   setSelectedOption("option2");
-    // } else if (value === "91011") {
-    //   setSelectedOption("option3");
-    // } else {
-    // setSelectedOption(""); // Reset if no match found
-    // }
-  };
-  const handleSelectChange = (event) => {
-    setSelectedOption(event.target.value);
-    setInputValue("");
-    const value = event.target.value;
-
-    // Extract the number part from the value
-    const numberPart = value.match(/\d{1,3}(?:,\d{3})*/);
-
-    if (numberPart) {
-      // Remove commas and convert the string back to a number
-      const normalValue = parseFloat(numberPart[0].replace(/,/g, ""));
-      // Check if it's a valid number
-      if (!isNaN(normalValue) && isFinite(normalValue)) {
-        // console.log(normalValue);
-        setSelectionValue(normalValue);
-      } else {
-        console.error("Not a valid number");
-      }
-    } else {
-      console.error("No number found in the string");
-    }
-  };
-
-  const postPlaceBid = async () => {
-    const api = path + "/api/bidding/bid";
-    try {
-      const result = await axiosInstance.post(`${api}`, placeBid);
-      console.log(result);
-      setReLoadBiddingHistory((prev) => !prev); // Only toggle once
-      console.log("step 2: post Bidbtn");
-    } catch (e) {
-      alert(e.response.data);
-      console.log(e.response.data);
-      console.log("step 2: post Bidbtn error");
-    }
-  };
-  // useEffect(() => {
-  //   if (placeBid) postPlaceBid();
-  //   setReLoadBiddingHistory(!reLoadBiddingHistory);
-  // }, [placeBid]);
   // Fetch painting data
   const getdata = async () => {
     setSelectedOption("");
     const api = path + "/api/bidding";
-    setLoading(true);
+
     try {
       const result = await axiosInstance.get(`${api}/${id}`);
       // setData(result.data.paintingsList);
@@ -156,37 +52,11 @@ export default function Auction() {
       console.log(error);
       console.log("step 3: get auction data erro");
     }
-    setLoading(false);
   };
 
   useEffect(() => {
     getdata();
   }, [id, reLoadBiddingHistory]);
-  useEffect(() => {
-    buildBreadCrumb();
-  }, [painting]);
-
-  useEffect(() => {
-    if (biddingHistory && biddingHistory.length > 0) {
-      setHighestBre(biddingHistory[0].bidAmount);
-    } else {
-      setHighestBre(painting?.price);
-    }
-
-    // console.log("BreAmoutArray:", breAmoutArray);
-
-    // else {
-    //   console.log("No bidding history available");
-    // }
-  }, [biddingHistory]);
-
-  useEffect(() => {
-    setBreAmoutArray(
-      Array.from({ length: 3 }, (_, i) => highestBre + 50 * (i + 1))
-    );
-    console.log("step 4: get highestBre and set setBreAmoutArray");
-  }, [highestBre]);
-
   const buildAcutionList = () => {
     if (!biddingHistory || biddingHistory.length === 0) {
       return <p>No bidding history available.</p>;
@@ -215,27 +85,6 @@ export default function Auction() {
     setAuctionList(buildAcutionList());
     console.log("step 5: setAuctionList");
   }, [biddingHistory]);
-  //buil selection option
-  useEffect(() => {
-    if (breAmoutArray) console.log("step 5: setSelectinOptionList");
-    setSelectinOptionList(
-      breAmoutArray?.map((b, i) => {
-        console.log(b);
-        return (
-          <option key={i} defaultValue={b}>
-            ${" "}
-            {new Intl.NumberFormat("en-IN", {
-              // maximumSignificantDigits: 4,
-            }).format(b)}
-          </option>
-        );
-      })
-    );
-  }, [breAmoutArray]);
-  // useEffect(() => {
-  // if (painting) console.log("painting:", painting);
-  // if (biddingHistory) console.log("biddingHistory:", biddingHistory);
-  // }, [painting, biddingHistory]);
 
   const buildBreadCrumb = useCallback(() => {
     if (!painting) return; // Exit if painting is undefined
@@ -251,7 +100,11 @@ export default function Auction() {
                 {painting.artisName}
               </Link>
             </li>
-            <li className="breadcrumb-item active" aria-current="page">
+            <li
+              className="breadcrumb-item active"
+              aria-current="page"
+              id="paintingId"
+            >
               {painting.paintingId}
             </li>
           </ol>
@@ -259,6 +112,114 @@ export default function Auction() {
       </div>
     );
   }, [painting]);
+
+  useEffect(() => {
+    if (biddingHistory && biddingHistory.length > 0) {
+      setHighestBre(biddingHistory[0].bidAmount);
+    } else {
+      setHighestBre(painting?.price);
+    }
+  }, [biddingHistory]);
+
+  useEffect(() => {
+    setBreAmoutArray(
+      Array.from({ length: 3 }, (_, i) => highestBre + 50 * (i + 1))
+    );
+    console.log("step 4: get highestBre and set setBreAmoutArray");
+  }, [highestBre]);
+
+  //build selection option
+  useEffect(() => {
+    if (breAmoutArray) console.log("step 5: setSelectinOptionList");
+    setSelectinOptionList(
+      breAmoutArray?.map((b, i) => {
+        console.log(b);
+        return (
+          <option key={i} value={b}>
+            ${" "}
+            {new Intl.NumberFormat("en-IN", {
+              // maximumSignificantDigits: 4,
+            }).format(b)}
+          </option>
+        );
+      })
+    );
+  }, [breAmoutArray]);
+
+  useEffect(() => {
+    buildBreadCrumb();
+  }, [painting]);
+  const handleTimeUp = (state) => {
+    setIsvalid(state);
+    // Perform any actions like disabling the parent component here
+  };
+  useEffect(() => {
+    console.log(isvalid);
+    isvalid
+      ? setPlaceBidBtn(
+          <button
+            type="submit"
+            className="btn btn-primary mx-3"
+            onClick={handleClickPlaceBid}
+          >
+            PLACE BID
+          </button>
+        )
+      : setPlaceBidBtn(<></>);
+  }, [isvalid]);
+
+  // Function to handle changes in the textbox
+
+  const handleInputChange = (e) => {
+    const { value, name } = e.target;
+
+    if (name === "selction") {
+      setInputValue(""); // Clear the text input when selection changes
+      setSelectedOption(value);
+    } else {
+      setSelectedOption(""); // Clear the selection when input changes
+      setInputValue(value);
+    }
+  };
+
+  //Post placeBid
+
+  const handleClickPlaceBid = async (e) => {
+    e.preventDefault();
+    const authorization = localStorage.getItem("token");
+    if (authorization == null) {
+      console.log(authorization);
+      showLoginModal();
+      return;
+    }
+
+    const inputValue = document.getElementById("inputValue").value;
+    const selectedValue = document.getElementById("selectedValue").value;
+    const finalvalue = inputValue === "" ? selectedValue : inputValue;
+    if (finalvalue) {
+      const newFormData = {
+        ...formData,
+        paintingId: document.getElementById("paintingId").innerText,
+        bidAmount: finalvalue,
+      };
+
+      setFormData(newFormData);
+      console.log(newFormData);
+
+      try {
+        const api = path + "/api/bidding/bid";
+        const result = await axiosInstance.post(`${api}`, newFormData);
+        console.log(result);
+        setReLoadBiddingHistory((prev) => !prev);
+      } catch (e) {
+        alert(e.response.data);
+        console.log(e);
+      }
+      showBiddingHistoryRef();
+    } else {
+      alert("Please confirm you amount");
+    }
+  };
 
   if (painting)
     return (
@@ -317,8 +278,6 @@ export default function Auction() {
                   }}
                   onTimeUp={handleTimeUp} // Pass the callback
                 />
-
-                {/* <strong className="h1 ms-4">10H 23m 41s</strong> */}
               </div>
               <p className="price h4 text-center mb-5">
                 ${" "}
@@ -326,64 +285,39 @@ export default function Auction() {
                   maximumSignificantDigits: 3,
                 }).format(painting.price)}{" "}
               </p>
-
-              <select
-                className="form-select"
-                aria-label="Default select example"
-                value={selectedOption}
-                onChange={handleSelectChange}
-              >
-                <option defaultValue={0}>Bidding amount ...</option>
-                {selectinOptionList}
-                {/* {breAmoutArray
-                  ? breAmoutArray.map((b, i) => {
-                      return (
-                        <option key={i} defaultValue={b}>
-                          ${" "}
-                          {new Intl.NumberFormat("en-IN", {
-                            maximumSignificantDigits: 3,
-                          }).format(b)}
-                        </option>
-                      );
-                    })
-                  : ""} */}
-                {/* <option defaultValue>$ 1,600</option>
-                <option defaultValue="1">$1,605</option>
-                <option defaultValue="2">$ 1.610</option> */}
-              </select>
-              <span className="small text-danger">
-                Once a bid is placed, it cannot be canceled. Please bid
-                carefully.
-              </span>
-              <input
-                className="form-control"
-                placeholder="optional amount"
-                value={inputValue}
-                onChange={handleInputChange}
-              ></input>
-
-              <div className="cardBtn d-flex justify-content-center m-5">
-                <AddFavoriteBtn paintingId={painting.paintingId} />
-                <a
-                  className="d-flex"
-                  href="#biddingHistoryOffcanvas"
-                  role="button"
-                  // data-bs-toggle="offcanvas"
-                  // aria-controls="BiddingHistoryModal"
+              <form action="">
+                <select
+                  className="form-select"
+                  aria-label="Default select example"
+                  id="selectedValue"
+                  name="selction"
+                  value={selectedOption}
+                  onChange={handleInputChange}
+                  // onChange={handleSelectChange}
                 >
-                  {/* {isvalid ? (
-                    <span
-                      className="btn btn-primary mx-3"
-                      onClick={handleClickPlaceBid}
-                    >
-                      PLACE BID
-                    </span>
-                  ) : (
-                    <></>
-                  )} */}
+                  <option value={null}>Bidding amount ...</option>
+                  {selectinOptionList}
+                </select>
+                <span className="small text-danger">
+                  Once a bid is placed, it cannot be canceled. Please bid
+                  carefully.
+                </span>
+                <input
+                  className="form-control"
+                  placeholder="optional amount"
+                  name="textbox"
+                  id="inputValue"
+                  type="text"
+                  value={inputValue}
+                  onChange={handleInputChange}
+                ></input>
+
+                <div className="cardBtn d-flex justify-content-center m-5">
+                  <AddFavoriteBtn paintingId={painting.paintingId} />
+
                   {placeBidBtn}
-                </a>
-              </div>
+                </div>
+              </form>
 
               <div className="row shipment">
                 <div className="row m-3">

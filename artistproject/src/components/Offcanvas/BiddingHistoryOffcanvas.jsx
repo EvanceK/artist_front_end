@@ -5,18 +5,22 @@ import { MainContext } from "../ContextProvider/MainContext";
 import axiosInstance from "../../axiosConfig";
 
 export default function BiddingHistoryOffcanvas() {
-
   const { isLogin, setLogin } = useContext(UserContext);
-  const { reLoadBiddingHistory, setReLoadBiddingHistory,setReLoadBiddingNum,reLoadBiddingNum } = useContext(MainContext);
+  const {
+    reLoadBiddingHistory,
+    setReLoadBiddingNum,
+    reLoadBiddingNum,
+    biddingHistoryRef,
+  } = useContext(MainContext);
   const [biddingHistory, setBiddingHistory] = useState([]);
-  const [reLoadCard,setReLoadCard] = useState(false);
-  const [renderCart,setRenderCart] = useState();
+  const [reLoadCard, setReLoadCard] = useState(false);
+  const [renderCart, setRenderCart] = useState();
 
   const getBiddingHistory = async () => {
     const path = import.meta.env.VITE_DATA_HOST_API;
     const api = path + "/api/bidding/history";
     const authorization = localStorage.getItem("token");
-    
+
     if (authorization) {
       const result = await axiosInstance.get(api);
       // console.log(result.data);
@@ -24,7 +28,6 @@ export default function BiddingHistoryOffcanvas() {
       setBiddingHistory(result.data);
       //存入記憶體
       localStorage.setItem("biddingHistory", JSON.stringify(result.data));
-
     } else {
       console.log("please login");
     }
@@ -44,20 +47,21 @@ export default function BiddingHistoryOffcanvas() {
     }
   }, [isLogin, reLoadBiddingHistory]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setReLoadBiddingNum(!reLoadBiddingNum);
     setRenderCart(
       biddingHistory.length > 0
-            ? biddingHistory.map((bp, i) => {
-                return <BiddingHistoryCard key={i} biddingHistoryProps={bp} />;
-              })
-            : ""
-       );
-     },[reLoadCard,biddingHistory])
-   
+        ? biddingHistory.map((bp, i) => {
+            return <BiddingHistoryCard key={i} biddingHistoryProps={bp} />;
+          })
+        : ""
+    );
+  }, [reLoadCard, biddingHistory]);
+
   return (
     <>
       <div
+        ref={biddingHistoryRef}
         className="offcanvas offcanvas-end"
         tabIndex="-1"
         id="biddingHistoryOffcanvas"

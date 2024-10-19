@@ -46,9 +46,9 @@ export default function StaffMgn() {
     const result = await axios.put(`${api}`, inputData);
     // console.log(result.data);
     //刷新頁面用
-    setUploadToggle(!uploadToggle)
+    setUploadToggle(!uploadToggle);
     reset();
-    alert("修改成功")
+    alert("修改成功");
   };
   //沒有id時就建立一個新的
   //新增
@@ -59,31 +59,37 @@ export default function StaffMgn() {
       const result = await axiosInstance.post(api, inputData);
       // console.log(result.data);
       //刷新頁面用
-      setUploadToggle(!uploadToggle)
+      setUploadToggle(!uploadToggle);
       reset();
-      alert("新增成功")
+      alert("新增成功");
     } catch (e) {
       console.log(e);
     }
-  };  
+  };
   useEffect(() => {
-    if(inputData)
-    try {
-      // 確認有沒有id
-      if (inputData.staffId == "") {      
-        if(inputData.staffName&&inputData.staffDepartment&&inputData.staffUsername&&inputData.staffPassword){
-          console.log(inputData);
-          createStaff();
-        }else{
-          alert("欄位不能為空")
+    if (inputData)
+      try {
+        // 確認有沒有id
+        if (inputData.staffId == "") {
+          console.log("sID is blank");
+          if (
+            inputData.staffName &&
+            inputData.staffDepartment &&
+            inputData.staffUserName &&
+            inputData.staffPassWord
+          ) {
+            console.log(inputData);
+            createStaff();
+          } else {
+            alert("欄位不能為空");
+          }
+        } else {
+          // setInputData(inputData);
+          updataStaff();
         }
-      } else {
-        // setInputData(inputData);
-        updataStaff();
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
-    }
     console.log(inputData);
   }, [inputData]);
 
@@ -91,11 +97,11 @@ export default function StaffMgn() {
     console.log(data);
     //確認資料
     if (data.confirmed) {
-    // unregister("confirmed");
-    // console.log("unregister: ", data);
-    setInputData(data);
+      // unregister("confirmed");
+      // console.log("unregister: ", data);
+      setInputData(data);
     } else {
-    alert("Please Confirmed");
+      alert("Please Confirmed");
     }
   };
 
@@ -142,7 +148,7 @@ export default function StaffMgn() {
             />
           </div>
           <div className="mb-3">
-          <label htmlFor="staffName" className="form-label">
+            <label htmlFor="staffName" className="form-label">
               Staff Name
             </label>
             <input
@@ -154,7 +160,7 @@ export default function StaffMgn() {
             />
           </div>
           <div className="mb-3">
-          <label htmlFor="staffDepartment" className="form-label">
+            <label htmlFor="staffDepartment" className="form-label">
               Staff Department
             </label>
             <input
@@ -166,8 +172,8 @@ export default function StaffMgn() {
             />
           </div>
           <div className="mb-3">
-          <label htmlFor="staffUserName" className="form-label">
-            Staff UserName
+            <label htmlFor="staffUserName" className="form-label">
+              Staff UserName
             </label>
             <input
               type="text"
@@ -178,8 +184,8 @@ export default function StaffMgn() {
             />
           </div>
           <div className="mb-3">
-          <label htmlFor="staffPassWord" className="form-label">
-            Staff PassWord
+            <label htmlFor="staffPassWord" className="form-label">
+              Staff PassWord
             </label>
             <input
               type="text"
@@ -195,7 +201,6 @@ export default function StaffMgn() {
               className="form-check-input"
               id="confirmed"
               {...register("confirmed")}
-
             />
             <label className="form-check-label" htmlFor="confirmed">
               Confirmed
