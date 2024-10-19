@@ -3,8 +3,10 @@ import axiosInstance from "../../../axiosConfig";
 
 export default function StaffMgn() {
   const path = import.meta.env.VITE_DATA_HOST_API;
-  const [staffList, setStaffList] = useState([]); //所有作家名單 目前for navBar 選單用
+  const [staffList, setStaffList] = useState([]); //所有員工名單 目前for navBar 選單用
   const [staffTable, setStaffTable] = useState();
+  const [inputData, setInputData] = useState();
+
   // methods for loading data
   const getStaffList = async () => {
     const api = path + "/StaffController/findall";
@@ -25,6 +27,54 @@ export default function StaffMgn() {
     if (staffList) setStaffTable(buildStaffTable());
   }, [staffList]);
 
+  //新增
+  const createStaffC = async () => {
+    console.log(inputData);
+    try {
+      const api = path + "/StaffController/createStaffC";
+      const result = await axiosInstance.post(api, inputData);
+      // console.log(result.data);
+      //刷新頁面用
+      setUploadToggle(!uploadToggle)
+      reset();
+      alert("新增成功")
+    } catch (e) {
+      console.log(e);
+    }
+  };  
+  useEffect(() => {
+    if(inputData)
+    try {
+      //確認有沒有id
+      if (inputData.staffId == "") {      
+        if(inputData.staffName&&inputData.staffDepartment&&inputData.staffUsername&&inputData.staffPassword){
+          console.log(inputData);
+          createStaff();
+        }else{
+          alert("欄位不能為空")
+        }
+      } else {
+        // setInputData(inputData);
+        updataStaff();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    console.log(inputData);
+  }, [inputData]);
+
+  const onSubmit = (data) => {
+    console.log(data);
+    //確認資料
+    if (data.confirmed) {
+    unregister("confirmed");
+    console.log("unregister: ", data);
+    setInputData(data);
+    } else {
+    alert("Please Confirmed");
+    }
+  };
+
   const buildStaffTable = () => {
     return staffList.map((a, i) => {
       console.log(a);
@@ -37,10 +87,10 @@ export default function StaffMgn() {
           <td>{a.staffPassword}</td>
           <td className="d-flex align-items-center justify-content-center">
             <div className="row d-flex">
-              <div className="btn col-4" id={a}>
+              <div className="btn col-6" id={a}>
                 Edit
               </div>
-              <div className="btn btn-danger col-4" id={a.staffId}>
+              <div className="btn btn-danger col-6" id={a.staffId}>
                 Delete
               </div>
             </div>
