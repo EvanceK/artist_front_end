@@ -10,7 +10,6 @@
 <a href=""><img src="https://img.shields.io/badge/javascript- ES6-blue?logo=javascript"/></a>
 <a href=""><img src="https://img.shields.io/badge/html5-white?logo=html5"/></a>
 <a href=""><img src="https://img.shields.io/badge/CSS3-yellow?logo=css3"/></a>
-<a href="https://www.python.org/"><img src="https://img.shields.io/badge/python-purple?logo=python"/></a>
 
 <h2>IDE, Frameworks</h2>
 <a href="https://legacy.reactjs.org/"><img src="https://img.shields.io/badge/react- 18.3.1-blue?logo=react"/></a>
