@@ -2,13 +2,12 @@ import { useEffect, useState } from "react";
 import axiosInstance from "../../../axiosConfig";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-
 export default function StaffMgn() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const [staffList, setStaffList] = useState([]); //所有員工名單 目前for navBar 選單用
   const [staffTable, setStaffTable] = useState();
   const [uploadToggle, setUploadToggle] = useState(false);
-
+  const [readData, setReadData] = useState();
   const [inputData, setInputData] = useState();
 
   const {
@@ -26,19 +25,71 @@ export default function StaffMgn() {
     // 等同 $.ajax(" get blablablba ")
     try {
       const result = await axiosInstance.get(`${api}`);
-      // console.log(result.data);
+      console.log(result.data);
       setStaffList(result.data);
+
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
     getStaffList();
-  }, []);
-
+  }, [uploadToggle]);
+  //將資料更新至table
   useEffect(() => {
     if (staffList) setStaffTable(buildStaffTable());
   }, [staffList]);
+
+  useEffect(() => {
+    if (readData) {
+      document.getElementById("staffId").value = readData.staffId;
+      setValue("staffId", readData.staffId);
+      document.getElementById("staffName").value = readData.staffName;
+      setValue("staffName", readData.staffName);
+      document.getElementById("staffDepartment").value = readData.staffDepartment;
+      setValue("staffDepartment", readData.staffDepartment);
+      document.getElementById("staffUsername").value = readData.staffUsername;
+      setValue("staffUsername", readData.staffUsername);
+      document.getElementById("staffPassword").value = readData.staffPassword;
+      setValue("staffPassword", readData.staffPassword);
+    }
+  }, [readData]);
+
+  //刪除按鈕
+  const deleteStaff = async (event) => {
+    const id = event.target.id;
+    console.log(id);
+    const api = path + "/StaffController/";
+    // 等同 $.ajax(" get blablablba ")
+    try {
+      const result = await axios.delete(`${api}${id}`);
+      console.log(result.data);
+      //刷新頁面用
+      setUploadToggle(!uploadToggle)
+      alert("刪除成功")
+    } catch (error) {
+      console.log("delete" + error);
+    }
+  };
+  
+  //編輯按鈕
+  const editStaff = async (event) => {
+    const id = event.target.id;
+    console.log(id);
+    const api = path + "/StaffController/" + id;
+    // 等同 $.ajax(" get blablablba ")
+    try {
+      const result = await axiosInstance.get(`${api}`);
+      console.log(result.data);
+      setReadData(result.data);
+      // setInputData(result.data);
+ 
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
   //有id就對資料進行修改
   const updataStaff = async () => {
     const api = path + "/StaffController/editStaff";
@@ -70,7 +121,7 @@ export default function StaffMgn() {
     if(inputData)
     try {
       // 確認有沒有id
-      if (inputData.staffId == "") {      
+      if (!inputData.staffId) {      
         if(inputData.staffName&&inputData.staffDepartment&&inputData.staffUsername&&inputData.staffPassword){
           console.log(inputData);
           createStaff();
@@ -111,10 +162,10 @@ export default function StaffMgn() {
           <td>{a.staffPassword}</td>
           <td className="d-flex align-items-center justify-content-center">
             <div className="row d-flex">
-              <div className="btn col-6" id={a}>
+              <div className="btn col-6" id={a.staffId} onClick={editStaff}>
                 Edit
               </div>
-              <div className="btn btn-danger col-6" id={a.staffId}>
+              <div className="btn btn-danger col-6" id={a.staffId} onClick={deleteStaff}>
                 Delete
               </div>
             </div>
@@ -166,27 +217,27 @@ export default function StaffMgn() {
             />
           </div>
           <div className="mb-3">
-          <label htmlFor="staffUserName" className="form-label">
+          <label htmlFor="staffUsername" className="form-label">
             Staff UserName
             </label>
             <input
               type="text"
               className="form-control"
-              id="staffUserName"
+              id="staffUsername"
               aria-describedby="emailHelp"
-              {...register("staffUserName")}
+              {...register("staffUsername")}
             />
           </div>
           <div className="mb-3">
-          <label htmlFor="staffPassWord" className="form-label">
+          <label htmlFor="staffPassword" className="form-label">
             Staff PassWord
             </label>
             <input
               type="text"
               className="form-control"
-              id="staffPassWord"
+              id="staffPassword"
               aria-describedby="emailHelp"
-              {...register("staffPassWord")}
+              {...register("staffPassword")}
             />
           </div>
           <div className="mb-3 form-check">
