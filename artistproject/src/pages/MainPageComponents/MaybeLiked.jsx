@@ -10,8 +10,11 @@ export default function MaybeLiked() {
 
   //撈取資料庫
   const getdata = async () => {
+    const token = localStorage.getItem("token") || "";
     try {
-      const result = await axiosInstance.get(`${api}?pageSize=3`);
+      const result = await axiosInstance.get(
+        `${api}?token=${token}&pageSize=3`
+      );
       setData(result.data.paintingsList);
       // console.log("maybeliked:", result.data);
     } catch (error) {

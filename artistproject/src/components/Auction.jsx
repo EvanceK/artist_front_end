@@ -1,8 +1,8 @@
-import { Link, useFetcher, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useCallback, useContext, useEffect, useState } from "react";
-import Carousel from "./Carousel";
+
 import axiosInstance from "../axiosConfig";
-import CountDown from "./countDown";
+import CountDown from "./CountDown";
 import AddFavoriteBtn from "./AddFavoriteBtn";
 import { MainContext } from "./ContextProvider/MainContext";
 
@@ -30,23 +30,32 @@ export default function Auction() {
   //Post placeBid
   const handleClickPlaceBid = () => {
     if (!localStorage.getItem("token")) showLoginModal();
-    // console.log("placeBid!");
     // console.log("ID:", painting.paintingId);
     // setPlaceBid({
     //   paintingId: painting.paintingId,
     //   bidAmount: "2000",
     // });
-    if (placeBid) postPlaceBid();
-    console.log("step 1: click Bidbtn");
-  };
-
-  useEffect(() => {
     if (inputValue && !selectionValue) {
       setFinalBidAmount(inputValue);
     } else if (selectionValue) {
       setFinalBidAmount(selectionValue);
     }
-  }, [inputValue, selectionValue]);
+    console.log("placeBid!");
+  };
+
+  // useEffect(() => {
+  //   if (inputValue && !selectionValue) {
+  //     setFinalBidAmount(inputValue);
+  //   } else if (selectionValue) {
+  //     setFinalBidAmount(selectionValue);
+  //   }
+  // }, [inputValue, selectionValue]);
+
+  useEffect(() => {
+    if (placeBid) postPlaceBid();
+    console.log("step 1: click Bidbtn");
+  }, [placeBid]);
+
   useEffect(() => {
     console.log(finalBidAmount);
     if (finalBidAmount)
@@ -359,8 +368,8 @@ export default function Auction() {
                   className="d-flex"
                   href="#biddingHistoryOffcanvas"
                   role="button"
-                  data-bs-toggle="offcanvas"
-                  aria-controls="BiddingHistoryModal"
+                  // data-bs-toggle="offcanvas"
+                  // aria-controls="BiddingHistoryModal"
                 >
                   {/* {isvalid ? (
                     <span
