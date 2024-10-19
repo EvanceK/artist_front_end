@@ -1,43 +1,72 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../axiosConfig";
+import axios from "axios";
 
 export default function OrderMgn() {
   const path = import.meta.env.VITE_DATA_HOST_API;
-  const [artistList, setArtisList] = useState([]); //所有作家名單 目前for navBar 選單用
-  const [artistTable, setArtistTable] = useState();
+  const [orderList, setOrderList] = useState([]); //所有訂單明細 目前for navBar 選單用
+  const [inputData,setInputData] = useState();
+  const [orderTable, setOrderTable] = useState();
   // methods for loading data
-  const getArtistList = async () => {
-    const api = path + "/ArtController/findall";
+  const getOrderList = async () => {
+    const api = path + "/OrderController/selectall";
     // 等同 $.ajax(" get blablablba ")
     try {
       const result = await axiosInstance.get(`${api}`);
       // console.log(result.data);
-      setArtisList(result.data);
+      setOrderList(result.data);
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
-    getArtistList();
+    getOrderList();
   }, []);
 
   useEffect(() => {
-    if (artistList) setArtistTable(buildArtistTable());
-  }, [artistList]);
+    if (orderList) setOrderTable(buildArtistTable());
+  }, [orderList]);
 
+  const editOrder = async(event) =>{
+    const id = event.target.id
+    console.log(id);
+    
+    const api = path + "/OrderController/"
+    try{
+      const result = await axiosInstance.get(`${api}${id}`)
+      console.log(result.data);
+      
+    }catch(error){
+      console.log(error);   
+    }
+  }
+  const deleteOrder = async(event) =>{
+    const id = event.target.id
+    console.log(id);
+    
+    const api = path + "/OrderController/OR0006"
+    try{
+      const result = await axios.delete(`${api}`)
+      console.log(result.data);
+      
+    }catch(error){
+      console.log(error);   
+    }
+  }
   const buildArtistTable = () => {
-    return artistList.map((a, i) => {
+    return orderList.map((a, i) => {
       console.log(a);
       return (
         <tr key={i}>
-          <th scope="row">{a.artistId}</th>
-          <td>{a.artistName}</td>
+          <th scope="row">{a.orderNumber}</th>
+          <td>{a.customerId}</td>
+          <td>{a.status}</td>
           <td className="col-4">
             <div className="row d-flex">
-              <div className="btn col-4" id={a.artistId}>
+              <div className="btn col-4" id={a.orderNumber} onClick={editOrder}>
                 Edit
               </div>
-              <div className="btn btn-danger col-4" id={a.artistId}>
+              <div className="btn btn-danger col-4" id={a.orderNumber} onClick={deleteOrder}>
                 Delete
               </div>
             </div>
@@ -173,7 +202,7 @@ export default function OrderMgn() {
               </tr>
             </thead>
             <tbody style={{ maxHeight: "380px", overflowY: "auto" }}>
-              {artistTable}
+              {orderTable}
             </tbody>
           </table>
         </div>

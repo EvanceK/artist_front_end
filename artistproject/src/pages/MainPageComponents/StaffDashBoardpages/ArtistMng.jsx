@@ -50,7 +50,7 @@ export default function ArtistMng() {
       console.log(result.data);
       setReadData(result.data);
       // setInputData(result.data);
-      document.setValue()
+ 
     } catch (error) {
       console.log(error);
     }
@@ -160,8 +160,8 @@ export default function ArtistMng() {
     console.log(data);
     //確認資料
     if (data.confirmed) {
-    unregister("confirmed");
-    console.log("unregister: ", data);
+    // unregister("confirmed");
+    // console.log("unregister: ", data);
     setInputData(data);
     } else {
     alert("Please Confirmed");
@@ -187,7 +187,7 @@ export default function ArtistMng() {
     <>
       <div className="h1 mt-5">Artist Managerment</div>
       <div className="row">
-        <form className="col-3" onSubmit={handleSubmit(onSubmit)} id="myForm">
+        <form className="col-3" onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-3">
             <label htmlFor="artistId" className="form-label">
               Id
