@@ -39,7 +39,7 @@ export default function MyCard({
               <div className="col-6">{Paintings.artisName}</div>
             </div>
             <div className="row justify-content-center">
-              <div className="col-2">YEAR</div>
+              <div className="col-2">SINCE</div>
               <div className="col-1">: </div>
               <div className="col-6">{Paintings.date}</div>
             </div>

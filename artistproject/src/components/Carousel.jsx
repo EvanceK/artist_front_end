@@ -63,7 +63,7 @@ export default function Carousel() {
             <div className="text ">
               <p className="pName">{p.paintingName}</p>
               <p className="aName ms-5"> by {p.artisName}</p>
-              <p className="pDate ms-5">{p.date}</p>
+              <p className="pDate ms-5">since: {p.date}</p>
               <p className="ms-5">
                 Has{" "}
                 <span className="text-secondary h1">

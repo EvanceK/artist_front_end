@@ -211,11 +211,11 @@ export default function Auction() {
         const result = await axiosInstance.post(`${api}`, newFormData);
         console.log(result);
         setReLoadBiddingHistory((prev) => !prev);
+        showBiddingHistoryRef();
       } catch (e) {
         alert(e.response.data);
         console.log(e);
       }
-      showBiddingHistoryRef();
     } else {
       alert("Please confirm you amount");
     }
