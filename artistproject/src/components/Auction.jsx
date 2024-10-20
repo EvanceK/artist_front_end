@@ -246,7 +246,7 @@ export default function Auction() {
                   <div className="col text-center">{painting.artisName}</div>
                 </div>
                 <div className="row">
-                  <div className="col-4  text-end">YEAR</div>
+                  <div className="col-4  text-end">SINCE</div>
                   <div className="col-1 ">:</div>
                   <div className="col text-center">{painting.date}</div>
                 </div>
