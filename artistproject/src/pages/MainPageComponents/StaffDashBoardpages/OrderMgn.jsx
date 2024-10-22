@@ -16,7 +16,21 @@ export default function OrderMgn() {
     reset,
     setValue, //set value from watched control
   } = useForm();
-
+  const [deliverySelectionList,setDeliverySelectionList]=useState();
+  const [selectedOption, setSelectedOption] = useState("");
+  const handleSelectChange = (event) => {
+    setSelectedOption(event.target.value);
+    console.log(event.target.value);
+  };
+  const buildDeliverySelectionList = () => {
+    return artistList?.map((a, i) => {
+      return (
+        <option key={i} value={a.artistId}>
+          {a.artistName}
+        </option>
+      );
+    });
+  };
   // methods for loading data
   const getOrderList = async () => {
     const api = path + "/OrderController/selectall";
@@ -143,9 +157,25 @@ export default function OrderMgn() {
   };
   return (
     <>
-      <div className="h1 mt-5">Order Managerment</div>
+      <div className="h1 mt-5">DeliveryOrders Managerment</div>
       <div className="row">
         <form className="col-3" onSubmit={handleSubmit(onSubmit)}>
+        <div className="mb-3">
+            <label htmlFor="delivery_number" className="form-label">
+            Delivery_number
+            </label>
+
+            <select
+              className="form-select"
+              aria-label="Default select example"
+              {...register("delivery_number")}
+              value={selectedOption}
+              onChange={handleSelectChange}
+            >
+              <option defaultValue={0}>select an artist ...</option>
+              {deliverySelectionList}
+            </select>
+          </div>
           <div className="mb-3">
             <label htmlFor="orderNumber" className="form-label">
               OrderNum
@@ -197,11 +227,11 @@ export default function OrderMgn() {
               // value={selectedOption}
               // onChange={handleSelectChange}
             >
-              <option defaultValue={0}>Pending Final Payment</option>
-              <option defaultValue={1}>select an status1</option>
-              <option defaultValue={2}>select an status2 </option>
-              <option defaultValue={3}>select an status3 </option>
-              <option defaultValue={4}>select an status4 </option>
+              <option defaultValue={0}>待處理</option>
+              <option defaultValue={1}>已包裝</option>
+              <option defaultValue={2}>已出貨</option>
+              <option defaultValue={3}>已送達</option>
+              <option defaultValue={4}>已取貨</option>
               {/* {artistSelectionList} */}
             </select>
           </div>
