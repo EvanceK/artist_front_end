@@ -71,12 +71,8 @@ export default function ChangeCreditCardModal() {
       };
       console.log("line73:", dataToSubmit);
 
-      const result = await axiosInstance.put(api, dataToSubmit, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      // console.log(result);
+      const result = await axiosInstance.put(api, dataToSubmit);
+      console.log(result);
       const modalInstance = bootstrap.Modal.getInstance(ChangeCreditCardModalRef.current);
         if (modalInstance) {
           modalInstance.hide(); // 隱藏模態框

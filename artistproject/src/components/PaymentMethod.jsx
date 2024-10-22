@@ -1,10 +1,12 @@
 import React, { useState, useContext } from "react";
 import { MainContext } from "./ContextProvider/MainContext";
+import axiosInstance from "../axiosConfig";
 
 function PaymentMethod() {
   const [paymentmethod, setPaymentMethod] = useState("CreditCard");
   const [paymentOption, setPaymentOption] = useState("One-time");
   const [installmentOption, setInstallmentOption] = useState("");
+  const [isChecked, setIsChecked] = useState(false);
 
   const {
     cardNumber2Ref,
@@ -14,17 +16,62 @@ function PaymentMethod() {
     handleExpirationDateChange,
     handleCvvChange,
     errors,
-    paymentInfo
+    paymentInfo,
+    setPaymentInfo,
   } = useContext(MainContext);
 
+  //付款方式選擇
   const handelPaymentMethodChange = (e) => {
     setPaymentMethod(e.target.value);
   };
+
+  //處理付款選項選擇
   const handelPaymentOptiondChange = (e) => {
     setPaymentOption(e.target.value);
   };
+
+  //處理分期選項
   const handelInstallmentOptiondChange = (e) => {
     setInstallmentOption(e.target.value);
+  };
+
+  // 當勾選 Checkbox 時發送 API 獲取信用卡資訊
+  const handleCheckboxChange = async (e) => {
+    setIsChecked(e.target.checked);
+
+    if (e.target.checked) {
+      try {
+        const result = await axiosInstance.get("/customers/initEditData"); // 發送 API 請求
+        const creditCardData = result.data;
+
+        // 這裡假設 API 返回的信用卡號是12位數字
+        const fullCardNumber = creditCardData.creditCardNo; // 假設是16位數字
+        console.log("line 49 :", fullCardNumber);
+        
+        if (fullCardNumber.length === 16) {
+          
+          setPaymentInfo({
+            cardNumber1: fullCardNumber.substring(0, 4),
+            cardNumber2: fullCardNumber.substring(4, 8),
+            cardNumber3: fullCardNumber.substring(8, 12),
+            cardNumber4: fullCardNumber.substring(12, 16),
+          });
+        } else {
+          // 處理信用卡號長度不正確的情況
+          console.error("Credit card number length is not 12 digits");
+        }
+      } catch (error) {
+        console.error("Error fetching credit card data:", error);
+      }
+    } else {
+      // 如果取消勾選，清空信用卡資料
+      setPaymentInfo({
+        cardNumber1: "",
+        cardNumber2: "",
+        cardNumber3: "",
+        cardNumber4: "",
+      });
+    }
   };
 
   return (
@@ -54,6 +101,17 @@ function PaymentMethod() {
                 onChange={handelPaymentMethodChange}
               ></input>
               CreditCard
+            </label>
+            <label className="ms-3 grayfont">
+              <input
+                className="form-check-input me-1 "
+                type="checkbox"
+                id="useSaveCreditCard"
+                checked={isChecked}
+                onChange={handleCheckboxChange}
+              />
+                Same as mywallet
+              
             </label>
           </div>
 

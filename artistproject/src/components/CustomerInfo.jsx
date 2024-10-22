@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import axiosInstance from "../axiosConfig";
 import { MainContext } from "./ContextProvider/MainContext"; 
 
-function CustomerInfo() {
+function CustomerInfo({CustomerInfo , setCustomerInfo}) {
   const [customer,setCustomer]=useState({
     name:"",
     nickName:"", 

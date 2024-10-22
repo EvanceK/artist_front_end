@@ -11,75 +11,7 @@ export default function WinningRecords() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const Authorization = localStorage.getItem("token");
   const myWinningerecordsApi = path + "/customers/mywinningrecords";
-  const editOrderApi = path + "/OrderController/editOrder";
-
-  //將訂單資料寫入
-  const [orderInfo, setOrderInfo] = useState({
-    
-  "orderNumber": "string",
-  "orderDate": "2024-10-18T09:50:49.687Z",
-  "customerId": "string",
-  "status": "string",
-  "attName": "string",
-  "attPhone": "string",
-  "deliveryAdress": "string",
-  "deliveryInstrictions": "string",
-  "orderDetail": {
-    "orderNumber": "string",
-    "paintingId": "string",
-    "price": 0,
-    "order": "string",
-    "painting": {
-      "artist": {
-        "artistId": "string",
-        "artistName": "string",
-        "desciption": "string",
-        "url": "string",
-        "paintings": [
-          "string"
-        ]
-      },
-      "paintingId": "string",
-      "paintingName": "string",
-      "artistId": "string",
-      "largUrl": "string",
-      "smallUrl": "string",
-      "price": 0,
-      "date": "string",
-      "style": "string",
-      "uploadDate": "2024-10-18T09:50:49.687Z",
-      "genre": "string",
-      "delicated": 0,
-      "status": "string",
-      "image": "string"
-    }
-  },
-  "customer": {
-    "customerId": "string",
-    "name": "string",
-    "nickName": "string",
-    "phone": "string",
-    "email": "string",
-    "address": "string",
-    "password": "string",
-    "creditCardNo": "string",
-    "bankAccount": "string",
-    "bankBalance": 0,
-    "orders": [
-      "string"
-    ],
-    "wish": [
-      {
-        "id": {
-          "customerId": "string",
-          "paintingId": "string"
-        },
-        "customer": "string"
-      }
-    ]
-  }
-  });
-
+  
   //管理選中的項目
   const [selectedItems, setSelectedItems] = useState([]);
 
@@ -108,15 +40,16 @@ export default function WinningRecords() {
   const [winningRecordsCard, setWinningRecordsCard] = useState();
 
   //API 返回得標記錄
-  const [winningRecords, setWinningRecords] = useState({
-    paintingId: "PT0001",
-    paintingName: "The Virgin and Child (The Madonna of the Rose)",
-    artistId: "AR0001",
-    artisName: "Giovanni Antonio Boltraffio",
-    smallUrl:
-      "https://uploads7.wikiart.org/images/giovanni-antonio-boltraffio/the-virgin-and-child-the-madonna-of-the-rose.jpg!Large.jpg",
-    price: 3150.0,
-  });
+  const [winningRecords, setWinningRecords] = useState({})
+  // ({
+  //   paintingId: "PT0001",
+  //   paintingName: "The Virgin and Child (The Madonna of the Rose)",
+  //   artistId: "AR0001",
+  //   artisName: "Giovanni Antonio Boltraffio",
+  //   smallUrl:
+  //     "https://uploads7.wikiart.org/images/giovanni-antonio-boltraffio/the-virgin-and-child-the-madonna-of-the-rose.jpg!Large.jpg",
+  //   price: 3150.0,
+  // });
 
   // 當selet All 被選中或取消選中
   const handleSelectedAllChange = (e) => {
@@ -128,8 +61,9 @@ export default function WinningRecords() {
   useEffect(() => {
     const sa = [];
     if (isSelecAllChecked) {
+      
       winningRecords.map((bp) => {
-        sa.push(bp.paintingId);
+        sa.push(bp.orderNumber);
       });
     } else {
       setSelectedItems([]);
@@ -150,17 +84,18 @@ export default function WinningRecords() {
       // const result = await axios.get(api);
       console.log(result.data);
       setWinningRecords(result.data.winningRecords);
-      console.log("winningRecords: ", winningRecords);
+      
     }
   };
 
   //根據selectedItems計算subtotal的金額
   useEffect(() => {
+    console.log("winningRecords: ", winningRecords);
     //使用selectedItems找出選中項目並計算總價
-    const total = selectedItems.map((paintingId) => {
-      const selectedRecord = winningRecords.find(record => record.paintingId === paintingId)
-      return selectedRecord ? selectedRecord.price : 0;
-    })
+  const total = selectedItems.map((orderNumber) => {
+    const selectedRecord = winningRecords.find(record => record.orderNumber === orderNumber); // 正確的屬性應該是orderNumber
+    return selectedRecord ? selectedRecord.price : 0;
+  })
     .reduce((sum, price) => sum + price, 0)
     setSubtotal(total);
   },[selectedItems, winningRecords]);
@@ -179,15 +114,15 @@ export default function WinningRecords() {
 
   // 算押金
   useEffect(() => {
-    const des= selectedItems.map((paintingId) => {
-      const selectedRecord = winningRecords.find(record => record.paintingId === paintingId)
+    const des = selectedItems.map((orderNumber) => {
+      const selectedRecord = winningRecords.find(record => record.orderNumber === orderNumber); // 使用orderNumber
       return selectedRecord ? selectedRecord.price : 0;
     })
-    .reduce((sum, price) => sum + price, 0)
-      const finallydes =Math.round( 0 - des * 0.01);
-      setDeposit(finallydes)
-    },[selectedItems,winningRecords])
+    .reduce((sum, price) => sum + price, 0);
   
+    const finallydes = Math.round(0 - des * 0.01);
+    setDeposit(finallydes);
+  }, [selectedItems, winningRecords]);
 
   // 加總所有金額
   useEffect(() => {
@@ -225,6 +160,14 @@ export default function WinningRecords() {
   const navigate = useNavigate();
 
   const handlePaymentClick = () => {
+     // 將選中的項目以及其他資料存到 localStorage
+     localStorage.setItem('selectedOrderNumbers', JSON.stringify(selectedItems));
+     localStorage.setItem('subtotal', subtotal);
+     localStorage.setItem('servicefee', servicefee);
+     localStorage.setItem('deliveryfee', deliveryfee);
+     localStorage.setItem('deposit', deposit);
+     localStorage.setItem('allfee', allfee);
+
     // 導航至 OrderPage 頁面
     navigate("/home/cusdashboard/OrderPage");
   };

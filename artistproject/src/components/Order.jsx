@@ -17,11 +17,41 @@ function Order() {
     const isValid = validateForm(recipientInfo, paymentInfo);
     if(isValid){
       navigate("/home/cusdashboard/ConfirmOrder");
-    } else {
-      console.log("form validation failed.");
-    }
-  };
+      try {
+        // 構建 API 請求的 payload
+        const payload = {
+          attName: recipientInfo.name,
+          attPhone: recipientInfo.phone,
+          deliveryAddress: recipientInfo.address,
+          deliveryInstrictions: document.getElementById('instructions').value,
+          deliveryFee: paymentInfo.deliveryFee,  // 假設有這個信息
+          totalAmount: paymentInfo.totalAmount,  // 假設有這個信息
+          orderList: paymentInfo.orderList.map(orderNumber => ({
+            orderNumber: orderNumber
+          }))
+        };
+       // 發送 POST 請求到後端 API，創建出貨單
+      const response =  axiosInstance.post("/DeliveryOrderController/createDeliveryOrder", payload);
 
+      if (response.status === 200) {
+        console.log("出貨單成立成功:", response.data.message);
+        // 導航到確認訂單頁面
+        navigate("/home/cusdashboard/ConfirmOrder");
+      } else {
+        console.error("出貨單成立失敗:", response.data.message);
+      }
+    } catch (error) {
+      console.error("出貨單成立錯誤:", error.message);
+    }
+  } else {
+    console.log("表單驗證失敗");
+  }
+};
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setRecipientInfo({ ...recipientInfo, [name]: value });
+  };
  
 
   //處理checkbox的部份
@@ -163,12 +193,12 @@ function Order() {
                     rows="3"
                   ></textarea>
                 </div>
-
-                {/* submit button*/}
+{/* 
+                submit button
                 <div className="place-Bid d-flex justify-content-center m-5 ">
                       <div className="btn"
                             onClick={handleOrderConfirmClick}>Confirm</div>
-                  </div>
+                  </div> */}
               </form>
             </div>
           </div>

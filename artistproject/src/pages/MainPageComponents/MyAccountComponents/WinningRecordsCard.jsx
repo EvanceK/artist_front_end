@@ -27,14 +27,14 @@ export default function WinningRecordsCard({
   const handleItemChange = (e) => {
     setIsSelecAll(false);
     const isChecked = e.target.checked;
-    const paintingId = e.target.id;
+    const orderNumber = e.target.id;
     setIsCheck(isChecked);
 
     if (isChecked) {
-      setSelectedItems((prevSelected) => [...prevSelected, paintingId]);
+      setSelectedItems((prevSelected) => [...prevSelected, orderNumber]);
     } else {
       setSelectedItems((prevSelected) =>
-        prevSelected.filter((id) => id !== paintingId)
+        prevSelected.filter((id) => id !== orderNumber)
       );
     }
   };
@@ -46,7 +46,7 @@ export default function WinningRecordsCard({
           className="form-check-input"
           type="checkbox"
           value=""
-          id={WinningRecordsCardProps.paintingId}
+          id={WinningRecordsCardProps.orderNumber}
           checked={isChecked} // 確保 checkbox 的狀態同步
           onChange={handleItemChange} // 當狀態改變時觸發事件處理
         />
@@ -87,7 +87,8 @@ export default function WinningRecordsCard({
 WinningRecordsCard.propTypes = {
   WinningRecordsCardProps: PropTypes.shape({
     artisName: PropTypes.string.isRequired,
-    paintingId: PropTypes.string.isRequired,
+    paintingId:PropTypes.string.isRequired,
+    orderNumber: PropTypes.string.isRequired,
     paintingName: PropTypes.string.isRequired,
     smallUrl: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
