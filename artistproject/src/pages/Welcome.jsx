@@ -51,9 +51,17 @@ export default function Welcome() {
         {/* <div className="btn btn-primary ">
           <Link to ="">MEMBER</Link></div> */}
           <div className="btn btn-primary ">
-          <Link className="nav-link" to="staffdashboard" aria-current="page">
+          <div
+            // type="button"
+            className=""
+            data-bs-toggle="modal"
+            data-bs-target="#StaffLoginModal"
+          >
             for STAFF
-          </Link>
+          </div>
+          {/* <Link className="nav-link" to="staffdashboard" aria-current="page">
+            for STAFF
+          </Link> */}
         </div>
         <div className="btn btn-primary">
           <Link to="/home">EXPLORE</Link>
