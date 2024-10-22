@@ -4,11 +4,13 @@ import axiosInstance from "../../axiosConfig";
 import axios from "axios";
 // import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../ContextProvider/UserContext";
 export default function StaffLoginModal() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const navigate = useNavigate();
   const[islogin,setIslogin] =useState(false);
+  const { setIsLogin, } = useContext(UserContext);
   // const divRef = useRef(null);
   const{
     register,
@@ -29,6 +31,7 @@ export default function StaffLoginModal() {
       localStorage.setItem("staffName", result.data.staffName);
       localStorage.setItem("roleId", result.data.roleId);
       setIslogin(!islogin);
+      setIsLogin(true);
     }catch(error){
       console.log("登入錯誤:"+error);
       if (error.response.data === "Username doesn't exist") {

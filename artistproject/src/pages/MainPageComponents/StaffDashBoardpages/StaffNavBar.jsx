@@ -1,7 +1,10 @@
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import $ from "jquery";
+import { UserContext } from "../../../components/ContextProvider/UserContext";
 export default function StaffNavBar() {
+  const { setIsLogin, } = useContext(UserContext);
+  const navigate = useNavigate();
   useEffect(() => {
     $(".nav-link").on("click", function () {
       $(".nav-link").removeClass("active"); // Remove "active" class from all
@@ -12,6 +15,13 @@ export default function StaffNavBar() {
       $(".nav-link").off("click");
     };
   }, []);
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("staffName");
+    localStorage.removeItem("roleId");
+    setIsLogin(false);
+    navigate("/");
+  };
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -76,6 +86,23 @@ export default function StaffNavBar() {
                 <Link className="nav-link " aria-current="page" to="staffmgn">
                   Staff Managerment
                 </Link>
+              </li>
+            </ul>
+          </div>
+          <div className="nav-item dropdown me-5">
+            <span
+              className="nav-link dropdown-toggle"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Hi! {localStorage.getItem("staffName")}
+            </span>
+            <ul className="dropdown-menu">
+              <li>
+                <span className="dropdown-item" onClick={logout}>
+                  Log out
+                </span>
               </li>
             </ul>
           </div>
