@@ -227,11 +227,11 @@ export default function OrderMgn() {
               // value={selectedOption}
               // onChange={handleSelectChange}
             >
-              <option defaultValue={0}>Pending Final Payment</option>
-              <option defaultValue={1}>select an status1</option>
-              <option defaultValue={2}>select an status2 </option>
-              <option defaultValue={3}>select an status3 </option>
-              <option defaultValue={4}>select an status4 </option>
+              <option defaultValue={0}>待處理</option>
+              <option defaultValue={1}>已包裝</option>
+              <option defaultValue={2}>已出貨</option>
+              <option defaultValue={3}>已送達</option>
+              <option defaultValue={4}>已取貨</option>
               {/* {artistSelectionList} */}
             </select>
           </div>

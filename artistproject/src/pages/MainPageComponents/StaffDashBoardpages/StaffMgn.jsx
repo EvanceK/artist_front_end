@@ -159,7 +159,8 @@ export default function StaffMgn() {
           <td>{a.staffName}</td>
           <td>{a.staffDepartment}</td>
           <td>{a.staffUsername}</td>
-          <td>{a.staffPassword}</td>
+          {/* <td>{a.staffPassword}</td> */}
+          <td>{a.roleId}</td>
           <td className="d-flex align-items-center justify-content-center">
             <div className="row d-flex">
               <div className="btn col-6" id={a.staffId} onClick={editStaff}>
@@ -240,6 +241,26 @@ export default function StaffMgn() {
               {...register("staffPassword")}
             />
           </div>
+          <div className="mb-3">
+            <label htmlFor="roleId" className="form-label">
+            Role_Id
+            </label>
+            <select
+              className="form-select"
+              aria-label="Default select example"
+              id="roleId"
+              {...register("roleId")}
+              // value={selectedOption}
+              // onChange={handleSelectChange}
+            >
+              <option defaultValue={0}>1</option>
+              <option defaultValue={1}>2</option>
+              <option defaultValue={2}>3</option>
+              <option defaultValue={3}>4</option>
+              <option defaultValue={4}>5</option>
+              {/* {artistSelectionList} */}
+            </select>
+          </div>
           <div className="mb-3 form-check">
             <input
               type="checkbox"
@@ -268,7 +289,8 @@ export default function StaffMgn() {
                 <th scope="col">Staff Name</th>
                 <th scope="col">Staff Department</th>
                 <th scope="col">Staff UserName</th>
-                <th scope="col">Staff PassWord</th>
+                {/* <th scope="col">Staff PassWord</th> */}
+                <th scope="col">Staff RoleId</th>
                 <th scope="col">Modify</th>
               </tr>
             </thead>
