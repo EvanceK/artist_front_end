@@ -9,6 +9,7 @@ export default function PaintingfindAll() {
   const [artistSelectionList, setArtistSelectionList] = useState();
   const [selectedOption, setSelectedOption] = useState("");
   const [uploadToggle, setUploadToggle] = useState(false);
+  const formData = new FormData();
   //下面是翻頁用
   const[url,setUrl]=useState()
   const [data, setData] = useState([]);
@@ -111,10 +112,15 @@ export default function PaintingfindAll() {
 
 const createPainting= async()=>{
   try{
-    console.log(inputData);
-    
+  
+    for (const key in inputData) {
+      formData.append(key, inputData[key]);
+    }
+    console.log(formData);
     const api = path + "/PTController/createPainting";
-    const result = await axiosInstance.post(api,inputData)
+    const result = await axiosInstance.post(api,formData,{
+      headers:{ "Content-Type":"multpart/form-data"}
+    })
     console.log(result.data);
     setUploadToggle(!uploadToggle);
     reset();
@@ -123,9 +129,9 @@ const createPainting= async()=>{
     console.log(error);
   }
 };
-useEffect(()=>{
+// useEffect(()=>{
 
-},[uploadToggle])
+// },[uploadToggle])
 const updataPainting = async ()=>{
   try{
     console.log(inputData);
@@ -149,6 +155,9 @@ const updataPainting = async ()=>{
       alert("Please Confirmed");
     }
   };
+  const handleFileChange = (e) => {
+    setInputData((prev) => ({ ...prev, image: e.target.files[0] }));
+  };
   //判斷資料是創建或修改
   useEffect(()=>{
     if(inputData)
@@ -161,7 +170,7 @@ const updataPainting = async ()=>{
         alert("欄位不可為空");
       };
      }else{
-      readData.date=inputData.date
+      // readData.date=inputData.date
       // setReadData(inputData)
       updataPainting();
      }
@@ -305,7 +314,10 @@ const updataPainting = async ()=>{
             <label htmlFor="Photo" className="form-label" >
               Photo
             </label>
-            <input type="file" className="form-control" id="Photo" {...register("photo")}/>
+            <input type="file" className="form-control" id="Photo" 
+            // {...register("image")}
+            onChange={handleFileChange}
+            />
           </div>
           <div className="mb-3">
             <label htmlFor="date" className="form-label">
@@ -379,7 +391,6 @@ const updataPainting = async ()=>{
                 <th scope="col">Upload Date</th>
                 <th scope="col">delicated</th>
                 <th scope="col">status</th>
-                
                 <th scope="col">Modify</th>
               </tr>
             </thead>

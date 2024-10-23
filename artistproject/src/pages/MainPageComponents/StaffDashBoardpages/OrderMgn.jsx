@@ -22,18 +22,19 @@ export default function OrderMgn() {
     setSelectedOption(event.target.value);
     console.log(event.target.value);
   };
+  
   const buildDeliverySelectionList = () => {
-    return artistList?.map((a, i) => {
+    return orderList?.map((a, i) => {
       return (
-        <option key={i} value={a.artistId}>
-          {a.artistName}
+        <option key={i} value={a.deliveryNumber}>
+          {a.deliveryNumber}
         </option>
       );
     });
   };
   // methods for loading data
   const getOrderList = async () => {
-    const api = path + "/OrderController/selectall";
+    const api = path + "/DeliveryOrderController/selectall";
     // 等同 $.ajax(" get blablablba ")
     try {
       const result = await axiosInstance.get(`${api}`);
@@ -48,14 +49,15 @@ export default function OrderMgn() {
   }, []);
 
   useEffect(() => {
-    if (orderList) setOrderTable(buildArtistTable());
+    if (orderList) setOrderTable(buildDeliveryTable());
+    setDeliverySelectionList(buildDeliverySelectionList());
   }, [orderList,uploadToggle]);
 
-  const editOrder = async(event) =>{
+  const editDelivery = async(event) =>{
     const id = event.target.id
     console.log(id);
     
-    const api = path + "/OrderController/{ordernumber}?ordernumber="
+    const api = path + "/DeliveryOrderController/"
     try{
       const result = await axiosInstance.get(`${api}${id}`)
       console.log(result.data);
@@ -66,45 +68,24 @@ export default function OrderMgn() {
   }
   useEffect(() => {
     if (readData) {
-      document.getElementById("orderNumber").value = readData.orderNumber;
-      setValue("orderNumber", readData.orderNumber);
-      document.getElementById("orderDate").value = readData.orderDate;
-      setValue("orderDate", readData.orderDate);
-      document.getElementById("customerId").value = readData.customerId;
-      setValue("customerId", readData.customerId);
-      document.getElementById("status").value = readData.status;
-      setValue("status", readData.status);
-      document.getElementById("deliveryAdress").value = readData.deliveryAdress;
-      setValue("deliveryAdress", readData.deliveryAdress);
+      document.getElementById("deliveryNumber").value = readData.deliveryNumber;
+      setValue("deliveryNumber", readData.deliveryNumber);
+      document.getElementById("deliveryInstrictions").value = readData.deliveryInstrictions;
+      setValue("deliveryInstrictions", readData.deliveryInstrictions);
+      document.getElementById("packageStaff").value = readData.packageStaff;
+      setValue("packageStaff", readData.packageStaff);
+      document.getElementById("deliveryAddress").value = readData.deliveryAddress;
+      setValue("deliveryAddress", readData.deliveryAddress);
       document.getElementById("attName").value = readData.attName;
       setValue("attName", readData.attName);
       document.getElementById("attPhone").value = readData.attPhone;
       setValue("attPhone", readData.attPhone);
-      document.getElementById("deliveryInstrictions").value = readData.deliveryInstrictions;
-      setValue("deliveryInstrictions", readData.deliveryInstrictions);
+      document.getElementById("deliveryStaff").value = readData.deliveryStaff;
+      setValue("deliveryStaff", readData.deliveryStaff);
     } 
   }, [readData]);
-  const deleteOrder = async(event) =>{
-    const id = event.target.id
-    console.log(id);
-    const api = path + "/OrderController/"
-    const yes = confirm('你確定要刪除嗎？');
-    if (yes) {
-      try{
-        const result = await axios.delete(`${api}${id}`)
-        console.log(result.data);
-        setUploadToggle(!uploadToggle);
-        alert('成功刪除');
-      }catch(error){
-        console.log(error);   
-      }
-    } else {
-      alert('你按了取消按鈕');
-    }
-    
-  }
-  const updataArtist = async()=>{
-    const api = path + "/OrderController/editOrder";
+  const updataDelivery = async()=>{
+    const api = path + "/DeliveryOrderController/editDeliveryOrders";
     try{
       const result = await axiosInstance.put(`${api}`, inputData);
       //刷新頁面用
@@ -119,7 +100,7 @@ export default function OrderMgn() {
   useEffect(() => {
     if(inputData)
     try {
-        updataArtist();
+      updataDelivery();
     } catch (error) {
       console.log(error);
     }
@@ -133,21 +114,18 @@ export default function OrderMgn() {
     alert("Please Confirmed");
     }
   }
-  const buildArtistTable = () => {
+  const buildDeliveryTable = () => {
     return orderList.map((a, i) => {
       console.log(a);
       return (
         <tr key={i}>
-          <th scope="row">{a.orderNumber}</th>
-          <td>{a.customerId}</td>
+          <th scope="row">{a.deliveryNumber}</th>
+          <td>{a.createDate}</td>
           <td>{a.status}</td>
           <td className="col-4">
             <div className="row d-flex">
-              <div className="btn col-4" id={a.orderNumber} onClick={editOrder}>
+              <div className="btn col-4" id={a.deliveryNumber} onClick={editDelivery}>
                 Edit
-              </div>
-              <div className="btn btn-danger col-4" id={a.orderNumber} onClick={deleteOrder}>
-                Delete
               </div>
             </div>
           </td>
@@ -161,22 +139,23 @@ export default function OrderMgn() {
       <div className="row">
         <form className="col-3" onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-3">
-            <label htmlFor="delivery_number" className="form-label">
+            <label htmlFor="deliveryNumber" className="form-label">
             Delivery_number
             </label>
 
             <select
               className="form-select"
               aria-label="Default select example"
-              {...register("delivery_number")}
+              id="deliveryNumber"
+              {...register("deliveryNumber")}
               value={selectedOption}
               onChange={handleSelectChange}
             >
-              <option defaultValue={0}>select an artist ...</option>
+              <option defaultValue={0}></option>
               {deliverySelectionList}
             </select>
           </div>
-          <div className="mb-3">
+          {/* <div className="mb-3">
             <label htmlFor="orderNumber" className="form-label">
               OrderNum
             </label>
@@ -188,31 +167,29 @@ export default function OrderMgn() {
               {...register("orderNumber")}
               readOnly
             />
-          </div>
+          </div> */}
           <div className="mb-3">
-          <label htmlFor="orderDate" className="form-label">
-              Order_Date
+          <label htmlFor="packageStaff" className="form-label">
+          PackageStaff
             </label>
             <input
               type="text"
               className="form-control"
-              id="orderDate"
+              id="packageStaff"
               aria-describedby="emailHelp"
-              {...register("orderDate")}
-              readOnly
+              {...register("packageStaff")}
             />
           </div>
           <div className="mb-3">
-          <label htmlFor="customerId" className="form-label">
-              CustmerId
+          <label htmlFor="deliveryStaff" className="form-label">
+          DeliveryStaff
             </label>
             <input
               type="text"
               className="form-control"
-              id="customerId"
+              id="deliveryStaff"
               aria-describedby="emailHelp"
-              {...register("customerId")}
-              readOnly
+              {...register("deliveryStaff")}
             />
           </div>
           <div className="mb-3">
@@ -248,15 +225,15 @@ export default function OrderMgn() {
             />
           </div> */}
           <div className="mb-3">
-          <label htmlFor="deliveryAdress" className="form-label">
+          <label htmlFor="deliveryAddress" className="form-label">
               Delivery_Address
             </label>
             <input
               type="text"
               className="form-control"
-              id="deliveryAdress"
+              id="deliveryAddress"
               aria-describedby="emailHelp"
-              {...register("deliveryAdress")}
+              {...register("deliveryAddress")}
             />
           </div>
           <div className="mb-3">
@@ -318,9 +295,9 @@ export default function OrderMgn() {
           <table className="table table-hover">
             <thead>
               <tr>
-                <th scope="col">Order_Number</th>
+                <th scope="col">DeliveryNumber</th>
                 {/* <th scope="col">Order_Date</th> */}
-                <th scope="col">Customer_Id</th>
+                <th scope="col">CreateDate</th>
                 <th scope="col">Status</th>
                 {/* <th scope="col">Delivery_Address</th>
                 <th scope="col">Att_Name</th>
