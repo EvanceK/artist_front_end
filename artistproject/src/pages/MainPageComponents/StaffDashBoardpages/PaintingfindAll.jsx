@@ -148,12 +148,16 @@ const updataPainting = async ()=>{
   //將資料寫進inputdata
   const onSubmit = (data) => {
     //確認資料
-    if(data.confirmed){
-     console.log(data);
-     setInputData(data);
-    }else{
-      alert("Please Confirmed");
-    }
+    data.forEach(item=>{
+      console.log(item);
+      setInputData(...inputData,item)
+    })
+    // if(data.confirmed){
+    //  console.log(data);
+    //  setInputData(data);
+    // }else{
+    //   alert("Please Confirmed");
+    // }
   };
   const handleFileChange = (e) => {
     setInputData((prev) => ({ ...prev, image: e.target.files[0] }));

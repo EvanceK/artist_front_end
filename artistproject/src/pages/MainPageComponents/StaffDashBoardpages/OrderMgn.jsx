@@ -1,15 +1,16 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axiosInstance from "../../../axiosConfig";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 
 export default function OrderMgn() {
   const path = import.meta.env.VITE_DATA_HOST_API;
-  const [orderList, setOrderList] = useState([]); //所有訂單明細 目前for navBar 選單用
+  const [deliveryList, setDeliveryList] = useState([]); //所有訂單明細 目前for navBar 選單用
   const [inputData,setInputData] = useState();
   const [orderTable, setOrderTable] = useState();
   const [readData, setReadData] = useState();
   const [uploadToggle, setUploadToggle] = useState(false);
+  // const [findByStatus,setFindByStatus] =useState();
   const {
     register, //Form state
     handleSubmit, //submit action
@@ -18,13 +19,63 @@ export default function OrderMgn() {
   } = useForm();
   const [deliverySelectionList,setDeliverySelectionList]=useState();
   const [selectedOption, setSelectedOption] = useState("");
+  const [deliveryOption,setDeliveryOption] =useState("");
   const handleSelectChange = (event) => {
-    setSelectedOption(event.target.value);
+    setDeliveryOption(event.target.value);
     console.log(event.target.value);
   };
-  
+  const handleStatusChange =(event) =>{
+    setSelectedOption(event.target.value);
+    console.log(event.target.value);
+  }
+  //取得status的data
+  const getdata = useCallback(async () => {
+    const api = path + "/DeliveryOrderController/status";
+    if (!selectedOption) return; // Prevent call if artistId is not available
+
+    try {
+      const result = await axiosInstance.get(
+        `${api}?status=${selectedOption}`
+      );
+      console.log(result.data);
+      // setFindByStatus(result.data)
+      setDeliveryList(result.data)
+      // setPaintingData(result.data.paintingsList);
+
+    } catch (error) {
+      console.log(error);
+    }
+  }, [selectedOption]);
+
+  // const getDeliverydata = useCallback(async () => {
+  //   const api = path + "/DeliveryOrderController/status";
+  //   if (!selectedOption) return; // Prevent call if artistId is not available
+
+  //   try {
+  //     const result = await axiosInstance.get(
+  //       `${api}?status=${selectedOption}`
+  //     );
+  //     console.log(result.data);
+  //     // setFindByStatus(result.data)
+  //     setDeliveryList(result.data)
+  //     // setPaintingData(result.data.paintingsList);
+
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // // }, [selectedOption]);
+  // useEffect(() => {
+  //   getDeliverydata();
+  //   setValue("deliveryNumber",selectedOption)
+  // }, [deliveryOption]);
+
+  useEffect(() => {
+    getdata();
+    setValue("status",selectedOption)
+  }, [selectedOption,uploadToggle,]);
+
   const buildDeliverySelectionList = () => {
-    return orderList?.map((a, i) => {
+    return deliveryList?.map((a, i) => {
       return (
         <option key={i} value={a.deliveryNumber}>
           {a.deliveryNumber}
@@ -33,25 +84,25 @@ export default function OrderMgn() {
     });
   };
   // methods for loading data
-  const getOrderList = async () => {
+  const getDeliveryList = async () => {
     const api = path + "/DeliveryOrderController/selectall";
     // 等同 $.ajax(" get blablablba ")
     try {
       const result = await axiosInstance.get(`${api}`);
       console.log(result.data);
-      setOrderList(result.data);
+      setDeliveryList(result.data);
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
-    getOrderList();
+    getDeliveryList();
   }, []);
 
   useEffect(() => {
-    if (orderList) setOrderTable(buildDeliveryTable());
+    if (deliveryList) setOrderTable(buildDeliveryTable());
     setDeliverySelectionList(buildDeliverySelectionList());
-  }, [orderList,uploadToggle]);
+  }, [deliveryList,uploadToggle]);
 
   const editDelivery = async(event) =>{
     const id = event.target.id
@@ -115,7 +166,7 @@ export default function OrderMgn() {
     }
   }
   const buildDeliveryTable = () => {
-    return orderList.map((a, i) => {
+    return deliveryList.map((a, i) => {
       console.log(a);
       return (
         <tr key={i}>
@@ -202,7 +253,7 @@ export default function OrderMgn() {
               id="status"
               {...register("status")}
               // value={selectedOption}
-              // onChange={handleSelectChange}
+              onChange={handleStatusChange}
             >
               <option defaultValue={0}>待處理</option>
               <option defaultValue={1}>已包裝</option>
