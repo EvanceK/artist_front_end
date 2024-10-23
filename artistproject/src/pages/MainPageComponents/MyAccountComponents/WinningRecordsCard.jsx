@@ -6,7 +6,6 @@ export default function WinningRecordsCard({
   WinningRecordsCardProps,
   isSelecAllChecked,
   setIsSelecAll,
-  selectedItems,
   setSelectedItems,
 }) {
   useEffect(() => {
@@ -87,15 +86,15 @@ export default function WinningRecordsCard({
 WinningRecordsCard.propTypes = {
   WinningRecordsCardProps: PropTypes.shape({
     artisName: PropTypes.string.isRequired,
-    paintingId:PropTypes.string.isRequired,
+    paintingId: PropTypes.string.isRequired,
     orderNumber: PropTypes.string.isRequired,
     paintingName: PropTypes.string.isRequired,
     smallUrl: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
   }).isRequired,
-  isSelecAllChecked: PropTypes.bool.isRequired,
-  handleItemChange: PropTypes.func.isRequired,
-  setIsSelecAll: PropTypes.func.isRequired,
-  selectedItems: PropTypes.shape.isRequired,
-  setSelectedItems: PropTypes.func.isRequired,
+  isSelecAllChecked: PropTypes.bool,
+  handleItemChange: PropTypes.func,
+  setIsSelecAll: PropTypes.func,
+  selectedItems: PropTypes.arrayOf(PropTypes.string),
+  setSelectedItems: PropTypes.func,
 };

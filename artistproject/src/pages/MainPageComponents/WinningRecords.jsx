@@ -1,5 +1,5 @@
-import MemberNav from "../../components/MemberNav";
-import OrderPage from "./OrderPage";
+// import MemberNav from "../../components/MemberNav";
+// import OrderPage from "./OrderPage";
 import { useContext, useEffect, useState } from "react"; // 新增 useContext
 import { MainContext } from "../../components/ContextProvider/MainContext";
 import { useNavigate } from "react-router-dom";
@@ -10,37 +10,36 @@ export default function WinningRecords() {
   //讀取後端api
   const path = import.meta.env.VITE_DATA_HOST_API;
   const Authorization = localStorage.getItem("token");
-  const myWinningerecordsApi = path + "/customers/mywinningrecords";
-  
+
   //管理選中的項目
   const [selectedItems, setSelectedItems] = useState([]);
 
   // 管理selectAll選中的狀態
-  const [isSelecAllChecked, setIsSelecAllChecked] = useState();
+  const [isSelecAllChecked, setIsSelecAllChecked] = useState(false);
 
   // 管理 是否全選
   const [isSelecAll, setIsSelecAll] = useState();
 
   //管理subtotal的狀態
-  const [subtotal, setSubtotal] = useState();
+  const [subtotal, setSubtotal] = useState(0);
 
   //管理 Service fee
-  const [servicefee, setServicefee] = useState();
+  const [servicefee, setServicefee] = useState(0);
 
   //管理運費 delivery fee
-  const [deliveryfee, setDeliveryfee] = useState();
+  const [deliveryfee, setDeliveryfee] = useState(0);
 
   //管理 總額 total
-  const [allfee, setAllfee] = useState();
+  const [allfee, setAllfee] = useState(0);
 
   //管理 deposit
-  const [deposit, setDeposit] = useState();
+  const [deposit, setDeposit] = useState(0);
 
   //管理 winningRecordsCard
   const [winningRecordsCard, setWinningRecordsCard] = useState();
 
   //API 返回得標記錄
-  const [winningRecords, setWinningRecords] = useState({})
+  const [winningRecords, setWinningRecords] = useState({});
   // ({
   //   paintingId: "PT0001",
   //   paintingName: "The Virgin and Child (The Madonna of the Rose)",
@@ -50,6 +49,20 @@ export default function WinningRecords() {
   //     "https://uploads7.wikiart.org/images/giovanni-antonio-boltraffio/the-virgin-and-child-the-madonna-of-the-rose.jpg!Large.jpg",
   //   price: 3150.0,
   // });
+
+  // 取得得標記錄
+  const getWinningRecords = async () => {
+    if (Authorization) {
+      //axiosInstance就有回傳token的功能
+      const api = path + "/customers/mywinningrecords";
+      const result = await axiosInstance.get(api);
+      console.log(result.data);
+      setWinningRecords(result.data.winningRecords);
+    }
+  };
+  useEffect(() => {
+    getWinningRecords();
+  }, []);
 
   // 當selet All 被選中或取消選中
   const handleSelectedAllChange = (e) => {
@@ -61,7 +74,6 @@ export default function WinningRecords() {
   useEffect(() => {
     const sa = [];
     if (isSelecAllChecked) {
-      
       winningRecords.map((bp) => {
         sa.push(bp.orderNumber);
       });
@@ -76,66 +88,53 @@ export default function WinningRecords() {
     console.log(isSelecAllChecked, "finall array", selectedItems);
   }, [selectedItems]);
 
-  // 取得得標記錄
-  const getWinningRecords = async () => {
-    if (Authorization) {
-      //axiosInstance就有回傳token的功能
-      const result = await axiosInstance.get(myWinningerecordsApi);
-      // const result = await axios.get(api);
-      console.log(result.data);
-      setWinningRecords(result.data.winningRecords);
-      
-    }
-  };
-
   //根據selectedItems計算subtotal的金額
   useEffect(() => {
     console.log("winningRecords: ", winningRecords);
     //使用selectedItems找出選中項目並計算總價
-  const total = selectedItems.map((orderNumber) => {
-    const selectedRecord = winningRecords.find(record => record.orderNumber === orderNumber); // 正確的屬性應該是orderNumber
-    return selectedRecord ? selectedRecord.price : 0;
-  })
-    .reduce((sum, price) => sum + price, 0)
+    const total = selectedItems
+      ?.map((orderNumber) => {
+        const selectedRecord = winningRecords.find(
+          (record) => record.orderNumber === orderNumber
+        ); // 正確的屬性應該是orderNumber
+        return selectedRecord ? selectedRecord.price : 0;
+      })
+      .reduce((sum, price) => sum + price, 0);
     setSubtotal(total);
-  },[selectedItems, winningRecords]);
+  }, [selectedItems, winningRecords]);
 
   //根據total算servicefee
-  useEffect(()=> {
+  useEffect(() => {
     const serfee = Math.round(subtotal * 0.01);
     setServicefee(serfee);
-  },[subtotal])
+  }, [subtotal]);
 
   //根據畫作多少決定運費
   useEffect(() => {
-    const delfee = selectedItems.length * 120;
+    const delfee = selectedItems?.length * 120;
     setDeliveryfee(delfee);
-  },[selectedItems])
+  }, [selectedItems]);
 
   // 算押金
   useEffect(() => {
-    const des = selectedItems.map((orderNumber) => {
-      const selectedRecord = winningRecords.find(record => record.orderNumber === orderNumber); // 使用orderNumber
-      return selectedRecord ? selectedRecord.price : 0;
-    })
-    .reduce((sum, price) => sum + price, 0);
-  
+    const des = selectedItems
+      ?.map((orderNumber) => {
+        const selectedRecord = winningRecords.find(
+          (record) => record.orderNumber === orderNumber
+        ); // 使用orderNumber
+        return selectedRecord ? selectedRecord.price : 0;
+      })
+      .reduce((sum, price) => sum + price, 0);
+
     const finallydes = Math.round(0 - des * 0.01);
     setDeposit(finallydes);
   }, [selectedItems, winningRecords]);
 
   // 加總所有金額
   useEffect(() => {
-    const allfee= subtotal+deliveryfee+servicefee;
+    const allfee = subtotal + deliveryfee + servicefee;
     setAllfee(allfee);
-  },[subtotal, deliveryfee, servicefee])
-
-  
-
-
-  useEffect(() => {
-    getWinningRecords();
-  }, []);
+  }, [subtotal, deliveryfee, servicefee]);
 
   useEffect(() => {
     setWinningRecordsCard(
@@ -160,13 +159,21 @@ export default function WinningRecords() {
   const navigate = useNavigate();
 
   const handlePaymentClick = () => {
-     // 將選中的項目以及其他資料存到 localStorage
-     localStorage.setItem('selectedOrderNumbers', JSON.stringify(selectedItems));
-     localStorage.setItem('subtotal', subtotal);
-     localStorage.setItem('servicefee', servicefee);
-     localStorage.setItem('deliveryfee', deliveryfee);
-     localStorage.setItem('deposit', deposit);
-     localStorage.setItem('allfee', allfee);
+    // 將選中的項目以及其他資料存到 localStorage
+    const orderObjectList = [];
+    selectedItems.map((i) => {
+      orderObjectList.push({ orderNumber: `${i}` });
+    });
+    localStorage.setItem(
+      "selectedOrderNumbers",
+      JSON.stringify(orderObjectList)
+    );
+    // localStorage.setItem("selectedOrderNumbers", JSON.stringify(selectedItems));
+    localStorage.setItem("subtotal", subtotal);
+    localStorage.setItem("servicefee", servicefee);
+    localStorage.setItem("deliveryfee", deliveryfee);
+    localStorage.setItem("deposit", deposit);
+    localStorage.setItem("allfee", allfee);
 
     // 導航至 OrderPage 頁面
     navigate("/home/cusdashboard/OrderPage");
@@ -231,7 +238,7 @@ export default function WinningRecords() {
                   </div>
                 </div>
               </div>
-              
+
               <div className=" border-bottom">
                 <div className="d-flex justify-content-between row">
                   <div className="col-4">

@@ -121,5 +121,5 @@ CountDown.propTypes = {
     textClass: PropTypes.string,
     CountDownClass: PropTypes.string,
   }),
-  onTimeUp: PropTypes.func.isRequired, // Ensure parent gets notified
+  onTimeUp: PropTypes.func, // Ensure parent gets notified
 };

@@ -13,8 +13,8 @@ function OrderPage() {
   const deliveryfee = localStorage.getItem("deliveryfee");
   const allfee = localStorage.getItem("allfee");
 
-   // State for CustomerInfo
-   const [customerInfo, setCustomerInfo] = useState({
+  // State for CustomerInfo
+  const [customerInfo, setCustomerInfo] = useState({
     name: "",
     email: "",
     phone: "",
@@ -36,9 +36,8 @@ function OrderPage() {
     address: "",
   });
 
-
-   // 使用這些數據在下一個頁面中顯示
-   useEffect(() => {
+  // 使用這些數據在下一個頁面中顯示
+  useEffect(() => {
     console.log(selectedItems, subtotal, servicefee, deliveryfee, allfee);
   }, [selectedItems, subtotal, servicefee, deliveryfee, allfee]);
 
@@ -55,7 +54,7 @@ function OrderPage() {
   //     recipientInfo,
 
   //   };
-  
+
   //   axios.post("/api/orders", orderData)
   //     .then(response => {
   //       console.log("Order submitted successfully", response);
@@ -67,16 +66,27 @@ function OrderPage() {
 
   return (
     <div className="container mt-5 w-75">
-      <CustomerInfo customerInfo={customerInfo} setCustomerInfo={setCustomerInfo} />
-      <PaymentMethod paymentInfo={paymentInfo} setPaymentInfo={setPaymentInfo} />
-      <Order recipientInfo={recipientInfo} setRecipientInfo={setRecipientInfo} />
-      
-      <div className="d-flex justify-content-center m-5 ">
-        <button className="btn btn-primary" onClick={handleOrderConfirmClick
-        }>
+      <CustomerInfo
+        customerInfo={customerInfo}
+        setCustomerInfo={setCustomerInfo}
+      />
+      <PaymentMethod
+        paymentInfo={paymentInfo}
+        setPaymentInfo={setPaymentInfo}
+      />
+      <Order
+        recipientInfo={recipientInfo}
+        setRecipientInfo={setRecipientInfo}
+      />
+
+      {/* <div className="d-flex justify-content-center m-5 ">
+        <button
+          className="btn btn-primary"
+          // onClick={handleOrderConfirmClick}
+        >
           Submit Order
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }
