@@ -9,6 +9,7 @@ export default function PaintingMgn() {
   const [artistSelectionList, setArtistSelectionList] = useState();
   const [selectedOption, setSelectedOption] = useState("");
   const [uploadToggle, setUploadToggle] = useState(false);
+  const formData = new FormData();
   //下面是翻頁用
   const [data, setData] = useState([]);
   const [totalPage, setTotalPage] = useState(1);
@@ -94,13 +95,21 @@ export default function PaintingMgn() {
       setValue("status", readData.status);
     }
   },[readData])
-
+  const handleFileChange = (e) => {
+    setInputData((prev) => ({ ...prev, image: e.target.files[0] }));
+  };
 const createPainting= async()=>{
   try{
     console.log(inputData);
     
+    for (const key in inputData) {
+      formData.append(key, inputData[key]);
+    }
+    
     const api = path + "/PTController/createPainting";
-    const result = await axiosInstance.post(api,inputData)
+    const result = await axiosInstance.post(api,formData,{
+      headers:{ "Content-Type":"multpart/form-data"}
+    })
     console.log(result.data);
     setUploadToggle(!uploadToggle);
     reset();
@@ -125,12 +134,15 @@ const updataPainting = async ()=>{
     console.log(error);
   }
 };
+
   //將資料寫進inputdata
   const onSubmit = (data) => {
     //確認資料
     if(data.confirmed){
      console.log(data);
      setInputData(data);
+    //  setInputData((prev) => ({ ...prev,data }));
+    // handleFileChange();
     }else{
       alert("Please Confirmed");
     }
@@ -138,16 +150,15 @@ const updataPainting = async ()=>{
   //判斷資料是創建或修改
   useEffect(()=>{
     if(inputData)
+      if (inputData.image && inputData.image[0]) {
+        formData.append("image", inputData.image[0]); // access the file
+      }
     try {
       //確認有沒有id
      if(inputData.paintingId==""){
-      if(inputData.paintingName&&inputData.artistId){
         createPainting();
       }else{
-        alert("欄位不可為空");
-      };
-     }else{
-      readData.date=inputData.date
+      // readData.date=inputData.date
       // setReadData(inputData)
       updataPainting();
      }
@@ -287,10 +298,13 @@ const updataPainting = async ()=>{
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="Photo" className="form-label" >
+            <label htmlFor="image" className="form-label" >
               Photo
             </label>
-            <input type="file" className="form-control" id="Photo" {...register("photo")}/>
+            <input type="file" className="form-control" id="image" 
+            // {...register("image")}
+            onChange={handleFileChange}
+            />
           </div>
           <div className="mb-3">
             <label htmlFor="date" className="form-label">

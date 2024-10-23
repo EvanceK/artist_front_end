@@ -67,7 +67,7 @@ export default function StaffNavBar() {
                   Artist Managerment
                 </Link>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link
                   className="nav-link "
                   aria-current="page"
@@ -75,14 +75,14 @@ export default function StaffNavBar() {
                 >
                   Painting Managerment
                 </Link>
-              </li>
+              </li> */}
               <li className="nav-item">
                 <Link
                   className="nav-link "
                   aria-current="page"
                   to="paintingfindAll"
                 >
-                  PaintingfindAll
+                  Painting Managerment
                 </Link>
               </li>
               
