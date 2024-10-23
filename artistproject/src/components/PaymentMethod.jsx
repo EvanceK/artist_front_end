@@ -41,15 +41,15 @@ function PaymentMethod() {
 
     if (e.target.checked) {
       try {
-        const result = await axiosInstance.get("/customers/initEditData"); // 發送 API 請求
+        const result = await axiosInstance.get("/customers/mywallet"); // 發送 API 請求
+        console.log(result);
         const creditCardData = result.data;
 
         // 這裡假設 API 返回的信用卡號是12位數字
         const fullCardNumber = creditCardData.creditCardNo; // 假設是16位數字
         console.log("line 49 :", fullCardNumber);
-        
-        if (fullCardNumber.length === 16) {
-          
+
+        if (fullCardNumber?.length === 16) {
           setPaymentInfo({
             cardNumber1: fullCardNumber.substring(0, 4),
             cardNumber2: fullCardNumber.substring(4, 8),
@@ -110,8 +110,7 @@ function PaymentMethod() {
                 checked={isChecked}
                 onChange={handleCheckboxChange}
               />
-                Same as mywallet
-              
+              Same as mywallet
             </label>
           </div>
 

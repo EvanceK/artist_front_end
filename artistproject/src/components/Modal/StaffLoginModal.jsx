@@ -9,19 +9,15 @@ import { UserContext } from "../ContextProvider/UserContext";
 export default function StaffLoginModal() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const navigate = useNavigate();
-  const[islogin,setIslogin] =useState(false);
-  const { setIsLogin, } = useContext(UserContext);
+  const [islogin, setIslogin] = useState(false);
+  const { setIsLogin } = useContext(UserContext);
   // const divRef = useRef(null);
-  const{
-    register,
-    handleSubmit,
-    watch,
-  } = useForm();
-  const onSubmit = async (data) =>{
+  const { register, handleSubmit, watch } = useForm();
+  const onSubmit = async (data) => {
     console.log(data);
-    try{
+    try {
       const api = path + "/StaffController/login";
-      const result =await axios.post(api,data,{
+      const result = await axios.post(api, data, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -32,8 +28,8 @@ export default function StaffLoginModal() {
       localStorage.setItem("roleId", result.data.roleId);
       setIslogin(!islogin);
       setIsLogin(true);
-    }catch(error){
-      console.log("登入錯誤:"+error);
+    } catch (error) {
+      console.log("登入錯誤:" + error);
       if (error.response.data === "Username doesn't exist") {
         alert("Username doesn't exist");
         // showIncorrectAccountModal();
@@ -43,13 +39,13 @@ export default function StaffLoginModal() {
       }
     }
   };
-  useEffect(()=>{
-    const staffName=localStorage.getItem("staffName")
-    console.log(staffName);
-    if(staffName){
-      navigate(`/staffdashboard`)
+  useEffect(() => {
+    const staffName = localStorage.getItem("staffName");
+    // console.log(staffName);
+    if (staffName) {
+      navigate(`/staffdashboard`);
     }
-  },[islogin])
+  }, [islogin]);
   return (
     <div
       className="modal fade"
@@ -114,8 +110,12 @@ export default function StaffLoginModal() {
               {/* <div className="btn col-3" data-bs-dismiss="modal">
                 LOG IN
               </div> */}
-              <button type="submit" className="btn btn-primary col-3" data-bs-dismiss="modal">
-              LOG IN
+              <button
+                type="submit"
+                className="btn btn-primary col-3"
+                data-bs-dismiss="modal"
+              >
+                LOG IN
               </button>
             </div>
           </form>

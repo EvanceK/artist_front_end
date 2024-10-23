@@ -17,27 +17,27 @@ export default function EditAccount() {
   //   phone: "",
   //   address: "",
   // });
-  const getCustomer = async()=>{
-    const path=import.meta.env.VITE_DATA_HOST_API;
+  const getCustomer = async () => {
+    const path = import.meta.env.VITE_DATA_HOST_API;
     const Authorization = localStorage.getItem("token");
-    const api= path + "/customers/initEditData";
-    if(Authorization){
-    //axiosInstance就有回傳token的功能
+    const api = path + "/customers/initEditData";
+    if (Authorization) {
+      //axiosInstance就有回傳token的功能
       const result = await axiosInstance.get(api);
       // const result = await axios.get(api);
-      console.log(result.data);
+      // console.log(result.data);
       // setData(result.data)
-      setData(result.data)
+      setData(result.data);
       // handleChange();
-    }else{
+    } else {
       // showLogingModal();
-      console.log("please login")
+      console.log("please login");
     }
   };
- 
-  useEffect(()=>{
+
+  useEffect(() => {
     getCustomer();
-  },[])
+  }, []);
   const handleChange = (e) => {
     const { name, value } = e.target;
     // console.log(name, value);
@@ -46,16 +46,16 @@ export default function EditAccount() {
   };
   const submit = async () => {
     try {
-       console.log(data);
-      if(Authorization){
-         const result = await axiosInstance.put(api, data, {
-      // const result = await axios.put(api, data, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      console.log(result);
-    }
+      console.log(data);
+      if (Authorization) {
+        const result = await axiosInstance.put(api, data, {
+          // const result = await axios.put(api, data, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        console.log(result);
+      }
     } catch (error) {
       console.log(error);
     }
