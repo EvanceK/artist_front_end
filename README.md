@@ -19,4 +19,5 @@
 <a href="https://nodejs.org/zh-tw"><img src="https://img.shields.io/badge/Node.js- v20.17.0-blue?logo=nodedotjs"/></a>
 <a href="https://nodejs.org/zh-tw"><img src="https://img.shields.io/badge/bootstrap- v5.3.3-fuchsia?logo=bootstrap"/></a>
 <a href="https://www.figma.com"><img src="https://img.shields.io/badge/figma- v2024-red?logo=figma"/></a>
+<a href="https://sass-lang.com/styleguide/brand/"><img src="https://img.shields.io/badge/SASS-%201.793-pink?logo=sass"/></a>
 
