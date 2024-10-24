@@ -15,6 +15,7 @@ export default function PaintingMgn() {
   const [totalPage, setTotalPage] = useState(1);
   const [requestPageNumber, setRequestPageNumber] = useState(1);
   //上面是翻頁用
+  const [inputFile,setInputFile]=useState();
   const [inputData, setInputData] = useState();
   const [readData, setReadData] = useState();//儲存edit的data並顯示在inputbox
   const [paintingData, setPaintingData] = useState();
@@ -96,8 +97,14 @@ export default function PaintingMgn() {
     }
   },[readData])
   const handleFileChange = (e) => {
-    setInputData((prev) => ({ ...prev, image: e.target.files[0] }));
+    setInputFile((prev) => ({ ...prev, image: e.target.files[0] }))
+    // setInputData((prev) => ({ ...prev, image: e.target.files[0] }));
   };
+  useEffect(()=>{
+    if (inputFile.image && inputFile.image[0]) {
+      formData.append("image", inputFile.image[0]); // access the file
+    }
+  },[inputFile])
 const createPainting= async()=>{
   try{
     console.log(inputData);
@@ -118,9 +125,7 @@ const createPainting= async()=>{
     console.log(error);
   }
 };
-useEffect(()=>{
 
-},[uploadToggle])
 const updataPainting = async ()=>{
   try{
     console.log(inputData);
@@ -150,9 +155,7 @@ const updataPainting = async ()=>{
   //判斷資料是創建或修改
   useEffect(()=>{
     if(inputData)
-      if (inputData.image && inputData.image[0]) {
-        formData.append("image", inputData.image[0]); // access the file
-      }
+     
     try {
       //確認有沒有id
      if(inputData.paintingId==""){

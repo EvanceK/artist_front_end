@@ -53,7 +53,7 @@ export default function RegisterModal() {
           </div>
 
           <div className="h2 my-3 "></div>
-          <div className="py-5 d-flex justify-content-center">
+          <div className="py-3 d-flex justify-content-center">
             <img
               className="projectLogo  w-50 h-50"
               src={projectLogo}
@@ -62,10 +62,10 @@ export default function RegisterModal() {
           </div>
           <form action="">
             <div className="input">
-              <div className="d-block mt-5 m-2">
+              <div className="d-block mt-3 m-2">
                 <div className="row m-2 d-flex justify-content-center">
                   <label
-                    className="col-3 d-flex justify-content-start"
+                    className="col-4 d-flex justify-content-start"
                     htmlFor="name"
                   >
                     Name :
@@ -81,7 +81,7 @@ export default function RegisterModal() {
                 </div>
                 <div className="row m-2 d-flex justify-content-center">
                   <label
-                    className="col-3 d-flex justify-content-start"
+                    className="col-4 d-flex justify-content-start"
                     htmlFor="nickname"
                   >
                     NickName :
@@ -98,7 +98,7 @@ export default function RegisterModal() {
 
                 <div className="row m-2 d-flex justify-content-center">
                   <label
-                    className="col-3 d-flex justify-content-start"
+                    className="col-4 d-flex justify-content-start"
                     htmlFor="Email"
                   >
                     Email :
@@ -114,7 +114,7 @@ export default function RegisterModal() {
                 </div>
                 <div className="row m-2 d-flex justify-content-center">
                   <label
-                    className="col-3 d-flex justify-content-start"
+                    className="col-4 d-flex justify-content-start"
                     htmlFor="Password"
                   >
                     Password :
@@ -130,7 +130,7 @@ export default function RegisterModal() {
                 </div>
                 <div className="row m-2 d-flex justify-content-center">
                   <label
-                    className="col-3 d-flex justify-content-start"
+                    className="col-4 d-flex justify-content-start"
                     htmlFor="Phone"
                   >
                     Phone :
@@ -147,7 +147,7 @@ export default function RegisterModal() {
                 </div>
                 <div className="row m-2 d-flex justify-content-center">
                   <label
-                    className="col-3 d-flex justify-content-start"
+                    className="col-4 d-flex justify-content-start"
                     htmlFor="Address"
                   >
                     Address :
@@ -167,7 +167,7 @@ export default function RegisterModal() {
 
             <div className="row d-flex justify-content-center m-5">
               <div
-                className="btn col-3 btn-primary"
+                className="btn col-4 btn-primary"
                 data-bs-toggle="modal"
                 data-bs-target="#SignupSuccess"
                 onClick={submit}

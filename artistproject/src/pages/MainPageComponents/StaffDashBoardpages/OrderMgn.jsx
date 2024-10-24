@@ -1,15 +1,17 @@
-import { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import axiosInstance from "../../../axiosConfig";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 
 export default function OrderMgn() {
   const path = import.meta.env.VITE_DATA_HOST_API;
-  const [orderList, setOrderList] = useState([]); //所有訂單明細 目前for navBar 選單用
+  const [deliveryList, setDeliveryList] = useState([]); //所有訂單明細 目前for navBar 選單用
   const [inputData,setInputData] = useState();
   const [orderTable, setOrderTable] = useState();
   const [readData, setReadData] = useState();
   const [uploadToggle, setUploadToggle] = useState(false);
+  const [expandedRow, setExpandedRow] = useState(null);
+  // const [findByStatus,setFindByStatus] =useState();
   const {
     register, //Form state
     handleSubmit, //submit action
@@ -18,13 +20,63 @@ export default function OrderMgn() {
   } = useForm();
   const [deliverySelectionList,setDeliverySelectionList]=useState();
   const [selectedOption, setSelectedOption] = useState("");
+  const [deliveryOption,setDeliveryOption] =useState("");
   const handleSelectChange = (event) => {
-    setSelectedOption(event.target.value);
+    setDeliveryOption(event.target.value);
     console.log(event.target.value);
   };
-  
+  const handleStatusChange =(event) =>{
+    setSelectedOption(event.target.value);
+    console.log(event.target.value);
+  }
+  //取得status的data
+  const getdata = useCallback(async () => {
+    const api = path + "/DeliveryOrderController/status";
+    if (!selectedOption) return; // Prevent call if artistId is not available
+
+    try {
+      const result = await axiosInstance.get(
+        `${api}?status=${selectedOption}`
+      );
+      console.log(result.data);
+      // setFindByStatus(result.data)
+      setDeliveryList(result.data)
+      // setPaintingData(result.data.paintingsList);
+
+    } catch (error) {
+      console.log(error);
+    }
+  }, [selectedOption]);
+
+  // const getDeliverydata = useCallback(async () => {
+  //   const api = path + "/DeliveryOrderController/status";
+  //   if (!selectedOption) return; // Prevent call if artistId is not available
+
+  //   try {
+  //     const result = await axiosInstance.get(
+  //       `${api}?status=${selectedOption}`
+  //     );
+  //     console.log(result.data);
+  //     // setFindByStatus(result.data)
+  //     setDeliveryList(result.data)
+  //     // setPaintingData(result.data.paintingsList);
+
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // // }, [selectedOption]);
+  // useEffect(() => {
+  //   getDeliverydata();
+  //   setValue("deliveryNumber",selectedOption)
+  // }, [deliveryOption]);
+
+  useEffect(() => {
+    getdata();
+    setValue("status",selectedOption)
+  }, [selectedOption,uploadToggle,]);
+
   const buildDeliverySelectionList = () => {
-    return orderList?.map((a, i) => {
+    return deliveryList?.map((a, i) => {
       return (
         <option key={i} value={a.deliveryNumber}>
           {a.deliveryNumber}
@@ -33,25 +85,25 @@ export default function OrderMgn() {
     });
   };
   // methods for loading data
-  const getOrderList = async () => {
+  const getDeliveryList = async () => {
     const api = path + "/DeliveryOrderController/selectall";
     // 等同 $.ajax(" get blablablba ")
     try {
       const result = await axiosInstance.get(`${api}`);
       console.log(result.data);
-      setOrderList(result.data);
+      setDeliveryList(result.data);
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
-    getOrderList();
+    getDeliveryList();
   }, []);
 
   useEffect(() => {
-    if (orderList) setOrderTable(buildDeliveryTable());
+    if (deliveryList) setOrderTable(buildDeliveryTable());
     setDeliverySelectionList(buildDeliverySelectionList());
-  }, [orderList,uploadToggle]);
+  }, [deliveryList,uploadToggle,expandedRow]);
 
   const editDelivery = async(event) =>{
     const id = event.target.id
@@ -114,11 +166,19 @@ export default function OrderMgn() {
     alert("Please Confirmed");
     }
   }
+ 
+  
+  const toggleDetails = (deliveryNumber) => {
+    // 若點擊同一列則收起詳細資料，否則展開該列
+      setExpandedRow((prev) => (prev === deliveryNumber ? null : deliveryNumber));
+    };
+
   const buildDeliveryTable = () => {
-    return orderList.map((a, i) => {
+    return deliveryList.map((a, i) => {
       console.log(a);
       return (
-        <tr key={i}>
+        <React.Fragment key={a.deliveryNumber}>
+        <tr  className={expandedRow === a.deliveryNumber ? "active-row" : ""}>
           <th scope="row">{a.deliveryNumber}</th>
           <td>{a.createDate}</td>
           <td>{a.status}</td>
@@ -127,9 +187,64 @@ export default function OrderMgn() {
               <div className="btn col-4" id={a.deliveryNumber} onClick={editDelivery}>
                 Edit
               </div>
+              <div className="btn col-4" id={a.deliveryNumber} onClick={() => toggleDetails(a.deliveryNumber)}>
+                Details
+              </div>
             </div>
           </td>
         </tr>
+        <tr className="">
+          <td colSpan="4" className="">
+        {expandedRow === a.deliveryNumber && (
+          a.orderList.map((o,i)=>{
+            return(
+              <table className="table table-hover">
+              <thead>
+                <tr style={{
+    backgroundColor: expandedRow === a.deliveryNumber ? '#ffe0b2' : 'transparent',
+    transition: 'background-color 0.3s ease'
+  }} >
+                  <th scope="col">OrderNumber</th>
+                  <th scope="col">CustomerId</th>
+                  <th scope="col">OrderDate</th>
+                  <th scope="col">PaintingId</th>
+                  <th scope="col">Desposit</th>
+                  <th scope="col">ServiceFee</th>
+                  <th scope="col">TotalAmount</th>
+                </tr>
+              </thead>
+              <tbody style={{ maxHeight: "380px", overflowY: "auto" }}>
+              <tr key={i}>
+                <th scope="row">{o.orderNumber}</th>
+                <td>{o.customerId}</td>
+                <td>{o.orderDate}</td>
+                <td>{o.paintingId}</td>
+                <td>{o.desposit}</td>
+                <td>{o.serviceFee}</td>
+                <td>{o.totalAmount}</td>
+                {/* <td>{o.totalAmount}</td> */}
+                {/* <td colSpan="4"></td> */}
+              </tr>
+              </tbody>
+            </table>
+              
+            )
+          })
+        )}
+          </td>
+        </tr>
+        {/* {expandedRow === a.deliveryNumber && a.orderList.map((o, j) => (
+          <tr key={`${a.deliveryNumber}-${j}`}>
+            <th scope="row">{o.orderNumber}</th>
+            <td colSpan="4">
+              <div>
+                <strong>Order Details:</strong>
+                <p>More info about order {o.orderNumber}</p>
+              </div>
+            </td>
+          </tr>
+        ))} */}
+        </React.Fragment>
       );
     });
   };
@@ -202,7 +317,7 @@ export default function OrderMgn() {
               id="status"
               {...register("status")}
               // value={selectedOption}
-              // onChange={handleSelectChange}
+              onChange={handleStatusChange}
             >
               <option defaultValue={0}>待處理</option>
               <option defaultValue={1}>已包裝</option>
