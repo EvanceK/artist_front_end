@@ -194,16 +194,13 @@ export default function OrderMgn() {
           </td>
         </tr>
         <tr className="">
-          <td colSpan="4" className="">
-        {expandedRow === a.deliveryNumber && (
-          a.orderList.map((o,i)=>{
+  <td colSpan="4">
+    {expandedRow === a.deliveryNumber && (
+      a.orderList.map((o, i) => {
             return(
-              <table className="table table-hover">
+              <table className="table table-striped table-hover" key={i}>
               <thead>
-                <tr style={{
-    backgroundColor: expandedRow === a.deliveryNumber ? '#ffe0b2' : 'transparent',
-    transition: 'background-color 0.3s ease'
-  }} >
+              <tr className="active-row underline bg-dark">
                   <th scope="col">OrderNumber</th>
                   <th scope="col">CustomerId</th>
                   <th scope="col">OrderDate</th>
