@@ -9,24 +9,8 @@ export default function NavBar() {
   const navigate = useNavigate();
   const { userName, setUserName, isLogin, setIsLogin } =
     useContext(UserContext);
-  const {
-    // like,
-    // setLike,
-
-    WToS,
-    artistList,
-    getArtistList,
-    getWishList,
-    // setRequestPageNumber,
-    // setSearch,
-    // search,
-    // searchParams,
-    // setSearchParams,
-    // PasswordChangedRef,
-    // showPasswordChangedRef,
-    reLoadBiddingNum,
-    // setReLoadBiddingNum,
-  } = useContext(MainContext);
+  const { WToS, artistList, getArtistList, getWishList, reLoadBiddingNum } =
+    useContext(MainContext);
 
   const [accountfeild, setAccountfeild] = useState();
   const [wishlistNumber, setWishlistNumber] = useState();
@@ -35,7 +19,6 @@ export default function NavBar() {
   const [paintingIdArray, setPaintingIdArray] = useState();
 
   useEffect(() => {
-    // Recheck localStorage whenever 'like' or 'loadWishlist' changes
     const updateWishlistNumber = () => {
       setPaintingIdArray(JSON.parse(localStorage.getItem("paintingIdArray")));
     };
