@@ -109,6 +109,7 @@ export default function PaintingfindAll() {
     }
   }, [readData]);
 
+<<<<<<< Updated upstream
   const createPainting = async () => {
     try {
       for (const key in inputData) {
@@ -128,6 +129,29 @@ export default function PaintingfindAll() {
     }
   };
   // useEffect(()=>{
+=======
+const createPainting= async()=>{
+  try{
+    if (inputData.photo && inputData.photo[0]) {
+      formData.append("photo", inputData.photo[0]); // access the file
+    }
+    for (const key in inputData) {
+      formData.append(key, inputData[key]);
+    }
+    const api = path + "/PTController/createPainting";
+    const result = await axiosInstance.post(api,formData,{
+      headers:{ "Content-Type":"multpart/form-data"}
+    })
+    console.log(result.data);
+    setUploadToggle(!uploadToggle);
+    reset();
+    alert("新增成功")
+  }catch(error){
+    console.log(error);
+  }
+};
+// useEffect(()=>{
+>>>>>>> Stashed changes
 
   // },[uploadToggle])
   const updataPainting = async () => {
@@ -146,21 +170,29 @@ export default function PaintingfindAll() {
   //將資料寫進inputdata
   const onSubmit = (data) => {
     //確認資料
-    data.forEach((item) => {
-      console.log(item);
-      setInputData(...inputData, item);
-    });
-    // if(data.confirmed){
-    //  console.log(data);
-    //  setInputData(data);
-    // }else{
-    //   alert("Please Confirmed");
-    // }
+<<<<<<< Updated upstream
+    // data.forEach((item) => {
+    //   console.log(item);
+    //   setInputData(...inputData, item);
+    // });
+=======
+    // data.forEach(item=>{
+    //   console.log(item);
+    //   setInputData(...inputData,item)
+    // })
+>>>>>>> Stashed changes
+    if(data.confirmed){
+     console.log(data);
+     setInputData(data);
+    }else{
+      alert("Please Confirmed");
+    }
   };
   const handleFileChange = (e) => {
     setInputData((prev) => ({ ...prev, image: e.target.files[0] }));
   };
   //判斷資料是創建或修改
+<<<<<<< Updated upstream
   useEffect(() => {
     if (inputData)
       try {
@@ -180,6 +212,28 @@ export default function PaintingfindAll() {
         console.log(error);
       }
   }, [inputData]);
+=======
+  useEffect(()=>{
+    if(inputData)
+    try {
+      //確認有沒有id
+      console.log(inputData);
+     if(inputData.paintingId==""){
+      if(inputData.paintingName&&inputData.artistId){
+        createPainting();
+      }else{
+        alert("欄位不可為空");
+      };
+     }else{
+      // readData.date=inputData.date
+      // setReadData(inputData)
+      updataPainting();
+     }
+    } catch (error) {
+      console.log(error);
+    }
+  },[inputData])
+>>>>>>> Stashed changes
   //用artistID取得畫作資料
   const getdata = useCallback(async () => {
     const api = path + "/PTController/artists";
