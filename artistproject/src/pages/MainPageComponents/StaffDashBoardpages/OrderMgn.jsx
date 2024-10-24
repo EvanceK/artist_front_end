@@ -145,6 +145,10 @@ export default function OrderMgn() {
       setValue("attPhone", readData.attPhone);
       document.getElementById("deliveryStaff").value = readData.deliveryStaff;
       setValue("deliveryStaff", readData.deliveryStaff);
+      setValue("deliveryFee",0);
+      setValue("totalAmount",0);
+      Date.now = readData.createDate;
+      setValue("createDate", readData.createDate);
     } 
   }, [readData]);
   const updataDelivery = async()=>{
@@ -195,10 +199,15 @@ export default function OrderMgn() {
             <td>{a.status}</td>
             <td className="col-4">
               <div className="row d-flex">
-                <div className="btn col-4" id={a.deliveryNumber} onClick={editDelivery}>
+                {/* <div className="btn col-4" id={a.deliveryNumber} onClick={editDelivery}>
                   Edit
-                </div>
-                <div className="btn col-4" id={a.deliveryNumber} onClick={() => toggleDetails(a.deliveryNumber)}>
+                </div> */}
+                <div className="btn col-4"
+                      data-bs-toggle="modal" 
+                      data-bs-target="#exampleModal" 
+                      id={a.deliveryNumber} onClick={editDelivery}
+                      data-bs-whatever="@mdo">Edit</div>
+                <div className="btn btn-secondary col-4" id={a.deliveryNumber} onClick={() => toggleDetails(a.deliveryNumber)}>
                   Details
                 </div>
               </div>
@@ -242,154 +251,181 @@ export default function OrderMgn() {
   };
   return (
     <>
+
+      <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="exampleModalLabel">Edit</h1>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div className="modal-body">
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="mb-3">
+                    <label htmlFor="deliveryNumber" className="form-label">
+                    Delivery_number
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="deliveryNumber"
+                      aria-describedby="emailHelp"
+                      {...register("deliveryNumber")}
+                    />
+                  </div>
+                  <div className="mb-3">
+                  <label htmlFor="packageStaff" className="form-label">
+                  PackageStaff
+                    </label>
+                    <select
+                      className="form-select"
+                      aria-label="Default select example"
+                      id="packageStaff"
+                      {...register("packageStaff")}
+                      value={staffOption}
+                      onChange={handleSelectChange}
+                    >
+                      <option defaultValue={0}></option>
+                      {deliveryStaffList}
+                    </select>
+                    {/* <input
+                      type="text"
+                      className="form-control"
+                      id="deliveryStaff"
+                      aria-describedby="emailHelp"
+                      {...register("deliveryStaff")}
+                    /> */}
+                  </div>
+                  <div className="mb-3">
+                  <label htmlFor="deliveryStaff" className="form-label">
+                  DeliveryStaff
+                    </label>
+                    {/* <input
+                      type="text"
+                      className="form-control"
+                      id="deliveryStaff"
+                      aria-describedby="emailHelp"
+                      {...register("deliveryStaff")}
+                    /> */}
+                    <select
+                      className="form-select"
+                      aria-label="Default select example"
+                      id="deliveryStaff"
+                      {...register("deliveryStaff")}
+                      value={staffOption}
+                      onChange={handleSelectChange}
+                    >
+                      <option defaultValue={0}></option>
+                      {deliveryStaffList}
+                    </select>
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="status" className="form-label">
+                      Status
+                    </label>
+                    <select
+                      className="form-select"
+                      aria-label="Default select example"
+                      id="status"
+                      {...register("status")}
+                      // value={selectedOption}
+                      onChange={handleStatusChange}
+                    >
+                      <option defaultValue={0}>待處理</option>
+                      <option defaultValue={1}>已包裝</option>
+                      <option defaultValue={2}>已出貨</option>
+                      <option defaultValue={3}>已送達</option>
+                      <option defaultValue={4}>已取貨</option>
+                      {/* {artistSelectionList} */}
+                    </select>
+                  </div>
+                  {/* <div className="mb-3">
+                  <label htmlFor="status" className="form-label">
+                      Status
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="status"
+                      aria-describedby="emailHelp"
+                      {...register("status")}
+                    />
+                  </div> */}
+                  <div className="mb-3">
+                  <label htmlFor="deliveryAddress" className="form-label">
+                      Delivery_Address
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="deliveryAddress"
+                      aria-describedby="emailHelp"
+                      {...register("deliveryAddress")}
+                    />
+                  </div>
+                  <div className="mb-3">
+                  <label htmlFor="attName" className="form-label">
+                  Att_Name
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="attName"
+                      aria-describedby="emailHelp"
+                      {...register("attName")}
+                    />
+                  </div>
+                  <div className="mb-3">
+                  <label htmlFor="attPhone" className="form-label">
+                  Att_Phone
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="attPhone"
+                      aria-describedby="emailHelp"
+                      {...register("attPhone")}
+                    />
+                  </div>
+                  <div className="mb-3">
+                  <label htmlFor="deliveryInstrictions" className="form-label">
+                  Delivery_Instrictions
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="deliveryInstrictions"
+                      aria-describedby="emailHelp"
+                      {...register("deliveryInstrictions")}
+                    />
+                  </div>
+                  <div className="mb-3 form-check">
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                      id="confirmed"
+                      {...register("confirmed")}
+                    />
+                    <label className="form-check-label" htmlFor="confirmed">
+                      Confirmed
+                    </label>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">
+                      Submit
+                    </button>
+                  </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="h1 mt-5">DeliveryOrders Managerment</div>
       <div className="row">
-        <form className="col-3" onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-3">
-            <label htmlFor="deliveryNumber" className="form-label">
-            Delivery_number
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="deliveryNumber"
-              aria-describedby="emailHelp"
-              {...register("deliveryNumber")}
-            />
-          </div>
-          <div className="mb-3">
-          <label htmlFor="packageStaff" className="form-label">
-          PackageStaff
-            </label>
-            <select
-              className="form-select"
-              aria-label="Default select example"
-              id="packageStaff"
-              {...register("packageStaff")}
-              value={staffOption}
-              onChange={handleSelectChange}
-            >
-              <option defaultValue={0}></option>
-              {deliveryStaffList}
-            </select>
-            {/* <input
-              type="text"
-              className="form-control"
-              id="deliveryStaff"
-              aria-describedby="emailHelp"
-              {...register("deliveryStaff")}
-            /> */}
-          </div>
-          <div className="mb-3">
-          <label htmlFor="deliveryStaff" className="form-label">
-          DeliveryStaff
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="deliveryStaff"
-              aria-describedby="emailHelp"
-              {...register("deliveryStaff")}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="status" className="form-label">
-              Status
-            </label>
-            <select
-              className="form-select"
-              aria-label="Default select example"
-              id="status"
-              {...register("status")}
-              // value={selectedOption}
-              onChange={handleStatusChange}
-            >
-              <option defaultValue={0}>待處理</option>
-              <option defaultValue={1}>已包裝</option>
-              <option defaultValue={2}>已出貨</option>
-              <option defaultValue={3}>已送達</option>
-              <option defaultValue={4}>已取貨</option>
-              {/* {artistSelectionList} */}
-            </select>
-          </div>
-          {/* <div className="mb-3">
-          <label htmlFor="status" className="form-label">
-              Status
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="status"
-              aria-describedby="emailHelp"
-              {...register("status")}
-            />
-          </div> */}
-          <div className="mb-3">
-          <label htmlFor="deliveryAddress" className="form-label">
-              Delivery_Address
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="deliveryAddress"
-              aria-describedby="emailHelp"
-              {...register("deliveryAddress")}
-            />
-          </div>
-          <div className="mb-3">
-          <label htmlFor="attName" className="form-label">
-          Att_Name
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="attName"
-              aria-describedby="emailHelp"
-              {...register("attName")}
-            />
-          </div>
-          <div className="mb-3">
-          <label htmlFor="attPhone" className="form-label">
-          Att_Phone
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="attPhone"
-              aria-describedby="emailHelp"
-              {...register("attPhone")}
-            />
-          </div>
-          <div className="mb-3">
-          <label htmlFor="deliveryInstrictions" className="form-label">
-          Delivery_Instrictions
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="deliveryInstrictions"
-              aria-describedby="emailHelp"
-              {...register("deliveryInstrictions")}
-            />
-          </div>
-          <div className="mb-3 form-check">
-            <input
-              type="checkbox"
-              className="form-check-input"
-              id="confirmed"
-              {...register("confirmed")}
-            />
-            <label className="form-check-label" htmlFor="confirmed">
-              Confirmed
-            </label>
-          </div>
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
-        </form>
-        <div className="col"></div>
         <div
-          className="table-responsive col-8"
+          className="table-responsive col-12"
           style={{ maxHeight: "80vh", overflowY: "auto" }}
         >
           <table className="table table-hover">
