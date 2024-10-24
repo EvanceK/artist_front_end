@@ -18,12 +18,13 @@ export default function OrderMgn() {
     reset,
     setValue, //set value from watched control
   } = useForm();
-  const [deliverySelectionList,setDeliverySelectionList]=useState();
+  const [staffList,setStaffList] =useState();
+  const [deliveryStaffList,setDeliveryStaffList]=useState();
   const [selectedOption, setSelectedOption] = useState("");
-  const [deliveryOption,setDeliveryOption] =useState("");
+  const [staffOption,setStaffOption] =useState("");
   const handleSelectChange = (event) => {
-    setDeliveryOption(event.target.value);
-    console.log(event.target.value);
+    setStaffOption(event.target.value);
+    // console.log(event.target.value);
   };
   const handleStatusChange =(event) =>{
     setSelectedOption(event.target.value);
@@ -31,55 +32,50 @@ export default function OrderMgn() {
   }
   //取得status的data
   const getdata = useCallback(async () => {
-    const api = path + "/DeliveryOrderController/status";
+    const api = path + "/DeliveryOrderController/selectByStatus/";
     if (!selectedOption) return; // Prevent call if artistId is not available
 
     try {
       const result = await axiosInstance.get(
-        `${api}?status=${selectedOption}`
+        `${api}${selectedOption}`
       );
       console.log(result.data);
-      // setFindByStatus(result.data)
       setDeliveryList(result.data)
-      // setPaintingData(result.data.paintingsList);
-
     } catch (error) {
       console.log(error);
     }
   }, [selectedOption]);
 
-  // const getDeliverydata = useCallback(async () => {
-  //   const api = path + "/DeliveryOrderController/status";
-  //   if (!selectedOption) return; // Prevent call if artistId is not available
+  const getDeliveryStaff = useCallback(async () => {
+    const api = path +"/DeliveryOrderController/selectByPackageStaff/";
+    if (!staffOption) return; // Prevent call if artistId is not available
 
-  //   try {
-  //     const result = await axiosInstance.get(
-  //       `${api}?status=${selectedOption}`
-  //     );
-  //     console.log(result.data);
-  //     // setFindByStatus(result.data)
-  //     setDeliveryList(result.data)
-  //     // setPaintingData(result.data.paintingsList);
-
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // // }, [selectedOption]);
-  // useEffect(() => {
-  //   getDeliverydata();
-  //   setValue("deliveryNumber",selectedOption)
-  // }, [deliveryOption]);
+    try {
+      const result = await axiosInstance.get(
+        `${api}${staffOption}`
+      );
+      console.log(result.data);
+      setDeliveryList(result.data)
+    } catch (error) {
+      console.log(error);
+    }
+  }, [staffOption]);
+  useEffect(() => {
+    // console.log(staffOption);
+    getDeliveryStaff();
+    // setValue("packageStaff",deliveryStaffList.staffOption)
+  }, [staffOption]);
 
   useEffect(() => {
     getdata();
     setValue("status",selectedOption)
-  }, [selectedOption,uploadToggle,]);
+  }, [selectedOption]);
 
-  const buildDeliverySelectionList = () => {
-    return deliveryList?.map((a, i) => {
+  const buildDeliveryStaffList = () => {
+    return staffList?.map((a, i) => {
       return (
-        <option key={i} value={a.deliveryNumber}>
-          {a.deliveryNumber}
+        <option key={i} value={a.staffUsername}>
+          {a.staffUsername}
         </option>
       );
     });
@@ -96,20 +92,33 @@ export default function OrderMgn() {
       console.log(error);
     }
   };
+  const getStaffList =async () =>{
+    const api = path + "/StaffController/findall";
+    // 等同 $.ajax(" get blablablba ")
+    try {
+      const result = await axiosInstance.get(`${api}`);
+      console.log(result.data);
+      setStaffList(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     getDeliveryList();
+    getStaffList();
   }, []);
 
   useEffect(() => {
+    console.log(deliveryList);
     if (deliveryList) setOrderTable(buildDeliveryTable());
-    setDeliverySelectionList(buildDeliverySelectionList());
+    setDeliveryStaffList(buildDeliveryStaffList());
   }, [deliveryList,uploadToggle,expandedRow]);
 
   const editDelivery = async(event) =>{
     const id = event.target.id
     console.log(id);
     
-    const api = path + "/DeliveryOrderController/"
+    const api = path + "/DeliveryOrderController/selectbydeliveryNumber/"
     try{
       const result = await axiosInstance.get(`${api}${id}`)
       console.log(result.data);
@@ -128,6 +137,8 @@ export default function OrderMgn() {
       setValue("packageStaff", readData.packageStaff);
       document.getElementById("deliveryAddress").value = readData.deliveryAddress;
       setValue("deliveryAddress", readData.deliveryAddress);
+      document.getElementById("status").value = readData.status;
+      setValue("status", readData.status);
       document.getElementById("attName").value = readData.attName;
       setValue("attName", readData.attName);
       document.getElementById("attPhone").value = readData.attPhone;
@@ -174,43 +185,42 @@ export default function OrderMgn() {
     };
 
   const buildDeliveryTable = () => {
-    return deliveryList.map((a, i) => {
-      console.log(a);
-      return (
-        <React.Fragment key={a.deliveryNumber}>
-        <tr  className={expandedRow === a.deliveryNumber ? "active-row" : ""}>
-          <th scope="row">{a.deliveryNumber}</th>
-          <td>{a.createDate}</td>
-          <td>{a.status}</td>
-          <td className="col-4">
-            <div className="row d-flex">
-              <div className="btn col-4" id={a.deliveryNumber} onClick={editDelivery}>
-                Edit
+      return deliveryList.map((a, i) => {
+        console.log(deliveryList);
+        return (
+          <React.Fragment key={a.deliveryNumber}>
+          <tr>
+            <th scope="row">{a.deliveryNumber}</th>
+            <td>{a.createDate}</td>
+            <td>{a.status}</td>
+            <td className="col-4">
+              <div className="row d-flex">
+                <div className="btn col-4" id={a.deliveryNumber} onClick={editDelivery}>
+                  Edit
+                </div>
+                <div className="btn col-4" id={a.deliveryNumber} onClick={() => toggleDetails(a.deliveryNumber)}>
+                  Details
+                </div>
               </div>
-              <div className="btn col-4" id={a.deliveryNumber} onClick={() => toggleDetails(a.deliveryNumber)}>
-                Details
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr className="">
-  <td colSpan="4">
-    {expandedRow === a.deliveryNumber && (
-      a.orderList.map((o, i) => {
-            return(
-              <table className="table table-striped table-hover" key={i}>
-              <thead>
-              <tr className="active-row underline bg-dark">
-                  <th scope="col">OrderNumber</th>
-                  <th scope="col">CustomerId</th>
-                  <th scope="col">OrderDate</th>
-                  <th scope="col">PaintingId</th>
-                  <th scope="col">Desposit</th>
-                  <th scope="col">ServiceFee</th>
-                  <th scope="col">TotalAmount</th>
-                </tr>
-              </thead>
-              <tbody style={{ maxHeight: "380px", overflowY: "auto" }}>
+            </td>
+          </tr>
+          <tr className="">
+        <td colSpan="4">
+        {expandedRow === a.deliveryNumber && (
+        <table className="table table-striped table-hover">
+          <thead>
+            <tr className="active-row underline bg-dark">
+              <th scope="col">OrderNumber</th>
+              <th scope="col">CustomerId</th>
+              <th scope="col">OrderDate</th>
+              <th scope="col">PaintingId</th>
+              <th scope="col">Desposit</th>
+              <th scope="col">ServiceFee</th>
+              <th scope="col">TotalAmount</th>
+            </tr>
+          </thead>
+          <tbody style={{ maxHeight: "380px", overflowY: "auto" }}>
+            {a.orderList.map((o, i) => (
               <tr key={i}>
                 <th scope="row">{o.orderNumber}</th>
                 <td>{o.customerId}</td>
@@ -219,31 +229,16 @@ export default function OrderMgn() {
                 <td>{o.desposit}</td>
                 <td>{o.serviceFee}</td>
                 <td>{o.totalAmount}</td>
-                {/* <td>{o.totalAmount}</td> */}
-                {/* <td colSpan="4"></td> */}
               </tr>
-              </tbody>
-            </table>
-              
-            )
-          })
-        )}
-          </td>
-        </tr>
-        {/* {expandedRow === a.deliveryNumber && a.orderList.map((o, j) => (
-          <tr key={`${a.deliveryNumber}-${j}`}>
-            <th scope="row">{o.orderNumber}</th>
-            <td colSpan="4">
-              <div>
-                <strong>Order Details:</strong>
-                <p>More info about order {o.orderNumber}</p>
-              </div>
+            ))}
+          </tbody>
+        </table>
+            )}
             </td>
           </tr>
-        ))} */}
-        </React.Fragment>
-      );
-    });
+          </React.Fragment>
+        );
+      });
   };
   return (
     <>
@@ -254,43 +249,29 @@ export default function OrderMgn() {
             <label htmlFor="deliveryNumber" className="form-label">
             Delivery_number
             </label>
-
-            <select
-              className="form-select"
-              aria-label="Default select example"
-              id="deliveryNumber"
-              {...register("deliveryNumber")}
-              value={selectedOption}
-              onChange={handleSelectChange}
-            >
-              <option defaultValue={0}></option>
-              {deliverySelectionList}
-            </select>
-          </div>
-          {/* <div className="mb-3">
-            <label htmlFor="orderNumber" className="form-label">
-              OrderNum
-            </label>
             <input
               type="text"
               className="form-control"
-              id="orderNumber"
+              id="deliveryNumber"
               aria-describedby="emailHelp"
-              {...register("orderNumber")}
-              readOnly
+              {...register("deliveryNumber")}
             />
-          </div> */}
+          </div>
           <div className="mb-3">
           <label htmlFor="packageStaff" className="form-label">
           PackageStaff
             </label>
-            <input
-              type="text"
-              className="form-control"
+            <select
+              className="form-select"
+              aria-label="Default select example"
               id="packageStaff"
-              aria-describedby="emailHelp"
               {...register("packageStaff")}
-            />
+              value={selectedOption}
+              onChange={handleSelectChange}
+            >
+              <option defaultValue={0}></option>
+              {deliveryStaffList}
+            </select>
           </div>
           <div className="mb-3">
           <label htmlFor="deliveryStaff" className="form-label">

@@ -5,6 +5,7 @@ import { UserContext } from "../../../components/ContextProvider/UserContext";
 export default function StaffNavBar() {
   const { setIsLogin, } = useContext(UserContext);
   const navigate = useNavigate();
+  const roleId = localStorage.getItem("roleId");
   useEffect(() => {
     $(".nav-link").on("click", function () {
       $(".nav-link").removeClass("active"); // Remove "active" class from all
@@ -58,7 +59,26 @@ export default function StaffNavBar() {
                   Main page
                 </Link>
               </li>
-              <li className="nav-item">
+              {roleId === '1' && (
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link" aria-current="page" to="/staffdashboard">
+                    Artist Management
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" aria-current="page" to="paintingfindAll">
+                    Painting Management
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" aria-current="page" to="staffmgn">
+                    Staff Management
+                  </Link>
+                </li>
+              </>
+            )}
+              {/* <li className="nav-item">
                 <Link
                   className="nav-link active"
                   aria-current="page"
@@ -67,15 +87,6 @@ export default function StaffNavBar() {
                   Artist Managerment
                 </Link>
               </li>
-              {/* <li className="nav-item">
-                <Link
-                  className="nav-link "
-                  aria-current="page"
-                  to="paintingmgn"
-                >
-                  Painting Managerment
-                </Link>
-              </li> */}
               <li className="nav-item">
                 <Link
                   className="nav-link "
@@ -84,19 +95,18 @@ export default function StaffNavBar() {
                 >
                   Painting Managerment
                 </Link>
-              </li>
-              
+              </li> */}
               <li className="nav-item">
                 <Link className="nav-link " aria-current="page" to="ordermgn">
-                  Order Managerment
+                DeliveryOrders Managerment
                 </Link>
               </li>
 
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link className="nav-link " aria-current="page" to="staffmgn">
                   Staff Managerment
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
           <div className="nav-item dropdown me-5">

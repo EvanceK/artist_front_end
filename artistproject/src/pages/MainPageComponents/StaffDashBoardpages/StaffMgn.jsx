@@ -256,8 +256,6 @@ export default function StaffMgn() {
               <option defaultValue={0}>1</option>
               <option defaultValue={1}>2</option>
               <option defaultValue={2}>3</option>
-              <option defaultValue={3}>4</option>
-              <option defaultValue={4}>5</option>
               {/* {artistSelectionList} */}
             </select>
           </div>
