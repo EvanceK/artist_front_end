@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import axiosInstance from "../axiosConfig";
 import { MainContext } from "./ContextProvider/MainContext";
 
 const SearchComponent = () => {
@@ -13,17 +12,6 @@ const SearchComponent = () => {
     e.preventDefault();
 
     setSearchParam();
-    // if (search.trim() === "") {
-    //   console.log("empty search", search);
-    //   setSearchParams({}); // Clear the query string
-    //   navigate("/home", { replace: true });
-    // } else {
-    //   setSearchParams({ keyword: search }); // Update the URL query param
-    //   navigate("/home?keyword=" + search, { replace: true });
-
-    //   // Fetch data from your API using the search keyword
-    //   // fetchSearchResults(search);
-    // }
   };
 
   function setSearchParam() {
@@ -42,20 +30,6 @@ const SearchComponent = () => {
   useEffect(() => {
     if (search) setSearchParam();
   }, [search]);
-
-  // const fetchSearchResults = async (keyword) => {
-  //   try {
-  //     const response = await axiosInstance.get(`/api/search`, {
-  //       params: {
-  //         keyword,
-  //       },
-  //     });
-  //     console.log("Fetched data:", response.data);
-  //     // Set your data to state or handle the results as needed
-  //   } catch (error) {
-  //     console.error("Error fetching search results:", error);
-  //   }
-  // };
 
   return (
     <form onSubmit={handleSearch}>

@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import OrangeImage from "../assets/home/orange.jpg";
-import { info } from "sass";
+import { useState } from "react";
 import { useContext } from "react"; // 新增 useContext
 import { MainContext } from "./ContextProvider/MainContext";
 import { useNavigate } from "react-router-dom";
@@ -52,10 +50,10 @@ function Order() {
     }
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setRecipientInfo({ ...recipientInfo, [name]: value });
-  };
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setRecipientInfo({ ...recipientInfo, [name]: value });
+  // };
 
   //處理checkbox的部份
   const [isChecked, setIsChecked] = useState(false);
