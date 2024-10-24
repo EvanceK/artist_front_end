@@ -3,12 +3,13 @@ import ConfirmOrderCustomerInfo from "../../components/ConfirmOrderCustomerInfo"
 import ConfirmOrderDetial from "../../components/ConfirmOrderDetial";
 import CustomerInfo from "../../components/CustomerInfo";
 import axiosInstance from "../../axiosConfig";
+import { useNavigate } from "react-router-dom";
 
 function ConfirmOrder() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const [deliveryOrders, setDeliveryOrders] = useState();
   const [formattedDate, setFormattedDate] = useState();
-
+  const navigate = useNavigate();
   // 取得得標記錄
   const getDeliveryOrders = async () => {
     const DeliveryOrders = JSON.parse(
@@ -16,10 +17,12 @@ function ConfirmOrder() {
     );
 
     try {
-      const api = path + `/DeliveryOrderController/${DeliveryOrders}`;
+      const api =
+        path +
+        `/DeliveryOrderController/selectbydeliveryNumber/${DeliveryOrders}`;
 
       const result = await axiosInstance.get(api);
-
+      console.log(result);
       localStorage.setItem("DeliveryOrders", JSON.stringify(result.data));
       setDeliveryOrders(result.data);
     } catch (e) {
@@ -29,6 +32,17 @@ function ConfirmOrder() {
   useEffect(() => {
     getDeliveryOrders();
   }, []);
+
+  const localStorageCleaning = () => {
+    localStorage.removeItem("DeliveryOrderNumber");
+    localStorage.removeItem("DeliveryOrders");
+    localStorage.removeItem("allfee");
+    localStorage.removeItem("deposit");
+    localStorage.removeItem("servicefee");
+    localStorage.removeItem("subtotal");
+    localStorage.removeItem("deliveryfee");
+    navigate("/home");
+  };
 
   useEffect(() => {
     const date = new Date(deliveryOrders?.createDate);
@@ -48,7 +62,7 @@ function ConfirmOrder() {
   }, [deliveryOrders]);
 
   return (
-    <div className=" mt-5">
+    <div className="container mt-5">
       <div className="h1 text-center">Thank You</div>
 
       <div className="text-center grayfont">
@@ -80,6 +94,13 @@ function ConfirmOrder() {
                 <p>Shipping Method: FOB</p>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+      <div className="row d-flex justify-content-center mb-5">
+        <div className="col-2">
+          <div className="btn btn-primary" onClick={localStorageCleaning}>
+            OK
           </div>
         </div>
       </div>

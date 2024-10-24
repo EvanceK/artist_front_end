@@ -2,7 +2,7 @@
 // import OrderPage from "./OrderPage";
 import { useContext, useEffect, useState } from "react"; // 新增 useContext
 import { MainContext } from "../../components/ContextProvider/MainContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../../axiosConfig";
 import WinningRecordsCard from "./MyAccountComponents/WinningRecordsCard";
 
@@ -74,7 +74,7 @@ export default function WinningRecords() {
   useEffect(() => {
     const sa = [];
     if (isSelecAllChecked) {
-      winningRecords.map((bp) => {
+      winningRecords?.map((bp) => {
         sa.push(bp.orderNumber);
       });
     } else {
@@ -138,20 +138,22 @@ export default function WinningRecords() {
 
   useEffect(() => {
     setWinningRecordsCard(
-      winningRecords.length > 0
-        ? winningRecords.map((bp, i) => {
-            return (
-              <WinningRecordsCard
-                key={i}
-                WinningRecordsCardProps={bp}
-                isSelecAllChecked={isSelecAllChecked}
-                setIsSelecAll={setIsSelecAll}
-                selectedItems={selectedItems}
-                setSelectedItems={setSelectedItems}
-              />
-            );
-          })
-        : "1"
+      winningRecords.length > 0 ? (
+        winningRecords.map((bp, i) => {
+          return (
+            <WinningRecordsCard
+              key={i}
+              WinningRecordsCardProps={bp}
+              isSelecAllChecked={isSelecAllChecked}
+              setIsSelecAll={setIsSelecAll}
+              selectedItems={selectedItems}
+              setSelectedItems={setSelectedItems}
+            />
+          );
+        })
+      ) : (
+        <Link to="/home">Let get what you like...</Link>
+      )
     );
     console.log(winningRecordsCard);
   }, [winningRecords, isSelecAllChecked]);

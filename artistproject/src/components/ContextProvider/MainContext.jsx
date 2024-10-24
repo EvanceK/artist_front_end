@@ -17,6 +17,32 @@ export const MainContext = createContext();
 export function MainContextProvider({ children }) {
   //API path 存放在環境變數 .evn 設定為 http://localhost:8080
   const path = import.meta.env.VITE_DATA_HOST_API;
+  const [isTokenExpired, setIsTokenExpired] = useState();
+  useEffect(() => {
+    const api = path + "/customers/checkToken";
+    const role = localStorage.getItem("roleId");
+    if (role) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
+    }
+    const token = localStorage.getItem("token");
+    if (token)
+      async () => {
+        const result = await axiosInstance.get(api);
+        setIsTokenExpired(result);
+      };
+  }, []);
+  useEffect(() => {
+    if (isTokenExpired == false) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
+      localStorage.removeItem("Wishlist");
+      localStorage.removeItem("biddingHistory");
+      localStorage.removeItem("nickName");
+      localStorage.removeItem("paintingIdArray");
+      localStorage.removeItem("selectedOrderNumbers");
+    }
+  }, [isTokenExpired]);
   //state for data 共用變數
   // const [loadWishlist, setLoadWishlist] = useState(false);
   // const [getWishlistData, setGetWishListData] = useState(false);

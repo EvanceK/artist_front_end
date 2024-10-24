@@ -1,63 +1,53 @@
 import { useEffect, useState } from "react";
-import OrangeImage from "../assets/home/orange.jpg";
 import Thumbnail from "./Thumbnail";
-function ConfirmOrderDetial() {
-  const DeliveryOrders = JSON.parse(localStorage.getItem("DeliveryOrders"));
-  const Total = JSON.parse(localStorage.getItem("allfee"));
-  const servicefee = JSON.parse(localStorage.getItem("servicefee"));
-  const orderList = DeliveryOrders.orderList;
-  const paintingArray = [];
-  const [thumbnailCard, setThumbnailCard] = useState();
-  orderList.map((o) => {
-    paintingArray.push(o.paintingId);
-  });
-  useEffect(() => {
-    console.log("paintingArray:", paintingArray);
-  }, []);
 
-  // const buildThumnail = () => {
-  //   paintingArray?.map((p) => {
-  //     console.log(p);
-  //     return (
-  //       <>
-  //         <Thumbnail paintingID={p}></Thumbnail>
-  //       </>
-  //     );
-  //   });
-  // };
-  // useEffect(() => {
-  //   setThumbnailCard(buildThumnail());
-  // }, [paintingArray]);
+function ConfirmOrderDetail() {
+  const [DeliveryOrders, setDeliveryOrders] = useState(null);
+  const [Total, setTotal] = useState(null);
+  const [paintingArray, setPaintingArray] = useState([]);
+  const [servicefee, setservicefee] = useState(null);
+
+  // Fetch data from localStorage
+  useEffect(() => {
+    const deliveryOrders = JSON.parse(localStorage.getItem("DeliveryOrders"));
+    setDeliveryOrders(deliveryOrders);
+    setTotal(JSON.parse(localStorage.getItem("allfee")));
+    setservicefee(JSON.parse(localStorage.getItem("servicefee")));
+    if (deliveryOrders?.orderList) {
+      const paintingIds = deliveryOrders.orderList.map((o) => o.paintingId);
+      setPaintingArray(paintingIds);
+    }
+  }, []);
 
   return (
     <div className="d-flex justify-content-center mt-5">
       <div className="border w-75 mb-5">
         <div className="h1">Order Detail:</div>
-        <div className=" row gap-5 m-5">
-          {paintingArray?.map((p, i) => {
-            // console.log(p);
-            return <Thumbnail key={i} paintingID={p}></Thumbnail>;
-          })}
+        <div className="row gap-5 m-5">
+          {/* Render Thumbnail components */}
+          {paintingArray?.map((p, i) => (
+            <Thumbnail key={i} paintingID={p} />
+          ))}
         </div>
 
         <div className="h1 underline ms-5 me-5"></div>
 
-        <div className=" d-flex justify-content-between align-items-star mb-5">
-          {/*左邊的 delivery instructions */}
+        <div className="d-flex justify-content-between align-items-start mb-5">
+          {/* Delivery Instructions */}
           <div className="d-block w-100">
-            <label className="h3 grayfont text-star ms-5">
+            <label className="h3 grayfont text-start ms-5">
               Delivery Instructions:
             </label>
             <textarea
               className="form-control ms-5 mt-2 w-75"
               rows="10"
               cols="5"
-              defaultValue={DeliveryOrders.deliveryInstrictions}
+              defaultValue={DeliveryOrders?.deliveryInstrictions}
             ></textarea>
           </div>
 
-          {/*右邊的total */}
-          <div className="row d-flex justify-content-end ms-2 me-5 mt-5  w-100">
+          {/* Total calculation */}
+          <div className="row d-flex justify-content-end ms-2 me-5 mt-5 w-100">
             <div className="col-8">
               <div className="d-flex justify-content-between row">
                 <div className="col-4">
@@ -69,7 +59,7 @@ function ConfirmOrderDetial() {
                 <div className="col-4">
                   <h4>
                     {new Intl.NumberFormat("en-IN", {}).format(
-                      DeliveryOrders.totalAmount
+                      DeliveryOrders?.totalAmount
                     )}
                   </h4>
                 </div>
@@ -85,7 +75,7 @@ function ConfirmOrderDetial() {
                   <div className="col-4">
                     <h4>
                       {new Intl.NumberFormat("en-IN", {}).format(
-                        DeliveryOrders.deliveryFee
+                        DeliveryOrders?.deliveryFee
                       )}
                     </h4>
                   </div>
@@ -126,4 +116,5 @@ function ConfirmOrderDetial() {
     </div>
   );
 }
-export default ConfirmOrderDetial;
+
+export default ConfirmOrderDetail;
