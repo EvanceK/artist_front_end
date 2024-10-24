@@ -266,12 +266,19 @@ export default function OrderMgn() {
               aria-label="Default select example"
               id="packageStaff"
               {...register("packageStaff")}
-              value={selectedOption}
+              value={staffOption}
               onChange={handleSelectChange}
             >
               <option defaultValue={0}></option>
               {deliveryStaffList}
             </select>
+            {/* <input
+              type="text"
+              className="form-control"
+              id="deliveryStaff"
+              aria-describedby="emailHelp"
+              {...register("deliveryStaff")}
+            /> */}
           </div>
           <div className="mb-3">
           <label htmlFor="deliveryStaff" className="form-label">
