@@ -9,8 +9,8 @@ export default function CountDown({ datetime, config, onTimeUp }) {
   const comingSoonDate = new Date(DateTime);
   comingSoonDate.setDate(comingSoonDate.getDate() + 7);
 
-  const closeInDate = new Date(comingSoonDate);
-  closeInDate.setDate(closeInDate.getDate() + 7);
+  const closeInDate = new Date(DateTime);
+  closeInDate.setDate(closeInDate.getDate() + 14);
 
   const [isClosed, setIsClosed] = useState(false);
   const [isOnGoing, setIsOnGoing] = useState(false);
@@ -77,6 +77,7 @@ export default function CountDown({ datetime, config, onTimeUp }) {
 
   return (
     <>
+      <p>{DateTime}</p>
       {!isClosed ? (
         <div className={`${config.CountDownClass}`}>
           {!isOnGoing ? (
