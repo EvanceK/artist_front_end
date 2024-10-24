@@ -38,6 +38,7 @@ const SearchComponent = () => {
       // searchResultRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }
+
   useEffect(() => {
     if (search) setSearchParam();
   }, [search]);

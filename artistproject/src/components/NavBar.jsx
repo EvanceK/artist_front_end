@@ -72,6 +72,7 @@ export default function NavBar() {
     localStorage.removeItem("paintingIdArray");
     localStorage.removeItem("Wishlist");
     localStorage.removeItem("biddingHistory");
+    localStorage.removeItem("selectedOrderNumbers");
     // setReLoadBiddingNum(!reLoadBiddingNum);
     setIsLogin(false);
     setToken(null);

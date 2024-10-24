@@ -1,7 +1,36 @@
 import { Link } from "react-router-dom";
 import GoldenCource from "../components/GoldenCource";
 import StarFollower from "../components/StarFollower";
+import { useEffect, useState } from "react";
+import axiosInstance from "../axiosConfig";
 export default function Welcome() {
+  const path = import.meta.env.VITE_DATA_HOST_API;
+  const [isTokenExpired, setIsTokenExpired] = useState();
+  useEffect(() => {
+    const api = path + "/customers/checkToken";
+    const role = localStorage.getItem("roleId");
+    if (role) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
+    }
+    const token = localStorage.getItem("token");
+    if (token)
+      async () => {
+        const result = await axiosInstance.get(api);
+        setIsTokenExpired(result);
+      };
+  }, []);
+  useEffect(() => {
+    if (isTokenExpired == false) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
+      localStorage.removeItem("Wishlist");
+      localStorage.removeItem("biddingHistory");
+      localStorage.removeItem("nickName");
+      localStorage.removeItem("paintingIdArray");
+      localStorage.removeItem("selectedOrderNumbers");
+    }
+  }, [isTokenExpired]);
   return (
     <div className="welcome">
       <GoldenCource />
@@ -50,7 +79,7 @@ export default function Welcome() {
       <div className="btngroup d-flex justify-content-between">
         {/* <div className="btn btn-primary ">
           <Link to ="">MEMBER</Link></div> */}
-          <div className="btn btn-primary ">
+        <div className="btn btn-primary ">
           <div
             // type="button"
             className=""
@@ -66,7 +95,6 @@ export default function Welcome() {
         <div className="btn btn-primary">
           <Link to="/home">EXPLORE</Link>
         </div>
-        
       </div>
     </div>
   );

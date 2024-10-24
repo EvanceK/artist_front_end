@@ -4,12 +4,13 @@ import axios from "axios";
 import { UserContext } from "../ContextProvider/UserContext";
 // import { MainPageContext } from "../ContextProvider/MainPageContext";
 import { MainContext } from "../ContextProvider/MainContext";
-import $ from "jquery";
+import $, { trim } from "jquery";
+import axiosInstance from "../../axiosConfig";
 export default function LoginModal() {
   const path = import.meta.env.VITE_DATA_HOST_API;
   const api = path + "/customers/login";
-  const { setUserName, setIsLogin, } = useContext(UserContext);
-  const {handleEmail } = useContext(MainContext);
+  const { setUserName, setIsLogin } = useContext(UserContext);
+  const { handleEmail } = useContext(MainContext);
 
   const {
     loginModalRef,
@@ -18,25 +19,18 @@ export default function LoginModal() {
     showIncorrectAccountModal,
     showIncorrectPasswordModal,
   } = useContext(MainContext);
-  const [data, setData] = useState({
-    email: "",
-    password: "",
-  });
+  const [data, setData] = useState();
 
   // email: tester@email.com. pass: 123
   const handleChange = (e) => {
     const { name, value } = e.target;
     // console.log(name, value);
-    setData({ ...data, [name]: value });
+    if (value.trim() != "") setData({ ...data, [name]: value });
     // console.log(data);
   };
   const submit = async () => {
     try {
-      const result = await axios.post(api, data, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const result = await axiosInstance.post(api, data);
       //處理成功登入結果
       // console.log(result);
       localStorage.setItem("token", result.data.token);
@@ -44,11 +38,10 @@ export default function LoginModal() {
       // setLoadWishlist(!loadWishlist);
       setIsLogin(true);
     } catch (error) {
-      handleEmail(data.email);  // 將用戶輸入的 email 保存到 context 中
+      handleEmail(data.email); // 將用戶輸入的 email 保存到 context 中
       console.log(error);
 
       if (error.response.data === "Email doesn't exist") {
-        
         showIncorrectAccountModal();
       } else if (error.response.data === "Invalid password") {
         showIncorrectPasswordModal();
@@ -95,7 +88,7 @@ export default function LoginModal() {
                 <h2 className="d-flex m-5 ">Sign Up or Log In</h2>
                 <div className="d-block">
                   <div className="row mt-5 m-2">
-                    <label className="col-3" htmlFor="email" >
+                    <label className="col-3" htmlFor="email">
                       Email:
                     </label>
                     <input
@@ -105,6 +98,7 @@ export default function LoginModal() {
                       type="text"
                       placeholder="email"
                       onChange={handleChange}
+                      required
                     />
                   </div>
                   <div className="row m-2">
@@ -118,6 +112,7 @@ export default function LoginModal() {
                       type="text"
                       placeholder="password"
                       onChange={handleChange}
+                      required
                     />
                   </div>
                 </div>
