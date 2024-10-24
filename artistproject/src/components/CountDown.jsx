@@ -10,7 +10,7 @@ export default function CountDown({ datetime, config, onTimeUp }) {
   comingSoonDate.setDate(comingSoonDate.getDate() + 7);
 
   const closeInDate = new Date(comingSoonDate);
-  closeInDate.setDate(closeInDate.getDate() + 14);
+  closeInDate.setDate(closeInDate.getDate() + 7);
 
   const [isClosed, setIsClosed] = useState(false);
   const [isOnGoing, setIsOnGoing] = useState(false);
