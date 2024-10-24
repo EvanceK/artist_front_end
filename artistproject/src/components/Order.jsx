@@ -13,7 +13,7 @@ function Order() {
     useContext(MainContext);
 
   //處理表單確認按鈕
-  const handleOrderConfirmClick = (e) => {
+  const handleOrderConfirmClick = async (e) => {
     e.preventDefault();
     const isValid = validateForm(recipientInfo, paymentInfo);
     if (isValid) {
@@ -33,9 +33,14 @@ function Order() {
           // ),
         };
         // 發送 POST 請求到後端 API，創建出貨單
-        const response = axiosInstance.post(
+        const response = await axiosInstance.post(
           "/DeliveryOrderController/createDeliveryOrder",
           payload
+        );
+        console.log(response.data);
+        localStorage.setItem(
+          "DeliveryOrderNumber",
+          JSON.stringify(response.data)
         );
         // 導航至 OrderPage 頁面
         navigate("/home/cusdashboard/ConfirmOrder");
@@ -192,7 +197,7 @@ function Order() {
                   rows="3"
                 ></textarea>
               </div>
-              submit button
+
               <div className="place-Bid d-flex justify-content-center m-5 ">
                 <div
                   className="btn btn-primary"

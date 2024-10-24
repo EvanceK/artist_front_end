@@ -66,10 +66,7 @@ function OrderPage() {
 
   return (
     <div className="container mt-5 w-75">
-      <CustomerInfo
-        customerInfo={customerInfo}
-        setCustomerInfo={setCustomerInfo}
-      />
+      <CustomerInfo />
       <PaymentMethod
         paymentInfo={paymentInfo}
         setPaymentInfo={setPaymentInfo}

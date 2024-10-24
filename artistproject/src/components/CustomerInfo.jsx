@@ -19,7 +19,7 @@ function CustomerInfo() {
     try {
       // 直接發送請求，不再檢查 token，因為已經假設用戶已登入
       const result = await axiosInstance.get(api);
-      console.log(result.data);
+      // console.log(result.data);
 
       // 將獲取到的客戶資料設置到狀態中
       setCustomer(result.data);
