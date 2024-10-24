@@ -77,7 +77,7 @@ export default function CountDown({ datetime, config, onTimeUp }) {
 
   return (
     <>
-      <p>{DateTime}</p>
+      {/* <p>{DateTime}</p> */}
       {!isClosed ? (
         <div className={`${config.CountDownClass}`}>
           {!isOnGoing ? (
