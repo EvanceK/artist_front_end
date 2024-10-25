@@ -282,7 +282,7 @@ export default function Auction() {
               <p className="price h4 text-center mb-5">
                 ${" "}
                 {new Intl.NumberFormat("en-IN", {
-                  maximumSignificantDigits: 3,
+                  // maximumSignificantDigits: 3,
                 }).format(painting.price)}{" "}
               </p>
               <form action="">
