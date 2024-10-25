@@ -343,7 +343,7 @@ export default function Auction() {
                   </div>
                   <div className="col">Byer Protection fee: 10%</div>
                 </div>
-                <div className="row m-3">
+                {/* <div className="row m-3">
                   <div className="col-1">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -356,7 +356,7 @@ export default function Auction() {
                       <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z" />
                     </svg>
                   </div>
-                </div>
+                </div> */}
                 <hr />
                 {auctionList}
               </div>

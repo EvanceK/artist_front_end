@@ -48,12 +48,7 @@ export default function EditAccount() {
     try {
       console.log(data);
       if (Authorization) {
-        const result = await axiosInstance.put(api, data, {
-          // const result = await axios.put(api, data, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        const result = await axiosInstance.put(api, data);
         console.log(result);
       }
     } catch (error) {
