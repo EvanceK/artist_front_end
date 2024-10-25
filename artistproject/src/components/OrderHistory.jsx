@@ -20,10 +20,6 @@ function OrderHistory() {
           </div>
 
           <div className="d-flex gap-3">
-            <label className="me-3">Payment method:</label>
-            <label>Credit Card One-time Payment</label>
-          </div>
-          <div className="d-flex gap-3">
             <label className="me-3">Reipent Address:</label>
             <label>236 NewTaipeiCity</label>
           </div>
