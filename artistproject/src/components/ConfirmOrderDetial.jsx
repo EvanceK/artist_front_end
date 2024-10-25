@@ -2,22 +2,31 @@ import { useEffect, useState } from "react";
 import Thumbnail from "./Thumbnail";
 
 function ConfirmOrderDetail() {
-  const [DeliveryOrders, setDeliveryOrders] = useState(null);
-  const [Total, setTotal] = useState(null);
+  const [DeliveryOrders, setDeliveryOrders] = useState(() =>
+    JSON.parse(localStorage.getItem("DeliveryOrders"))
+  );
+  const [Total, setTotal] = useState(() =>
+    JSON.parse(localStorage.getItem("allfee"))
+  );
+  const [servicefee, setServiceFee] = useState(() =>
+    JSON.parse(localStorage.getItem("servicefee"))
+  );
   const [paintingArray, setPaintingArray] = useState([]);
-  const [servicefee, setservicefee] = useState(null);
-
-  // Fetch data from localStorage
+  const [ThumbnailCards, setThumbnailCards] = useState(null);
   useEffect(() => {
-    const deliveryOrders = JSON.parse(localStorage.getItem("DeliveryOrders"));
-    setDeliveryOrders(deliveryOrders);
-    setTotal(JSON.parse(localStorage.getItem("allfee")));
-    setservicefee(JSON.parse(localStorage.getItem("servicefee")));
-    if (deliveryOrders?.orderList) {
-      const paintingIds = deliveryOrders.orderList.map((o) => o.paintingId);
+    if (DeliveryOrders?.orderList) {
+      const paintingIds = DeliveryOrders.orderList.map((o) => o.paintingId);
       setPaintingArray(paintingIds);
     }
-  }, []);
+  }, [DeliveryOrders, setPaintingArray]);
+
+  useEffect(() => {
+    if (paintingArray.length > 0) {
+      setThumbnailCards(
+        paintingArray.map((p, i) => <Thumbnail key={i} paintingID={p} />)
+      );
+    }
+  }, [paintingArray]);
 
   return (
     <div className="d-flex justify-content-center mt-5">
@@ -25,9 +34,10 @@ function ConfirmOrderDetail() {
         <div className="h1">Order Detail:</div>
         <div className="row gap-5 m-5">
           {/* Render Thumbnail components */}
-          {paintingArray?.map((p, i) => (
+          {/* {paintingArray?.map((p, i) => (
             <Thumbnail key={i} paintingID={p} />
-          ))}
+          ))} */}
+          {ThumbnailCards}
         </div>
 
         <div className="h1 underline ms-5 me-5"></div>
