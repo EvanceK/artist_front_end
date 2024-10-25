@@ -18,12 +18,19 @@ export default function OrderMgn() {
     reset,
     setValue, //set value from watched control
   } = useForm();
-  const [staffList,setStaffList] =useState();
+  const [role3staff,setRole3staff] =useState();
+  const [role2Staff,setRole2Staff] =useState();
   const [deliveryStaffList,setDeliveryStaffList]=useState();
+  const [packageStaffList,setPackageStaffList] =useState();
   const [selectedOption, setSelectedOption] = useState("");
   const [staffOption,setStaffOption] =useState("");
-  const handleSelectChange = (event) => {
+  const [packagestaffOption,setPackageStaffOption] =useState("");
+  const handleDeliverySelectChange = (event) => {
     setStaffOption(event.target.value);
+    // console.log(event.target.value);
+  };
+  const handlePackageSelectChange = (event) => {
+    setPackageStaffOption(event.target.value);
     // console.log(event.target.value);
   };
   const handleStatusChange =(event) =>{
@@ -46,25 +53,25 @@ export default function OrderMgn() {
     }
   }, [selectedOption]);
 
-  const getDeliveryStaff = useCallback(async () => {
+  const getPackageStaff = useCallback(async () => {
     const api = path +"/DeliveryOrderController/selectByPackageStaff/";
-    if (!staffOption) return; // Prevent call if artistId is not available
-
+    if (!packagestaffOption) return; // Prevent call if artistId is not available 
     try {
       const result = await axiosInstance.get(
-        `${api}${staffOption}`
+        `${api}${packagestaffOption}`
       );
-      console.log(result.data);
+      console.log(result);
       setDeliveryList(result.data)
     } catch (error) {
       console.log(error);
     }
-  }, [staffOption]);
+  }, [packagestaffOption]);
   useEffect(() => {
     // console.log(staffOption);
-    getDeliveryStaff();
+    getPackageStaff();
+    console.log(packagestaffOption);
     // setValue("packageStaff",deliveryStaffList.staffOption)
-  }, [staffOption]);
+  }, [packagestaffOption]);
 
   useEffect(() => {
     getdata();
@@ -72,7 +79,16 @@ export default function OrderMgn() {
   }, [selectedOption]);
 
   const buildDeliveryStaffList = () => {
-    return staffList?.map((a, i) => {
+    return role3staff?.map((a, i) => {
+      return (
+        <option key={i} value={a.staffUsername}>
+          {a.staffUsername}
+        </option>
+      );
+    });
+  };
+  const buildPackageStaffList = () => {
+    return role2Staff?.map((a, i) => {
       return (
         <option key={i} value={a.staffUsername}>
           {a.staffUsername}
@@ -98,7 +114,13 @@ export default function OrderMgn() {
     try {
       const result = await axiosInstance.get(`${api}`);
       console.log(result.data);
-      setStaffList(result.data);
+      const filteredStaff2 = result.data.filter(staff => staff.roleId === 2);
+      const filteredStaff3 = result.data.filter(staff => staff.roleId === 3);
+      console.log(filteredStaff2);
+      
+      setRole2Staff(filteredStaff2);
+      setRole3staff(filteredStaff3);
+      // setStaffList(result.data);
     } catch (error) {
       console.log(error);
     }
@@ -112,6 +134,7 @@ export default function OrderMgn() {
     console.log(deliveryList);
     if (deliveryList) setOrderTable(buildDeliveryTable());
     setDeliveryStaffList(buildDeliveryStaffList());
+    setPackageStaffList(buildPackageStaffList())
   }, [deliveryList,uploadToggle,expandedRow]);
 
   const editDelivery = async(event) =>{
@@ -145,10 +168,6 @@ export default function OrderMgn() {
       setValue("attPhone", readData.attPhone);
       document.getElementById("deliveryStaff").value = readData.deliveryStaff;
       setValue("deliveryStaff", readData.deliveryStaff);
-      setValue("deliveryFee",0);
-      setValue("totalAmount",0);
-      Date.now = readData.createDate;
-      setValue("createDate", readData.createDate);
     } 
   }, [readData]);
   const updataDelivery = async()=>{
@@ -181,13 +200,10 @@ export default function OrderMgn() {
     alert("Please Confirmed");
     }
   }
- 
-  
   const toggleDetails = (deliveryNumber) => {
     // 若點擊同一列則收起詳細資料，否則展開該列
       setExpandedRow((prev) => (prev === deliveryNumber ? null : deliveryNumber));
     };
-
   const buildDeliveryTable = () => {
       return deliveryList.map((a, i) => {
         console.log(deliveryList);
@@ -282,8 +298,8 @@ export default function OrderMgn() {
                       aria-label="Default select example"
                       id="packageStaff"
                       {...register("packageStaff")}
-                      value={staffOption}
-                      onChange={handleSelectChange}
+                      value={packagestaffOption}
+                      onChange={handlePackageSelectChange}
                     >
                       <option defaultValue={0}></option>
                       {deliveryStaffList}
@@ -313,7 +329,7 @@ export default function OrderMgn() {
                       id="deliveryStaff"
                       {...register("deliveryStaff")}
                       value={staffOption}
-                      onChange={handleSelectChange}
+                      onChange={handleDeliverySelectChange}
                     >
                       <option defaultValue={0}></option>
                       {deliveryStaffList}
