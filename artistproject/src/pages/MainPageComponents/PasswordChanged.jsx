@@ -4,8 +4,8 @@ import { MainContext } from "../../components/ContextProvider/MainContext";
 import axiosInstance from "../../axiosConfig";
 export default function PasswordChanged() {
   const path=import.meta.env.VITE_DATA_HOST_API;
-  const Authorization = localStorage.getItem("token");
-  const api= path + "/customers/EditPassword";
+  const Authorization = localStorage.getItem("biddingHistory");
+  
   const[password,setPassword] = useState({
     password:"",
     confirmPassword:""
@@ -22,7 +22,7 @@ export default function PasswordChanged() {
       console.log(result.data);
       setData(result.data)
     }else{
-      showLogingModal();
+      // showLogingModal();
       console.log("please login")
     }
   };
@@ -44,15 +44,26 @@ export default function PasswordChanged() {
       console.log(data);
       // setData({...data,[password]:password}) 
       // console.log(data);
-      
+     
      if(Authorization){
-        const result = await axiosInstance.put(api, data, {
+      const api= path + "/customers/EditPassword";
+      const result = await axiosInstance.put(api, data, {
        headers: {
+        //  Authorization: `Bearer ${Authorization}`,
          "Content-Type": "application/json",
        },
-     });
-     console.log(result);
-   }
+       });
+      console.log(result);
+     }else{
+        // const api= path + "/reset-password/";
+        // const token = localStorage.get("token")
+        // const result = await axiosInstance.put(api,token, data, {
+        //   headers: {
+        //     Authorization: `Bearer ${Authorization}`,
+        //     "Content-Type": "application/json",
+        //   },
+        // });
+     }
    } catch (error) {
      console.log(error);
    }
