@@ -217,7 +217,7 @@ export default function ChangeCreditCardModal() {
                       }}
                       maxLength="4"
                     />
-                    <div className="row d-flex justify-content-center  m-3 ">
+                    {/* <div className="row d-flex justify-content-center  m-3 ">
                       Expiration Date :
                       <input
                         type="text"
@@ -235,7 +235,7 @@ export default function ChangeCreditCardModal() {
                         onChange={handleCvvChange}
                         maxLength="3"
                       />
-                    </div>
+                    </div> */}
                   </div>
                   <div>
                     {/* 顯示卡號的錯誤訊息 */}
