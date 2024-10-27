@@ -304,11 +304,11 @@ export default function OrderMgn() {
               // value={selectedOption}
               onChange={handleStatusChange}
             >
-              <option defaultValue={0}>待處理</option>
-              <option defaultValue={1}>已包裝</option>
-              <option defaultValue={2}>已出貨</option>
-              <option defaultValue={3}>已送達</option>
-              <option defaultValue={4}>已取貨</option>
+              <option defaultValue={0}>Pending</option>
+              <option defaultValue={1}>packed</option>
+              <option defaultValue={2}>Shipped</option>
+              <option defaultValue={3}>Delivered</option>
+              <option defaultValue={4}>Picked up</option>
               {/* {artistSelectionList} */}
             </select>
           </div>
