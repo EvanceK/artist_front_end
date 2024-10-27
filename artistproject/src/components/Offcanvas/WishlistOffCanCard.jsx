@@ -2,7 +2,7 @@ import { useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import axiosInstance from "../../axiosConfig";
 import { MainContext } from "../ContextProvider/MainContext";
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const path = import.meta.env.VITE_DATA_HOST_API;
 export default function WishlistOffCanCard({ wishlisProps }) {
   const { setaddRemoveWishlistprocessed, addRemoveWishlistprocessed } =
@@ -11,19 +11,18 @@ export default function WishlistOffCanCard({ wishlisProps }) {
     const api = path + `/api/wishlist/${event.target.id}`;
     const result = await axiosInstance.delete(api);
     setaddRemoveWishlistprocessed(!addRemoveWishlistprocessed);
-
   };
   const navigate = useNavigate();
   const divRef = useRef(null);
   const placeBid = (e) => {
-    if(divRef.current){
+    if (divRef.current) {
       console.log(divRef.current.id);
       navigate(`/home/auction/${divRef.current.id}`);
     }
   };
   return (
     <>
-      <div className="row align-items-center m-3" id={wishlisProps.paintingId} onClick={placeBid} ref={divRef}>
+      <div className="row align-items-center m-3">
         {/* <input
       className="form-check-input"
       style={{ fontSize: "20px" }}
@@ -31,7 +30,12 @@ export default function WishlistOffCanCard({ wishlisProps }) {
       value=""
       id="select"
     /> */}
-        <div className="d-flex justify-content-center col">
+        <div
+          className="d-flex justify-content-center col"
+          id={wishlisProps.paintingId}
+          ref={divRef}
+          onClick={placeBid}
+        >
           <img
             className="img-fluid"
             src={wishlisProps.smallUrl}

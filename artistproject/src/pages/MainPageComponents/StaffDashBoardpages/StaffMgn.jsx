@@ -27,7 +27,6 @@ export default function StaffMgn() {
       const result = await axiosInstance.get(`${api}`);
       console.log(result.data);
       setStaffList(result.data);
-
     } catch (error) {
       console.log(error);
     }
@@ -46,7 +45,8 @@ export default function StaffMgn() {
       setValue("staffId", readData.staffId);
       document.getElementById("staffName").value = readData.staffName;
       setValue("staffName", readData.staffName);
-      document.getElementById("staffDepartment").value = readData.staffDepartment;
+      document.getElementById("staffDepartment").value =
+        readData.staffDepartment;
       setValue("staffDepartment", readData.staffDepartment);
       document.getElementById("staffUsername").value = readData.staffUsername;
       setValue("staffUsername", readData.staffUsername);
@@ -65,13 +65,13 @@ export default function StaffMgn() {
       const result = await axios.delete(`${api}${id}`);
       console.log(result.data);
       //刷新頁面用
-      setUploadToggle(!uploadToggle)
-      alert("刪除成功")
+      setUploadToggle(!uploadToggle);
+      alert("刪除成功");
     } catch (error) {
       console.log("delete" + error);
     }
   };
-  
+
   //編輯按鈕
   const editStaff = async (event) => {
     const id = event.target.id;
@@ -83,12 +83,10 @@ export default function StaffMgn() {
       console.log(result.data);
       setReadData(result.data);
       // setInputData(result.data);
- 
     } catch (error) {
       console.log(error);
     }
   };
-
 
   //有id就對資料進行修改
   const updataStaff = async () => {
@@ -97,9 +95,9 @@ export default function StaffMgn() {
     const result = await axios.put(`${api}`, inputData);
     // console.log(result.data);
     //刷新頁面用
-    setUploadToggle(!uploadToggle)
+    setUploadToggle(!uploadToggle);
     reset();
-    alert("修改成功")
+    alert("修改成功");
   };
   //沒有id時就建立一個新的
   //新增
@@ -110,31 +108,36 @@ export default function StaffMgn() {
       const result = await axiosInstance.post(api, inputData);
       // console.log(result.data);
       //刷新頁面用
-      setUploadToggle(!uploadToggle)
+      setUploadToggle(!uploadToggle);
       reset();
-      alert("新增成功")
+      alert("新增成功");
     } catch (e) {
       console.log(e);
     }
-  };  
+  };
   useEffect(() => {
-    if(inputData)
-    try {
-      // 確認有沒有id
-      if (!inputData.staffId) {      
-        if(inputData.staffName&&inputData.staffDepartment&&inputData.staffUsername&&inputData.staffPassword){
-          console.log(inputData);
-          createStaff();
-        }else{
-          alert("欄位不能為空")
+    if (inputData)
+      try {
+        // 確認有沒有id
+        if (!inputData.staffId) {
+          if (
+            inputData.staffName &&
+            inputData.staffDepartment &&
+            inputData.staffUsername &&
+            inputData.staffPassword
+          ) {
+            console.log(inputData);
+            createStaff();
+          } else {
+            alert("欄位不能為空");
+          }
+        } else {
+          // setInputData(inputData);
+          updataStaff();
         }
-      } else {
-        // setInputData(inputData);
-        updataStaff();
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
-    }
     console.log(inputData);
   }, [inputData]);
 
@@ -142,11 +145,11 @@ export default function StaffMgn() {
     console.log(data);
     //確認資料
     if (data.confirmed) {
-    // unregister("confirmed");
-    // console.log("unregister: ", data);
-    setInputData(data);
+      // unregister("confirmed");
+      // console.log("unregister: ", data);
+      setInputData(data);
     } else {
-    alert("Please Confirmed");
+      alert("Please Confirmed");
     }
   };
 
@@ -160,13 +163,19 @@ export default function StaffMgn() {
           <td>{a.staffDepartment}</td>
           <td>{a.staffUsername}</td>
           {/* <td>{a.staffPassword}</td> */}
-          <td>{a.roleId}</td>
+          <td>
+            {a.roleId == 1 ? "Manager" : a.roleId == 2 ? "Leader" : "Staff"}
+          </td>
           <td className="d-flex align-items-center justify-content-center">
             <div className="row d-flex">
               <div className="btn col-6" id={a.staffId} onClick={editStaff}>
                 Edit
               </div>
-              <div className="btn btn-danger col-6" id={a.staffId} onClick={deleteStaff}>
+              <div
+                className="btn btn-danger col-6"
+                id={a.staffId}
+                onClick={deleteStaff}
+              >
                 Delete
               </div>
             </div>
@@ -194,7 +203,7 @@ export default function StaffMgn() {
             />
           </div>
           <div className="mb-3">
-          <label htmlFor="staffName" className="form-label">
+            <label htmlFor="staffName" className="form-label">
               Staff Name
             </label>
             <input
@@ -206,7 +215,7 @@ export default function StaffMgn() {
             />
           </div>
           <div className="mb-3">
-          <label htmlFor="staffDepartment" className="form-label">
+            <label htmlFor="staffDepartment" className="form-label">
               Staff Department
             </label>
             <input
@@ -218,8 +227,8 @@ export default function StaffMgn() {
             />
           </div>
           <div className="mb-3">
-          <label htmlFor="staffUsername" className="form-label">
-            Staff UserName
+            <label htmlFor="staffUsername" className="form-label">
+              Staff UserName
             </label>
             <input
               type="text"
@@ -230,8 +239,8 @@ export default function StaffMgn() {
             />
           </div>
           <div className="mb-3">
-          <label htmlFor="staffPassword" className="form-label">
-            Staff PassWord
+            <label htmlFor="staffPassword" className="form-label">
+              Staff PassWord
             </label>
             <input
               type="text"
@@ -243,7 +252,7 @@ export default function StaffMgn() {
           </div>
           <div className="mb-3">
             <label htmlFor="roleId" className="form-label">
-            Role_Id
+              Role
             </label>
             <select
               className="form-select"
@@ -253,9 +262,10 @@ export default function StaffMgn() {
               // value={selectedOption}
               // onChange={handleSelectChange}
             >
-              <option defaultValue={0}>1</option>
-              <option defaultValue={1}>2</option>
-              <option defaultValue={2}>3</option>
+              <option value={0}>...</option>
+              <option value={1}>Manager</option>
+              <option value={2}>Leader</option>
+              <option value={3}>Staff</option>
               {/* {artistSelectionList} */}
             </select>
           </div>
@@ -265,7 +275,6 @@ export default function StaffMgn() {
               className="form-check-input"
               id="confirmed"
               {...register("confirmed")}
-
             />
             <label className="form-check-label" htmlFor="confirmed">
               Confirmed
@@ -288,7 +297,7 @@ export default function StaffMgn() {
                 <th scope="col">Staff Department</th>
                 <th scope="col">Staff UserName</th>
                 {/* <th scope="col">Staff PassWord</th> */}
-                <th scope="col">Staff RoleId</th>
+                <th scope="col">Staff Role</th>
                 <th scope="col">Modify</th>
               </tr>
             </thead>
