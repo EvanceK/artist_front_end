@@ -56,6 +56,7 @@ function ConfirmOrder() {
     }
   };
   useEffect(() => {
+    window.scrollTo(0, 0);
     getDeliveryOrders();
   }, []);
 
@@ -209,7 +210,7 @@ function ConfirmOrder() {
             <div className="h1 underline mt-5">Recipient information </div>
             <div className="mt-5">
               <div className=" flex-column h3">
-                <p>Recipient's Name: {DeliveryOrders?.attName}</p>
+                <p>Recipient&apos;s Name: {DeliveryOrders?.attName}</p>
                 <p>Phone: {DeliveryOrders?.attPhone}</p>
                 <p>Address: {DeliveryOrders?.deliveryAddress}</p>
                 <p>Shipping Method: FOB</p>

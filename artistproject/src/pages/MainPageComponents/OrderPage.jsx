@@ -38,6 +38,7 @@ function OrderPage() {
 
   // 使用這些數據在下一個頁面中顯示
   useEffect(() => {
+    window.scrollTo(0, 0);
     console.log(selectedItems, subtotal, servicefee, deliveryfee, allfee);
   }, [selectedItems, subtotal, servicefee, deliveryfee, allfee]);
 
