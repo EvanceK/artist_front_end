@@ -18,12 +18,20 @@ export default function OrderMgn() {
     reset,
     setValue, //set value from watched control
   } = useForm();
+  const [role3staff,setRole3staff] =useState();
+  const [role2Staff,setRole2Staff] =useState();
   const [staffList,setStaffList] =useState();
   const [deliveryStaffList,setDeliveryStaffList]=useState();
+  const [packageStaffList,setPackageStaffList] =useState();
   const [selectedOption, setSelectedOption] = useState("");
   const [staffOption,setStaffOption] =useState("");
-  const handleSelectChange = (event) => {
+  const [packagestaffOption,setPackageStaffOption] =useState("");
+  const handleDeliverySelectChange = (event) => {
     setStaffOption(event.target.value);
+    // console.log(event.target.value);
+  };
+  const handlePackageSelectChange = (event) => {
+    setPackageStaffOption(event.target.value);
     // console.log(event.target.value);
   };
   const handleStatusChange =(event) =>{
@@ -47,10 +55,11 @@ export default function OrderMgn() {
   }, [selectedOption]);
 
   const getDeliveryStaff = useCallback(async () => {
-    const api = path +"/DeliveryOrderController/selectByPackageStaff/";
+    const api = path +"/DeliveryOrderController/selectByDeliveryStaff/";
     if (!staffOption) return; // Prevent call if artistId is not available
 
     try {
+      console.log(staffOption);
       const result = await axiosInstance.get(
         `${api}${staffOption}`
       );
@@ -60,19 +69,46 @@ export default function OrderMgn() {
       console.log(error);
     }
   }, [staffOption]);
+
+  const getPackageStaff = useCallback(async () => {
+    const api = path +"/DeliveryOrderController/selectByPackageStaff/";
+    if (!packagestaffOption) return; // Prevent call if artistId is not available 
+    try {
+      console.log(packagestaffOption);
+      const result = await axiosInstance.get(
+        `${api}${packagestaffOption}`
+      );
+      console.log(result);
+      setDeliveryList(result.data)
+    } catch (error) {
+      console.log(error);
+    }
+  }, [packagestaffOption]);
   useEffect(() => {
-    // console.log(staffOption);
     getDeliveryStaff();
-    // setValue("packageStaff",deliveryStaffList.staffOption)
+    setValue("deliveryStaff",staffOption)
   }, [staffOption]);
+
+  useEffect(() => {
+    getPackageStaff();
+    setValue("packageStaff",packagestaffOption)
+  }, [packagestaffOption]);
 
   useEffect(() => {
     getdata();
     setValue("status",selectedOption)
   }, [selectedOption]);
-
   const buildDeliveryStaffList = () => {
-    return staffList?.map((a, i) => {
+    return role3staff?.map((a, i) => {
+      return (
+        <option key={i} value={a.staffUsername}>
+          {a.staffUsername}
+        </option>
+      );
+    });
+  };
+  const buildPackageStaffList = () => {
+    return role2Staff?.map((a, i) => {
       return (
         <option key={i} value={a.staffUsername}>
           {a.staffUsername}
@@ -98,7 +134,13 @@ export default function OrderMgn() {
     try {
       const result = await axiosInstance.get(`${api}`);
       console.log(result.data);
-      setStaffList(result.data);
+      const filteredStaff2 = result.data.filter(staff => staff.roleId === 2);
+      const filteredStaff3 = result.data.filter(staff => staff.roleId === 3);
+      console.log(filteredStaff2);
+      
+      setRole2Staff(filteredStaff2);
+      setRole3staff(filteredStaff3);
+      // setStaffList(result.data);
     } catch (error) {
       console.log(error);
     }
@@ -112,6 +154,7 @@ export default function OrderMgn() {
     console.log(deliveryList);
     if (deliveryList) setOrderTable(buildDeliveryTable());
     setDeliveryStaffList(buildDeliveryStaffList());
+    setPackageStaffList(buildPackageStaffList())
   }, [deliveryList,uploadToggle,expandedRow]);
 
   const editDelivery = async(event) =>{
@@ -186,7 +229,7 @@ export default function OrderMgn() {
 
   const buildDeliveryTable = () => {
       return deliveryList.map((a, i) => {
-        console.log(deliveryList);
+        // console.log(deliveryList);
         return (
           <React.Fragment key={a.deliveryNumber}>
           <tr>
@@ -266,11 +309,11 @@ export default function OrderMgn() {
               aria-label="Default select example"
               id="packageStaff"
               {...register("packageStaff")}
-              value={staffOption}
-              onChange={handleSelectChange}
+              value={packagestaffOption}
+              onChange={handlePackageSelectChange}
             >
               <option defaultValue={0}></option>
-              {deliveryStaffList}
+              {packageStaffList}
             </select>
             {/* <input
               type="text"
@@ -284,13 +327,24 @@ export default function OrderMgn() {
           <label htmlFor="deliveryStaff" className="form-label">
           DeliveryStaff
             </label>
-            <input
+            {/* <input
               type="text"
               className="form-control"
               id="deliveryStaff"
               aria-describedby="emailHelp"
               {...register("deliveryStaff")}
-            />
+            /> */}
+             <select
+                className="form-select"
+                aria-label="Default select example"
+                id="deliveryStaff"
+                {...register("deliveryStaff")}
+                value={staffOption}
+                onChange={handleDeliverySelectChange}
+                >
+                <option defaultValue={0}></option>
+                {deliveryStaffList}
+             </select>
           </div>
           <div className="mb-3">
             <label htmlFor="status" className="form-label">
